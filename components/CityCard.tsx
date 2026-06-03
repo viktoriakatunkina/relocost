@@ -45,11 +45,11 @@ export function CityCard({
         <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/30 to-transparent" />
 
         <div className="relative h-full flex flex-col justify-between p-6">
-          <div className="flex items-start justify-between">
+          <div className="flex items-start justify-between gap-2">
             <span className="text-4xl drop-shadow-lg" aria-hidden>
               {city.flag_emoji}
             </span>
-            <span className="text-xs uppercase tracking-wider text-cream/90 bg-pine-tree/50 backdrop-blur px-2 py-1 rounded">
+            <span className="text-xs uppercase tracking-wider text-cream bg-pine-tree/80 backdrop-blur px-2 py-1 rounded mr-12 whitespace-nowrap">
               {city.country_ru}
             </span>
           </div>
