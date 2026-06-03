@@ -19,6 +19,7 @@ export function PaymentModal({
 }) {
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!pkg) return;
@@ -32,19 +33,48 @@ export function PaymentModal({
   if (!pkg) return null;
   const meta = PACKAGES[pkg];
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email || !email.includes("@")) return;
     setSubmitting(true);
-    // На MVP оплата — заглушка. Дальше будет POST /api/payment/create в ЮKassa.
-    setTimeout(() => {
-      addUnlocked(slug, pkg!);
+    setError(null);
+    try {
+      const res = await fetch("/api/payment/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug, pkg, email }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data?.error || "Не удалось создать платеж. Попробуйте ещё раз.");
+        setSubmitting(false);
+        return;
+      }
+
+      // Demo-режим: ключи ЮKassa ещё не подключены — открываем локально.
+      if (data?.demo) {
+        addUnlocked(slug, pkg!);
+        setSubmitting(false);
+        onClose();
+        alert(
+          `Оплата ЮKassa скоро будет подключена. Сейчас «${meta.label}» открыт для демонстрации.`,
+        );
+        return;
+      }
+
+      // Боевой режим: уходим на страницу оплаты ЮKassa.
+      if (data?.confirmation_url) {
+        window.location.href = data.confirmation_url;
+        return;
+      }
+
+      setError("ЮKassa не вернула ссылку на оплату. Попробуйте ещё раз.");
       setSubmitting(false);
-      onClose();
-      alert(
-        `Оплата ЮKassa подключим позже. Сейчас «${meta.label}» условно открыт для демонстрации.`,
-      );
-    }, 350);
+    } catch {
+      setError("Сеть недоступна. Проверьте подключение и попробуйте ещё раз.");
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -93,17 +123,22 @@ export function PaymentModal({
               autoFocus
             />
           </label>
+          {error && (
+            <p className="text-pale-copper text-sm bg-pale-copper/10 border border-pale-copper/20 rounded-xl px-4 py-2.5">
+              {error}
+            </p>
+          )}
           <button
             type="submit"
             disabled={submitting}
             className="w-full px-6 py-3.5 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy disabled:opacity-60"
           >
-            {submitting ? "Открываем…" : `Получить за ${meta.price} ₽`}
+            {submitting ? "Переходим к оплате…" : `Оплатить ${meta.price} ₽`}
           </button>
         </form>
 
         <p className="text-brandy/50 text-xs mt-4 text-center">
-          ЮKassa подключим к запуску — пока кнопка демонстрационная.
+          Оплата картой через ЮKassa. Доступ откроется сразу после оплаты.
         </p>
       </div>
     </div>
