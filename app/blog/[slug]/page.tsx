@@ -90,13 +90,13 @@ export default async function BlogPostPage({
         <div className="relative max-w-4xl mx-auto px-6 pt-12 pb-16">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-brandy/70 hover:text-pale-copper text-sm mb-8 transition"
+            className="inline-flex items-center gap-2 text-brandy/70 hover:text-copper text-sm mb-8 transition"
           >
             ← Все статьи
           </Link>
           <div className="flex items-center gap-2 text-brandy/70 text-xs uppercase tracking-wider mb-4">
             {post.tag && (
-              <span className="text-pale-copper">{post.tag}</span>
+              <span className="text-copper">{post.tag}</span>
             )}
             {post.tag && post.read_time && <span>·</span>}
             {post.read_time && <span>{post.read_time} мин чтения</span>}
@@ -113,7 +113,7 @@ export default async function BlogPostPage({
 
       <div className="max-w-6xl mx-auto px-6 pt-16 grid lg:grid-cols-[1fr_300px] gap-12">
         <article
-          className="prose prose-invert prose-headings:font-serif prose-headings:text-cream prose-p:text-brandy/90 prose-strong:text-cream prose-a:text-pale-copper prose-a:no-underline hover:prose-a:underline prose-li:text-brandy/90 prose-table:text-brandy/90 prose-th:text-cream prose-hr:border-dingley/30 max-w-none"
+          className="prose prose-invert prose-headings:font-serif prose-headings:text-cream prose-p:text-brandy/90 prose-strong:text-cream prose-a:text-copper prose-a:no-underline hover:prose-a:underline prose-li:text-brandy/90 prose-table:text-brandy/90 prose-th:text-cream prose-hr:hairline max-w-none"
         >
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {post.content_md}
@@ -122,7 +122,7 @@ export default async function BlogPostPage({
 
         {city && (
           <aside className="lg:sticky lg:top-8 self-start">
-            <div className="p-6 rounded-2xl bg-kombu-green/40 border border-dingley/30">
+            <div className="p-6 rounded-2xl bg-surface border hairline">
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-3xl" aria-hidden>
                   {city.flag_emoji}
@@ -142,7 +142,7 @@ export default async function BlogPostPage({
               </p>
               <Link
                 href={`/city/${city.slug}`}
-                className="block w-full text-center px-5 py-3 rounded-pill bg-pale-copper text-pine-tree font-semibold transition hover:bg-brandy"
+                className="block w-full text-center px-5 py-3 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy"
               >
                 Профиль {city.name_ru} →
               </Link>

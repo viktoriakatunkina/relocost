@@ -5,6 +5,7 @@ import type { Price, PriceCategory } from "@/lib/types";
 import { formatRub } from "@/lib/cities";
 import { PACKAGES, isUnlocked, useUnlocked } from "@/lib/unlocked";
 import { PaymentModal } from "@/components/freemium/PaymentModal";
+import { typo } from "@/lib/typography";
 
 type Lifestyle = "econom" | "standard" | "comfort";
 
@@ -194,11 +195,12 @@ export function Calculator({
 
   return (
     <section className="max-w-6xl mx-auto px-6 pt-20">
-      <h2 className="font-serif text-3xl md:text-4xl text-cream mb-3">
-        Калькулятор бюджета
+      <span className="eyebrow">Бюджет</span>
+      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-3">
+        Калькулятор переезда
       </h2>
-      <p className="text-brandy/70 mb-8">
-        Сколько будет стоить месяц жизни в {cityName} — выберите образ жизни.
+      <p className="text-brandy/80 text-lg mb-10 max-w-xl text-pretty">
+        {typo(`Сколько будет стоить месяц жизни в ${cityName} — выберите образ жизни.`)}
       </p>
 
       <div className="grid md:grid-cols-3 gap-3 mb-8">
@@ -211,24 +213,24 @@ export function Calculator({
               onClick={() => setLifestyle(opt.id)}
               className={`text-left p-5 rounded-2xl border transition ${
                 active
-                  ? "bg-pale-copper/20 border-pale-copper"
-                  : "bg-kombu-green/40 border-dingley/30 hover:border-dingley/70"
+                  ? "bg-copper/15 border-copper/60 shadow-glow"
+                  : "bg-surface hairline hover:border-copper/30"
               }`}
             >
               <div
-                className={`font-serif text-2xl mb-1 ${
-                  active ? "text-pale-copper" : "text-cream"
+                className={`font-serif text-2xl mb-1.5 ${
+                  active ? "text-copper" : "text-cream"
                 }`}
               >
                 {opt.label}
               </div>
-              <p className="text-brandy/70 text-sm leading-snug">{opt.hint}</p>
+              <p className="text-brandy/75 text-sm leading-snug text-pretty">{typo(opt.hint)}</p>
             </button>
           );
         })}
       </div>
 
-      <div className="relative rounded-2xl bg-kombu-green/40 border border-dingley/30 p-6 md:p-8 overflow-hidden">
+      <div className="relative rounded-3xl bg-surface border hairline p-6 md:p-8 overflow-hidden">
         <div
           style={!opened ? { filter: "blur(6px)" } : undefined}
           className={!opened ? "pointer-events-none select-none" : ""}
@@ -238,48 +240,49 @@ export function Calculator({
             {result.lines.map((l) => (
               <li
                 key={l.category}
-                className="flex items-center justify-between gap-3 border-b border-dingley/20 pb-3 last:border-0 last:pb-0"
+                className="flex items-center justify-between gap-3 border-b hairline pb-3.5 last:border-0 last:pb-0"
               >
-                <span className="text-brandy/90">{l.label}</span>
+                <span className="text-cream/90">{l.label}</span>
                 <span className="text-cream tabular-nums whitespace-nowrap">
-                  {formatRub(l.min)} – {formatRub(l.max)}
+                  <span className="text-brandy/70">{formatRub(l.min)}</span>
+                  <span className="text-brandy/40 mx-1.5">—</span>
+                  <span className="font-semibold">{formatRub(l.max)}</span>
                 </span>
               </li>
             ))}
           </ul>
 
-          <div className="pt-6 border-t border-dingley/40 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div className="pt-6 border-t hairline flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
-              <p className="text-brandy/70 text-sm uppercase tracking-wider mb-1">
+              <p className="text-copper text-xs uppercase tracking-[0.18em] mb-2 font-medium">
                 Итого за месяц
               </p>
               <p className="font-serif text-4xl md:text-5xl text-cream tabular-nums">
                 {formatRub(result.totalMin)} – {formatRub(result.totalMax)}
               </p>
             </div>
-            <p className="text-brandy/60 text-sm md:text-right md:max-w-xs">
-              Точный бюджет с медициной, развлечениями и сравнением — в пакете «Точный бюджет».
+            <p className="text-brandy/70 text-sm md:text-right md:max-w-xs text-pretty">
+              {typo("Точный бюджет с медициной, развлечениями и сравнением — в пакете «Точный бюджет».")}
             </p>
           </div>
         </div>
 
         {!opened && (
           <div className="absolute inset-0 flex items-center justify-center px-4">
-            <div className="max-w-md w-full bg-pine-tree/85 backdrop-blur-md border border-dingley/40 rounded-2xl p-6 md:p-7 text-center shadow-2xl">
-              <div className="text-3xl mb-2" aria-hidden>
+            <div className="max-w-md w-full bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-3xl p-7 md:p-8 text-center shadow-card">
+              <div className="text-3xl mb-3" aria-hidden>
                 {budget.emoji}
               </div>
-              <h3 className="font-serif text-xl text-cream mb-2">
-                Точные цифры — в пакете {budget.label}
+              <h3 className="font-serif text-2xl text-cream mb-3 text-pretty">
+                {typo(`Точные цифры — в пакете ${budget.label}`)}
               </h3>
-              <p className="text-brandy/80 text-sm mb-5 leading-relaxed">
-                Разблюренный итог, разбивка по 7 категориям и сравнение с другим
-                городом.
+              <p className="text-brandy/85 text-sm mb-6 leading-relaxed text-pretty">
+                {typo("Разблюренный итог, разбивка по 7 категориям и сравнение с другим городом.")}
               </p>
               <button
                 type="button"
                 onClick={() => setPayOpen(true)}
-                className="inline-block px-6 py-3 rounded-pill bg-pale-copper text-pine-tree font-semibold transition hover:bg-brandy"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy hover:shadow-glow"
               >
                 Открыть за {budget.price} ₽
               </button>

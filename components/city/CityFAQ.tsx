@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import type { CityContent } from "@/lib/cities-content";
+import { typo } from "@/lib/typography";
 
 export function CityFAQ({ faq }: { faq: CityContent["faq"] }) {
   const [open, setOpen] = useState<number | null>(0);
 
-  // Schema.org FAQPage разметка для SEO
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -18,12 +18,13 @@ export function CityFAQ({ faq }: { faq: CityContent["faq"] }) {
   };
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-20">
+    <section className="max-w-4xl mx-auto px-6 pt-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
+      <span className="eyebrow">FAQ</span>
+      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-10">
         Частые вопросы
       </h2>
       <div className="space-y-3">
@@ -32,17 +33,21 @@ export function CityFAQ({ faq }: { faq: CityContent["faq"] }) {
           return (
             <div
               key={i}
-              className="rounded-2xl bg-kombu-green/40 border border-dingley/30 overflow-hidden"
+              className={`rounded-3xl border overflow-hidden transition ${
+                isOpen ? "bg-surface-elevated border-copper/30" : "bg-surface hairline hover:border-copper/20"
+              }`}
             >
               <button
                 type="button"
                 onClick={() => setOpen(isOpen ? null : i)}
-                className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left transition hover:bg-kombu-green/60"
+                className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
                 aria-expanded={isOpen}
               >
-                <span className="text-cream font-medium">{item.question}</span>
+                <span className="text-cream font-medium text-base md:text-lg text-pretty">
+                  {typo(item.question)}
+                </span>
                 <span
-                  className={`text-pale-copper text-2xl leading-none transition-transform ${
+                  className={`text-copper text-2xl leading-none transition-transform shrink-0 ${
                     isOpen ? "rotate-45" : ""
                   }`}
                   aria-hidden
@@ -51,8 +56,8 @@ export function CityFAQ({ faq }: { faq: CityContent["faq"] }) {
                 </span>
               </button>
               {isOpen && (
-                <div className="px-6 pb-6 text-brandy/90 leading-relaxed">
-                  {item.answer}
+                <div className="px-6 pb-6 text-brandy/90 leading-relaxed text-pretty">
+                  {typo(item.answer)}
                 </div>
               )}
             </div>

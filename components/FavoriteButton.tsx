@@ -36,8 +36,8 @@ export function FavoriteButton({
         aria-pressed={active}
         className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-pill border text-sm transition ${
           active
-            ? "bg-pale-copper/20 border-pale-copper text-pale-copper"
-            : "border-dingley/40 text-brandy hover:text-cream hover:border-dingley/70"
+            ? "bg-copper/20 border-copper text-copper"
+            : "border-cream/10 text-brandy hover:text-cream hover:border-copper/30"
         }`}
       >
         <Heart filled={active} />
@@ -54,8 +54,8 @@ export function FavoriteButton({
       aria-pressed={active}
       className={`absolute top-3 right-3 w-9 h-9 rounded-full backdrop-blur flex items-center justify-center transition z-10 ${
         mounted && active
-          ? "bg-pale-copper/90 text-pine-tree"
-          : "bg-pine-tree/50 text-brandy hover:bg-pine-tree/70 hover:text-pale-copper"
+          ? "bg-copper/90 text-pine-tree"
+          : "bg-pine-tree/50 text-brandy hover:bg-pine-tree/70 hover:text-copper"
       }`}
     >
       <Heart filled={mounted && active} small />

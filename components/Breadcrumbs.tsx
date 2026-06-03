@@ -33,7 +33,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
             {c.href ? (
               <Link
                 href={c.href}
-                className="hover:text-pale-copper transition"
+                className="hover:text-copper transition"
               >
                 {c.name}
               </Link>

@@ -132,8 +132,8 @@ export default async function CountryPage({
                       ? "bg-emerald-400/80"
                       : content.difficulty_overall === 3
                       ? "bg-amber-400/80"
-                      : "bg-pale-copper"
-                    : "bg-kombu-green/60"
+                      : "bg-copper"
+                    : "bg-surface-elevated"
                 }`}
               />
             ))}
@@ -166,8 +166,8 @@ function Fact({
     <div
       className={`p-6 md:p-7 rounded-2xl border ${
         accent
-          ? "bg-pale-copper/15 border-pale-copper/40"
-          : "bg-kombu-green/40 border-dingley/30"
+          ? "bg-copper/15 border-copper/40"
+          : "bg-surface hairline"
       }`}
     >
       <h3 className="font-serif text-xl text-cream mb-3">{title}</h3>

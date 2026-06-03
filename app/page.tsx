@@ -9,6 +9,7 @@ import { BlogPreview } from "@/components/BlogPreview";
 import { Reveal } from "@/components/Reveal";
 import { SiteSchemas } from "@/components/SiteSchemas";
 import { Footer } from "@/components/Footer";
+import { typo } from "@/lib/typography";
 
 export const metadata = {
   alternates: { canonical: "/" },
@@ -69,8 +70,7 @@ export default async function HomePage() {
             className="text-brandy/90 text-lg md:text-2xl max-w-2xl mb-12 fade-up text-pretty leading-relaxed"
             style={{ animationDelay: "240ms" }}
           >
-            Аренда, еда, транспорт, виза — собираем честный месячный бюджет
-            по 27 городам России и зарубежья.
+            {typo("Аренда, еда, транспорт, виза — собираем честный месячный бюджет по 27 городам России и зарубежья.")}
           </p>
 
           <div className="fade-up max-w-2xl" style={{ animationDelay: "360ms" }}>
@@ -100,7 +100,7 @@ export default async function HomePage() {
                   Популярные направления
                 </h2>
                 <p className="text-brandy/75 text-lg mt-4 max-w-xl text-pretty">
-                  Города с большим русскоязычным комьюнити, понятной визой и доступной арендой.
+                  {typo("Города с большим русскоязычным комьюнити, понятной визой и доступной арендой.")}
                 </p>
               </div>
               <span className="hidden md:inline-flex chip chip-accent shrink-0">

@@ -23,7 +23,7 @@ export default async function BlogPage() {
   return (
     <main className="pb-24">
       <section className="max-w-6xl mx-auto px-6 pt-12 pb-12">
-        <p className="text-pale-copper uppercase text-sm tracking-wider mb-4">
+        <p className="text-copper uppercase text-sm tracking-wider mb-4">
           Блог
         </p>
         <h1 className="font-serif text-5xl md:text-6xl text-cream leading-[1.05] mb-6">

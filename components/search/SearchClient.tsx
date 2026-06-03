@@ -137,7 +137,7 @@ export function SearchClient({ cities }: { cities: CityWithMinRent[] }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Город или страна"
-        className="w-full px-6 py-4 rounded-pill bg-kombu-green/60 backdrop-blur text-cream placeholder-brandy/50 text-lg border border-dingley/40 focus:border-pale-copper focus:outline-none transition mb-6"
+        className="w-full px-6 py-4 rounded-pill bg-surface-elevated backdrop-blur text-cream placeholder-brandy/50 text-lg border border-cream/10 focus:border-copper focus:outline-none transition mb-6"
         aria-label="Поиск города или страны"
       />
 
@@ -163,7 +163,7 @@ export function SearchClient({ cities }: { cities: CityWithMinRent[] }) {
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3 mb-10">
-        <label className="inline-flex items-center gap-2 px-4 py-2 rounded-pill border border-dingley/40 text-brandy/90 cursor-pointer hover:border-pale-copper transition">
+        <label className="inline-flex items-center gap-2 px-4 py-2 rounded-pill border border-cream/10 text-brandy/90 cursor-pointer hover:border-copper transition">
           <input
             type="checkbox"
             checked={visaFree}
@@ -181,7 +181,7 @@ export function SearchClient({ cities }: { cities: CityWithMinRent[] }) {
             <button
               type="button"
               onClick={reset}
-              className="text-pale-copper text-sm hover:underline"
+              className="text-copper text-sm hover:underline"
             >
               Сбросить фильтры
             </button>
@@ -223,7 +223,7 @@ function FilterSelect({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-4 py-3 rounded-2xl bg-kombu-green/60 border border-dingley/40 text-cream focus:border-pale-copper focus:outline-none"
+        className="w-full px-4 py-3 rounded-2xl bg-surface-elevated border hairline text-cream focus:border-copper focus:outline-none"
       >
         {Object.entries(options).map(([v, lbl]) => (
           <option key={v} value={v} className="bg-pine-tree">

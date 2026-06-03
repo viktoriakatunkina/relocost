@@ -53,12 +53,12 @@ export function PaymentModal({
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md rounded-2xl bg-kombu-green border border-dingley/50 p-6 md:p-8 shadow-2xl"
+        className="w-full max-w-md rounded-2xl bg-surface-elevated border-cream/15 p-6 md:p-8 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-3 mb-5">
           <div>
-            <div className="flex items-center gap-2 text-pale-copper uppercase text-xs tracking-wider mb-2">
+            <div className="flex items-center gap-2 text-copper uppercase text-xs tracking-wider mb-2">
               <span>{meta.emoji}</span>
               <span>Пакет</span>
             </div>
@@ -89,14 +89,14 @@ export function PaymentModal({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full px-4 py-3 rounded-pill bg-pine-tree/60 border border-dingley/40 text-cream placeholder-brandy/40 focus:border-pale-copper focus:outline-none"
+              className="w-full px-4 py-3 rounded-pill bg-pine-tree/60 border border-cream/10 text-cream placeholder-brandy/40 focus:border-copper focus:outline-none"
               autoFocus
             />
           </label>
           <button
             type="submit"
             disabled={submitting}
-            className="w-full px-6 py-3.5 rounded-pill bg-pale-copper text-pine-tree font-semibold transition hover:bg-brandy disabled:opacity-60"
+            className="w-full px-6 py-3.5 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy disabled:opacity-60"
           >
             {submitting ? "Открываем…" : `Получить за ${meta.price} ₽`}
           </button>

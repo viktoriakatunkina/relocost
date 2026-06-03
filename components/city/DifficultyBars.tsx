@@ -17,37 +17,38 @@ export function DifficultyBars({
   }));
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-20">
-      <h2 className="font-serif text-3xl md:text-4xl text-cream mb-2">
+    <section className="max-w-4xl mx-auto px-6 pt-20">
+      <span className="eyebrow">Оценка</span>
+      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-3">
         Сложность переезда
       </h2>
-      <p className="text-brandy/70 mb-8">
+      <p className="text-brandy/80 text-lg mb-10 max-w-xl text-pretty">
         Оценка от 1 (легко) до 5 (трудно) по пяти параметрам.
       </p>
-      <div className="space-y-5">
+      <div className="p-6 md:p-8 rounded-3xl bg-surface border hairline space-y-5">
         {items.map((it) => (
           <div key={it.key} className="grid grid-cols-12 items-center gap-4">
-            <span className="col-span-12 sm:col-span-4 text-brandy/90">
+            <span className="col-span-12 sm:col-span-5 text-cream/90">
               {it.label}
             </span>
-            <div className="col-span-10 sm:col-span-7 flex gap-1.5">
+            <div className="col-span-10 sm:col-span-6 flex gap-1.5">
               {[1, 2, 3, 4, 5].map((n) => (
                 <div
                   key={n}
                   className={`h-2 flex-1 rounded-full transition ${
                     n <= it.value
                       ? n <= 2
-                        ? "bg-emerald-400/80"
+                        ? "bg-emerald-400"
                         : n === 3
-                        ? "bg-amber-400/80"
-                        : "bg-pale-copper"
-                      : "bg-kombu-green/60"
+                        ? "bg-amber-400"
+                        : "bg-copper"
+                      : "bg-cream/8"
                   }`}
                 />
               ))}
             </div>
-            <span className="col-span-2 sm:col-span-1 text-cream tabular-nums text-right">
-              {it.value}/5
+            <span className="col-span-2 sm:col-span-1 text-cream tabular-nums text-right font-semibold">
+              {it.value}<span className="text-brandy/40">/5</span>
             </span>
           </div>
         ))}

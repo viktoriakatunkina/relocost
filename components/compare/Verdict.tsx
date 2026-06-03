@@ -17,7 +17,7 @@ export function Verdict({
       <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
         Итог
       </h2>
-      <div className="rounded-3xl bg-gradient-to-br from-dingley/40 via-kombu-green to-pine-tree p-8 md:p-12 border border-dingley/40">
+      <div className="rounded-3xl bg-gradient-to-br from-dingley/40 via-kombu-green to-pine-tree p-8 md:p-12 border border-cream/10">
         <div className="grid md:grid-cols-2 gap-8 mb-10">
           <Card city={a} score={scoreA} accent={scoreA > scoreB} />
           <Card city={b} score={scoreB} accent={scoreB > scoreA} />
@@ -45,8 +45,8 @@ function Card({
     <div
       className={`p-6 rounded-2xl border ${
         accent
-          ? "bg-pale-copper/20 border-pale-copper"
-          : "bg-kombu-green/40 border-dingley/30"
+          ? "bg-copper/20 border-copper"
+          : "bg-surface hairline"
       }`}
     >
       <div className="flex items-center gap-3 mb-4">
@@ -65,7 +65,7 @@ function Card({
       </p>
       <Link
         href={`/city/${city.slug}`}
-        className="inline-block px-5 py-2.5 rounded-pill bg-pale-copper text-pine-tree text-sm font-semibold transition hover:bg-brandy"
+        className="inline-block px-5 py-2.5 rounded-pill bg-copper text-pine-tree text-sm font-semibold transition hover:bg-brandy"
       >
         Подробно про {city.name_ru} →
       </Link>

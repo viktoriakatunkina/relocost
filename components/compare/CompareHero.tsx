@@ -26,11 +26,11 @@ export function CompareHero({ a, b }: { a: City; b: City }) {
     <section className="max-w-6xl mx-auto px-6 pt-12 pb-12">
       <Link
         href="/"
-        className="inline-flex items-center gap-2 text-brandy/70 hover:text-pale-copper text-sm mb-8 transition"
+        className="inline-flex items-center gap-2 text-brandy/70 hover:text-copper text-sm mb-8 transition"
       >
         ← На главную
       </Link>
-      <p className="text-pale-copper uppercase text-sm tracking-wider mb-4">
+      <p className="text-copper uppercase text-sm tracking-wider mb-4">
         Сравнение
       </p>
       <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] mb-10">

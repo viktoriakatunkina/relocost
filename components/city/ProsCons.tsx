@@ -1,3 +1,5 @@
+import { typo } from "@/lib/typography";
+
 export function ProsCons({
   pros,
   cons,
@@ -7,10 +9,11 @@ export function ProsCons({
 }) {
   return (
     <section className="max-w-6xl mx-auto px-6 pt-20">
-      <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
+      <span className="eyebrow">За и против</span>
+      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-10">
         Плюсы и минусы
       </h2>
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-5">
         <Column title="Сильные стороны" items={pros} variant="pros" />
         <Column title="Что учитывать" items={cons} variant="cons" />
       </div>
@@ -27,18 +30,32 @@ function Column({
   items: string[];
   variant: "pros" | "cons";
 }) {
-  const accent = variant === "pros" ? "text-emerald-300" : "text-pale-copper";
-  const symbol = variant === "pros" ? "+" : "−";
+  const isPro = variant === "pros";
   return (
-    <div className="p-6 md:p-8 rounded-2xl bg-kombu-green/40 border border-dingley/30">
-      <h3 className="font-serif text-2xl text-cream mb-5">{title}</h3>
-      <ul className="space-y-3">
+    <div className="p-6 md:p-8 rounded-3xl bg-surface border hairline">
+      <div className="flex items-center gap-3 mb-6">
+        <span
+          className={`w-9 h-9 rounded-full flex items-center justify-center text-lg font-semibold ${
+            isPro
+              ? "bg-emerald-400/15 text-emerald-300"
+              : "bg-copper/15 text-copper"
+          }`}
+          aria-hidden
+        >
+          {isPro ? "+" : "−"}
+        </span>
+        <h3 className="font-serif text-2xl text-cream">{title}</h3>
+      </div>
+      <ul className="space-y-3.5">
         {items.map((it, i) => (
-          <li key={i} className="flex gap-3 text-brandy/90">
-            <span className={`${accent} font-semibold text-lg leading-none mt-0.5`}>
-              {symbol}
-            </span>
-            <span className="leading-relaxed">{it}</span>
+          <li key={i} className="flex gap-3 text-cream/90 leading-relaxed text-pretty">
+            <span
+              className={`mt-2.5 w-1.5 h-1.5 rounded-full shrink-0 ${
+                isPro ? "bg-emerald-400" : "bg-copper"
+              }`}
+              aria-hidden
+            />
+            <span>{typo(it)}</span>
           </li>
         ))}
       </ul>

@@ -1,3 +1,5 @@
+import { typo } from "@/lib/typography";
+
 const STEPS = [
   {
     n: "01",
@@ -29,7 +31,7 @@ export function HowItWorks() {
             Как это работает
           </h2>
           <p className="text-brandy/80 text-lg max-w-xl mx-auto mt-4 text-pretty">
-            Три шага от мысли «а где лучше?» до собранного бюджета и плана переезда.
+            {typo("Три шага от мысли «а где лучше?» до собранного бюджета и плана переезда.")}
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-5">
@@ -40,19 +42,19 @@ export function HowItWorks() {
                 key={s.n}
                 className="relative p-8 rounded-3xl bg-surface border hairline overflow-hidden group transition-all duration-300 hover:bg-surface-elevated hover:-translate-y-1"
               >
-                <div className="absolute -top-6 -right-6 font-serif text-[8rem] text-pale-copper/8 leading-none select-none pointer-events-none">
+                <div className="absolute -top-6 -right-6 font-serif text-[8rem] text-copper/8 leading-none select-none pointer-events-none">
                   {s.n}
                 </div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-2xl bg-pale-copper/15 text-copper flex items-center justify-center mb-6 group-hover:bg-pale-copper/25 transition">
+                  <div className="w-12 h-12 rounded-2xl bg-copper/15 text-copper flex items-center justify-center mb-6 group-hover:bg-copper/25 transition">
                     <Icon />
                   </div>
                   <div className="flex items-center gap-3 mb-3">
                     <span className="text-copper font-mono text-sm tracking-wider">{s.n}</span>
-                    <span className="h-px flex-1 bg-pale-copper/25" />
+                    <span className="h-px flex-1 bg-copper/25" />
                   </div>
-                  <h3 className="font-serif text-2xl md:text-3xl text-cream mb-3">{s.title}</h3>
-                  <p className="text-brandy/85 leading-relaxed text-pretty">{s.text}</p>
+                  <h3 className="font-serif text-2xl md:text-3xl text-cream mb-3">{typo(s.title)}</h3>
+                  <p className="text-brandy/85 leading-relaxed text-pretty">{typo(s.text)}</p>
                 </div>
               </div>
             );

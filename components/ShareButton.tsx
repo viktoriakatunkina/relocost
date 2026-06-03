@@ -38,8 +38,8 @@ export function ShareButton({
     "inline-flex items-center gap-2 px-4 py-2.5 rounded-pill text-sm transition";
   const styles =
     variant === "ghost"
-      ? "border border-dingley/40 text-brandy hover:text-cream hover:border-dingley/70"
-      : "border border-dingley/40 text-brandy hover:text-cream hover:border-dingley/70";
+      ? "border border-cream/10 text-brandy hover:text-cream hover:border-copper/30"
+      : "border border-cream/10 text-brandy hover:text-cream hover:border-copper/30";
 
   return (
     <button type="button" onClick={onClick} className={`${base} ${styles}`}>

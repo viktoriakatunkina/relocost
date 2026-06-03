@@ -64,8 +64,8 @@ function TagButton({
       onClick={onClick}
       className={`px-4 py-2 rounded-pill border text-sm transition ${
         active
-          ? "bg-pale-copper text-pine-tree border-pale-copper"
-          : "border-dingley/40 text-brandy/80 hover:text-cream hover:border-dingley/70"
+          ? "bg-copper text-pine-tree border-copper"
+          : "border-cream/10 text-brandy/80 hover:text-cream hover:border-copper/30"
       }`}
     >
       {label}

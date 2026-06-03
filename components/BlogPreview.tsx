@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { BlogPost } from "@/lib/blog";
 import { BlogCard } from "@/components/blog/BlogCard";
+import { typo } from "@/lib/typography";
 
 export function BlogPreview({ posts }: { posts: BlogPost[] }) {
   if (!posts.length) return null;
@@ -14,7 +15,7 @@ export function BlogPreview({ posts }: { posts: BlogPost[] }) {
               Гайды и подборки
             </h2>
             <p className="text-brandy/75 text-lg max-w-xl text-pretty">
-              Свежие материалы для тех, кто планирует переезд.
+              {typo("Свежие материалы для тех, кто планирует переезд.")}
             </p>
           </div>
           <Link

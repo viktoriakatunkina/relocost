@@ -4,6 +4,7 @@ import type { City } from "@/lib/types";
 import { unsplashSrc } from "@/lib/unsplash";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { ShareButton } from "@/components/ShareButton";
+import { typo } from "@/lib/typography";
 
 const GRADIENTS: Record<string, string> = {
   tbilisi: "from-rose-900/70 via-pine-tree to-pine-tree",
@@ -84,7 +85,7 @@ export function CityHero({ city }: { city: City }) {
 
         {city.intro_text && (
           <p className="text-brandy/85 text-lg md:text-xl max-w-3xl leading-relaxed text-pretty mb-8">
-            {city.intro_text}
+            {typo(city.intro_text)}
           </p>
         )}
 

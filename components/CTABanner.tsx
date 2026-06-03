@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { typo } from "@/lib/typography";
 
 export function CTABanner() {
   return (
@@ -21,7 +22,7 @@ export function CTABanner() {
               Считаем сколько денег <span className="text-copper">понадобится</span> в первый месяц
             </h2>
             <p className="text-brandy/85 text-lg md:text-xl max-w-xl text-pretty">
-              Выберите город — собираем бюджет, расскажем про визу, документы и быт. Бесплатно.
+              {typo("Выберите город — собираем бюджет, расскажем про визу, документы и быт. Бесплатно.")}
             </p>
 
             <div className="flex flex-wrap gap-3 mt-10">

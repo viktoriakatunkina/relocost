@@ -12,14 +12,14 @@ export function FavoritesClient({ cities }: { cities: CityWithMinRent[] }) {
   return (
     <section className="max-w-6xl mx-auto px-6">
       {filtered.length === 0 ? (
-        <div className="rounded-2xl bg-kombu-green/40 border border-dingley/30 p-10 text-center">
+        <div className="rounded-2xl bg-surface border hairline p-10 text-center">
           <p className="text-brandy/80 text-lg mb-5">
             Пока нет сохраненных городов. Нажмите на сердечко на карточке
             любого города — и он появится здесь.
           </p>
           <Link
             href="/"
-            className="inline-block px-6 py-3 rounded-pill bg-pale-copper text-pine-tree font-semibold transition hover:bg-brandy"
+            className="inline-block px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy"
           >
             Открыть список городов
           </Link>

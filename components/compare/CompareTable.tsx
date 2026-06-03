@@ -16,8 +16,8 @@ export function CompareTable({
       <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
         Победитель по категориям
       </h2>
-      <div className="rounded-2xl bg-kombu-green/40 border border-dingley/30 overflow-hidden">
-        <div className="grid grid-cols-[1fr_auto_auto] md:grid-cols-[1.5fr_1fr_1fr] gap-2 md:gap-4 px-5 py-3 border-b border-dingley/30 text-brandy/60 text-xs uppercase tracking-wider">
+      <div className="rounded-2xl bg-surface border hairline overflow-hidden">
+        <div className="grid grid-cols-[1fr_auto_auto] md:grid-cols-[1.5fr_1fr_1fr] gap-2 md:gap-4 px-5 py-3 border-b hairline text-brandy/60 text-xs uppercase tracking-wider">
           <span>Категория</span>
           <span className="text-right truncate">{a.name_ru}</span>
           <span className="text-right truncate">{b.name_ru}</span>
@@ -41,24 +41,24 @@ function Row({ line }: { line: CompareLine }) {
       <span className="text-brandy/90 text-sm md:text-base">{line.label}</span>
       <span
         className={`text-right tabular-nums ${
-          aWin ? "text-pale-copper font-semibold" : "text-cream"
+          aWin ? "text-copper font-semibold" : "text-cream"
         }`}
       >
         {fmt(line.a)}
         {aWin && (
-          <span className="hidden md:inline ml-2 text-xs uppercase text-pale-copper/80">
+          <span className="hidden md:inline ml-2 text-xs uppercase text-copper/80">
             лучше
           </span>
         )}
       </span>
       <span
         className={`text-right tabular-nums ${
-          bWin ? "text-pale-copper font-semibold" : "text-cream"
+          bWin ? "text-copper font-semibold" : "text-cream"
         }`}
       >
         {fmt(line.b)}
         {bWin && (
-          <span className="hidden md:inline ml-2 text-xs uppercase text-pale-copper/80">
+          <span className="hidden md:inline ml-2 text-xs uppercase text-copper/80">
             лучше
           </span>
         )}

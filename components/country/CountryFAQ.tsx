@@ -1,4 +1,5 @@
 import type { CountryContent } from "@/lib/countries-content";
+import { typo } from "@/lib/typography";
 
 export function CountryFAQ({
   countryName,
@@ -37,31 +38,34 @@ export function CountryFAQ({
   };
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-20">
+    <section className="max-w-4xl mx-auto px-6 pt-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
+      <span className="eyebrow">FAQ</span>
+      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-10 text-balance">
         Частые вопросы про {countryName}
       </h2>
       <div className="space-y-3">
         {items.map((it, i) => (
           <details
             key={i}
-            className="group rounded-2xl bg-kombu-green/40 border border-dingley/30 overflow-hidden"
+            className="group rounded-3xl bg-surface border hairline overflow-hidden open:border-copper/30 open:bg-surface-elevated transition"
           >
             <summary className="cursor-pointer flex items-center justify-between gap-4 px-6 py-5 list-none">
-              <span className="text-cream font-medium">{it.q}</span>
+              <span className="text-cream font-medium text-base md:text-lg text-pretty">
+                {typo(it.q)}
+              </span>
               <span
-                className="text-pale-copper text-2xl leading-none transition-transform group-open:rotate-45"
+                className="text-copper text-2xl leading-none transition-transform group-open:rotate-45 shrink-0"
                 aria-hidden
               >
                 +
               </span>
             </summary>
-            <div className="px-6 pb-6 text-brandy/90 leading-relaxed">
-              {it.a}
+            <div className="px-6 pb-6 text-brandy/90 leading-relaxed text-pretty">
+              {typo(it.a)}
             </div>
           </details>
         ))}

@@ -3,6 +3,7 @@
 import { useUnlocked, isUnlocked } from "@/lib/unlocked";
 import { LockedSection } from "@/components/freemium/LockedSection";
 import type { CityContent, PlaceType } from "@/lib/cities-content";
+import { typo } from "@/lib/typography";
 
 const TYPE_LABELS: Record<PlaceType, string> = {
   cafe: "Кафе",
@@ -16,14 +17,16 @@ const TYPE_LABELS: Record<PlaceType, string> = {
 
 function PlaceCard({ p }: { p: CityContent["best_places"][number] }) {
   return (
-    <div className="p-6 rounded-2xl bg-kombu-green/40 border border-dingley/30">
-      <div className="flex items-baseline justify-between gap-3 mb-3">
-        <h3 className="font-serif text-2xl text-cream">{p.name}</h3>
-        <span className="text-pale-copper text-xs uppercase tracking-wider whitespace-nowrap">
+    <div className="p-6 md:p-7 rounded-3xl bg-surface border hairline hover:border-copper/25 hover:bg-surface-elevated transition group">
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <h3 className="font-serif text-2xl text-cream leading-tight text-pretty">{p.name}</h3>
+        <span className="chip chip-accent shrink-0">
           {TYPE_LABELS[p.type]}
         </span>
       </div>
-      <p className="text-brandy/90 leading-relaxed">{p.description}</p>
+      <p className="text-brandy/85 leading-relaxed text-pretty">
+        {typo(p.description)}
+      </p>
     </div>
   );
 }
@@ -42,11 +45,12 @@ export function BestPlaces({
 
   return (
     <section className="max-w-6xl mx-auto px-6 pt-20">
-      <h2 className="font-serif text-3xl md:text-4xl text-cream mb-2">
+      <span className="eyebrow">Локации</span>
+      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-3">
         Лучшие места
       </h2>
-      <p className="text-brandy/70 mb-8">
-        Кафе, рестораны, районы и коворкинги, которые рекомендуют переехавшие.
+      <p className="text-brandy/75 text-lg mb-10 max-w-xl text-pretty">
+        {typo("Кафе, рестораны, районы и коворкинги, которые рекомендуют переехавшие.")}
       </p>
       <div className="grid md:grid-cols-2 gap-5">
         {free.map((p) => (
