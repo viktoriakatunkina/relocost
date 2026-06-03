@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import { Header } from "@/components/Header";
 
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
@@ -71,6 +72,7 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} ${cormorant.variable} antialiased`}
       >
+        <Header />
         {children}
       </body>
     </html>
