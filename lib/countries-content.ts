@@ -203,6 +203,9 @@ export const COUNTRY_NAMES_RU: Record<string, string> = {
   croatia: "Хорватия",
   malaysia: "Малайзия",
   vietnam: "Вьетнам",
+  israel: "Израиль",
+  "czech-republic": "Чехия",
+  india: "Индия",
 };
 
 // Родительный падеж — для заголовков «Города ...»
@@ -229,4 +232,7 @@ export const COUNTRY_NAMES_GENITIVE: Record<string, string> = {
   croatia: "Хорватии",
   malaysia: "Малайзии",
   vietnam: "Вьетнама",
+  israel: "Израиля",
+  "czech-republic": "Чехии",
+  india: "Индии",
 };
