@@ -3,15 +3,18 @@
 @tailwind utilities;
 
 :root {
-  /* Relocost palette — раздел 5 ТЗ */
-  --pine-tree: #202808;
-  --kombu-green: #33432B;
+  --pine-tree: #1A2105;
+  --kombu-green: #2C3A24;
   --dingley: #6A784D;
-  --brandy: #DEC59E;
-  --pale-copper: #C4866D;
-  --white: #F5F0E8;
+  --brandy: #E6CFA8;
+  --pale-copper: #D89478;
+  --copper: #E89B6E;
+  --white: #F6F1E8;
   --muted: #8A9A6E;
   --dim: #5A6A45;
+  --surface: #28321A;
+  --surface-elevated: #34401F;
+  --hairline: rgba(222, 197, 158, 0.14);
 }
 
 html, body {
@@ -58,14 +61,47 @@ a:focus:not(:focus-visible) {
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .fade-up { animation: fadeUp 0.6s ease-out both; }
+  .fade-in { animation: fadeIn 0.4s ease-out both; }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-pale-copper text-xs uppercase tracking-[0.18em] font-medium;
   }
-  .fade-up {
-    animation: fadeUp 0.6s ease-out both;
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.7;
   }
-  .fade-in {
-    animation: fadeIn 0.4s ease-out both;
+
+  .hairline {
+    border-color: var(--hairline);
+  }
+
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.7;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-pill text-[11px] font-medium tracking-wide;
+    background: rgba(222, 197, 158, 0.10);
+    color: var(--brandy);
+    border: 1px solid rgba(222, 197, 158, 0.16);
+  }
+
+  .chip-accent {
+    background: rgba(216, 148, 120, 0.16);
+    color: var(--copper);
+    border: 1px solid rgba(216, 148, 120, 0.28);
   }
 }
 

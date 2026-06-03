@@ -61,41 +61,53 @@ export function SearchBar({ items }: { items: SearchItem[] }) {
   }
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-2xl mx-auto">
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setOpen(true);
-          setFocusedIndex(-1);
-        }}
-        onFocus={() => setOpen(true)}
-        onKeyDown={onKeyDown}
-        placeholder="Выберите город или страну — Тбилиси, Грузия, Бали…"
-        className="w-full px-6 py-4 rounded-pill bg-kombu-green/70 backdrop-blur text-cream placeholder-brandy/90 text-lg border border-dingley/40 focus:border-pale-copper focus:outline-none transition [color-scheme:dark]"
-        aria-label="Поиск города или страны"
-      />
+    <div ref={containerRef} className="relative w-full">
+      <div className="relative">
+        <span className="absolute left-6 top-1/2 -translate-y-1/2 text-copper pointer-events-none" aria-hidden>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="7" />
+            <line x1="21" y1="21" x2="16.5" y2="16.5" />
+          </svg>
+        </span>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setOpen(true);
+            setFocusedIndex(-1);
+          }}
+          onFocus={() => setOpen(true)}
+          onKeyDown={onKeyDown}
+          placeholder="Тбилиси, Бали, Лиссабон..."
+          className="w-full pl-14 pr-6 py-5 rounded-pill bg-surface/90 backdrop-blur text-cream placeholder-brandy/60 text-lg md:text-xl border hairline focus:border-copper focus:bg-surface-elevated focus:outline-none transition shadow-card [color-scheme:dark]"
+          aria-label="Поиск города или страны"
+        />
+        <span className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 items-center gap-1 text-brandy/50 text-xs pointer-events-none">
+          <kbd className="px-1.5 py-0.5 rounded border hairline">↵</kbd>
+          выбрать
+        </span>
+      </div>
 
       {open && suggestions.length > 0 && (
-        <ul className="absolute top-full left-0 right-0 mt-2 bg-kombu-green border border-dingley/40 rounded-2xl overflow-hidden shadow-2xl z-20">
+        <ul className="absolute top-full left-0 right-0 mt-3 bg-surface-elevated border hairline rounded-3xl overflow-hidden shadow-card z-20">
           {suggestions.map((s, i) => (
             <li key={s.slug}>
               <button
                 type="button"
                 onMouseEnter={() => setFocusedIndex(i)}
                 onClick={() => goTo(s.slug)}
-                className={`w-full flex items-center gap-3 px-5 py-3 text-left transition ${
+                className={`w-full flex items-center gap-3 px-5 py-3.5 text-left transition ${
                   i === focusedIndex
-                    ? "bg-dingley/30"
-                    : "hover:bg-dingley/20"
+                    ? "bg-copper/15"
+                    : "hover:bg-cream/5"
                 }`}
               >
-                <span className="text-2xl" aria-hidden>
+                <span className="text-2xl shrink-0" aria-hidden>
                   {s.flag_emoji}
                 </span>
-                <span className="text-cream">{s.name_ru}</span>
-                <span className="text-brandy/60 text-sm ml-auto">
+                <span className="text-cream font-medium">{s.name_ru}</span>
+                <span className="text-brandy/55 text-sm ml-auto">
                   {s.country_ru}
                 </span>
               </button>
