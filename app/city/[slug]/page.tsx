@@ -18,6 +18,7 @@ import { SimilarCities } from "@/components/city/SimilarCities";
 import { StickyBar } from "@/components/freemium/StickyBar";
 import { UnlockFromUrl } from "@/components/freemium/UnlockFromUrl";
 import { Suspense } from "react";
+import { Reveal } from "@/components/Reveal";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 86400;
@@ -94,37 +95,61 @@ export default async function CityPage({
         </section>
       )}
 
-      <Calculator slug={c.slug} prices={prices} cityName={c.name_ru} />
-
-      {content && <ProsCons pros={content.pros} cons={content.cons} />}
-
-      <PricesTable prices={prices} />
-
-      {content && <DifficultyBars breakdown={content.difficulty_breakdown} />}
+      <Reveal>
+        <Calculator slug={c.slug} prices={prices} cityName={c.name_ru} />
+      </Reveal>
 
       {content && (
-        <BestPlaces slug={c.slug} places={content.best_places} />
+        <Reveal>
+          <ProsCons pros={content.pros} cons={content.cons} />
+        </Reveal>
+      )}
+
+      <Reveal>
+        <PricesTable prices={prices} />
+      </Reveal>
+
+      {content && (
+        <Reveal>
+          <DifficultyBars breakdown={content.difficulty_breakdown} />
+        </Reveal>
       )}
 
       {content && (
-        <VisaSteps
-          slug={c.slug}
-          isForeign={c.is_foreign}
-          steps={content.visa_steps}
-        />
+        <Reveal>
+          <BestPlaces slug={c.slug} places={content.best_places} />
+        </Reveal>
       )}
 
       {content && (
-        <Reviews
-          slug={c.slug}
-          isForeign={c.is_foreign}
-          reviews={content.reviews}
-        />
+        <Reveal>
+          <VisaSteps
+            slug={c.slug}
+            isForeign={c.is_foreign}
+            steps={content.visa_steps}
+          />
+        </Reveal>
       )}
 
-      {content && <CityFAQ faq={content.faq} />}
+      {content && (
+        <Reveal>
+          <Reviews
+            slug={c.slug}
+            isForeign={c.is_foreign}
+            reviews={content.reviews}
+          />
+        </Reveal>
+      )}
 
-      <SimilarCities cities={similar} isForeign={c.is_foreign} />
+      {content && (
+        <Reveal>
+          <CityFAQ faq={content.faq} />
+        </Reveal>
+      )}
+
+      <Reveal>
+        <SimilarCities cities={similar} isForeign={c.is_foreign} />
+      </Reveal>
 
       <div className="pt-24">
         <Footer />

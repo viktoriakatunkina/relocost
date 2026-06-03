@@ -5,6 +5,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { HowItWorks } from "@/components/HowItWorks";
 import { CTABanner } from "@/components/CTABanner";
 import { BlogPreview } from "@/components/BlogPreview";
+import { Reveal } from "@/components/Reveal";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 86400;
@@ -29,31 +30,44 @@ export default async function HomePage() {
         />
 
         <div className="max-w-4xl mx-auto text-center w-full">
-          <p className="text-pale-copper font-medium tracking-wider uppercase text-sm mb-6">
+          <p
+            className="text-pale-copper font-medium tracking-wider uppercase text-sm mb-6 fade-up"
+            style={{ animationDelay: "0ms" }}
+          >
             Relocost · калькулятор переезда
           </p>
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-cream leading-[1.05] mb-8">
+          <h1
+            className="font-serif text-5xl md:text-7xl lg:text-8xl text-cream leading-[1.05] mb-8 fade-up"
+            style={{ animationDelay: "120ms" }}
+          >
             Сколько стоит переехать в&nbsp;другой город или страну?
           </h1>
-          <p className="text-brandy/90 text-lg md:text-xl max-w-2xl mx-auto mb-12">
+          <p
+            className="text-brandy/90 text-lg md:text-xl max-w-2xl mx-auto mb-12 fade-up"
+            style={{ animationDelay: "240ms" }}
+          >
             Аренда, еда, транспорт, виза — считаем реальный бюджет на месяц.
             Реальные цены, отзывы переехавших, гайды по&nbsp;10&nbsp;направлениям.
           </p>
 
-          <SearchBar items={searchItems} />
+          <div className="fade-up" style={{ animationDelay: "360ms" }}>
+            <SearchBar items={searchItems} />
+          </div>
         </div>
       </section>
 
       <section id="popular" className="py-16 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-end justify-between mb-10">
-            <h2 className="font-serif text-4xl md:text-5xl text-cream">
-              Популярные направления
-            </h2>
-            <span className="text-brandy/60 text-sm hidden md:block">
-              {popular.length} городов
-            </span>
-          </div>
+          <Reveal>
+            <div className="flex items-end justify-between mb-10">
+              <h2 className="font-serif text-4xl md:text-5xl text-cream">
+                Популярные направления
+              </h2>
+              <span className="text-brandy/60 text-sm hidden md:block">
+                {popular.length} городов
+              </span>
+            </div>
+          </Reveal>
 
           {popular.length === 0 ? (
             <p className="text-brandy/70">
@@ -62,16 +76,24 @@ export default async function HomePage() {
           ) : (
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
               {popular.map((city, i) => (
-                <CityCard key={city.id} city={city} index={i} />
+                <Reveal key={city.id} delay={i * 60}>
+                  <CityCard city={city} index={i} />
+                </Reveal>
               ))}
             </div>
           )}
         </div>
       </section>
 
-      <HowItWorks />
-      <BlogPreview posts={posts} />
-      <CTABanner />
+      <Reveal>
+        <HowItWorks />
+      </Reveal>
+      <Reveal>
+        <BlogPreview posts={posts} />
+      </Reveal>
+      <Reveal>
+        <CTABanner />
+      </Reveal>
       <Footer />
     </>
   );

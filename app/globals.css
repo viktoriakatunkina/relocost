@@ -24,8 +24,54 @@ h1, h2, h3, .font-serif {
   font-family: var(--font-cormorant), Georgia, serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--pale-copper);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Декоративные элементы вне фокуса не должны иметь рамку */
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .fade-up {
+    animation: fadeUp 0.6s ease-out both;
+  }
+  .fade-in {
+    animation: fadeIn 0.4s ease-out both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fade-up,
+  .fade-in {
+    animation: none;
   }
 }
