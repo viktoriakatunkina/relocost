@@ -1,16 +1,19 @@
 import { getAllCitiesForSearch, getPopularCities } from "@/lib/cities";
+import { getPublishedPosts } from "@/lib/blog";
 import { CityCard } from "@/components/CityCard";
 import { SearchBar } from "@/components/SearchBar";
 import { HowItWorks } from "@/components/HowItWorks";
 import { CTABanner } from "@/components/CTABanner";
+import { BlogPreview } from "@/components/BlogPreview";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 86400;
 
 export default async function HomePage() {
-  const [popular, searchItems] = await Promise.all([
+  const [popular, searchItems, posts] = await Promise.all([
     getPopularCities(6),
     getAllCitiesForSearch(),
+    getPublishedPosts(3),
   ]);
 
   return (
@@ -67,6 +70,7 @@ export default async function HomePage() {
       </section>
 
       <HowItWorks />
+      <BlogPreview posts={posts} />
       <CTABanner />
       <Footer />
     </>
