@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80" role="img" aria-label="Relocost">
+  <!-- Полный логотип: знак (пин) + wordmark «Relocost». Для шапки на тёмном фоне. -->
+  <!-- Знак, бокс 64×64, выровнен по вертикали -->
+  <g transform="translate(8,8)">
+    <path d="M32 13c-9.4 0-17 7.2-17 16.4 0 7 4.8 13.3 11.2 18.9 1.9 1.6 3.7 3 5 4 0.5 0.4 1.1 0.4 1.6 0 1.3-1 3.1-2.4 5-4C45.2 42.7 49 36.4 49 29.4 49 20.2 41.4 13 32 13Z" fill="#E89B6E"/>
+    <circle cx="32" cy="28.5" r="7" fill="#1A2105"/>
+  </g>
+  <!-- Wordmark: Cormorant Garamond -> Georgia fallback -->
+  <text x="84" y="52" font-family="'Cormorant Garamond', Georgia, serif" font-size="44" font-weight="600" fill="#F6F1E8" letter-spacing="0.2">Relocost</text>
+</svg>
