@@ -45,13 +45,13 @@ export function CityCard({
           <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} aria-hidden />
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/40 to-pine-tree/0" />
+        <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/65 to-pine-tree/25" />
         <div className="absolute inset-0 ring-1 ring-inset ring-cream/5 rounded-3xl" />
 
         <div className="relative h-full flex flex-col justify-between p-5 md:p-6">
           <div className="flex items-start justify-between gap-3">
             <span
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill bg-pine-tree/70 backdrop-blur-md text-xs uppercase tracking-[0.15em] text-cream font-medium mr-12 max-w-[70%]"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill bg-pine-tree/80 backdrop-blur-md text-xs uppercase tracking-[0.15em] text-cream font-medium mr-12 max-w-[70%] border hairline"
             >
               <span className="text-base leading-none" aria-hidden>{city.flag_emoji}</span>
               <span className="truncate">{city.country_ru}</span>

@@ -52,7 +52,7 @@ export default async function HomePage() {
           className="absolute inset-0 -z-10"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(26,33,5,0.45) 0%, rgba(26,33,5,0.75) 55%, rgba(26,33,5,0.98) 100%), radial-gradient(ellipse at 15% 20%, rgba(216,148,120,0.28) 0%, transparent 50%), radial-gradient(ellipse at 85% 75%, rgba(106,120,77,0.45) 0%, transparent 55%)",
+              "linear-gradient(to bottom, rgba(26,33,5,0.65) 0%, rgba(26,33,5,0.85) 55%, rgba(26,33,5,0.98) 100%), radial-gradient(ellipse at 15% 20%, rgba(216,148,120,0.25) 0%, transparent 50%), radial-gradient(ellipse at 85% 75%, rgba(106,120,77,0.4) 0%, transparent 55%)",
           }}
           aria-hidden
         />
@@ -65,17 +65,17 @@ export default async function HomePage() {
             </p>
           </div>
           <h1
-            className="font-serif text-[clamp(2.75rem,7vw,6.5rem)] text-cream leading-[1.02] mb-8 fade-up text-balance"
+            className="font-serif text-[clamp(2.75rem,7vw,6.5rem)] text-cream leading-[1.02] mb-8 fade-up text-balance text-shadow-hero"
             style={{ animationDelay: "120ms", letterSpacing: "-0.02em" }}
           >
             Сколько стоит <span className="text-copper italic">пере&shy;ехать</span>
             <br className="hidden md:block" /> в другой город или страну?
           </h1>
           <p
-            className="text-brandy/90 text-lg md:text-2xl max-w-2xl mb-12 fade-up text-pretty leading-relaxed"
+            className="text-cream/95 text-lg md:text-2xl max-w-2xl mb-12 fade-up text-pretty leading-relaxed text-shadow-body"
             style={{ animationDelay: "240ms" }}
           >
-            {typo("Аренда, еда, транспорт, виза — собираем честный месячный бюджет по 27 городам России и зарубежья.")}
+            {typo(`Аренда, еда, транспорт, виза — собираем честный месячный бюджет по ${searchItems.length} городам России и зарубежья.`)}
           </p>
 
           <div className="fade-up max-w-2xl" style={{ animationDelay: "360ms" }}>
@@ -83,15 +83,15 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-16 grid grid-cols-3 max-w-2xl gap-6 fade-up" style={{ animationDelay: "480ms" }}>
-            <HeroStat value="27" label="городов" />
-            <HeroStat value="540" label="цен в базе" />
-            <HeroStat value="11" label="стран" />
+            <HeroStat value={String(searchItems.length)} label="городов" />
+            <HeroStat value={String(searchItems.length * 20)} label="цен в базе" />
+            <HeroStat value={String(allCountries.length)} label="стран" />
           </div>
         </div>
 
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-brandy/50 text-xs flex flex-col items-center gap-2 fade-in" style={{ animationDelay: "800ms" }}>
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-brandy/75 text-xs flex flex-col items-center gap-2 fade-in text-shadow-body" style={{ animationDelay: "800ms" }}>
           <span className="uppercase tracking-[0.18em]">Листайте</span>
-          <span className="w-px h-8 bg-copper/50" />
+          <span className="w-px h-8 bg-copper/70" />
         </div>
       </section>
 

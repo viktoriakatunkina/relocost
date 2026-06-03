@@ -48,11 +48,14 @@ export function CityHero({ city }: { city: City }) {
           aria-hidden
         />
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/75 to-pine-tree/20" />
+      {/* Базовое затемнение, чтобы яркие фото не съедали текст */}
+      <div className="absolute inset-0 bg-pine-tree/35" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/85 to-pine-tree/55" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-r from-pine-tree/55 via-transparent to-transparent" aria-hidden />
       <div
         className="absolute inset-0"
         style={{
-          background: "radial-gradient(ellipse at 80% 20%, rgba(216,148,120,0.18), transparent 50%)",
+          background: "radial-gradient(ellipse at 80% 20%, rgba(216,148,120,0.18), transparent 55%)",
         }}
         aria-hidden
       />
@@ -60,7 +63,7 @@ export function CityHero({ city }: { city: City }) {
       <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-24">
         <Link
           href={`/country/${city.country_slug}`}
-          className="inline-flex items-center gap-2 text-brandy/70 hover:text-copper text-sm mb-12 transition"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill bg-pine-tree/55 backdrop-blur-sm text-brandy hover:text-copper text-sm mb-12 transition border hairline"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
           Все города {city.country_ru === "Россия" ? "России" : `· ${city.country_ru}`}
@@ -73,13 +76,13 @@ export function CityHero({ city }: { city: City }) {
           <div className="pt-2">
             <div className="flex items-center gap-3 mb-4">
               <span className="h-px w-10 bg-copper" />
-              <p className="text-copper uppercase text-xs tracking-[0.2em] font-medium">
+              <p className="text-copper uppercase text-xs tracking-[0.2em] font-medium text-shadow-body">
                 {city.country_ru}
               </p>
             </div>
-            <h1 className="font-serif text-cream leading-[0.98] drop-shadow-2xl tracking-tight">
+            <h1 className="font-serif text-cream leading-[0.98] tracking-tight text-shadow-hero">
               <span className="block text-5xl md:text-8xl">{city.name_ru}</span>
-              <span className="block mt-3 font-sans text-base md:text-lg text-brandy/80 uppercase tracking-[0.2em] font-medium">
+              <span className="block mt-3 font-sans text-base md:text-lg text-brandy/90 uppercase tracking-[0.2em] font-medium">
                 Стоимость жизни в 2026 году
               </span>
             </h1>
@@ -87,7 +90,7 @@ export function CityHero({ city }: { city: City }) {
         </div>
 
         {city.intro_text && (
-          <p className="text-brandy/85 text-lg md:text-xl max-w-3xl leading-relaxed text-pretty mb-8">
+          <p className="text-cream/95 text-lg md:text-xl max-w-3xl leading-relaxed text-pretty mb-8 text-shadow-body">
             {typo(city.intro_text)}
           </p>
         )}
@@ -122,10 +125,10 @@ export function CityHero({ city }: { city: City }) {
 function Tag({ children, accent }: { children: React.ReactNode; accent?: boolean }) {
   return (
     <span
-      className={`px-4 py-1.5 rounded-pill backdrop-blur text-xs uppercase tracking-[0.15em] font-medium border ${
+      className={`px-4 py-1.5 rounded-pill backdrop-blur-md text-xs uppercase tracking-[0.15em] font-medium border ${
         accent
-          ? "bg-copper/15 border-copper/40 text-copper"
-          : "bg-pine-tree/60 border-cream/15 text-brandy"
+          ? "bg-copper/25 border-copper/50 text-cream"
+          : "bg-pine-tree/75 border-cream/20 text-cream/95"
       }`}
     >
       {children}
