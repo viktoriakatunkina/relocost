@@ -23,6 +23,8 @@ const SECTIONS = [
     title: "Помощь",
     links: [
       { href: "/blog", label: "Гайды и подборки" },
+      { href: "/offer", label: "Публичная оферта" },
+      { href: "/contacts", label: "Контакты и реквизиты" },
     ],
   },
 ];
@@ -62,7 +64,12 @@ export function Footer() {
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 pt-8 border-t hairline text-xs text-brandy/55">
           <p>© {year} Relocost. Цены — оценки на основе открытых источников.</p>
-          <p>Сделано в России, с любовью к переменам.</p>
+          <p>
+            Самозанятый Катункина В. В. · ИНН 260503461107 ·{" "}
+            <Link href="/contacts" className="hover:text-copper transition">
+              реквизиты
+            </Link>
+          </p>
         </div>
       </div>
     </footer>
