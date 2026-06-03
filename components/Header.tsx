@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const NAV = [
   { href: "/search", label: "Города" },
+  { href: "/countries", label: "Страны" },
   { href: "/blog", label: "Журнал" },
   { href: "/favorites", label: "Избранное" },
 ];

@@ -5,6 +5,7 @@ const SECTIONS = [
     title: "Сервис",
     links: [
       { href: "/search", label: "Поиск городов" },
+      { href: "/countries", label: "Все страны" },
       { href: "/favorites", label: "Избранное" },
       { href: "/blog", label: "Журнал" },
     ],

@@ -1,7 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getAllCitiesForSearch, getPopularCities } from "@/lib/cities";
 import { getPublishedPosts } from "@/lib/blog";
+import { getAllCountriesAggregated } from "@/lib/countries";
 import { CityCard } from "@/components/CityCard";
+import { CountryCard } from "@/components/country/CountryCard";
 import { SearchBar } from "@/components/SearchBar";
 import { HowItWorks } from "@/components/HowItWorks";
 import { CTABanner } from "@/components/CTABanner";
@@ -25,11 +28,13 @@ export const metadata = {
 export const revalidate = 86400;
 
 export default async function HomePage() {
-  const [popular, searchItems, posts] = await Promise.all([
+  const [popular, searchItems, posts, allCountries] = await Promise.all([
     getPopularCities(6),
     getAllCitiesForSearch(),
     getPublishedPosts(3),
+    getAllCountriesAggregated(),
   ]);
+  const countriesPreview = allCountries.slice(0, 8);
 
   return (
     <>
@@ -124,13 +129,52 @@ export default async function HomePage() {
           )}
 
           <div className="mt-12 text-center">
-            <a
+            <Link
               href="/search"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-pill border hairline text-cream/90 hover:text-cream hover:border-copper transition"
             >
-              Все 27 направлений
+              Все {searchItems.length} направлений
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section id="countries" className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <Reveal>
+            <div className="flex items-end justify-between mb-12 gap-6">
+              <div>
+                <span className="eyebrow">По странам</span>
+                <h2 className="font-serif text-4xl md:text-6xl text-cream mt-6 text-balance">
+                  Каталог стран
+                </h2>
+                <p className="text-brandy/75 text-lg mt-4 max-w-xl text-pretty">
+                  {typo("Выберите направление: для каждой страны — список городов, цены, визовые шаги и общая сложность переезда.")}
+                </p>
+              </div>
+              <span className="hidden md:inline-flex chip chip-accent shrink-0">
+                {allCountries.length} стран
+              </span>
+            </div>
+          </Reveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {countriesPreview.map((c, i) => (
+              <Reveal key={c.slug} delay={i * 40}>
+                <CountryCard country={c} />
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              href="/countries"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-pill border hairline text-cream/90 hover:text-cream hover:border-copper transition"
+            >
+              Все {allCountries.length} стран
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </Link>
           </div>
         </div>
       </section>
