@@ -12,6 +12,9 @@ export type BlogPost = {
   seo_title: string | null;
   seo_description: string | null;
   cover_unsplash_id: string | null;
+  cover_url: string | null;
+  cover_author_name: string | null;
+  cover_author_url: string | null;
   published: boolean;
   created_at: string;
 };

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -9,6 +10,7 @@ import {
   getPostBySlug,
   getPublishedPosts,
 } from "@/lib/blog";
+import { unsplashSrc, unsplashAuthorUrlWithUtm } from "@/lib/unsplash";
 import { RelatedPosts } from "@/components/blog/RelatedPosts";
 import type { City } from "@/lib/types";
 import { ShareButton } from "@/components/ShareButton";
@@ -60,6 +62,9 @@ export default async function BlogPostPage({
     getPublishedPosts(),
   ]);
 
+  const heroCover = unsplashSrc(post.cover_url, { w: 1600, q: 80 });
+  const heroAuthorUrl = unsplashAuthorUrlWithUtm(post.cover_author_url);
+
   const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://relocost.ru").replace(/\/$/, "");
   const articleSchema = {
     "@context": "https://schema.org",
@@ -102,7 +107,27 @@ export default async function BlogPostPage({
       <section
         className={`relative bg-gradient-to-br ${coverGradient(post.slug)} overflow-hidden`}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/40 to-transparent" />
+        {heroCover && (
+          <Image
+            src={heroCover}
+            alt={post.title}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/55 to-pine-tree/30" />
+        {post.cover_author_name && heroAuthorUrl && (
+          <a
+            href={heroAuthorUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute bottom-3 right-4 z-10 text-[11px] text-brandy/55 hover:text-brandy transition"
+          >
+            Фото: {post.cover_author_name} / Unsplash
+          </a>
+        )}
         <div className="relative max-w-4xl mx-auto px-6 pt-12 pb-16">
           <Link
             href="/blog"
