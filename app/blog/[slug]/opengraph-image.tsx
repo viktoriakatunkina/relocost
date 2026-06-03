@@ -35,7 +35,7 @@ export default async function OG({ params }: { params: { slug: string } }) {
           flexDirection: "column",
           justifyContent: "space-between",
           background:
-            "radial-gradient(ellipse at 20% 10%, #33432B 0%, transparent 60%), radial-gradient(ellipse at 90% 90%, #C4866D 0%, transparent 55%), #202808",
+            "linear-gradient(135deg, #33432B 0%, #202808 55%, #5A3D2A 100%)",
           padding: "72px",
           fontFamily: "Georgia, serif",
           color: "#F5F0E8",
