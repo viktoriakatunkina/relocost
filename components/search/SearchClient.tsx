@@ -28,6 +28,11 @@ const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
   bali: "asia",
   bangkok: "asia",
   dubai: "middle_east",
+  astana: "cis",
+  samarkand: "cis",
+  izmir: "europe",
+  porto: "europe",
+  malaga: "europe",
 };
 
 const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
@@ -48,6 +53,11 @@ const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
   kaliningrad: "cool",
   moscow: "cool",
   spb: "cool",
+  astana: "cool",
+  izmir: "temperate",
+  porto: "temperate",
+  malaga: "temperate",
+  samarkand: "temperate",
 };
 
 // Города без визы для россиян (безвиз или visa-on-arrival ≥ 30 дней)
@@ -66,6 +76,9 @@ const VISA_FREE_FOR_RU = new Set([
   "dubai",
   "istanbul",
   "alanya",
+  "astana",
+  "samarkand",
+  "izmir",
 ]);
 
 const REGION_OPTIONS: [Region, string][] = [
