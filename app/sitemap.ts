@@ -19,6 +19,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const countries = Array.from(
     new Set(cityRows.map((c) => c.country_slug).filter(Boolean)),
   );
+  const slugs = cityRows.map((c) => c.slug as string);
+  const comparePairs: string[] = [];
+  for (let i = 0; i < slugs.length; i++) {
+    for (let j = 0; j < slugs.length; j++) {
+      if (i === j) continue;
+      comparePairs.push(`${slugs[i]}-vs-${slugs[j]}`);
+    }
+  }
 
   return [
     {
@@ -50,6 +58,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+    })),
+    ...comparePairs.map((pair) => ({
+      url: `${BASE}/compare/${pair}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
     ...(posts ?? []).map((p) => ({
       url: `${BASE}/blog/${p.slug}`,
