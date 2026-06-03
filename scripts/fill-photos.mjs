@@ -10,16 +10,16 @@ const UNSPLASH = fs.readFileSync(path.join(os.homedir(), ".relocost/unsplash_acc
 const sb = createClient(SB_URL, SB_KEY, { auth: { persistSession: false } });
 
 const QUERIES = {
-  bishkek: "bishkek kyrgyzstan",
-  tashkent: "tashkent uzbekistan",
-  minsk: "minsk belarus",
-  podgorica: "podgorica montenegro",
-  batumi: "batumi black sea georgia",
-  antalya: "antalya turkey",
-  phuket: "phuket thailand beach",
-  "chiang-mai": "chiang mai thailand",
-  kutaisi: "kutaisi georgia",
-  budva: "budva montenegro sea",
+  sofia: "sofia bulgaria",
+  varna: "varna bulgaria black sea",
+  athens: "athens greece acropolis",
+  valencia: "valencia spain",
+  nicosia: "nicosia cyprus",
+  paphos: "paphos cyprus",
+  dubrovnik: "dubrovnik croatia",
+  "kuala-lumpur": "kuala lumpur malaysia",
+  "da-nang": "da nang vietnam beach",
+  "nha-trang": "nha trang vietnam",
 };
 
 async function fetchUnsplash(query) {
