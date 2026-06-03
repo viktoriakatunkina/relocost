@@ -28,6 +28,17 @@ export async function generateMetadata({
   return {
     title: post.seo_title ?? post.title,
     description: post.seo_description ?? undefined,
+    openGraph: {
+      title: post.title,
+      description: post.seo_description ?? undefined,
+      type: "article",
+      publishedTime: post.created_at,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.seo_description ?? undefined,
+    },
   };
 }
 

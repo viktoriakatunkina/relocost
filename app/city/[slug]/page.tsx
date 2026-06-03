@@ -41,6 +41,16 @@ export async function generateMetadata({
   return {
     title: city.seo_title,
     description: city.seo_description,
+    openGraph: {
+      title: city.seo_title ?? undefined,
+      description: city.seo_description ?? undefined,
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: city.seo_title ?? undefined,
+      description: city.seo_description ?? undefined,
+    },
   };
 }
 

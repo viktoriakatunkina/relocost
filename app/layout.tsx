@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Manrope, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
@@ -15,13 +15,52 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://relocost.ru";
+
 export const metadata: Metadata = {
-  title: "Relocost — калькулятор стоимости жизни для переезжающих",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Relocost — калькулятор стоимости жизни для переезжающих",
+    template: "%s",
+  },
   description:
-    "Считаем реальный бюджет на жизнь в любом городе: аренда, еда, транспорт, виза. Цены, отзывы, гайды по 10+ направлениям внутри РФ и за рубежом.",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://relocost.ru",
-  ),
+    "Считаем реальный бюджет на жизнь в любом городе: аренда, еда, транспорт, виза. Цены, отзывы и гайды по 10+ направлениям внутри РФ и за рубежом.",
+  applicationName: "Relocost",
+  authors: [{ name: "Relocost" }],
+  keywords: [
+    "стоимость жизни",
+    "калькулятор переезда",
+    "релокация",
+    "переезд за границу",
+    "сколько стоит жить",
+    "виза для россиян",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    url: SITE_URL,
+    siteName: "Relocost",
+    title: "Relocost — калькулятор стоимости жизни для переезжающих",
+    description:
+      "Считаем реальный бюджет на жизнь в любом городе. Цены, отзывы и гайды по 10+ направлениям.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Relocost — калькулятор стоимости жизни для переезжающих",
+    description:
+      "Считаем реальный бюджет на жизнь в любом городе. Цены, отзывы и гайды по 10+ направлениям.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#202808",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
