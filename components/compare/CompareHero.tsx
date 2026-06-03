@@ -12,6 +12,13 @@ const GRADIENTS: Record<string, string> = {
   krasnodar: "from-red-900/70 to-pine-tree",
   sochi: "from-blue-900/70 to-pine-tree",
   kaliningrad: "from-slate-700/70 to-pine-tree",
+  moscow: "from-zinc-700/70 to-pine-tree",
+  spb: "from-indigo-900/70 to-pine-tree",
+  istanbul: "from-red-800/70 to-pine-tree",
+  alanya: "from-teal-800/70 to-pine-tree",
+  limassol: "from-cyan-900/70 to-pine-tree",
+  budapest: "from-emerald-800/70 to-pine-tree",
+  lisbon: "from-amber-700/70 to-pine-tree",
 };
 
 export function CompareHero({ a, b }: { a: City; b: City }) {

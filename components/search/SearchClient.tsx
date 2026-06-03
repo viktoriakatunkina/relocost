@@ -9,6 +9,8 @@ type Climate = "all" | "tropical" | "temperate" | "cool";
 type Budget = "all" | "30000" | "50000" | "80000" | "120000";
 
 const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
+  moscow: "ru",
+  spb: "ru",
   krasnodar: "ru",
   sochi: "ru",
   kaliningrad: "ru",
@@ -16,6 +18,11 @@ const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
   almaty: "cis",
   tbilisi: "europe",
   belgrade: "europe",
+  istanbul: "europe",
+  alanya: "europe",
+  limassol: "europe",
+  budapest: "europe",
+  lisbon: "europe",
   bali: "asia",
   bangkok: "asia",
   dubai: "middle_east",
@@ -25,16 +32,23 @@ const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
   bali: "tropical",
   bangkok: "tropical",
   dubai: "tropical",
+  alanya: "tropical",
+  limassol: "tropical",
   tbilisi: "temperate",
   yerevan: "temperate",
   belgrade: "temperate",
   almaty: "temperate",
   krasnodar: "temperate",
   sochi: "temperate",
+  istanbul: "temperate",
+  budapest: "temperate",
+  lisbon: "temperate",
   kaliningrad: "cool",
+  moscow: "cool",
+  spb: "cool",
 };
 
-// Города без визы для россиян (короткий безвиз ≥ 30 дней)
+// Города без визы для россиян (безвиз или visa-on-arrival ≥ 30 дней)
 const VISA_FREE_FOR_RU = new Set([
   "tbilisi",
   "yerevan",
@@ -45,8 +59,11 @@ const VISA_FREE_FOR_RU = new Set([
   "krasnodar",
   "sochi",
   "kaliningrad",
-  // Дубай — visa-on-arrival 60 дней, тоже считаем безвизом
+  "moscow",
+  "spb",
   "dubai",
+  "istanbul",
+  "alanya",
 ]);
 
 const REGION_LABELS: Record<Region, string> = {
