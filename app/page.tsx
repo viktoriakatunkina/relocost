@@ -83,15 +83,10 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-16 grid grid-cols-3 max-w-2xl gap-6 fade-up" style={{ animationDelay: "480ms" }}>
-            <HeroStat value={String(searchItems.length)} label="городов" />
-            <HeroStat value={String(searchItems.length * 20)} label="цен в базе" />
-            <HeroStat value={String(allCountries.length)} label="стран" />
+            <HeroStat value={String(searchItems.length)} label={plural(searchItems.length, ["город", "города", "городов"])} />
+            <HeroStat value={String(allCountries.length)} label={plural(allCountries.length, ["страна", "страны", "стран"])} />
+            <HeroStat value="7" label="категорий трат" />
           </div>
-        </div>
-
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-brandy/75 text-xs flex flex-col items-center gap-2 fade-in text-shadow-body" style={{ animationDelay: "800ms" }}>
-          <span className="uppercase tracking-[0.18em]">Листайте</span>
-          <span className="w-px h-8 bg-copper/70" />
         </div>
       </section>
 
@@ -191,6 +186,15 @@ export default async function HomePage() {
       <Footer />
     </>
   );
+}
+
+// Русское склонение: forms = [1 город, 2 города, 5 городов]
+function plural(n: number, forms: [string, string, string]): string {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return forms[0];
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return forms[1];
+  return forms[2];
 }
 
 function HeroStat({ value, label }: { value: string; label: string }) {

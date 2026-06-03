@@ -24,6 +24,15 @@ export type City = {
   unsplash_url: string | null;
   unsplash_author_name: string | null;
   unsplash_author_url: string | null;
+  gallery: GalleryPhoto[] | null;
+};
+
+// Фото в галерее «<город> в кадрах». Хранится в cities.gallery (jsonb-массив).
+// u — base URL Unsplash, n — имя автора, h — ссылка на профиль автора.
+export type GalleryPhoto = {
+  u: string;
+  n: string;
+  h: string;
 };
 
 export type Price = {
@@ -46,3 +55,7 @@ export type PriceCategory =
   | "entertainment";
 
 export type CityWithMinRent = City & { min_rent: number };
+
+// Город с минимальной арендой и оценкой экономичного месячного бюджета «от»
+// (аренда на окраине + продукты + проездной + ЖКХ/интернет/мобильная).
+export type CityWithBudget = CityWithMinRent & { monthly_from: number };

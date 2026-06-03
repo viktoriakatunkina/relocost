@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import type { City, CityWithMinRent } from "@/lib/types";
+import type { City, CityWithBudget } from "@/lib/types";
 import { SearchClient } from "@/components/search/SearchClient";
 import { Footer } from "@/components/Footer";
 
@@ -15,29 +15,47 @@ export const metadata = {
   alternates: { canonical: "/search" },
 };
 
-async function getAllCitiesWithRent(): Promise<CityWithMinRent[]> {
+async function getAllCitiesWithBudget(): Promise<CityWithBudget[]> {
   const { data: cities } = await supabase
     .from("cities")
     .select("*")
     .order("name_ru");
   if (!cities?.length) return [];
   const ids = cities.map((c) => c.id);
-  const { data: rents } = await supabase
+
+  // Тянем позиции, нужные для экономичного месячного бюджета «от».
+  const { data: prices } = await supabase
     .from("prices")
-    .select("city_id, price_min")
+    .select("city_id, category, item_name_ru, price_min")
     .in("city_id", ids)
-    .eq("category", "rent")
-    .eq("item_name_ru", "1-комн. квартира на окраине");
-  const minByCity = new Map<string, number>();
-  for (const r of rents ?? []) minByCity.set(r.city_id, r.price_min);
-  return (cities as City[]).map((c) => ({
-    ...c,
-    min_rent: minByCity.get(c.id) ?? 0,
-  }));
+    .in("category", ["rent", "food", "transport", "utilities"]);
+
+  // Группируем по городу.
+  type Row = { item_name_ru: string; price_min: number };
+  const byCity = new Map<string, Row[]>();
+  for (const p of prices ?? []) {
+    const arr = byCity.get(p.city_id) ?? [];
+    arr.push({ item_name_ru: p.item_name_ru, price_min: p.price_min });
+    byCity.set(p.city_id, arr);
+  }
+
+  const find = (rows: Row[], needle: string) =>
+    rows.find((r) => r.item_name_ru.includes(needle))?.price_min ?? 0;
+
+  return (cities as City[]).map((c) => {
+    const rows = byCity.get(c.id) ?? [];
+    const rent = find(rows, "окраине");
+    const food = find(rows, "Продукты");
+    const transport = find(rows, "проездной");
+    const utilities =
+      find(rows, "ЖКХ") + find(rows, "Домашний") + find(rows, "Мобильная");
+    const monthly_from = rent + food + transport + utilities;
+    return { ...c, min_rent: rent, monthly_from };
+  });
 }
 
 export default async function SearchPage() {
-  const cities = await getAllCitiesWithRent();
+  const cities = await getAllCitiesWithBudget();
 
   return (
     <main className="pb-24">

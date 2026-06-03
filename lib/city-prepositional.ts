@@ -1,0 +1,51 @@
+// Предложный падеж города с предлогом («в Тбилиси», «на Бали») для заголовков
+// и SEO-текстов. Слаги — острова/территории берут «на», остальные «в».
+const PREP: Record<string, string> = {
+  tbilisi: "в Тбилиси",
+  yerevan: "в Ереване",
+  belgrade: "в Белграде",
+  dubai: "в Дубае",
+  bali: "на Бали",
+  bangkok: "в Бангкоке",
+  almaty: "в Алматы",
+  krasnodar: "в Краснодаре",
+  sochi: "в Сочи",
+  moscow: "в Москве",
+  spb: "в Санкт-Петербурге",
+  istanbul: "в Стамбуле",
+  alanya: "в Алании",
+  limassol: "в Лимассоле",
+  budapest: "в Будапеште",
+  lisbon: "в Лиссабоне",
+  kaliningrad: "в Калининграде",
+  bishkek: "в Бишкеке",
+  tashkent: "в Ташкенте",
+  minsk: "в Минске",
+  podgorica: "в Подгорице",
+  batumi: "в Батуми",
+  antalya: "в Анталье",
+  phuket: "на Пхукете",
+  kutaisi: "в Кутаиси",
+  budva: "в Будве",
+  sofia: "в Софии",
+  varna: "в Варне",
+  athens: "в Афинах",
+  valencia: "в Валенсии",
+  nicosia: "в Никосии",
+  paphos: "в Пафосе",
+  dubrovnik: "в Дубровнике",
+  barcelona: "в Барселоне",
+  prague: "в Праге",
+  goa: "на Гоа",
+  "chiang-mai": "в Чиангмае",
+  "ho-chi-minh": "в Хошимине",
+  "nha-trang": "в Нячанге",
+  "da-nang": "в Дананге",
+  "kuala-lumpur": "в Куала-Лумпуре",
+  "tel-aviv": "в Тель-Авиве",
+};
+
+// «в Тбилиси» / «на Бали». Фоллбэк для незаполненных слагов — «в <Название>».
+export function cityIn(slug: string, nameRu: string): string {
+  return PREP[slug] ?? `в ${nameRu}`;
+}

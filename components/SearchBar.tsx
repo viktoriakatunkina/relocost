@@ -43,6 +43,15 @@ export function SearchBar({ items }: { items: SearchItem[] }) {
     router.push(`/city/${slug}`);
   }
 
+  function onSubmit() {
+    const pick = suggestions[focusedIndex >= 0 ? focusedIndex : 0];
+    if (pick) {
+      goTo(pick.slug);
+    } else if (query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+    }
+  }
+
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (!open || suggestions.length === 0) return;
     if (e.key === "ArrowDown") {
@@ -80,13 +89,21 @@ export function SearchBar({ items }: { items: SearchItem[] }) {
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
           placeholder="Тбилиси, Бали, Лиссабон..."
-          className="w-full pl-14 pr-6 py-5 rounded-pill bg-surface/90 backdrop-blur text-cream placeholder-brandy/60 text-lg md:text-xl border hairline focus:border-copper focus:bg-surface-elevated focus:outline-none transition shadow-card [color-scheme:dark]"
+          className="w-full pl-14 pr-16 md:pr-36 py-5 rounded-pill bg-surface/90 backdrop-blur text-cream placeholder-brandy/60 text-lg md:text-xl border hairline focus:border-copper focus:bg-surface-elevated focus:outline-none transition shadow-card [color-scheme:dark]"
           aria-label="Поиск города или страны"
         />
-        <span className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 items-center gap-1 text-brandy/50 text-xs pointer-events-none">
-          <kbd className="px-1.5 py-0.5 rounded border hairline">↵</kbd>
-          выбрать
-        </span>
+        <button
+          type="button"
+          onClick={onSubmit}
+          aria-label="Найти"
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-2 bg-copper text-pine-tree font-semibold rounded-pill px-4 md:px-6 py-3 hover:bg-brandy hover:shadow-glow active:scale-[0.97] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-pale-copper focus-visible:ring-offset-2 focus-visible:ring-offset-pine-tree"
+        >
+          <span className="hidden md:inline">Найти</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <line x1="5" y1="12" x2="18" y2="12" />
+            <polyline points="13 7 18 12 13 17" />
+          </svg>
+        </button>
       </div>
 
       {open && suggestions.length > 0 && (

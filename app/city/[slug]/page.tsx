@@ -5,6 +5,7 @@ import { CITY_CONTENT } from "@/lib/cities-content";
 import type { City } from "@/lib/types";
 import { CityHero } from "@/components/city/CityHero";
 import { QuickFacts } from "@/components/city/QuickFacts";
+import { CitySummary } from "@/components/city/CitySummary";
 import { PhotoGallery } from "@/components/city/PhotoGallery";
 import { ProsCons } from "@/components/city/ProsCons";
 import { PricesTable } from "@/components/city/PricesTable";
@@ -95,8 +96,13 @@ export default async function CityPage({
 
       <QuickFacts city={c} />
 
+      <Reveal>
+        <CitySummary city={c} content={content} />
+      </Reveal>
+
       <PhotoGallery
         cityName={c.name_ru}
+        gallery={c.gallery}
         unsplashUrl={c.unsplash_url}
         authorName={c.unsplash_author_name}
         authorUrl={c.unsplash_author_url}
