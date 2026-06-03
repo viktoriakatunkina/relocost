@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import type { City } from "@/lib/types";
 import { unsplashSrc } from "@/lib/unsplash";
+import { FavoriteButton } from "@/components/FavoriteButton";
+import { ShareButton } from "@/components/ShareButton";
 
 const GRADIENTS: Record<string, string> = {
   tbilisi: "from-rose-900/70 via-pine-tree to-pine-tree",
@@ -69,6 +71,18 @@ export function CityHero({ city }: { city: City }) {
             <Tag>Сложный переезд</Tag>
           )}
           {city.is_popular && <Tag>Популярное направление</Tag>}
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3 mt-8">
+          <FavoriteButton
+            slug={city.slug}
+            cityName={city.name_ru}
+            variant="hero"
+          />
+          <ShareButton
+            title={`Стоимость жизни в ${city.name_ru} — Relocost`}
+            text={`Сколько стоит жить в ${city.name_ru}? Калькулятор, цены, виза.`}
+          />
         </div>
       </div>
     </section>

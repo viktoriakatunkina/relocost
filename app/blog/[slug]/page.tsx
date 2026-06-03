@@ -9,6 +9,7 @@ import {
   getPostBySlug,
 } from "@/lib/blog";
 import type { City } from "@/lib/types";
+import { ShareButton } from "@/components/ShareButton";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 3600;
@@ -85,9 +86,13 @@ export default async function BlogPostPage({
             {post.tag && post.read_time && <span>·</span>}
             {post.read_time && <span>{post.read_time} мин чтения</span>}
           </div>
-          <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] max-w-3xl">
+          <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] max-w-3xl mb-8">
             {post.title}
           </h1>
+          <ShareButton
+            title={post.title}
+            text={post.seo_description ?? undefined}
+          />
         </div>
       </section>
 

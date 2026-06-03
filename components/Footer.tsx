@@ -8,10 +8,11 @@ export function Footer() {
           <span className="text-brandy/60">·</span>
           <span className="text-brandy/60">калькулятор переезда</span>
         </div>
-        <nav className="flex gap-6 text-brandy/70">
+        <nav className="flex flex-wrap gap-6 text-brandy/70">
           <a href="/" className="hover:text-pale-copper">Главная</a>
-          <a href="/blog" className="hover:text-pale-copper">Блог</a>
           <a href="/search" className="hover:text-pale-copper">Поиск</a>
+          <a href="/favorites" className="hover:text-pale-copper">Избранное</a>
+          <a href="/blog" className="hover:text-pale-copper">Блог</a>
         </nav>
         <p className="text-brandy/50">© {year}</p>
       </div>
