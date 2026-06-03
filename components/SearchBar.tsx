@@ -72,8 +72,8 @@ export function SearchBar({ items }: { items: SearchItem[] }) {
         }}
         onFocus={() => setOpen(true)}
         onKeyDown={onKeyDown}
-        placeholder="Выбери город или страну — Тбилиси, Грузия, Бали…"
-        className="w-full px-6 py-4 rounded-pill bg-kombu-green/60 backdrop-blur text-cream placeholder-brandy/50 text-lg border border-dingley/40 focus:border-pale-copper focus:outline-none transition"
+        placeholder="Выберите город или страну — Тбилиси, Грузия, Бали…"
+        className="w-full px-6 py-4 rounded-pill bg-kombu-green/70 backdrop-blur text-cream placeholder-brandy/90 text-lg border border-dingley/40 focus:border-pale-copper focus:outline-none transition [color-scheme:dark]"
         aria-label="Поиск города или страны"
       />
 

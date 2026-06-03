@@ -198,7 +198,7 @@ export function Calculator({
         Калькулятор бюджета
       </h2>
       <p className="text-brandy/70 mb-8">
-        Сколько будет стоить месяц жизни в {cityName} — выбери образ жизни.
+        Сколько будет стоить месяц жизни в {cityName} — выберите образ жизни.
       </p>
 
       <div className="grid md:grid-cols-3 gap-3 mb-8">

@@ -191,7 +191,7 @@ export function SearchClient({ cities }: { cities: CityWithMinRent[] }) {
 
       {filtered.length === 0 ? (
         <p className="text-brandy/70 text-center py-16">
-          Под такие условия ничего не нашли. Попробуй ослабить фильтры.
+          Под такие условия ничего не нашли. Попробуйте ослабить фильтры.
         </p>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">

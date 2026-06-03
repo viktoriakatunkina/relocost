@@ -7,7 +7,7 @@ export const revalidate = 86400;
 
 export const metadata = {
   title: "Сохранённые города — Relocost",
-  description: "Города, которые ты добавил в избранное для сравнения и подробного изучения.",
+  description: "Города, которые Вы добавили в избранное для сравнения и подробного изучения.",
   robots: { index: false, follow: false },
 };
 
@@ -44,7 +44,7 @@ export default async function FavoritesPage() {
           Сохранённые города
         </h1>
         <p className="text-brandy/80 text-lg max-w-2xl">
-          Города, которые ты отметил сердечком — собраны в одном месте для
+          Города, которые Вы отметили сердечком — собраны в одном месте для
           сравнения и быстрого доступа.
         </p>
       </section>

@@ -137,7 +137,7 @@ export default async function BlogPostPage({
                 </div>
               </div>
               <p className="text-brandy/80 text-sm mb-5 leading-relaxed">
-                Открой полный профиль города: реальные цены, калькулятор,
+                Откройте полный профиль города: реальные цены, калькулятор,
                 виза, плюсы и минусы, отзывы переехавших.
               </p>
               <Link
