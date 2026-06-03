@@ -8,6 +8,7 @@ import { QuickFacts } from "@/components/city/QuickFacts";
 import { PhotoGallery } from "@/components/city/PhotoGallery";
 import { ProsCons } from "@/components/city/ProsCons";
 import { PricesTable } from "@/components/city/PricesTable";
+import { Calculator } from "@/components/city/Calculator";
 import { DifficultyBars } from "@/components/city/DifficultyBars";
 import { BestPlaces } from "@/components/city/BestPlaces";
 import { VisaSteps } from "@/components/city/VisaSteps";
@@ -75,18 +76,7 @@ export default async function CityPage({
         </section>
       )}
 
-      {/* Калькулятор — будет на этапе B3 */}
-      <section className="max-w-6xl mx-auto px-6 pt-20">
-        <h2 className="font-serif text-3xl md:text-4xl text-cream mb-3">
-          Калькулятор бюджета
-        </h2>
-        <p className="text-brandy/70 mb-8">
-          Считаем месячный минимум: аренда, еда, транспорт и быт.
-        </p>
-        <div className="p-10 rounded-2xl bg-kombu-green/40 border border-dingley/30 text-center">
-          <p className="text-brandy/70">Интерактивный калькулятор появится на следующем шаге.</p>
-        </div>
-      </section>
+      <Calculator prices={prices} cityName={c.name_ru} />
 
       {content && <ProsCons pros={content.pros} cons={content.cons} />}
 
