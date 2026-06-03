@@ -21,6 +21,9 @@ export type City = {
   lat: number | null;
   lng: number | null;
   unsplash_photo_id: string | null;
+  unsplash_url: string | null;
+  unsplash_author_name: string | null;
+  unsplash_author_url: string | null;
 };
 
 export type Price = {

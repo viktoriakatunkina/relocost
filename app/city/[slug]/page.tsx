@@ -69,7 +69,12 @@ export default async function CityPage({
 
       <QuickFacts city={c} />
 
-      <PhotoGallery cityName={c.name_ru} />
+      <PhotoGallery
+        cityName={c.name_ru}
+        unsplashUrl={c.unsplash_url}
+        authorName={c.unsplash_author_name}
+        authorUrl={c.unsplash_author_url}
+      />
 
       {c.intro_text && (
         <section className="max-w-4xl mx-auto px-6 pt-16">

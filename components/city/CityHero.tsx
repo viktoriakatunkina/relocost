@@ -1,5 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { City } from "@/lib/types";
+import { unsplashSrc } from "@/lib/unsplash";
 
 const GRADIENTS: Record<string, string> = {
   tbilisi: "from-rose-900/70 via-pine-tree to-pine-tree",
@@ -17,12 +19,27 @@ const GRADIENTS: Record<string, string> = {
 export function CityHero({ city }: { city: City }) {
   const gradient =
     GRADIENTS[city.slug] ?? "from-kombu-green/60 via-pine-tree to-pine-tree";
+  const photo = unsplashSrc(city.unsplash_url, { w: 1600, q: 80 });
+
   return (
     <section className="relative overflow-hidden">
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${gradient}`}
-        aria-hidden
-      />
+      {photo ? (
+        <Image
+          src={photo}
+          alt={`${city.name_ru} — ${city.country_ru}`}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      ) : (
+        <div
+          className={`absolute inset-0 bg-gradient-to-br ${gradient}`}
+          aria-hidden
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/70 to-pine-tree/30" />
+
       <div className="relative max-w-6xl mx-auto px-6 pt-12 pb-20">
         <Link
           href={`/country/${city.country_slug}`}
@@ -31,24 +48,20 @@ export function CityHero({ city }: { city: City }) {
           ← Все города {city.country_ru === "Россия" ? "России" : `· ${city.country_ru}`}
         </Link>
         <div className="flex items-start gap-6 mb-8">
-          <span className="text-7xl md:text-8xl leading-none" aria-hidden>
+          <span className="text-7xl md:text-8xl leading-none drop-shadow-2xl" aria-hidden>
             {city.flag_emoji}
           </span>
           <div>
             <p className="text-pale-copper uppercase text-sm tracking-wider mb-3">
               {city.country_ru}
             </p>
-            <h1 className="font-serif text-5xl md:text-7xl text-cream leading-[1.05]">
+            <h1 className="font-serif text-5xl md:text-7xl text-cream leading-[1.05] drop-shadow-2xl">
               {city.name_ru}
             </h1>
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          {city.is_foreign ? (
-            <Tag>За рубежом</Tag>
-          ) : (
-            <Tag>Внутренняя миграция</Tag>
-          )}
+          {city.is_foreign ? <Tag>За рубежом</Tag> : <Tag>Внутренняя миграция</Tag>}
           {city.difficulty_score !== null && city.difficulty_score <= 2 && (
             <Tag>Простой переезд</Tag>
           )}
@@ -64,7 +77,7 @@ export function CityHero({ city }: { city: City }) {
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="px-4 py-1.5 rounded-pill border border-dingley/50 text-brandy text-xs uppercase tracking-wider">
+    <span className="px-4 py-1.5 rounded-pill bg-pine-tree/50 backdrop-blur border border-dingley/50 text-brandy text-xs uppercase tracking-wider">
       {children}
     </span>
   );
