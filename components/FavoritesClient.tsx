@@ -14,7 +14,7 @@ export function FavoritesClient({ cities }: { cities: CityWithMinRent[] }) {
       {filtered.length === 0 ? (
         <div className="rounded-2xl bg-kombu-green/40 border border-dingley/30 p-10 text-center">
           <p className="text-brandy/80 text-lg mb-5">
-            Пока нет сохранённых городов. Нажмите на сердечко на карточке
+            Пока нет сохраненных городов. Нажмите на сердечко на карточке
             любого города — и он появится здесь.
           </p>
           <Link

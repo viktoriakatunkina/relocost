@@ -57,7 +57,7 @@ export function StickyBar({
               className="shrink-0 inline-flex items-center gap-1.5 px-4 md:px-5 py-2 rounded-pill bg-pale-copper text-pine-tree text-sm font-semibold border border-pale-copper transition hover:bg-brandy ml-auto"
             >
               <span>🎁</span>
-              <span>Всё {PACKAGES.bundle.price} ₽</span>
+              <span>Все {PACKAGES.bundle.price} ₽</span>
               {bundleSavings > 0 && (
                 <span className="hidden md:inline text-pine-tree/70 text-xs font-medium">
                   −{bundleSavings} ₽

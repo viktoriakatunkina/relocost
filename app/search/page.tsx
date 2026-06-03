@@ -46,11 +46,11 @@ export default async function SearchPage() {
           Поиск
         </p>
         <h1 className="font-serif text-5xl md:text-6xl text-cream leading-[1.05] mb-6">
-          Какой город подойдёт именно Вам?
+          Какой город подойдет именно Вам?
         </h1>
         <p className="text-brandy/80 text-lg max-w-2xl">
           Подберите направление по бюджету, климату и визовому режиму. Все цифры
-          — из реальных цен на жильё и продукты.
+          — из реальных цен на жилье и продукты.
         </p>
       </section>
 

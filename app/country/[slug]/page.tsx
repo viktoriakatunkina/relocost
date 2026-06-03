@@ -119,7 +119,7 @@ export default async function CountryPage({
             Общая сложность переезда
           </h2>
           <p className="text-brandy/70 mb-6">
-            Усреднённая оценка по всем городам страны — от 1 (легко) до 5
+            Усредненная оценка по всем городам страны — от 1 (легко) до 5
             (трудно).
           </p>
           <div className="flex items-center gap-3 max-w-md">

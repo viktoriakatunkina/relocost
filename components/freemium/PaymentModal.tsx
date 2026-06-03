@@ -81,7 +81,7 @@ export function PaymentModal({
         <form onSubmit={onSubmit} className="space-y-4">
           <label className="block">
             <span className="block text-brandy/70 text-sm mb-2">
-              Email для отправки отчёта
+              Email для отправки отчета
             </span>
             <input
               type="email"

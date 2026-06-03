@@ -18,6 +18,7 @@ html, body {
   background: var(--pine-tree);
   color: var(--white);
   font-family: var(--font-manrope), system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
 }
 
 h1, h2, h3, .font-serif {

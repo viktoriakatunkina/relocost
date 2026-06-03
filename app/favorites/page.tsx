@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "Сохранённые города — Relocost",
+  title: "Сохраненные города — Relocost",
   description: "Города, которые Вы добавили в избранное для сравнения и подробного изучения.",
   robots: { index: false, follow: false },
 };
@@ -41,7 +41,7 @@ export default async function FavoritesPage() {
           Избранное
         </p>
         <h1 className="font-serif text-5xl md:text-6xl text-cream leading-[1.05] mb-6">
-          Сохранённые города
+          Сохраненные города
         </h1>
         <p className="text-brandy/80 text-lg max-w-2xl">
           Города, которые Вы отметили сердечком — собраны в одном месте для

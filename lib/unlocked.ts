@@ -11,7 +11,7 @@ export const PACKAGES: Record<
   places: { label: "Лучшие места", short: "Места", price: 79, emoji: "📍" },
   guide: { label: "Гайд по жизни", short: "Гайд", price: 149, emoji: "🧭" },
   budget: { label: "Точный бюджет", short: "Бюджет", price: 199, emoji: "📊" },
-  bundle: { label: "Всё вместе", short: "Всё", price: 299, emoji: "🎁" },
+  bundle: { label: "Все вместе", short: "Все", price: 299, emoji: "🎁" },
 };
 
 export const PACKAGE_DESCRIPTIONS: Record<PackageType, string> = {

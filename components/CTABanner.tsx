@@ -9,7 +9,7 @@ export function CTABanner() {
         </h2>
         <p className="text-brandy/90 text-lg md:text-xl max-w-2xl mx-auto mb-10">
           Выберите город — посчитаем сколько денег понадобится в первый месяц
-          и что ждёт по визе и быту.
+          и что ждет по визе и быту.
         </p>
         <Link
           href="#popular"

@@ -5,7 +5,7 @@ export function QuickFacts({ city }: { city: City }) {
     { label: "Климат", value: city.climate },
     { label: "Язык", value: city.language },
     { label: "Валюта", value: city.currency },
-    { label: "Перелёт из Москвы", value: city.flight_from_moscow },
+    { label: "Перелет из Москвы", value: city.flight_from_moscow },
   ].filter((f) => f.value);
 
   return (

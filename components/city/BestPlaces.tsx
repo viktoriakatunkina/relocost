@@ -66,7 +66,7 @@ export function BestPlaces({
             <LockedSection
               slug={slug}
               pkg="places"
-              hint={`Ещё ${locked.length} проверенных мест: рестораны, рынки, коворкинги, скрытые районы.`}
+              hint={`Еще ${locked.length} проверенных мест: рестораны, рынки, коворкинги, скрытые районы.`}
             >
               <div className="grid md:grid-cols-2 gap-5">
                 {locked.map((p) => (

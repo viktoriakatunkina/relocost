@@ -69,7 +69,7 @@ export function VisaSteps({
             <LockedSection
               slug={slug}
               pkg="guide"
-              hint={`Ещё ${locked.length} шага: открытие счёта, аренда с регистрацией, путь к ВНЖ.`}
+              hint={`Еще ${locked.length} шага: открытие счета, аренда с регистрацией, путь к ВНЖ.`}
             >
               <ol className="space-y-4">
                 {locked.map((s, i) => (

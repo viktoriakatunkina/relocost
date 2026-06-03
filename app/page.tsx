@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getAllCitiesForSearch, getPopularCities } from "@/lib/cities";
 import { getPublishedPosts } from "@/lib/blog";
 import { CityCard } from "@/components/CityCard";
@@ -32,12 +33,20 @@ export default async function HomePage() {
   return (
     <>
       <SiteSchemas />
-      <section className="relative min-h-[88vh] flex flex-col justify-center px-6 py-20 overflow-hidden">
+      <section className="relative isolate min-h-[88vh] flex flex-col justify-center px-6 py-20 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2400&q=70"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover -z-20 opacity-60"
+        />
         <div
-          className="absolute inset-0 -z-10 opacity-70"
+          className="absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(ellipse at top, rgba(106,120,77,0.35) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(196,134,109,0.18) 0%, transparent 50%)",
+              "linear-gradient(to bottom, rgba(32,40,8,0.55) 0%, rgba(32,40,8,0.75) 60%, rgba(32,40,8,0.95) 100%), radial-gradient(ellipse at top, rgba(106,120,77,0.35) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(196,134,109,0.22) 0%, transparent 50%)",
           }}
           aria-hidden
         />

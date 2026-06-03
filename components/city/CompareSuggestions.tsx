@@ -8,7 +8,7 @@ export function CompareSuggestions({
   current: City;
   candidates: CityWithMinRent[];
 }) {
-  // Берём первые 4 похожих города и собираем алфавитные canonical-пары.
+  // Берем первые 4 похожих города и собираем алфавитные canonical-пары.
   const pairs = candidates.slice(0, 4).map((c) => {
     const [a, b] = [current.slug, c.slug].sort();
     return {
