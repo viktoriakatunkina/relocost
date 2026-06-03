@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import type { Price, PriceCategory } from "@/lib/types";
 import { formatRub } from "@/lib/cities";
+import { PACKAGES, isUnlocked, useUnlocked } from "@/lib/unlocked";
+import { PaymentModal } from "@/components/freemium/PaymentModal";
 
 type Lifestyle = "econom" | "standard" | "comfort";
 
@@ -172,9 +174,11 @@ function lineMinMax(
 }
 
 export function Calculator({
+  slug,
   prices,
   cityName,
 }: {
+  slug: string;
   prices: Record<PriceCategory, Price[]>;
   cityName: string;
 }) {
@@ -183,6 +187,10 @@ export function Calculator({
     () => lineMinMax(prices, lifestyle),
     [prices, lifestyle],
   );
+  const unlocked = useUnlocked(slug);
+  const opened = isUnlocked(unlocked, "budget");
+  const [payOpen, setPayOpen] = useState(false);
+  const budget = PACKAGES.budget;
 
   return (
     <section className="max-w-6xl mx-auto px-6 pt-20">
@@ -220,36 +228,71 @@ export function Calculator({
         })}
       </div>
 
-      <div className="rounded-2xl bg-kombu-green/40 border border-dingley/30 p-6 md:p-8">
-        <ul className="space-y-3 mb-6">
-          {result.lines.map((l) => (
-            <li
-              key={l.category}
-              className="flex items-center justify-between gap-3 border-b border-dingley/20 pb-3 last:border-0 last:pb-0"
-            >
-              <span className="text-brandy/90">{l.label}</span>
-              <span className="text-cream tabular-nums whitespace-nowrap">
-                {formatRub(l.min)} – {formatRub(l.max)}
-              </span>
-            </li>
-          ))}
-        </ul>
+      <div className="relative rounded-2xl bg-kombu-green/40 border border-dingley/30 p-6 md:p-8 overflow-hidden">
+        <div
+          style={!opened ? { filter: "blur(6px)" } : undefined}
+          className={!opened ? "pointer-events-none select-none" : ""}
+          aria-hidden={!opened}
+        >
+          <ul className="space-y-3 mb-6">
+            {result.lines.map((l) => (
+              <li
+                key={l.category}
+                className="flex items-center justify-between gap-3 border-b border-dingley/20 pb-3 last:border-0 last:pb-0"
+              >
+                <span className="text-brandy/90">{l.label}</span>
+                <span className="text-cream tabular-nums whitespace-nowrap">
+                  {formatRub(l.min)} – {formatRub(l.max)}
+                </span>
+              </li>
+            ))}
+          </ul>
 
-        <div className="pt-6 border-t border-dingley/40 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-          <div>
-            <p className="text-brandy/70 text-sm uppercase tracking-wider mb-1">
-              Итого за месяц
-            </p>
-            <p className="font-serif text-4xl md:text-5xl text-cream tabular-nums">
-              {formatRub(result.totalMin)} – {formatRub(result.totalMax)}
+          <div className="pt-6 border-t border-dingley/40 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <p className="text-brandy/70 text-sm uppercase tracking-wider mb-1">
+                Итого за месяц
+              </p>
+              <p className="font-serif text-4xl md:text-5xl text-cream tabular-nums">
+                {formatRub(result.totalMin)} – {formatRub(result.totalMax)}
+              </p>
+            </div>
+            <p className="text-brandy/60 text-sm md:text-right md:max-w-xs">
+              Точный бюджет с медициной, развлечениями и сравнением — в пакете «Точный бюджет».
             </p>
           </div>
-          <p className="text-brandy/60 text-sm md:text-right md:max-w-xs">
-            Базовый расчёт по 4 категориям. Точный бюджет с медициной,
-            развлечениями и сравнением — в пакете «Точный бюджет».
-          </p>
         </div>
+
+        {!opened && (
+          <div className="absolute inset-0 flex items-center justify-center px-4">
+            <div className="max-w-md w-full bg-pine-tree/85 backdrop-blur-md border border-dingley/40 rounded-2xl p-6 md:p-7 text-center shadow-2xl">
+              <div className="text-3xl mb-2" aria-hidden>
+                {budget.emoji}
+              </div>
+              <h3 className="font-serif text-xl text-cream mb-2">
+                Точные цифры — в пакете {budget.label}
+              </h3>
+              <p className="text-brandy/80 text-sm mb-5 leading-relaxed">
+                Разблюренный итог, разбивка по 7 категориям и сравнение с другим
+                городом.
+              </p>
+              <button
+                type="button"
+                onClick={() => setPayOpen(true)}
+                className="inline-block px-6 py-3 rounded-pill bg-pale-copper text-pine-tree font-semibold transition hover:bg-brandy"
+              >
+                Открыть за {budget.price} ₽
+              </button>
+            </div>
+          </div>
+        )}
       </div>
+
+      <PaymentModal
+        slug={slug}
+        pkg={payOpen ? "budget" : null}
+        onClose={() => setPayOpen(false)}
+      />
     </section>
   );
 }

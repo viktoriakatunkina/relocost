@@ -15,6 +15,9 @@ import { VisaSteps } from "@/components/city/VisaSteps";
 import { Reviews } from "@/components/city/Reviews";
 import { CityFAQ } from "@/components/city/CityFAQ";
 import { SimilarCities } from "@/components/city/SimilarCities";
+import { StickyBar } from "@/components/freemium/StickyBar";
+import { UnlockFromUrl } from "@/components/freemium/UnlockFromUrl";
+import { Suspense } from "react";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 86400;
@@ -76,7 +79,7 @@ export default async function CityPage({
         </section>
       )}
 
-      <Calculator prices={prices} cityName={c.name_ru} />
+      <Calculator slug={c.slug} prices={prices} cityName={c.name_ru} />
 
       {content && <ProsCons pros={content.pros} cons={content.cons} />}
 
@@ -84,11 +87,25 @@ export default async function CityPage({
 
       {content && <DifficultyBars breakdown={content.difficulty_breakdown} />}
 
-      {content && <BestPlaces places={content.best_places} />}
+      {content && (
+        <BestPlaces slug={c.slug} places={content.best_places} />
+      )}
 
-      {content && <VisaSteps steps={content.visa_steps} />}
+      {content && (
+        <VisaSteps
+          slug={c.slug}
+          isForeign={c.is_foreign}
+          steps={content.visa_steps}
+        />
+      )}
 
-      {content && <Reviews reviews={content.reviews} />}
+      {content && (
+        <Reviews
+          slug={c.slug}
+          isForeign={c.is_foreign}
+          reviews={content.reviews}
+        />
+      )}
 
       {content && <CityFAQ faq={content.faq} />}
 
@@ -97,6 +114,11 @@ export default async function CityPage({
       <div className="pt-24">
         <Footer />
       </div>
+
+      <StickyBar slug={c.slug} isForeign={c.is_foreign} />
+      <Suspense fallback={null}>
+        <UnlockFromUrl slug={c.slug} />
+      </Suspense>
     </main>
   );
 }
