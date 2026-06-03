@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Relocost palette — раздел 5 ТЗ */
+  --pine-tree: #202808;
+  --kombu-green: #33432B;
+  --dingley: #6A784D;
+  --brandy: #DEC59E;
+  --pale-copper: #C4866D;
+  --white: #F5F0E8;
+  --muted: #8A9A6E;
+  --dim: #5A6A45;
+}
+
+html, body {
+  background: var(--pine-tree);
+  color: var(--white);
+  font-family: var(--font-manrope), system-ui, -apple-system, sans-serif;
+}
+
+h1, h2, h3, .font-serif {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
