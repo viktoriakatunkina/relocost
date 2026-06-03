@@ -19,6 +19,11 @@ export function CitySummary({
     ? content?.visa_steps?.[0]?.title ?? "Зависит от страны — см. раздел «Виза»"
     : "Не нужна — переезд внутри России";
 
+  const DIFFICULTY = ["", "Легкий", "Средний", "Средний", "Сложный", "Сложный"];
+  const difficultyValue = city.difficulty_score
+    ? DIFFICULTY[Math.min(city.difficulty_score, 5)] || "—"
+    : "—";
+
   const tiles: Array<{ icon: string; label: string; value: string }> = [
     {
       icon: "💰",
@@ -31,7 +36,7 @@ export function CitySummary({
       value: visaValue,
     },
     { icon: "🗣", label: "Язык", value: city.language ?? "—" },
-    { icon: "🌡", label: "Климат", value: city.climate ?? "—" },
+    { icon: "📊", label: "Сложность переезда", value: difficultyValue },
   ];
 
   return (
