@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Manrope, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
+import { YandexMetrika } from "@/components/YandexMetrika";
 
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
@@ -74,6 +75,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        <YandexMetrika />
       </body>
     </html>
   );
