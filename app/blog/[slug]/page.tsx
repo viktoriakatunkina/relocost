@@ -60,14 +60,30 @@ export default async function BlogPostPage({
     getPublishedPosts(),
   ]);
 
+  const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://relocost.ru").replace(/\/$/, "");
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
     description: post.seo_description ?? undefined,
+    image: `${SITE_URL}/blog/${post.slug}/opengraph-image`,
     datePublished: post.created_at,
-    author: { "@type": "Organization", name: "Relocost" },
-    publisher: { "@type": "Organization", name: "Relocost" },
+    dateModified: post.created_at,
+    author: {
+      "@type": "Organization",
+      name: "Relocost",
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Relocost",
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/apple-icon` },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/blog/${post.slug}`,
+    },
   };
 
   return (

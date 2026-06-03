@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import {
   COUNTRY_CONTENT,
+  COUNTRY_NAMES_GENITIVE,
   COUNTRY_NAMES_RU,
 } from "@/lib/countries-content";
 import {
@@ -82,7 +83,7 @@ export default async function CountryPage({
 
       <section className="max-w-6xl mx-auto px-6 pt-16">
         <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
-          Города {countryName === "Россия" ? "России" : countryName}
+          Города {COUNTRY_NAMES_GENITIVE[params.slug] ?? countryName}
         </h2>
         {cities.length === 0 ? (
           <p className="text-brandy/70">Города пока не добавлены.</p>

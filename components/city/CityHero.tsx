@@ -77,8 +77,11 @@ export function CityHero({ city }: { city: City }) {
                 {city.country_ru}
               </p>
             </div>
-            <h1 className="font-serif text-5xl md:text-8xl text-cream leading-[0.98] drop-shadow-2xl tracking-tight">
-              {city.name_ru}
+            <h1 className="font-serif text-cream leading-[0.98] drop-shadow-2xl tracking-tight">
+              <span className="block text-5xl md:text-8xl">{city.name_ru}</span>
+              <span className="block mt-3 font-sans text-base md:text-lg text-brandy/80 uppercase tracking-[0.2em] font-medium">
+                Стоимость жизни в 2026 году
+              </span>
             </h1>
           </div>
         </div>

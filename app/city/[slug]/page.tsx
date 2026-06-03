@@ -21,6 +21,8 @@ import { UnlockFromUrl } from "@/components/freemium/UnlockFromUrl";
 import { Suspense } from "react";
 import { Reveal } from "@/components/Reveal";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { CitySchema } from "@/components/city/CitySchema";
+import { ProductSchema } from "@/components/city/ProductSchema";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 86400;
@@ -80,6 +82,8 @@ export default async function CityPage({
 
   return (
     <main className="pb-24">
+      <CitySchema city={c} />
+      <ProductSchema city={c} />
       <Breadcrumbs
         items={[
           { name: "Главная", href: "/" },
@@ -97,14 +101,6 @@ export default async function CityPage({
         authorName={c.unsplash_author_name}
         authorUrl={c.unsplash_author_url}
       />
-
-      {c.intro_text && (
-        <section className="max-w-4xl mx-auto px-6 pt-16">
-          <p className="text-brandy/90 text-lg md:text-xl leading-relaxed">
-            {c.intro_text}
-          </p>
-        </section>
-      )}
 
       <Reveal>
         <Calculator slug={c.slug} prices={prices} cityName={c.name_ru} />

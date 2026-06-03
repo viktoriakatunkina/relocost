@@ -19,11 +19,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const countries = Array.from(
     new Set(cityRows.map((c) => c.country_slug).filter(Boolean)),
   );
-  const slugs = cityRows.map((c) => c.slug as string);
+  const slugs = cityRows.map((c) => c.slug as string).sort();
+  // Канонические пары (a < b) — не плодим дубли для крaul-бюджета.
   const comparePairs: string[] = [];
   for (let i = 0; i < slugs.length; i++) {
-    for (let j = 0; j < slugs.length; j++) {
-      if (i === j) continue;
+    for (let j = i + 1; j < slugs.length; j++) {
       comparePairs.push(`${slugs[i]}-vs-${slugs[j]}`);
     }
   }
