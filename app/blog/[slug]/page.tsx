@@ -7,9 +7,12 @@ import {
   getAllPostSlugs,
   getCityForPost,
   getPostBySlug,
+  getPublishedPosts,
 } from "@/lib/blog";
+import { RelatedPosts } from "@/components/blog/RelatedPosts";
 import type { City } from "@/lib/types";
 import { ShareButton } from "@/components/ShareButton";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 3600;
@@ -29,11 +32,13 @@ export async function generateMetadata({
   return {
     title: post.seo_title ?? post.title,
     description: post.seo_description ?? undefined,
+    alternates: { canonical: `/blog/${params.slug}` },
     openGraph: {
       title: post.title,
       description: post.seo_description ?? undefined,
       type: "article",
       publishedTime: post.created_at,
+      url: `/blog/${params.slug}`,
     },
     twitter: {
       card: "summary_large_image",
@@ -50,7 +55,10 @@ export default async function BlogPostPage({
 }) {
   const post = await getPostBySlug(params.slug);
   if (!post) notFound();
-  const city = (await getCityForPost(post.city_id)) as City | null;
+  const [city, allPosts] = await Promise.all([
+    getCityForPost(post.city_id) as Promise<City | null>,
+    getPublishedPosts(),
+  ]);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -67,6 +75,13 @@ export default async function BlogPostPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <Breadcrumbs
+        items={[
+          { name: "Главная", href: "/" },
+          { name: "Блог", href: "/blog" },
+          { name: post.title },
+        ]}
       />
       <section
         className={`relative bg-gradient-to-br ${coverGradient(post.slug)} overflow-hidden`}
@@ -135,6 +150,8 @@ export default async function BlogPostPage({
           </aside>
         )}
       </div>
+
+      <RelatedPosts current={post} all={allPosts} />
 
       <div className="pt-24">
         <Footer />

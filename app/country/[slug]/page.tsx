@@ -9,7 +9,9 @@ import {
   getCountryMeta,
 } from "@/lib/countries";
 import { CountryHero } from "@/components/country/CountryHero";
+import { CountryFAQ } from "@/components/country/CountryFAQ";
 import { CityCard } from "@/components/CityCard";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 86400;
@@ -29,6 +31,13 @@ export async function generateMetadata({
   return {
     title: `Переезд в ${name} в 2026 году — города, цены, виза | Relocost`,
     description: `Сколько стоит переехать в ${name}? Цены, города, визы для россиян, опыт переехавших. Калькулятор бюджета по каждому городу.`,
+    alternates: { canonical: `/country/${params.slug}` },
+    openGraph: {
+      title: `Переезд в ${name} в 2026 году — города, цены, виза`,
+      description: `Сколько стоит переехать в ${name}? Цены, города, визы для россиян.`,
+      type: "website",
+      url: `/country/${params.slug}`,
+    },
   };
 }
 
@@ -50,6 +59,12 @@ export default async function CountryPage({
 
   return (
     <main className="pb-24">
+      <Breadcrumbs
+        items={[
+          { name: "Главная", href: "/" },
+          { name: countryName },
+        ]}
+      />
       <CountryHero
         countryRu={countryName}
         flagEmoji={meta.flag_emoji}
@@ -128,6 +143,8 @@ export default async function CountryPage({
           </div>
         </section>
       )}
+
+      {content && <CountryFAQ countryName={countryName} content={content} />}
 
       <div className="pt-24">
         <Footer />

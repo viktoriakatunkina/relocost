@@ -6,7 +6,19 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { CTABanner } from "@/components/CTABanner";
 import { BlogPreview } from "@/components/BlogPreview";
 import { Reveal } from "@/components/Reveal";
+import { SiteSchemas } from "@/components/SiteSchemas";
 import { Footer } from "@/components/Footer";
+
+export const metadata = {
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Relocost — калькулятор стоимости жизни для переезжающих",
+    description:
+      "Считаем реальный бюджет на жизнь в любом городе. Цены, отзывы и гайды по 10+ направлениям.",
+    type: "website" as const,
+    url: "/",
+  },
+};
 
 export const revalidate = 86400;
 
@@ -19,6 +31,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <SiteSchemas />
       <section className="relative min-h-[88vh] flex flex-col justify-center px-6 py-20 overflow-hidden">
         <div
           className="absolute inset-0 -z-10 opacity-70"

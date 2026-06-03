@@ -9,6 +9,10 @@ export const metadata = {
   title: "Поиск города для переезда — Россия и зарубежом | Relocost",
   description:
     "Найди город по бюджету, климату и визе для россиян. 10+ направлений с реальными ценами и сложностью переезда.",
+  // Страница с интерактивными фильтрами — не индексируем, чтобы Google не плодил
+  // thin-content варианты с параметрами URL.
+  robots: { index: false, follow: true },
+  alternates: { canonical: "/search" },
 };
 
 async function getAllCitiesWithRent(): Promise<CityWithMinRent[]> {

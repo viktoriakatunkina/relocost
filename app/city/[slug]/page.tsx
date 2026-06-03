@@ -15,10 +15,12 @@ import { VisaSteps } from "@/components/city/VisaSteps";
 import { Reviews } from "@/components/city/Reviews";
 import { CityFAQ } from "@/components/city/CityFAQ";
 import { SimilarCities } from "@/components/city/SimilarCities";
+import { CompareSuggestions } from "@/components/city/CompareSuggestions";
 import { StickyBar } from "@/components/freemium/StickyBar";
 import { UnlockFromUrl } from "@/components/freemium/UnlockFromUrl";
 import { Suspense } from "react";
 import { Reveal } from "@/components/Reveal";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 86400;
@@ -42,10 +44,12 @@ export async function generateMetadata({
   return {
     title: city.seo_title,
     description: city.seo_description,
+    alternates: { canonical: `/city/${params.slug}` },
     openGraph: {
       title: city.seo_title ?? undefined,
       description: city.seo_description ?? undefined,
       type: "article",
+      url: `/city/${params.slug}`,
     },
     twitter: {
       card: "summary_large_image",
@@ -76,6 +80,13 @@ export default async function CityPage({
 
   return (
     <main className="pb-24">
+      <Breadcrumbs
+        items={[
+          { name: "Главная", href: "/" },
+          { name: c.country_ru, href: `/country/${c.country_slug}` },
+          { name: c.name_ru },
+        ]}
+      />
       <CityHero city={c} />
 
       <QuickFacts city={c} />
@@ -149,6 +160,10 @@ export default async function CityPage({
 
       <Reveal>
         <SimilarCities cities={similar} isForeign={c.is_foreign} />
+      </Reveal>
+
+      <Reveal>
+        <CompareSuggestions current={c} candidates={similar} />
       </Reveal>
 
       <div className="pt-24">

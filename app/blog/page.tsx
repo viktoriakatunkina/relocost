@@ -8,6 +8,14 @@ export const metadata = {
   title: "Блог Relocost — гайды по переезду, цены, визы и сравнения городов",
   description:
     "Пошаговые гайды релокации, сравнения городов и подборки направлений. Только проверенные цифры и опыт переехавших.",
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "Блог Relocost — гайды по переезду",
+    description:
+      "Пошаговые гайды релокации, сравнения городов и подборки направлений.",
+    type: "website" as const,
+    url: "/blog",
+  },
 };
 
 export default async function BlogPage() {
