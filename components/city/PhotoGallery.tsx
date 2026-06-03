@@ -1,15 +1,6 @@
 import Image from "next/image";
 import { unsplashSrc, unsplashAuthorUrlWithUtm } from "@/lib/unsplash";
 
-const ACCENTS = [
-  ["#33432B", "#6A784D"],
-  ["#202808", "#33432B"],
-  ["#C4866D", "#33432B"],
-  ["#6A784D", "#DEC59E"],
-  ["#33432B", "#202808"],
-  ["#5A6A45", "#33432B"],
-];
-
 export function PhotoGallery({
   cityName,
   unsplashUrl,
@@ -21,43 +12,69 @@ export function PhotoGallery({
   authorName: string | null;
   authorUrl: string | null;
 }) {
-  const main = unsplashSrc(unsplashUrl, { w: 900, q: 80 });
+  const main = unsplashSrc(unsplashUrl, { w: 1800, q: 85 });
   const credited = unsplashAuthorUrlWithUtm(authorUrl);
 
+  if (!main) return null;
+
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-12">
-      <h2 className="font-serif text-3xl text-cream mb-6">{cityName} в кадрах</h2>
-      <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory">
-        {main && (
-          <div className="snap-start shrink-0 w-72 md:w-80 aspect-[4/3] rounded-2xl overflow-hidden relative border border-dingley/30">
-            <Image
-              src={main}
-              alt={`${cityName} — главное фото`}
-              fill
-              sizes="(max-width: 768px) 80vw, 320px"
-              className="object-cover"
-            />
-          </div>
+    <section className="max-w-6xl mx-auto px-6 pt-16">
+      <div className="flex items-end justify-between mb-6 gap-4">
+        <div>
+          <span className="eyebrow">Город в кадрах</span>
+          <h2 className="font-serif text-3xl md:text-4xl text-cream mt-4">
+            {cityName} вблизи
+          </h2>
+        </div>
+        {authorName && (
+          <p className="text-brandy/55 text-xs hidden md:block shrink-0">
+            Фото:{" "}
+            {credited ? (
+              <a
+                href={credited}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-copper underline-offset-2 hover:underline"
+              >
+                {authorName}
+              </a>
+            ) : (
+              authorName
+            )}{" "}
+            ·{" "}
+            <a
+              href="https://unsplash.com/?utm_source=relocost&utm_medium=referral"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-copper underline-offset-2 hover:underline"
+            >
+              Unsplash
+            </a>
+          </p>
         )}
-        {ACCENTS.map(([a, b], i) => (
-          <div
-            key={i}
-            className="snap-start shrink-0 w-72 md:w-80 aspect-[4/3] rounded-2xl border border-dingley/30"
-            style={{ background: `linear-gradient(135deg, ${a} 0%, ${b} 100%)` }}
-            aria-label="Атмосферный фон"
-          />
-        ))}
       </div>
 
-      {main && authorName && (
-        <p className="text-brandy/50 text-xs mt-3">
+      <div className="relative aspect-[16/9] md:aspect-[21/9] rounded-3xl overflow-hidden border hairline group">
+        <Image
+          src={main}
+          alt={`${cityName} — главное фото`}
+          fill
+          sizes="(max-width: 1280px) 100vw, 1200px"
+          className="object-cover transition duration-1000 group-hover:scale-[1.03]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-pine-tree/60 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 ring-1 ring-inset ring-cream/5 rounded-3xl pointer-events-none" />
+      </div>
+
+      {authorName && (
+        <p className="text-brandy/55 text-xs mt-4 md:hidden">
           Фото:{" "}
           {credited ? (
             <a
               href={credited}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-pale-copper underline-offset-2 hover:underline"
+              className="hover:text-copper underline-offset-2 hover:underline"
             >
               {authorName}
             </a>
@@ -69,7 +86,7 @@ export function PhotoGallery({
             href="https://unsplash.com/?utm_source=relocost&utm_medium=referral"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-pale-copper underline-offset-2 hover:underline"
+            className="hover:text-copper underline-offset-2 hover:underline"
           >
             Unsplash
           </a>
