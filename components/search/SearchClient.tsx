@@ -43,6 +43,9 @@ const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
   "tel-aviv": "middle_east",
   "abu-dhabi": "middle_east",
   bukhara: "cis",
+  baku: "cis",
+  samui: "asia",
+  bodrum: "europe",
 };
 
 const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
@@ -78,6 +81,9 @@ const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
   "abu-dhabi": "tropical",
   "tel-aviv": "temperate",
   bukhara: "temperate",
+  baku: "temperate",
+  samui: "tropical",
+  bodrum: "temperate",
 };
 
 // Города без визы для россиян (безвиз или visa-on-arrival ≥ 30 дней)
@@ -108,6 +114,9 @@ const VISA_FREE_FOR_RU = new Set([
   "penang",
   "abu-dhabi",
   "bukhara",
+  "baku",
+  "samui",
+  "bodrum",
 ]);
 
 const REGION_OPTIONS: [Region, string][] = [
