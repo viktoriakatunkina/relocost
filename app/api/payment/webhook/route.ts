@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getPayment } from "@/lib/yokassa";
+import { ensurePurchasePaid } from "@/lib/purchase-fallback";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -45,11 +46,10 @@ export async function POST(req: Request) {
   const db = supabaseAdmin();
 
   if (payment.status === "succeeded" && payment.paid) {
-    await db
-      .from("purchases")
-      .update({ status: "paid" })
-      .eq("id", purchaseId)
-      .neq("status", "paid");
+    // Помечаем покупку оплаченной; если записи нет — восстанавливаем её
+    // (защита от потери оплаты). Идемпотентно: повторный webhook по paid-заказу
+    // не создаёт дубль и не возвращает ошибку.
+    await ensurePurchasePaid(db, payment, purchaseId);
   } else if (payment.status === "canceled") {
     await db
       .from("purchases")

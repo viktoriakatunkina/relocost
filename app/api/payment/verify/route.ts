@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getPayment, isYokassaConfigured } from "@/lib/yokassa";
+import { ensurePurchasePaid } from "@/lib/purchase-fallback";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -40,14 +41,12 @@ export async function GET(req: Request) {
     const pkg = payment.metadata?.pkg;
     const purchaseId = payment.metadata?.purchase_id;
 
-    // Подстраховка на случай, если webhook еще не дошел: помечаем покупку оплаченной.
+    // Подстраховка на случай, если webhook еще не дошел: помечаем покупку
+    // оплаченной. Если записи нет — восстанавливаем её из платежа (защита от
+    // потери оплаты). Идемпотентно и не падает.
     if (purchaseId) {
       const db = supabaseAdmin();
-      await db
-        .from("purchases")
-        .update({ status: "paid" })
-        .eq("id", purchaseId)
-        .neq("status", "paid");
+      await ensurePurchasePaid(db, payment, purchaseId);
     }
 
     return NextResponse.json({ ok: true, slug, pkg, status: payment.status });
