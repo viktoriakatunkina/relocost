@@ -36,6 +36,9 @@ const PREP = {
   hanoi: "в Ханое", larnaca: "в Ларнаке", heraklion: "в Ираклионе", alicante: "в Аликанте",
   fethiye: "в Фетхие", tivat: "в Тивате",
   doha: "в Дохе", cebu: "на Себу", split: "в Сплите", thessaloniki: "в Салониках", aktau: "в Актау",
+  muscat: "в Маскате", manama: "в Манаме", "phnom-penh": "в Пномпене", sanya: "в Санье",
+  seoul: "в Сеуле", sharjah: "в Шардже", madrid: "в Мадриде", jakarta: "в Джакарте",
+  "phu-quoc": "на Фукуоке", krabi: "в Краби",
 };
 
 const { data: cities, error } = await sb

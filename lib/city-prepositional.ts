@@ -70,6 +70,16 @@ const PREP: Record<string, string> = {
   split: "в Сплите",
   thessaloniki: "в Салониках",
   aktau: "в Актау",
+  muscat: "в Маскате",
+  manama: "в Манаме",
+  "phnom-penh": "в Пномпене",
+  sanya: "в Санье",
+  seoul: "в Сеуле",
+  sharjah: "в Шардже",
+  madrid: "в Мадриде",
+  jakarta: "в Джакарте",
+  "phu-quoc": "на Фукуоке",
+  krabi: "в Краби",
 };
 
 // «в Тбилиси» / «на Бали». Фоллбэк для незаполненных слагов — «в <Название>».

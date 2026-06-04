@@ -61,6 +61,16 @@ const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
   split: "europe",
   thessaloniki: "europe",
   aktau: "cis",
+  muscat: "middle_east",
+  manama: "middle_east",
+  "phnom-penh": "asia",
+  sanya: "asia",
+  seoul: "asia",
+  sharjah: "middle_east",
+  madrid: "europe",
+  jakarta: "asia",
+  "phu-quoc": "asia",
+  krabi: "asia",
 };
 
 const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
@@ -114,6 +124,16 @@ const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
   split: "temperate",
   thessaloniki: "temperate",
   aktau: "temperate",
+  muscat: "tropical",
+  manama: "tropical",
+  "phnom-penh": "tropical",
+  sanya: "tropical",
+  seoul: "temperate",
+  sharjah: "tropical",
+  madrid: "temperate",
+  jakarta: "tropical",
+  "phu-quoc": "tropical",
+  krabi: "tropical",
 };
 
 // Города без визы для россиян (безвиз или visa-on-arrival ≥ 30 дней)
@@ -159,6 +179,13 @@ const VISA_FREE_FOR_RU = new Set([
   "doha",
   "cebu",
   "aktau",
+  "phnom-penh",
+  "sanya",
+  "seoul",
+  "sharjah",
+  "jakarta",
+  "phu-quoc",
+  "krabi",
 ]);
 
 const REGION_OPTIONS: [Region, string][] = [
