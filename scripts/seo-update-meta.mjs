@@ -1,7 +1,7 @@
 // Обновляет seo_title / seo_description всех городов под топ-запросы:
 // «стоимость жизни в X 2026», «виза в X для россиян», «цены», «отзывы».
 // Шаблон раздельный для зарубежных и российских городов. Факты не выдумываем —
-// только обобщённые формулировки + название города.
+// только обобщенные формулировки + название города.
 // Запуск: node scripts/seo-update-meta.mjs
 import { createClient } from "@supabase/supabase-js";
 import fs from "node:fs";
@@ -32,6 +32,9 @@ const PREP = {
   malaga: "в Малаге", samarkand: "в Самарканде",
   pattaya: "в Паттайе", penang: "в Пенанге", "abu-dhabi": "в Абу-Даби",
   bukhara: "в Бухаре", baku: "в Баку", samui: "на Самуи", bodrum: "в Бодруме",
+  tirana: "в Тиране", chisinau: "в Кишиневе", dushanbe: "в Душанбе", colombo: "в Коломбо",
+  hanoi: "в Ханое", larnaca: "в Ларнаке", heraklion: "в Ираклионе", alicante: "в Аликанте",
+  fethiye: "в Фетхие", tivat: "в Тивате",
 };
 
 const { data: cities, error } = await sb

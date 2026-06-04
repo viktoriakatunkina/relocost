@@ -46,6 +46,16 @@ const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
   baku: "cis",
   samui: "asia",
   bodrum: "europe",
+  tirana: "europe",
+  chisinau: "europe",
+  dushanbe: "cis",
+  colombo: "asia",
+  hanoi: "asia",
+  larnaca: "europe",
+  heraklion: "europe",
+  alicante: "europe",
+  fethiye: "europe",
+  tivat: "europe",
 };
 
 const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
@@ -84,6 +94,16 @@ const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
   baku: "temperate",
   samui: "tropical",
   bodrum: "temperate",
+  tirana: "temperate",
+  chisinau: "temperate",
+  dushanbe: "temperate",
+  colombo: "tropical",
+  hanoi: "tropical",
+  larnaca: "tropical",
+  heraklion: "temperate",
+  alicante: "temperate",
+  fethiye: "temperate",
+  tivat: "temperate",
 };
 
 // Города без визы для россиян (безвиз или visa-on-arrival ≥ 30 дней)
@@ -117,6 +137,15 @@ const VISA_FREE_FOR_RU = new Set([
   "baku",
   "samui",
   "bodrum",
+  "tirana",
+  "chisinau",
+  "dushanbe",
+  "colombo",
+  "hanoi",
+  "fethiye",
+  "tivat",
+  "budva",
+  "podgorica",
 ]);
 
 const REGION_OPTIONS: [Region, string][] = [
