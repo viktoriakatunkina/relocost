@@ -5,7 +5,7 @@ import { randomUUID } from "crypto";
  * Документация: https://yookassa.ru/developers/api
  *
  * Самозанятый (НПД): фискальные чеки ЮKassa формирует и отправляет в ФНС
- * автоматически на стороне сервиса, поэтому объект `receipt` в запросе НЕ передаём.
+ * автоматически на стороне сервиса, поэтому объект `receipt` в запросе НЕ передаем.
  */
 
 const API_BASE = "https://api.yookassa.ru/v3";
@@ -36,6 +36,39 @@ export function isYokassaConfigured(): boolean {
   return Boolean(process.env.YOKASSA_SHOP_ID && process.env.YOKASSA_SECRET_KEY);
 }
 
+/**
+ * Слать ли в платеж чек НПД («Чеки для самозанятых»).
+ * ВКЛЮЧАТЬ только после активации фискализации на стороне ЮKassa
+ * (иначе платежи будут отклоняться). Управляется env YOKASSA_RECEIPTS=1.
+ */
+export function receiptsEnabled(): boolean {
+  return process.env.YOKASSA_RECEIPTS === "1";
+}
+
+/**
+ * Чек НПД для самозанятого: одна позиция-услуга, НДС не облагается (vat_code 1).
+ * ЮKassa сама формирует чек в «Мой налог» и отправляет покупателю на email.
+ */
+export function buildNpdReceipt(opts: {
+  email: string;
+  description: string;
+  amountRub: number;
+}): Record<string, unknown> {
+  return {
+    customer: { email: opts.email },
+    items: [
+      {
+        description: opts.description.slice(0, 128),
+        quantity: "1.00",
+        amount: { value: formatAmount(opts.amountRub), currency: "RUB" },
+        vat_code: 1, // НДС не облагается (самозанятый)
+        payment_subject: "service",
+        payment_mode: "full_payment",
+      },
+    ],
+  };
+}
+
 function authHeader(): string {
   const shopId = process.env.YOKASSA_SHOP_ID;
   const secretKey = process.env.YOKASSA_SECRET_KEY;
@@ -61,7 +94,7 @@ export type YooPayment = {
 };
 
 /**
- * Создаёт платёж в ЮKassa с подтверждением через redirect.
+ * Создает платеж в ЮKassa с подтверждением через redirect.
  * Возвращает объект платежа с `confirmation.confirmation_url` для перенаправления.
  */
 export async function createPayment(opts: {
@@ -71,6 +104,8 @@ export async function createPayment(opts: {
   metadata: Record<string, string>;
   /** Email покупателя — для уведомления и чека НПД на стороне ЮKassa. */
   customerEmail?: string;
+  /** Чек НПД. Передавать ТОЛЬКО при включенной фискализации (receiptsEnabled). */
+  receipt?: Record<string, unknown>;
 }): Promise<YooPayment> {
   const body: Record<string, unknown> = {
     amount: { value: formatAmount(opts.amountRub), currency: "RUB" },
@@ -79,6 +114,9 @@ export async function createPayment(opts: {
     description: opts.description.slice(0, 128),
     metadata: opts.metadata,
   };
+  if (opts.receipt) {
+    body.receipt = opts.receipt;
+  }
 
   const res = await fetch(`${API_BASE}/payments`, {
     method: "POST",

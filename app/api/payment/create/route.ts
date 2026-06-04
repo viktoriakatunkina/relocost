@@ -6,6 +6,8 @@ import {
   isValidPackage,
   PACKAGE_PRICES,
   PACKAGE_LABELS,
+  receiptsEnabled,
+  buildNpdReceipt,
 } from "@/lib/yokassa";
 
 export const runtime = "nodejs";
@@ -17,7 +19,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * POST /api/payment/create
  * Тело: { slug: string, pkg: PackageType, email: string }
  *
- * Создаёт запись purchases (status=pending) и платёж в ЮKassa.
+ * Создает запись purchases (status=pending) и платеж в ЮKassa.
  * Возвращает { confirmation_url } для редиректа на оплату.
  * Если ключи ЮKassa не настроены — возвращает { demo: true }, фронт работает в demo-режиме.
  */
@@ -48,7 +50,7 @@ export async function POST(req: Request) {
 
   const db = supabaseAdmin();
 
-  // Город ищем на сервере — берём его id, название и признак зарубежного.
+  // Город ищем на сервере — берем его id, название и признак зарубежного.
   const { data: city, error: cityErr } = await db
     .from("cities")
     .select("id, name_ru, is_foreign")
@@ -92,13 +94,19 @@ export async function POST(req: Request) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://relocost.ru";
   const returnUrl = `${siteUrl}/city/${slug}?unlocked=${pkg}`;
 
+  const description = `Relocost: «${PACKAGE_LABELS[pkg]}» — ${city.name_ru}`;
+
   try {
     const payment = await createPayment({
       amountRub: amount,
-      description: `Relocost: «${PACKAGE_LABELS[pkg]}» — ${city.name_ru}`,
+      description,
       returnUrl,
       customerEmail: email,
       metadata: { purchase_id: purchase.id, slug, pkg },
+      // Чек НПД — только при включенной фискализации на стороне ЮKassa.
+      receipt: receiptsEnabled()
+        ? buildNpdReceipt({ email, description, amountRub: amount })
+        : undefined,
     });
 
     const url = payment.confirmation?.confirmation_url;

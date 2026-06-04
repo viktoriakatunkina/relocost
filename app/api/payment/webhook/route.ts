@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
  * POST /api/payment/webhook
  * Принимает уведомления ЮKassa (https://yookassa.ru/developers/using-api/webhooks).
  *
- * ЮKassa шлёт { event, object } без подписи, поэтому достоверность проверяем
+ * ЮKassa шлет { event, object } без подписи, поэтому достоверность проверяем
  * повторным запросом платежа по id (getPayment) — доверяем только статусу из API.
  *
  * Адрес webhook'а нужно зарегистрировать в ЛК ЮKassa (или через API) на
