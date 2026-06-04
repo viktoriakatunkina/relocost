@@ -184,7 +184,7 @@ export default async function BlogPostPage({
           <div className="mt-12 pt-6 border-t hairline text-sm text-brandy/65 space-y-2">
             <p>
               <strong className="text-cream">Как мы считаем.</strong> Цены — агрегированные
-              оценки из открытых источников (Numbeo, Expatistan, курс ЦБ РФ), приведённые к
+              оценки из открытых источников (Numbeo, Expatistan, курс ЦБ РФ), приведенные к
               рублям и обновляемые ежеквартально. Подробнее — на странице{" "}
               <Link href="/about" className="text-copper hover:underline">
                 О проекте

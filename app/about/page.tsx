@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 export const metadata = {
   title: "О проекте Relocost — как мы считаем стоимость жизни",
   description:
-    "Кто делает Relocost, откуда берём цены по городам, как часто обновляем данные и почему цифрам можно доверять. Методология и источники.",
+    "Кто делает Relocost, откуда берем цены по городам, как часто обновляем данные и почему цифрам можно доверять. Методология и источники.",
   alternates: { canonical: "/about" },
 };
 
@@ -14,7 +14,7 @@ export const revalidate = 86400;
 const SOURCES = [
   { name: "Numbeo", what: "крупнейшая база цен от пользователей по городам мира" },
   { name: "Expatistan", what: "сравнение стоимости жизни для экспатов" },
-  { name: "ЦБ РФ", what: "официальный курс валют для пересчёта в рубли" },
+  { name: "ЦБ РФ", what: "официальный курс валют для пересчета в рубли" },
   { name: "Локальные источники", what: "объявления аренды, тарифы операторов и транспорта в каждом городе" },
 ];
 
@@ -63,10 +63,10 @@ export default function AboutPage() {
           ))}
         </div>
 
-        <h2 className="font-serif text-3xl text-cream mt-16 mb-4">Откуда мы берём цифры</h2>
+        <h2 className="font-serif text-3xl text-cream mt-16 mb-4">Откуда мы берем цифры</h2>
         <p className="text-brandy/85 leading-relaxed mb-6">
-          Цены — это агрегированные оценки на основе нескольких открытых источников, приведённые
-          к рублям. Мы не выдумываем числа и не берём их «с потолка»:
+          Цены — это агрегированные оценки на основе нескольких открытых источников, приведенные
+          к рублям. Мы не выдумываем числа и не берем их «с потолка»:
         </p>
         <ul className="space-y-3 mb-8">
           {SOURCES.map((s) => (
@@ -85,7 +85,7 @@ export default function AboutPage() {
         <div className="p-6 rounded-2xl border hairline bg-surface">
           <h2 className="font-serif text-2xl text-cream mb-2">Кто делает Relocost</h2>
           <p className="text-brandy/80 leading-relaxed mb-4">
-            Проект ведёт небольшая редакция, которая сама проходила через переезд и знает, какие
+            Проект ведет небольшая редакция, которая сама проходила через переезд и знает, какие
             вопросы возникают на практике. По всем вопросам и предложениям — пишите нам.
           </p>
           <div className="flex flex-wrap gap-3">

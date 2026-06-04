@@ -4,7 +4,7 @@ import { formatRub } from "@/lib/cities";
 
 // Уникальные данные Relocost внутри статьи: реальные базовые цены связанного
 // города из нашей базы + ссылка на полный калькулятор. То, чего нет у конкурентов
-// и что даёт «information gain» для SEO. Рендерится только для статей с city_id.
+// и что дает «information gain» для SEO. Рендерится только для статей с city_id.
 
 const PICKS: { category: PriceCategory; match: string; label: string }[] = [
   { category: "rent", match: "1-комн. квартира на окраине", label: "Аренда 1-комн. (окраина)" },
@@ -65,7 +65,7 @@ export function ArticleCityData({
           href={`/city/${city.slug}`}
           className="shrink-0 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm transition hover:bg-brandy"
         >
-          Полный расчёт для {city.name_ru} →
+          Полный расчет для {city.name_ru} →
         </Link>
       </div>
     </aside>
