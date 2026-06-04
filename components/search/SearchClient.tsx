@@ -56,6 +56,11 @@ const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
   alicante: "europe",
   fethiye: "europe",
   tivat: "europe",
+  doha: "middle_east",
+  cebu: "asia",
+  split: "europe",
+  thessaloniki: "europe",
+  aktau: "cis",
 };
 
 const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
@@ -104,6 +109,11 @@ const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
   alicante: "temperate",
   fethiye: "temperate",
   tivat: "temperate",
+  doha: "tropical",
+  cebu: "tropical",
+  split: "temperate",
+  thessaloniki: "temperate",
+  aktau: "temperate",
 };
 
 // Города без визы для россиян (безвиз или visa-on-arrival ≥ 30 дней)
@@ -146,6 +156,9 @@ const VISA_FREE_FOR_RU = new Set([
   "tivat",
   "budva",
   "podgorica",
+  "doha",
+  "cebu",
+  "aktau",
 ]);
 
 const REGION_OPTIONS: [Region, string][] = [

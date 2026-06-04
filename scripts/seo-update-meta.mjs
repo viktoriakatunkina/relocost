@@ -35,6 +35,7 @@ const PREP = {
   tirana: "в Тиране", chisinau: "в Кишиневе", dushanbe: "в Душанбе", colombo: "в Коломбо",
   hanoi: "в Ханое", larnaca: "в Ларнаке", heraklion: "в Ираклионе", alicante: "в Аликанте",
   fethiye: "в Фетхие", tivat: "в Тивате",
+  doha: "в Дохе", cebu: "на Себу", split: "в Сплите", thessaloniki: "в Салониках", aktau: "в Актау",
 };
 
 const { data: cities, error } = await sb
