@@ -99,3 +99,55 @@ export function useUnlocked(slug: string): PackageType[] {
   }, [slug]);
   return state;
 }
+
+// --- Ожидающий платеж (для серверной проверки после возврата с ЮKassa) ---
+//
+// Перед уходом на оплату сохраняем id платежа в sessionStorage. После возврата
+// VerifyOnReturn сверяет его на сервере (реально ли succeeded) и только тогда
+// разблокирует контент. URL-параметрам больше НЕ доверяем.
+
+const PENDING_KEY = "relocost_pending_payment";
+
+export type PendingPayment = {
+  payment_id: string;
+  slug: string;
+  pkg: PackageType;
+};
+
+export function setPendingPayment(p: PendingPayment) {
+  if (typeof window === "undefined") return;
+  try {
+    window.sessionStorage.setItem(PENDING_KEY, JSON.stringify(p));
+  } catch {
+    /* ignore */
+  }
+}
+
+export function readPendingPayment(): PendingPayment | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.sessionStorage.getItem(PENDING_KEY);
+    if (!raw) return null;
+    const p = JSON.parse(raw) as Partial<PendingPayment>;
+    if (
+      p &&
+      typeof p.payment_id === "string" &&
+      typeof p.slug === "string" &&
+      VALID.includes(p.pkg as PackageType)
+    ) {
+      return p as PendingPayment;
+    }
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
+export function clearPendingPayment() {
+  if (typeof window === "undefined") return;
+  try {
+    window.sessionStorage.removeItem(PENDING_KEY);
+  } catch {
+    /* ignore */
+  }
+}

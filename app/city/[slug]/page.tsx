@@ -18,8 +18,7 @@ import { CityFAQ } from "@/components/city/CityFAQ";
 import { SimilarCities } from "@/components/city/SimilarCities";
 import { CompareSuggestions } from "@/components/city/CompareSuggestions";
 import { StickyBar } from "@/components/freemium/StickyBar";
-import { UnlockFromUrl } from "@/components/freemium/UnlockFromUrl";
-import { Suspense } from "react";
+import { VerifyOnReturn } from "@/components/freemium/VerifyOnReturn";
 import { Reveal } from "@/components/Reveal";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CitySchema } from "@/components/city/CitySchema";
@@ -173,9 +172,7 @@ export default async function CityPage({
       </div>
 
       <StickyBar slug={c.slug} isForeign={c.is_foreign} />
-      <Suspense fallback={null}>
-        <UnlockFromUrl slug={c.slug} />
-      </Suspense>
+      <VerifyOnReturn slug={c.slug} />
     </main>
   );
 }

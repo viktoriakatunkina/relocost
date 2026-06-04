@@ -5,6 +5,7 @@ import {
   PACKAGES,
   PACKAGE_DESCRIPTIONS,
   addUnlocked,
+  setPendingPayment,
   type PackageType,
 } from "@/lib/unlocked";
 
@@ -47,12 +48,12 @@ export function PaymentModal({
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data?.error || "Не удалось создать платеж. Попробуйте ещё раз.");
+        setError(data?.error || "Не удалось создать платеж. Попробуйте еще раз.");
         setSubmitting(false);
         return;
       }
 
-      // Demo-режим: ключи ЮKassa ещё не подключены — открываем локально.
+      // Demo-режим: ключи ЮKassa еще не подключены — открываем локально.
       if (data?.demo) {
         addUnlocked(slug, pkg!);
         setSubmitting(false);
@@ -63,16 +64,20 @@ export function PaymentModal({
         return;
       }
 
-      // Боевой режим: уходим на страницу оплаты ЮKassa.
+      // Боевой режим: запоминаем платеж для серверной проверки после возврата
+      // и уходим на страницу оплаты ЮKassa.
       if (data?.confirmation_url) {
+        if (data?.payment_id) {
+          setPendingPayment({ payment_id: data.payment_id, slug, pkg: pkg! });
+        }
         window.location.href = data.confirmation_url;
         return;
       }
 
-      setError("ЮKassa не вернула ссылку на оплату. Попробуйте ещё раз.");
+      setError("ЮKassa не вернула ссылку на оплату. Попробуйте еще раз.");
       setSubmitting(false);
     } catch {
-      setError("Сеть недоступна. Проверьте подключение и попробуйте ещё раз.");
+      setError("Сеть недоступна. Проверьте подключение и попробуйте еще раз.");
       setSubmitting(false);
     }
   }

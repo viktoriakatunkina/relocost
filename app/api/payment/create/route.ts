@@ -92,7 +92,9 @@ export async function POST(req: Request) {
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://relocost.ru";
-  const returnUrl = `${siteUrl}/city/${slug}?unlocked=${pkg}`;
+  // Возврат на чистый URL: разблокировку решает серверная проверка платежа
+  // (VerifyOnReturn → /api/payment/verify), а не параметр в адресе.
+  const returnUrl = `${siteUrl}/city/${slug}`;
 
   const description = `Relocost: «${PACKAGE_LABELS[pkg]}» — ${city.name_ru}`;
 
