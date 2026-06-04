@@ -39,6 +39,11 @@ const PREP = {
   muscat: "в Маскате", manama: "в Манаме", "phnom-penh": "в Пномпене", sanya: "в Санье",
   seoul: "в Сеуле", sharjah: "в Шардже", madrid: "в Мадриде", jakarta: "в Джакарте",
   "phu-quoc": "на Фукуоке", krabi: "в Краби",
+  hurghada: "в Хургаде", "sharm-el-sheikh": "в Шарм-эль-Шейхе", cairo: "в Каире", marrakesh: "в Марракеше",
+  sousse: "в Сусе", "mexico-city": "в Мехико", "playa-del-carmen": "в Плая-дель-Кармен",
+  "buenos-aires": "в Буэнос-Айресе", "rio-de-janeiro": "в Рио-де-Жанейро", amman: "в Аммане", haifa: "в Хайфе",
+  manila: "в Маниле", kathmandu: "в Катманду", "siem-reap": "в Сием-Реапе", seville: "в Севилье",
+  ankara: "в Анкаре", skopje: "в Скопье", kazan: "в Казани", yekaterinburg: "в Екатеринбурге", gyumri: "в Гюмри",
 };
 
 const { data: cities, error } = await sb

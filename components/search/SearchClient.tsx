@@ -5,7 +5,7 @@ import type { CityWithBudget } from "@/lib/types";
 import { CityCard } from "@/components/CityCard";
 import { formatRub } from "@/lib/cities";
 
-type Region = "all" | "ru" | "cis" | "europe" | "asia" | "middle_east";
+type Region = "all" | "ru" | "cis" | "europe" | "asia" | "middle_east" | "africa" | "americas";
 type Climate = "all" | "tropical" | "temperate" | "cool";
 type Difficulty = "all" | "easy" | "medium" | "hard";
 type Sort = "budget" | "difficulty" | "name" | "popular";
@@ -71,6 +71,26 @@ const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
   jakarta: "asia",
   "phu-quoc": "asia",
   krabi: "asia",
+  hurghada: "africa",
+  "sharm-el-sheikh": "africa",
+  cairo: "africa",
+  marrakesh: "africa",
+  sousse: "africa",
+  "mexico-city": "americas",
+  "playa-del-carmen": "americas",
+  "buenos-aires": "americas",
+  "rio-de-janeiro": "americas",
+  amman: "middle_east",
+  haifa: "middle_east",
+  manila: "asia",
+  kathmandu: "asia",
+  "siem-reap": "asia",
+  seville: "europe",
+  ankara: "europe",
+  skopje: "europe",
+  kazan: "ru",
+  yekaterinburg: "ru",
+  gyumri: "cis",
 };
 
 const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
@@ -134,6 +154,26 @@ const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
   jakarta: "tropical",
   "phu-quoc": "tropical",
   krabi: "tropical",
+  hurghada: "tropical",
+  "sharm-el-sheikh": "tropical",
+  cairo: "tropical",
+  marrakesh: "temperate",
+  sousse: "temperate",
+  "mexico-city": "temperate",
+  "playa-del-carmen": "tropical",
+  "buenos-aires": "temperate",
+  "rio-de-janeiro": "tropical",
+  amman: "temperate",
+  haifa: "temperate",
+  manila: "tropical",
+  kathmandu: "temperate",
+  "siem-reap": "tropical",
+  seville: "temperate",
+  ankara: "temperate",
+  skopje: "temperate",
+  kazan: "cool",
+  yekaterinburg: "cool",
+  gyumri: "cool",
 };
 
 // Города без визы для россиян (безвиз или visa-on-arrival ≥ 30 дней)
@@ -186,6 +226,23 @@ const VISA_FREE_FOR_RU = new Set([
   "jakarta",
   "phu-quoc",
   "krabi",
+  "hurghada",
+  "sharm-el-sheikh",
+  "cairo",
+  "marrakesh",
+  "sousse",
+  "buenos-aires",
+  "rio-de-janeiro",
+  "amman",
+  "haifa",
+  "manila",
+  "kathmandu",
+  "siem-reap",
+  "ankara",
+  "skopje",
+  "kazan",
+  "yekaterinburg",
+  "gyumri",
 ]);
 
 const REGION_OPTIONS: [Region, string][] = [
@@ -195,6 +252,8 @@ const REGION_OPTIONS: [Region, string][] = [
   ["europe", "Европа"],
   ["asia", "Азия"],
   ["middle_east", "Ближний Восток"],
+  ["africa", "Африка"],
+  ["americas", "Америка"],
 ];
 
 const CLIMATE_OPTIONS: [Climate, string][] = [
