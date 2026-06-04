@@ -33,6 +33,16 @@ const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
   izmir: "europe",
   porto: "europe",
   malaga: "europe",
+  "chiang-mai": "asia",
+  "ho-chi-minh": "asia",
+  "da-nang": "asia",
+  "nha-trang": "asia",
+  "kuala-lumpur": "asia",
+  pattaya: "asia",
+  penang: "asia",
+  "tel-aviv": "middle_east",
+  "abu-dhabi": "middle_east",
+  bukhara: "cis",
 };
 
 const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
@@ -58,6 +68,16 @@ const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
   porto: "temperate",
   malaga: "temperate",
   samarkand: "temperate",
+  "chiang-mai": "tropical",
+  "ho-chi-minh": "tropical",
+  "da-nang": "tropical",
+  "nha-trang": "tropical",
+  "kuala-lumpur": "tropical",
+  pattaya: "tropical",
+  penang: "tropical",
+  "abu-dhabi": "tropical",
+  "tel-aviv": "temperate",
+  bukhara: "temperate",
 };
 
 // Города без визы для россиян (безвиз или visa-on-arrival ≥ 30 дней)
@@ -79,6 +99,15 @@ const VISA_FREE_FOR_RU = new Set([
   "astana",
   "samarkand",
   "izmir",
+  "chiang-mai",
+  "ho-chi-minh",
+  "da-nang",
+  "nha-trang",
+  "kuala-lumpur",
+  "pattaya",
+  "penang",
+  "abu-dhabi",
+  "bukhara",
 ]);
 
 const REGION_OPTIONS: [Region, string][] = [

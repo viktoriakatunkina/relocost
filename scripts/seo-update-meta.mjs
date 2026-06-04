@@ -30,6 +30,8 @@ const PREP = {
   "kuala-lumpur": "в Куала-Лумпуре", "tel-aviv": "в Тель-Авиве",
   astana: "в Астане", izmir: "в Измире", porto: "в Порту",
   malaga: "в Малаге", samarkand: "в Самарканде",
+  pattaya: "в Паттайе", penang: "в Пенанге", "abu-dhabi": "в Абу-Даби",
+  bukhara: "в Бухаре",
 };
 
 const { data: cities, error } = await sb
