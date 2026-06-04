@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 
 const NAV = [
   { href: "/search", label: "Города" },
@@ -35,6 +36,7 @@ export function Header() {
           >
             Посчитать
           </Link>
+          <LanguageSwitcher />
         </nav>
       </div>
     </header>

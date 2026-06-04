@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Manrope, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
+import { LanguagePending } from "@/components/i18n/LanguagePending";
 import { YandexMetrika } from "@/components/YandexMetrika";
 
 const manrope = Manrope({
@@ -77,6 +78,7 @@ export default function RootLayout({
         className={`${manrope.variable} ${cormorant.variable} antialiased`}
       >
         <Header />
+        <LanguagePending />
         {children}
         <YandexMetrika />
       </body>
