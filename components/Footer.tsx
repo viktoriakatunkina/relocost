@@ -23,6 +23,7 @@ const SECTIONS = [
     title: "Помощь",
     links: [
       { href: "/blog", label: "Гайды и подборки" },
+      { href: "/about", label: "О проекте" },
       { href: "/offer", label: "Публичная оферта" },
       { href: "/contacts", label: "Контакты и реквизиты" },
     ],

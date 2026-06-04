@@ -12,7 +12,9 @@ import {
 } from "@/lib/blog";
 import { unsplashSrc, unsplashAuthorUrlWithUtm } from "@/lib/unsplash";
 import { RelatedPosts } from "@/components/blog/RelatedPosts";
-import type { City } from "@/lib/types";
+import { ArticleCityData } from "@/components/blog/ArticleCityData";
+import { getPricesByCity } from "@/lib/prices";
+import type { City, Price, PriceCategory } from "@/lib/types";
 import { ShareButton } from "@/components/ShareButton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
@@ -57,10 +59,18 @@ export default async function BlogPostPage({
 }) {
   const post = await getPostBySlug(params.slug);
   if (!post) notFound();
-  const [city, allPosts] = await Promise.all([
+  const [city, allPosts, prices] = await Promise.all([
     getCityForPost(post.city_id) as Promise<City | null>,
     getPublishedPosts(),
+    post.city_id
+      ? getPricesByCity(post.city_id)
+      : Promise.resolve(null as Record<PriceCategory, Price[]> | null),
   ]);
+
+  const updatedLabel = new Intl.DateTimeFormat("ru-RU", {
+    month: "long",
+    year: "numeric",
+  }).format(new Date(post.created_at));
 
   const heroCover = unsplashSrc(post.cover_url, { w: 1600, q: 80 });
   const heroAuthorUrl = unsplashAuthorUrlWithUtm(post.cover_author_url);
@@ -76,8 +86,8 @@ export default async function BlogPostPage({
     dateModified: post.created_at,
     author: {
       "@type": "Organization",
-      name: "Relocost",
-      url: SITE_URL,
+      name: "Редакция Relocost",
+      url: `${SITE_URL}/about`,
     },
     publisher: {
       "@type": "Organization",
@@ -142,9 +152,16 @@ export default async function BlogPostPage({
             {post.tag && post.read_time && <span>·</span>}
             {post.read_time && <span>{post.read_time} мин чтения</span>}
           </div>
-          <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] max-w-3xl mb-8">
+          <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] max-w-3xl mb-6">
             {post.title}
           </h1>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-brandy/70 text-sm mb-8">
+            <Link href="/about" className="text-brandy/90 hover:text-copper transition">
+              Редакция Relocost
+            </Link>
+            <span aria-hidden>·</span>
+            <span>обновлено: {updatedLabel}</span>
+          </div>
           <ShareButton
             title={post.title}
             text={post.seo_description ?? undefined}
@@ -153,13 +170,33 @@ export default async function BlogPostPage({
       </section>
 
       <div className="max-w-6xl mx-auto px-6 pt-16 grid lg:grid-cols-[1fr_300px] gap-12">
-        <article
-          className="prose prose-invert prose-headings:font-serif prose-headings:text-cream prose-p:text-brandy/90 prose-strong:text-cream prose-a:text-copper prose-a:no-underline hover:prose-a:underline prose-li:text-brandy/90 prose-table:text-brandy/90 prose-th:text-cream prose-hr:hairline max-w-none"
-        >
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {post.content_md}
-          </ReactMarkdown>
-        </article>
+        <div>
+          <article
+            className="prose prose-invert prose-headings:font-serif prose-headings:text-cream prose-p:text-brandy/90 prose-strong:text-cream prose-a:text-copper prose-a:no-underline hover:prose-a:underline prose-li:text-brandy/90 prose-table:text-brandy/90 prose-th:text-cream prose-hr:hairline max-w-none"
+          >
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {post.content_md}
+            </ReactMarkdown>
+          </article>
+
+          {city && prices && <ArticleCityData city={city} prices={prices} />}
+
+          <div className="mt-12 pt-6 border-t hairline text-sm text-brandy/65 space-y-2">
+            <p>
+              <strong className="text-cream">Как мы считаем.</strong> Цены — агрегированные
+              оценки из открытых источников (Numbeo, Expatistan, курс ЦБ РФ), приведённые к
+              рублям и обновляемые ежеквартально. Подробнее — на странице{" "}
+              <Link href="/about" className="text-copper hover:underline">
+                О проекте
+              </Link>
+              .
+            </p>
+            <p>
+              Данные по визам, налогам и банкам актуальны на 2026 год и могут быстро меняться —
+              проверяйте первоисточники перед решениями.
+            </p>
+          </div>
+        </div>
 
         {city && (
           <aside className="lg:sticky lg:top-8 self-start">
