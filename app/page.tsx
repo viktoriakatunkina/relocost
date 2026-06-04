@@ -13,6 +13,7 @@ import { Reveal } from "@/components/Reveal";
 import { SiteSchemas } from "@/components/SiteSchemas";
 import { Footer } from "@/components/Footer";
 import { typo } from "@/lib/typography";
+import { HeroMist, WarmOrbs } from "@/components/decor/Atmosphere";
 
 export const metadata = {
   alternates: { canonical: "/" },
@@ -57,6 +58,8 @@ export default async function HomePage() {
           aria-hidden
         />
 
+        <HeroMist />
+
         <div className="max-w-5xl mx-auto w-full">
           <div className="flex items-center gap-3 mb-8 fade-up" style={{ animationDelay: "0ms" }}>
             <span className="h-px w-12 bg-copper" />
@@ -72,7 +75,7 @@ export default async function HomePage() {
             <br className="hidden md:block" /> в другой город или страну?
           </h1>
           <p
-            className="text-cream/95 text-lg md:text-2xl max-w-2xl mb-12 fade-up text-pretty leading-relaxed text-shadow-body"
+            className="text-cream/95 text-lg md:text-2xl max-w-2xl mb-12 fade-up text-pretty leading-relaxed text-shadow-body font-medium"
             style={{ animationDelay: "240ms" }}
           >
             {typo(`Аренда, еда, транспорт, виза — собираем честный месячный бюджет по ${searchItems.length} городам России и зарубежья.`)}
@@ -83,14 +86,15 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-16 grid grid-cols-3 max-w-2xl gap-6 fade-up" style={{ animationDelay: "480ms" }}>
-            <HeroStat value={String(searchItems.length)} label={plural(searchItems.length, ["город", "города", "городов"])} />
-            <HeroStat value={String(allCountries.length)} label={plural(allCountries.length, ["страна", "страны", "стран"])} />
-            <HeroStat value="7" label="категорий трат" />
+            <HeroStat value={String(searchItems.length)} label={plural(searchItems.length, ["город", "города", "городов"])} accent="#E89B6E" />
+            <HeroStat value={String(allCountries.length)} label={plural(allCountries.length, ["страна", "страны", "стран"])} accent="#E0A93E" />
+            <HeroStat value="7" label="категорий трат" accent="#7FA8B8" />
           </div>
         </div>
       </section>
 
-      <section id="popular" className="py-24 px-6">
+      <section id="popular" className="relative isolate overflow-hidden py-24 px-6">
+        <WarmOrbs className="-z-10" />
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <div className="flex items-end justify-between mb-12 gap-6">
@@ -99,7 +103,7 @@ export default async function HomePage() {
                 <h2 className="font-serif text-4xl md:text-6xl text-cream mt-6 text-balance">
                   Популярные направления
                 </h2>
-                <p className="text-brandy/75 text-lg mt-4 max-w-xl text-pretty">
+                <p className="text-brandy/80 text-lg mt-4 max-w-xl text-pretty font-medium">
                   {typo("Города с большим русскоязычным комьюнити, понятной визой и доступной арендой.")}
                 </p>
               </div>
@@ -135,7 +139,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="countries" className="py-24 px-6">
+      <section id="countries" className="relative isolate overflow-hidden py-24 px-6">
+        <WarmOrbs className="-z-10" />
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <div className="flex items-end justify-between mb-12 gap-6">
@@ -144,7 +149,7 @@ export default async function HomePage() {
                 <h2 className="font-serif text-4xl md:text-6xl text-cream mt-6 text-balance">
                   Каталог стран
                 </h2>
-                <p className="text-brandy/75 text-lg mt-4 max-w-xl text-pretty">
+                <p className="text-brandy/80 text-lg mt-4 max-w-xl text-pretty font-medium">
                   {typo("Выберите направление: для каждой страны — список городов, цены, визовые шаги и общая сложность переезда.")}
                 </p>
               </div>
@@ -197,11 +202,29 @@ function plural(n: number, forms: [string, string, string]): string {
   return forms[2];
 }
 
-function HeroStat({ value, label }: { value: string; label: string }) {
+function HeroStat({
+  value,
+  label,
+  accent,
+}: {
+  value: string;
+  label: string;
+  accent: string;
+}) {
   return (
-    <div className="border-l-2 border-copper/40 pl-4">
-      <div className="font-serif text-3xl md:text-4xl text-cream leading-none">{value}</div>
-      <div className="text-brandy/65 text-xs uppercase tracking-[0.15em] mt-2">{label}</div>
+    <div
+      className="rounded-2xl border px-4 py-3.5 backdrop-blur-sm"
+      style={{ background: `${accent}1A`, borderColor: `${accent}55` }}
+    >
+      <div
+        className="font-serif text-3xl md:text-4xl leading-none"
+        style={{ color: accent }}
+      >
+        {value}
+      </div>
+      <div className="text-cream/75 text-xs uppercase tracking-[0.15em] mt-2 font-medium">
+        {label}
+      </div>
     </div>
   );
 }

@@ -29,11 +29,18 @@ html, body {
 
 body {
   overflow-wrap: break-word;
+  /* Чуть плотнее базовый текст — уходим от «тонкого» ощущения */
+  font-weight: 460;
 }
 
 h1, h2, h3, .font-serif {
   font-family: var(--font-cormorant), Georgia, serif;
   font-feature-settings: "kern", "liga", "calt";
+}
+
+/* Заголовки заметно плотнее */
+h1, h2, h3 {
+  font-weight: 600;
 }
 
 p, li, blockquote {
@@ -70,6 +77,24 @@ a:focus:not(:focus-visible) {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* Атмосфера: медленный горизонтальный дрейф (дымка/облака) */
+@keyframes drift {
+  from { transform: translate3d(-6%, 0, 0); }
+  to { transform: translate3d(6%, 0, 0); }
+}
+
+/* Мягкое вертикальное парение (тёплые свечения в секциях) */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+/* Пульсация яркости/масштаба для цветных «орбов» */
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.08); }
 }
 
 @layer utilities {
@@ -123,12 +148,27 @@ a:focus:not(:focus-visible) {
     color: var(--copper);
     border: 1px solid rgba(216, 148, 120, 0.28);
   }
+
+  /* Атмосферные элементы: мягкие цветные «орбы» и дымка */
+  .orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(56px);
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+  .animate-drift { animation: drift 30s ease-in-out infinite alternate; }
+  .animate-floaty { animation: floaty 10s ease-in-out infinite; }
+  .animate-glow { animation: glowPulse 12s ease-in-out infinite; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .fade-up,
-  .fade-in {
+  .fade-in,
+  .animate-drift,
+  .animate-floaty,
+  .animate-glow {
     animation: none;
   }
 }
