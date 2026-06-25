@@ -217,6 +217,29 @@ export default async function HomePage({
         <HowItWorks cityCount={cityCount} />
       </Reveal>
       <Reveal>
+        <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
+          <div className="relative overflow-hidden rounded-3xl border border-copper/30 bg-copper/10 p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-6">
+            <div className="flex-1">
+              <span className="eyebrow">Не знаете, с чего начать</span>
+              <h2 className="font-serif text-3xl md:text-4xl text-cream mt-4 mb-3">
+                Пройдите тест «Куда мне переехать?»
+              </h2>
+              <p className="text-brandy/80 text-lg max-w-xl text-pretty">
+                6 вопросов о бюджете, климате и приоритетах — и персональная
+                подборка городов из нашей базы за минуту.
+              </p>
+            </div>
+            <Link
+              href="/quiz"
+              className="shrink-0 inline-flex items-center justify-center gap-2 px-7 py-4 rounded-pill bg-copper text-pine-tree font-semibold text-lg hover:bg-brandy transition"
+            >
+              Пройти тест
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
+        </section>
+      </Reveal>
+      <Reveal>
         <BlogPreview posts={posts} />
       </Reveal>
       <Reveal>

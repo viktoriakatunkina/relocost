@@ -5,7 +5,10 @@
     "blog": "Jurnal",
     "favorites": "Saqlanganlar",
     "calculate": "Hisoblash",
-    "logoAlt": "Relocost — bosh sahifa"
+    "logoAlt": "Relocost — bosh sahifa",
+    "quiz": "Test",
+    "checklist": "Roʻyxat",
+    "rating": "Reyting"
   },
   "lang": {
     "label": "Tilni tanlash",

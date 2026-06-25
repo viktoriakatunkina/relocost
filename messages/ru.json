@@ -5,7 +5,10 @@
     "blog": "Журнал",
     "favorites": "Избранное",
     "calculate": "Посчитать",
-    "logoAlt": "Relocost — на главную"
+    "logoAlt": "Relocost — на главную",
+    "quiz": "Куда переехать",
+    "checklist": "Чек-лист",
+    "rating": "Рейтинг"
   },
   "lang": {
     "label": "Выбор языка",

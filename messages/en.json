@@ -5,7 +5,10 @@
     "blog": "Journal",
     "favorites": "Saved",
     "calculate": "Calculate",
-    "logoAlt": "Relocost — home"
+    "logoAlt": "Relocost — home",
+    "quiz": "Move quiz",
+    "checklist": "Checklist",
+    "rating": "Rating"
   },
   "lang": {
     "label": "Choose language",

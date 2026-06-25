@@ -9,6 +9,9 @@ export async function Footer() {
   const navLinks = [
     { href: "/search", label: tn("cities") },
     { href: "/countries", label: tn("countries") },
+    { href: "/quiz", label: tn("quiz") },
+    { href: "/rating", label: tn("rating") },
+    { href: "/checklist", label: tn("checklist") },
     { href: "/blog", label: tn("blog") },
     { href: "/favorites", label: tn("favorites") },
   ];

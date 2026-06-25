@@ -1,4 +1,5 @@
 import { getCitiesWithBudget } from "./city-budget";
+import { climateTemp, COASTAL } from "./city-signals";
 import type { CityWithBudget } from "./types";
 
 // SEO-подборки городов («Города до 50 000 ₽», «Куда уехать на зимовку» и т.п.).
@@ -17,28 +18,9 @@ export type ListDef = {
   select: (cities: CityWithBudget[]) => CityWithBudget[];
 };
 
-// Средняя температура из строки climate вида «+27°C ср.» → число (или null).
-function climateTemp(c: CityWithBudget): number | null {
-  if (!c.climate) return null;
-  const m = c.climate.match(/([+-]?\d+)/);
-  return m ? parseInt(m[1], 10) : null;
-}
-
 const hasBudget = (c: CityWithBudget) => c.monthly_from > 0;
 const byBudget = (a: CityWithBudget, b: CityWithBudget) =>
   a.monthly_from - b.monthly_from;
-
-// Приморские города (нет отдельного поля «у моря» — ведём ручной список slug).
-const COASTAL = new Set<string>([
-  "batumi", "sochi", "kaliningrad", "antalya", "alanya", "bodrum", "fethiye",
-  "izmir", "limassol", "larnaca", "paphos", "budva", "tivat", "barcelona",
-  "valencia", "alicante", "malaga", "lisbon", "porto", "split", "dubrovnik",
-  "varna", "thessaloniki", "heraklion", "dubai", "abu-dhabi", "sharjah",
-  "bali", "phuket", "pattaya", "samui", "krabi", "nha-trang", "da-nang",
-  "phu-quoc", "colombo", "goa", "hurghada", "sharm-el-sheikh", "sousse",
-  "muscat", "tel-aviv", "haifa", "rio-de-janeiro", "playa-del-carmen",
-  "cebu", "penang", "manama", "doha",
-]);
 
 export const LISTS: ListDef[] = [
   {

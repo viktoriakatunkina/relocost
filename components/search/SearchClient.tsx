@@ -6,6 +6,7 @@ import type { CityWithBudget } from "@/lib/types";
 import { CityCard } from "@/components/CityCard";
 import { formatRub } from "@/lib/cities";
 import { getVisa, type VisaStatus } from "@/lib/visa";
+import { COASTAL } from "@/lib/city-signals";
 import { cityName, countryName } from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/routing";
 
@@ -197,21 +198,6 @@ const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
   gyumri: "cool",
 };
 
-// Города «у моря» — расположены на морском/океанском побережье (пляжная жизнь —
-// частый запрос при выборе города). Поля «coastal» в БД нет, поэтому ведём
-// явный список по slug. Реки/озёра/эстуарии (Москва, Прага, Хошимин и т.п.) сюда
-// НЕ входят — только настоящее побережье.
-const SEASIDE = new Set<string>([
-  "abu-dhabi", "aktau", "alanya", "alicante", "antalya", "baku", "bali",
-  "barcelona", "batumi", "bodrum", "budva", "cebu", "colombo", "da-nang",
-  "doha", "dubai", "dubrovnik", "fethiye", "goa", "haifa", "heraklion",
-  "hurghada", "izmir", "krabi", "larnaca", "limassol", "lisbon", "malaga",
-  "manama", "manila", "muscat", "nha-trang", "paphos", "pattaya", "penang",
-  "phu-quoc", "phuket", "playa-del-carmen", "porto", "rio-de-janeiro", "samui",
-  "sanya", "sharjah", "sharm-el-sheikh", "sochi", "sousse", "split", "tel-aviv",
-  "thessaloniki", "tivat", "valencia", "varna",
-]);
-
 function diffBucket(score: number | null): Exclude<Difficulty, "all"> | null {
   if (score == null) return null;
   if (score <= 1) return "easy";
@@ -317,7 +303,7 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
         if (visa === "required" && status !== "visa_required") return false;
       }
       if (directOnly && !isDirectFlight(c.flight_from_moscow)) return false;
-      if (seasideOnly && !SEASIDE.has(c.slug)) return false;
+      if (seasideOnly && !COASTAL.has(c.slug)) return false;
       if (c.monthly_from > 0 && c.monthly_from > max) return false;
       return true;
     });

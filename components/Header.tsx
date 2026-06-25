@@ -11,6 +11,7 @@ export async function Header() {
   const nav = [
     { href: "/search", label: t("cities") },
     { href: "/countries", label: t("countries") },
+    { href: "/quiz", label: t("quiz") },
     { href: "/blog", label: t("blog") },
   ] as const;
 

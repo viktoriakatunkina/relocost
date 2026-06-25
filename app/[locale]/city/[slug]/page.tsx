@@ -21,6 +21,9 @@ import { CitySummary } from "@/components/city/CitySummary";
 import { CityAbout } from "@/components/city/CityAbout";
 import { MonthlyBudget } from "@/components/city/MonthlyBudget";
 import { CostVsMoscow } from "@/components/city/CostVsMoscow";
+import { EarnEquivalent } from "@/components/city/EarnEquivalent";
+import { LivingScore } from "@/components/city/LivingScore";
+import { monthlyBudgetFrom } from "@/lib/city-budget";
 import { CityDistricts } from "@/components/city/CityDistricts";
 import { CityWork } from "@/components/city/CityWork";
 import { PhotoGallery } from "@/components/city/PhotoGallery";
@@ -127,6 +130,12 @@ export default async function CityPage({
   const moscowComparison =
     c.slug === "moscow" ? null : cityVsMoscow(prices, moscowBaseline);
 
+  // Месячный бюджет «от» из цен страницы — для оценки «для переезда» (LivingScore).
+  const { min_rent, monthly_from } = monthlyBudgetFrom(
+    Object.values(prices).flat(),
+  );
+  const cityForScore = { ...c, min_rent, monthly_from };
+
   return (
     <main className="pb-24">
       <CitySchema city={c} />
@@ -179,7 +188,12 @@ export default async function CityPage({
       </Reveal>
 
       {moscowComparison && (
-        <CostVsMoscow cityName={name} comparison={moscowComparison} />
+        <>
+          <CostVsMoscow cityName={name} comparison={moscowComparison} />
+          <Reveal>
+            <EarnEquivalent cityName={name} avgDiff={moscowComparison.avgDiff} />
+          </Reveal>
+        </>
       )}
 
       {content && (
@@ -187,6 +201,14 @@ export default async function CityPage({
           <DifficultyBars breakdown={content.difficulty_breakdown} />
         </Reveal>
       )}
+
+      <Reveal>
+        <LivingScore
+          city={cityForScore}
+          cityName={name}
+          breakdown={content?.difficulty_breakdown}
+        />
+      </Reveal>
 
       {content?.work && (
         <Reveal>
