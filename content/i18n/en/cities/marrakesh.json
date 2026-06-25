@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Marrakesh 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Marrakesh per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Morocco's Red City by the Atlas Mountains: visa-free entry for 90 days, the exotic medina, a warm winter and low prices. The downsides are the bustle of the medina, the language barrier (Arabic and French) and the hot summer.",
+  "climate": "+20°C avg.",
+  "language": "Arabic, French, English",
+  "currency": "Dirham, MAD",
+  "population": "930 thousand",
+  "flight_from_moscow": "7 hours with a layover",
+  "pros": [
+    "Visa-free entry for 90 days for Russian citizens",
+    "The exotic medina and Eastern flavour",
+    "A warm winter and low prices",
+    "The Atlas Mountains and the coast nearby",
+    "A developed tourist infrastructure"
+  ],
+  "cons": [
+    "The bustle and pushiness of the medina",
+    "A language barrier — Arabic and French",
+    "Hot summers",
+    "Alcohol is sold in a limited way"
+  ],
+  "best_places": [
+    { "name": "Jemaa el-Fnaa Square", "description": "The heart of the medina: street food, musicians and bazaars under UNESCO protection." },
+    { "name": "Majorelle Garden", "description": "Yves Saint Laurent's famous cobalt-blue garden with exotic plants." },
+    { "name": "Gueliz (the new town)", "description": "A modern district with cafés, boutiques and rentals for expats." },
+    { "name": "Bahia Palace", "description": "A lavish 19th-century palace with carvings, gardens and mosaics." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russians enjoy visa-free entry of up to 90 days — all you need is a passport." },
+    { "title": "Renting a home", "description": "Riads in the medina and apartments in Gueliz are rented monthly." },
+    { "title": "Connectivity and money", "description": "A local SIM card is cheap; you'll need cash in dirhams and a card from a foreign bank." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business or long-term stay you obtain a carte de séjour." },
+    { "title": "Transport", "description": "In the medina it's foot and mopeds only; taxis are convenient around the city." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Marrakesh?", "answer": "No, visa-free up to 90 days. For a long stay you obtain a residence permit (carte de séjour)." },
+    { "question": "How much does it cost to live in Marrakesh?", "answer": "Affordable, especially outside the tourist areas. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Marrakesh?", "answer": "Arabic and French; less English, especially in the medina." },
+    { "question": "Can I pay with a Russian card in Marrakesh?", "answer": "No, Russian cards don't work. You'll need cash in dirhams and a card from a foreign bank." },
+    { "question": "What is the climate like in Marrakesh?", "answer": "Semi-arid: hot summers, a mild warm winter with cool nights." },
+    { "question": "Is alcohol freely available in Marrakesh?", "answer": "Alcohol is sold in a limited way — in licensed shops, hotels and some restaurants." }
+  ],
+  "reviews": [
+    { "profession": "remote designer", "text": "Marrakesh is pure exotica: riads, bazaars, a warm winter and low prices. The downsides are the bustle of the medina and French instead of English — it's harder without it." },
+    { "profession": "photographer", "text": "The city is incredibly textured, it's warm in winter, with mountains and the ocean nearby. Gueliz is quieter than the medina. You do have to get used to the pushiness at the bazaars." }
+  ]
+}

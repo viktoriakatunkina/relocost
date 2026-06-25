@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Malaga 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Malaga per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of the Costa del Sol: around 300 sunny days, mild winters and a reputation as one of Spain's most comfortable cities for families. You relocate via a digital nomad visa or a residence permit, and a stable income is required.",
+  "climate": "+19°C avg.",
+  "language": "Spanish, English",
+  "currency": "Euro, EUR",
+  "population": "580 thousand",
+  "flight_from_moscow": "5–8 hours with a layover",
+  "pros": [
+    "Around 300 sunny days and a mild winter on the Mediterranean",
+    "One of the most comfortable and safest cities in Spain for families",
+    "Widespread English, an airport hub and the high-speed AVE train",
+    "A digital nomad visa with a 24% tax rate (the Beckham regime)",
+    "Beaches, mountains and all of Andalusia close by"
+  ],
+  "cons": [
+    "A Schengen visa and income from about €2,850 a month for the nomad visa",
+    "NIE and empadronamiento bureaucracy and queues for cita previa",
+    "Rent is expensive and rising fast due to tourism and expats",
+    "Spanish is needed for paperwork and outside the tourist areas",
+    "Very hot and crowded on the coast in summer"
+  ],
+  "best_places": [
+    { "name": "Old Town (Centro Histórico)", "description": "A pedestrian centre with the cathedral, the Picasso Museum and cafés on every corner." },
+    { "name": "La Malagueta", "description": "The city beach and promenade a step from the centre — popular with newcomers." },
+    { "name": "Pedregalejo and El Palo", "description": "Former fishing quarters by the sea, with chiringuitos and a relaxed atmosphere." },
+    { "name": "Teatinos", "description": "A modern district by the university — new builds, cheaper than the centre, handy with kids." }
+  ],
+  "visa_steps": [
+    { "title": "Digital nomad visa or residence permit", "description": "A Digital Nomad Visa for remote workers (income from about €2,850/month) or a non-lucrative visa for the financially independent." },
+    { "title": "NIE", "description": "A foreigner's identification number — needed for everything: the bank, renting, contracts." },
+    { "title": "Bank account", "description": "BBVA, Santander, CaixaBank or Sabadell open accounts with a passport and a NIE." },
+    { "title": "Rental and empadronamiento", "description": "A lease and registration at the town hall (padrón) — needed for the residence permit and access to healthcare." },
+    { "title": "Residence card (TIE)", "description": "After arrival — biometrics and the TIE card; the first term is usually 1–3 years, renewable." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Malaga?", "answer": "Yes, Spain is in Schengen. To live there you obtain a digital nomad visa or a non-lucrative (financially independent) visa." },
+    { "question": "How much money do you need to move to Malaga?", "answer": "For the nomad visa — a stable income from about €2,850 a month for one person; for the non-lucrative — savings and passive income." },
+    { "question": "What is the climate like in Malaga?", "answer": "Mediterranean and very mild: around 300 sunny days, a warm winter and a hot summer." },
+    { "question": "Can I pay with a Russian card in Malaga?", "answer": "No, cards from Russia don't work. You need an account and card from a Spanish bank, which require a NIE." },
+    { "question": "Is Malaga good with children?", "answer": "Yes, the city is safe, with the sea, parks and international schools — one of families' favourite destinations." },
+    { "question": "What about work in Malaga?", "answer": "The local market requires Spanish; relocators on a nomad visa work remotely. The IT cluster at Málaga TechPark is growing." }
+  ],
+  "reviews": [
+    { "profession": "architect", "text": "We got the nomad visa, with a 24% tax under the Beckham regime — nice. Malaga is sunny and convenient, but finding a rental took a while and wasn't cheap." },
+    { "profession": "UX designer", "text": "We moved with our child: the sea, safety, an international school. The downside — Spanish bureaucracy and the queues for cita previa." }
+  ]
+}

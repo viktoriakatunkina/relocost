@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Hanoi 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Hanoi per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Vietnam with a thousand-year history: 45 days visa-free, very low prices and a buzzing street life. Cooler than the south in winter; the downsides are heavy traffic, noise and air quality.",
+  "climate": "+24°C avg.",
+  "language": "Vietnamese, English",
+  "currency": "Dong, VND",
+  "population": "8 mln",
+  "flight_from_moscow": "10 hours with a layover",
+  "pros": [
+    "45 days visa-free for Russian citizens",
+    "Very low prices and delicious street food",
+    "A rich history and vibrant city life",
+    "A growing scene for remote workers and coffee shops",
+    "Cooler and more comfortable than the south in winter"
+  ],
+  "cons": [
+    "Heavy traffic from motorbikes",
+    "Noise and air quality in the centre",
+    "A language barrier outside tourist spots",
+    "High humidity and hot summers"
+  ],
+  "best_places": [
+    { "name": "Old Quarter (36 streets)", "description": "The historic heart of the city with shops, cafés and street food." },
+    { "name": "Hoan Kiem Lake", "description": "The central lake with a temple on an islet — a place for morning walks." },
+    { "name": "Tay Ho (West Lake)", "description": "A quiet district by the big lake, popular with expats." },
+    { "name": "Temple of Literature", "description": "An ancient Confucian temple and Vietnam's first university." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 45 days without a visa for Russian citizens — the stamp is issued at the border." },
+    { "title": "E-visa (for long stays)", "description": "A 90-day e-visa is issued online on the official portal." },
+    { "title": "Renting a home", "description": "Apartments and flats rent monthly; the districts around West Lake are popular." },
+    { "title": "Bank account and connectivity", "description": "A local SIM card is cheap; you'll need cash dong and a foreign bank card." },
+    { "title": "Long-term stay", "description": "To live beyond the visa, you'll need a TRC through employment or business." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Hanoi?", "answer": "Up to 45 days you don't need a visa. For a longer stay you apply for a 90-day e-visa." },
+    { "question": "How much does it cost to live in Hanoi?", "answer": "Very cheap, especially food and transport. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Hanoi?", "answer": "Vietnamese; English is understood in tourist spots, but there can be a language barrier in daily life." },
+    { "question": "Can I pay with a Russian card in Hanoi?", "answer": "No, Russian cards don't work. You'll need cash dong and a foreign bank card." },
+    { "question": "What is the climate like in Hanoi?", "answer": "Subtropical: hot, humid summers and noticeably cooler winters than the south." },
+    { "question": "How does Hanoi differ from Ho Chi Minh City?", "answer": "Hanoi is older, more laid-back and cooler in winter; Ho Chi Minh City is more business-minded and hot year-round." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "Hanoi is cheap and full of character — the coffee and food are a love of their own. The sea of bikes takes getting used to, and the air in the centre is so-so." },
+    { "profession": "remote editor", "text": "I chose Hanoi for the atmosphere and the prices. It's pleasantly cool in winter. The downside is the language barrier outside the centre and the noise of a big city." }
+  ]
+}

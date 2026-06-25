@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Podgorica 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Podgorica per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Visa-free entry for 30 days with the option to extend, and an accessible path to residency through business or property. A quiet capital for those who want to live in a country on track for the EU.",
+  "climate": "+15°C avg.",
+  "language": "Montenegrin, Serbian",
+  "currency": "Euro, EUR",
+  "population": "190 thousand",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "Visa-free entry for 30 days, with a simple path to residency",
+    "The euro — a stable currency with no volatility",
+    "Access to all of Montenegro — from the sea to the mountains in 1–2 hours",
+    "Proximity to the EU and Montenegro's candidate status",
+    "A calm pace of life and a low crime rate"
+  ],
+  "cons": [
+    "Hot, dry summers in the basin — up to +40°C in July",
+    "A weak job market — most relocators work remotely",
+    "A serious shortage of quality private healthcare",
+    "A limited choice of international schools"
+  ],
+  "best_places": [
+    { "name": "Stara Varos", "description": "The old Turkish quarter with mosques, a clock tower and authentic cafés." },
+    { "name": "Skadar Lake", "description": "The largest lake in the Balkans, 30 minutes from the city — boats, vineyards and restaurants." },
+    { "name": "Cubo Coworking", "description": "The main hub for remote workers and freelancers, with an active community." },
+    { "name": "Pod Volat", "description": "Classic chorba, oven-roasted lamb and local wines — old local cuisine." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 30 days without a visa, extendable for another 30 days through the police or a trip to Serbia." },
+    { "title": "Registration (Beli karton)", "description": "Within 24 hours of moving in — registration with the police via your landlord." },
+    { "title": "Residency through work or business", "description": "Opening a company (DOO) or a contract with a local employer — a path to a 1-year residency." },
+    { "title": "Buying property", "description": "Residency through housing of any value — the most popular path for Russians." },
+    { "title": "Account and taxes", "description": "CKB, NLB, Erste — they work with Russians. The tax for sole traders is 9–15%." }
+  ],
+  "faq": [
+    { "question": "Is Podgorica in the EU?", "answer": "No, but it has had candidate status since 2010, the euro is the official currency, and the Schengen area is nearby." },
+    { "question": "Which language is spoken in Podgorica?", "answer": "Montenegrin (close to Serbian); in the tourism sector people speak English and Russian." },
+    { "question": "Is the sea far from Podgorica?", "answer": "1 hour to Budva or Bar, 1.5 to Kotor. Many live in Podgorica and head to the sea on weekends." },
+    { "question": "Can I work for Western companies in Podgorica?", "answer": "Yes, through a DOO (LLC) or freelancing — 9% tax, contracts in euros." },
+    { "question": "What is healthcare like in Podgorica?", "answer": "Public care is weak, but Podgorica has private clinics. Many treat complex cases in Serbia or the EU." },
+    { "question": "What is the climate like in Podgorica?", "answer": "Mediterranean: +5°C in winter, +30–40°C in summer in the basin, with little rainfall." }
+  ],
+  "reviews": [
+    { "profession": "fintech analyst", "text": "I opened a DOO and pay 9% tax in euros. Housing in Podgorica costs €600, and weekends are by the sea. The downside — in summer the city is stifling, saved only by the AC and Skadar Lake." },
+    { "profession": "graphic designer", "text": "This isn't Europe in the full sense, but everything you need is here: banks, schools, restaurants. My daughter goes to an international school and my husband works remotely." }
+  ]
+}

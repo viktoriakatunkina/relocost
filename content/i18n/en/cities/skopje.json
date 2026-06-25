@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Skopje 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Skopje per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of North Macedonia in the Balkans: visa-free entry for Russians, some of the lowest prices in Europe and a warm climate. The downsides are a small job market, modest infrastructure and winter smog.",
+  "climate": "+13°C avg.",
+  "language": "Macedonian, English",
+  "currency": "Denar, MKD",
+  "population": "600 thousand",
+  "flight_from_moscow": "5 hours with a layover",
+  "pros": [
+    "Visa-free entry for Russian citizens",
+    "Some of the lowest prices in Europe",
+    "A warm climate and greenery all around",
+    "A compact and convenient city",
+    "A friendly attitude toward Russians"
+  ],
+  "cons": [
+    "A small job market",
+    "Modest international infrastructure",
+    "Smog in the winter months",
+    "Few direct flights"
+  ],
+  "best_places": [
+    { "name": "Macedonia Square", "description": "The central square with monuments and fountains in the heart of the city." },
+    { "name": "Old Bazaar (Čaršija)", "description": "An Ottoman quarter with shops, coffeehouses and mosques." },
+    { "name": "Stone Bridge", "description": "A historic bridge over the Vardar River, the symbol of Skopje." },
+    { "name": "Mount Vodno", "description": "A green mountain above the city with a cable car and a cross monument." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "A visa-free regime applies to Russians for tourist trips — check the current allowed duration." },
+    { "title": "Renting a home", "description": "Apartments are rented very cheaply by European standards." },
+    { "title": "Connectivity and money", "description": "A local SIM card is inexpensive; you need denars and a foreign bank card." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business or long-term stay you can get a residence permit." },
+    { "title": "Transport", "description": "The city is compact; buses and taxis are convenient." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Skopje?", "answer": "A visa-free regime applies for tourist trips — check the current allowed duration before you go." },
+    { "question": "How much does it cost to live in Skopje?", "answer": "Some of the lowest prices in Europe. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Skopje?", "answer": "Macedonian (close to Bulgarian and Serbian); English is understood among younger people." },
+    { "question": "Can I pay with a Russian card in Skopje?", "answer": "No, Russian cards don't work. You need denars and a foreign bank card." },
+    { "question": "What is the climate like in Skopje?", "answer": "Continental-Mediterranean: hot summers and cool winters, sometimes with smog." },
+    { "question": "Why move to Skopje?", "answer": "Cheap living in Europe, visa-free entry, a warm climate and a relaxed Balkan pace." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Skopje surprised me with how cheap it is: Europe on a shoestring, warm and green. The downsides are the small job market and winter smog, but it's peaceful and visa-free." },
+    { "profession": "copywriter", "text": "A compact, cosy city with friendly people. The prices are a pleasure and the Balkan atmosphere is lovely. What's missing is international services and direct flights." }
+  ]
+}

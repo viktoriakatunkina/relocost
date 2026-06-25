@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Minsk 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Minsk per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Visa-free entry, a common economic space with Russia, with Russian as an official language. A clean, safe city with good infrastructure and affordable housing.",
+  "climate": "+7°C avg.",
+  "language": "Belarusian, Russian",
+  "currency": "Belarusian ruble, BYN",
+  "population": "2 mln",
+  "flight_from_moscow": "1.5 hours",
+  "pros": [
+    "Visa-free entry, a shared labour market and a patent system",
+    "Russian is an official language — no language barrier",
+    "A clean, safe, well-kept city",
+    "Affordable healthcare and strong education",
+    "A developed IT industry and the High-Tech Park (HTP)"
+  ],
+  "cons": [
+    "The political situation and sanctions restrictions",
+    "Difficulties with international payments and SWIFT",
+    "A grey, overcast climate most of the year",
+    "A weak air hub — few direct flights to distant countries"
+  ],
+  "best_places": [
+    { "name": "Independence Avenue", "description": "The city's main architectural axis — Stalinist Empire style, cafés, museums." },
+    { "name": "Zybitskaya Street", "description": "Minsk's 'bar street' — dozens of bars and restaurants in the old quarter." },
+    { "name": "Imaguru", "description": "The HTP's main coworking and startup hub — meetups, an accelerator, events every evening." },
+    { "name": "Galleria Minsk", "description": "The main shopping and food cluster — restaurants, a gastro-market, a cinema." }
+  ],
+  "visa_steps": [
+    { "title": "No borders", "description": "Russians enter on their internal passport — no stamps or visas." },
+    { "title": "Registration", "description": "After 90 days — registration at the OVIR office or via the landlord (a hotel registers you automatically)." },
+    { "title": "Residence permit", "description": "Through employment, a sole proprietorship in the HTP, marriage or buying property — a standard 1–3 month procedure." },
+    { "title": "Bank account", "description": "Belarusbank, Priorbank — they open accounts for Russians with a passport, without a residence permit." },
+    { "title": "Registering a sole proprietorship / HTP", "description": "A sole proprietorship — 1 day. An HTP resident pays 9% tax, with access to grants and investors." }
+  ],
+  "faq": [
+    { "question": "What about banks for Russians in Minsk?", "answer": "Belarusian banks work, but international transfers are restricted. SWIFT — only to local banks." },
+    { "question": "Are prices the same as in Moscow?", "answer": "Rent is 1.5–2 times cheaper, groceries are comparable, services are more affordable." },
+    { "question": "What about internet and services in Minsk?", "answer": "The internet is stable, plans are lower than in Russia. Many international services are blocked." },
+    { "question": "Is it worth relocating with family to Minsk?", "answer": "Minsk is one of the safest cities in the CIS, with excellent schools and healthcare for children." },
+    { "question": "Which districts to choose in Minsk?", "answer": "The centre is pricier but convenient. Uruchcha and Kamennaya Gorka are modern. Zeleny Lug is quiet and green." },
+    { "question": "Can I work for a Russian company in Minsk?", "answer": "Yes, through Russian payment details or a Belarusian sole proprietorship — tax of 5–9%." }
+  ],
+  "reviews": [
+    { "profession": "architect", "text": "After Moscow, Minsk is a rest for the nervous system: clean, quiet, safe. The downside is that you won't get all the familiar services everywhere, but you get used to it." },
+    { "profession": "marketer", "text": "The HTP offers a transparent tax system, and a sole proprietorship is set up in a day. Minsk is a 'normal Russia' from the 2010s, in the best sense." }
+  ]
+}

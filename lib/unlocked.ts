@@ -66,6 +66,37 @@ export function addUnlocked(slug: string, pkg: PackageType) {
   writeUnlocked(slug, [...cur, pkg]);
 }
 
+// Разблокировать сразу несколько пакетов (восстановление доступа по email).
+export function addManyUnlocked(slug: string, pkgs: PackageType[]) {
+  const cur = readUnlocked(slug);
+  const merged = [...cur];
+  for (const p of pkgs) if (!merged.includes(p)) merged.push(p);
+  if (merged.length !== cur.length) writeUnlocked(slug, merged);
+}
+
+// Email покупателя сохраняем в localStorage (durable, в отличие от
+// sessionStorage). По нему восстанавливаем доступ на том же устройстве
+// автоматически, даже если sessionStorage потерялся при возврате с оплаты.
+const EMAIL_KEY = "relocost_purchase_email";
+
+export function savePurchaseEmail(email: string) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(EMAIL_KEY, email.trim());
+  } catch {
+    /* ignore */
+  }
+}
+
+export function readPurchaseEmail(): string | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.localStorage.getItem(EMAIL_KEY);
+  } catch {
+    return null;
+  }
+}
+
 export function isUnlocked(unlocked: PackageType[], pkg: PackageType): boolean {
   if (unlocked.includes("bundle")) return true;
   return unlocked.includes(pkg);

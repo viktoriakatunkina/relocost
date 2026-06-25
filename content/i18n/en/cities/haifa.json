@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Haifa 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Haifa per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A port city in northern Israel: 90 days visa-free, the sea and Mount Carmel, a large Russian-speaking community. Cheaper than Tel Aviv; the downsides are high prices overall and the mandatory repatriation for long-term status.",
+  "climate": "+20°C avg.",
+  "language": "Hebrew, English, Russian",
+  "currency": "Shekel, ILS",
+  "population": "285k",
+  "flight_from_moscow": "4.5 hours",
+  "pros": [
+    "90 days visa-free for Russian citizens",
+    "The sea and Mount Carmel, greenery in the city",
+    "A large Russian-speaking community",
+    "Cheaper and more laid-back than Tel Aviv",
+    "Strong healthcare and a tech sector"
+  ],
+  "cons": [
+    "High prices overall",
+    "Long-term status requires repatriation (aliyah)",
+    "Hilly terrain — lots of climbs",
+    "Religious restrictions on Saturdays (Shabbat)"
+  ],
+  "best_places": [
+    { "name": "Baháʼí Gardens", "description": "The famous terraced gardens on the slope of Carmel — a symbol of the city." },
+    { "name": "German Colony", "description": "A historic street with restaurants and views of the gardens and the port." },
+    { "name": "Hadar", "description": "A central district with markets, cafés and affordable rent." },
+    { "name": "Carmel beaches", "description": "City beaches along the Mediterranean Sea." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russian citizens get up to 90 days visa-free — all you need is a passport." },
+    { "title": "Renting a home", "description": "Apartments rent monthly; prices are lower than in Tel Aviv." },
+    { "title": "Bank account and connectivity", "description": "A local SIM card; you'll need shekels and a foreign bank card." },
+    { "title": "Repatriation (aliyah)", "description": "For citizenship and long-term status you go through the repatriation process if eligible (see relocating to Israel)." },
+    { "title": "Long-term stay", "description": "Without eligibility for aliyah, long-term status is limited to the tourist period." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Haifa?", "answer": "No, up to 90 days visa-free as a tourist. For long-term status you need eligibility for repatriation." },
+    { "question": "How much does it cost to live in Haifa?", "answer": "Expensive by regional standards, but cheaper than Tel Aviv. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Haifa?", "answer": "Hebrew; English is common, and there are very many Russian-speaking residents." },
+    { "question": "Can I pay with a Russian card in Haifa?", "answer": "No, Russian cards don't work. You'll need shekels and a foreign bank card." },
+    { "question": "What is the climate like in Haifa?", "answer": "Mediterranean: hot, dry summers and mild, rainy winters." },
+    { "question": "How does Haifa differ from Tel Aviv?", "answer": "Haifa is cheaper, more laid-back and greener, with the sea and a mountain; Tel Aviv is pricier, more dynamic and more of a party city." }
+  ],
+  "reviews": [
+    { "profession": "engineer", "text": "Haifa means the sea, Carmel and lots of Russian speakers, cheaper than Tel Aviv. The downsides are the general price level and climbing the hills, but healthcare and high tech are strong." },
+    { "profession": "remote designer", "text": "The city is cosy and green, and adapting was easy thanks to the language. It's not cheap to live, and everything freezes on Shabbat, but you get used to it." }
+  ]
+}

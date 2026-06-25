@@ -1,5 +1,6 @@
 import { supabase } from "./supabase";
 import { getPricesByCity } from "./prices";
+import { formatRub } from "./cities";
 import type { City, Price, PriceCategory } from "./types";
 
 export type CompareCategory =
@@ -147,9 +148,163 @@ export async function loadCompare(
   return { a, b, lines, scoreA, scoreB };
 }
 
-export async function allCompareParams(): Promise<{ pair: string }[]> {
+// ── Текст-вывод и FAQ (генерируются из чисел сравнения, без ручного контента) ──
+// Нужны для уникального контента и FAQPage-разметки на compare-страницах.
+
+export type CompareFaqItem = { question: string; answer: string };
+
+// Сумма денежных категорий (аренда + продукты + транспорт + ЖКХ) — «общий бюджет».
+function moneySum(data: CompareResult, side: "a" | "b"): number {
+  return data.lines
+    .filter((l) => l.unit === "rub")
+    .reduce((acc, l) => acc + (side === "a" ? l.a : l.b), 0);
+}
+
+function nameOf(data: CompareResult, side: "a" | "b"): string {
+  return side === "a" ? data.a.name_ru : data.b.name_ru;
+}
+
+// Абзацы текста-вывода под таблицей (русский — основной язык трафика).
+export function compareSummary(data: CompareResult): string[] {
+  const { a, b } = data;
+  const rent = data.lines.find((l) => l.key === "rent");
+  const diff = data.lines.find((l) => l.key === "difficulty");
+  const sumA = moneySum(data, "a");
+  const sumB = moneySum(data, "b");
+  const cheaper = sumA === sumB ? null : sumA < sumB ? a : b;
+  const pricier = cheaper === a ? b : cheaper === b ? a : null;
+  const diffPct =
+    cheaper && pricier && Math.max(sumA, sumB) > 0
+      ? Math.round((Math.abs(sumA - sumB) / Math.max(sumA, sumB)) * 100)
+      : 0;
+
+  const out: string[] = [];
+
+  // Абзац 1 — деньги
+  if (cheaper && pricier) {
+    out.push(
+      `По базовым расходам на месяц (аренда, продукты, транспорт и ЖКХ) ${cheaper.name_ru} выходит примерно на ${diffPct}% дешевле, чем ${pricier.name_ru}: ` +
+        `${formatRub(Math.min(sumA, sumB))} против ${formatRub(Math.max(sumA, sumB))} в месяц на одного человека (ориентировочно, по курсу начала 2026 года).`,
+    );
+  } else {
+    out.push(
+      `По базовым расходам на месяц ${a.name_ru} и ${b.name_ru} сопоставимы — ориентировочно ${formatRub(sumA)} в месяц на одного человека (по курсу начала 2026 года).`,
+    );
+  }
+
+  // Абзац 2 — категории + сложность + вывод
+  const rentWinner =
+    rent && rent.winner !== "tie" ? nameOf(data, rent.winner) : null;
+  const easier =
+    diff && diff.winner !== "tie" ? nameOf(data, diff.winner) : null;
+  const leader =
+    data.scoreA === data.scoreB
+      ? null
+      : data.scoreA > data.scoreB
+        ? a.name_ru
+        : b.name_ru;
+
+  let p2 = "";
+  if (rentWinner) p2 += `Аренда заметно доступнее в городе ${rentWinner}. `;
+  if (easier) p2 += `Переехать и легализоваться обычно проще в ${easier}. `;
+  if (leader) {
+    p2 += `В сумме по большинству категорий выгоднее ${leader}. `;
+  } else {
+    p2 += `По категориям счет примерно равный — выбор зависит от приоритетов. `;
+  }
+  p2 += cheaper
+    ? `Если на первом месте экономия — берите ${cheaper.name_ru}; если важнее простота переезда${easier ? ` — ${easier}` : ""}.`
+    : `Ориентируйтесь на то, что для Вас важнее — климат, виза или сообщество.`;
+  out.push(p2);
+
+  return out;
+}
+
+// 4 вопроса FAQ — ответы из чисел (для FAQPage rich snippet).
+export function compareFaq(data: CompareResult): CompareFaqItem[] {
+  const { a, b } = data;
+  const rent = data.lines.find((l) => l.key === "rent");
+  const diff = data.lines.find((l) => l.key === "difficulty");
+  const sumA = moneySum(data, "a");
+  const sumB = moneySum(data, "b");
+  const cheaper = sumA === sumB ? null : sumA < sumB ? a.name_ru : b.name_ru;
+  const easier =
+    diff && diff.winner !== "tie" ? nameOf(data, diff.winner) : null;
+
+  const items: CompareFaqItem[] = [];
+
+  items.push({
+    question: `Где жить дешевле — ${a.name_ru} или ${b.name_ru}?`,
+    answer: cheaper
+      ? `По базовым расходам (аренда, продукты, транспорт, ЖКХ) дешевле ${cheaper}: ориентировочно ${formatRub(Math.min(sumA, sumB))} против ${formatRub(Math.max(sumA, sumB))} в месяц на одного человека по курсу начала 2026 года.`
+      : `Расходы в ${a.name_ru} и ${b.name_ru} сопоставимы — ориентировочно ${formatRub(sumA)} в месяц на одного человека.`,
+  });
+
+  if (rent) {
+    items.push({
+      question: `Сколько стоит аренда в городах ${a.name_ru} и ${b.name_ru}?`,
+      answer: `Однокомнатная квартира на окраине обходится ориентировочно в ${formatRub(rent.a)} в месяц в городе ${a.name_ru} и ${formatRub(rent.b)} — в ${b.name_ru} (оценка на начало 2026 года).`,
+    });
+  }
+
+  items.push({
+    question: `Где проще переехать — ${a.name_ru} или ${b.name_ru}?`,
+    answer: easier
+      ? `Переезд и легализация обычно проще в городе ${easier} — там ниже оценка сложности по визе, банкам и адаптации. Подробности — в профилях городов.`
+      : `По сложности переезда ${a.name_ru} и ${b.name_ru} близки. Смотрите визовые условия страны и наличие русскоязычного сообщества.`,
+  });
+
+  items.push({
+    question: `${a.name_ru} или ${b.name_ru} — что выбрать для переезда в 2026 году?`,
+    answer:
+      data.scoreA === data.scoreB
+        ? `Счет по категориям примерно равный. Если важнее бюджет — выбирайте более дешевый вариант${cheaper ? ` (${cheaper})` : ""}; если простота переезда${easier ? ` — ${easier}` : ""}.`
+        : `По большинству категорий выгоднее ${data.scoreA > data.scoreB ? a.name_ru : b.name_ru}. Окончательный выбор зависит от приоритетов: бюджет, виза, климат и сообщество.`,
+  });
+
+  return items;
+}
+
+// Топовые города для прегенерации страниц сравнения. Полная декартова пара
+// всех городов (~9700 страниц) раздувала сборку до OOM, поэтому статикой
+// собираем только пары между этими городами; остальные догенерятся по запросу
+// (ISR, dynamicParams=true). Список — стартовые города из ТЗ + крупные хабы.
+export const TOP_COMPARE_SLUGS = [
+  "tbilisi",
+  "yerevan",
+  "belgrade",
+  "dubai",
+  "bali",
+  "bangkok",
+  "almaty",
+  "krasnodar",
+  "sochi",
+  "kaliningrad",
+  "istanbul",
+  "tashkent",
+] as const;
+
+// Канонические (a < b) пары топ-городов — для sitemap, без дублей-реверсов.
+export async function topComparePairs(): Promise<string[]> {
   const { data } = await supabase.from("cities").select("slug");
-  const slugs = (data ?? []).map((c) => c.slug as string);
+  const have = new Set((data ?? []).map((c) => c.slug as string));
+  const slugs = TOP_COMPARE_SLUGS.filter((s) => have.has(s)).sort();
+  const out: string[] = [];
+  for (let i = 0; i < slugs.length; i++) {
+    for (let j = i + 1; j < slugs.length; j++) {
+      out.push(`${slugs[i]}-vs-${slugs[j]}`);
+    }
+  }
+  return out;
+}
+
+// Параметры для generateStaticParams: обе ориентации (a-vs-b и b-vs-a) топ-пар,
+// чтобы прямые ссылки в обе стороны отдавались статикой. Остальные пары —
+// on-demand. Канонизация на реверс задаётся через alternates.canonical в meta.
+export async function topCompareParams(): Promise<{ pair: string }[]> {
+  const { data } = await supabase.from("cities").select("slug");
+  const have = new Set((data ?? []).map((c) => c.slug as string));
+  const slugs = TOP_COMPARE_SLUGS.filter((s) => have.has(s));
   const out: { pair: string }[] = [];
   for (let i = 0; i < slugs.length; i++) {
     for (let j = 0; j < slugs.length; j++) {

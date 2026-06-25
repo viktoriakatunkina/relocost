@@ -44,3 +44,6 @@ coverage/
 supabase/.branches/
 supabase/.temp/
 .vercel
+
+# Локальный кэш-план переноса фото в Storage (не секрет, просто промежуточный артефакт)
+scripts/.photo-fill-plan.json

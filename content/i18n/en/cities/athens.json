@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Athens 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Athens per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A Schengen city with a Golden Visa from 250,000 euros: a path to EU citizenship, mild winters and well-developed Russian-speaking infrastructure. The city blends ancient heritage with a modern IT scene.",
+  "climate": "+18°C avg.",
+  "language": "Greek, English",
+  "currency": "Euro, EUR",
+  "population": "3.1 mln",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "Golden Visa for buying property from 250,000 euros",
+    "A direct path to EU citizenship after 7 years of residency",
+    "Warm, mild winters at +12–18°C",
+    "Sea and islands an hour from the centre",
+    "Developed Russian-speaking infrastructure: schools, doctors, notaries"
+  ],
+  "cons": [
+    "Rents rose sharply after the influx of foreigners",
+    "Hot, dry summers up to +40°C",
+    "Slow, opaque bureaucracy",
+    "Greek is essential for long-term daily life"
+  ],
+  "best_places": [
+    { "name": "Plaka", "description": "The old town at the foot of the Acropolis: taverns, boutiques, neoclassical mansions." },
+    { "name": "Kolonaki", "description": "A premium district with galleries, fusion restaurants and designer boutiques." },
+    { "name": "Coho", "description": "The main coworking of the English-speaking community, with meeting rooms and an event venue." },
+    { "name": "Glyfada", "description": "A coastal southern suburb: beaches, sports clubs, a favourite of families with children." }
+  ],
+  "visa_steps": [
+    { "title": "Schengen visa", "description": "A C or D visa through the Greek embassy. It takes 2–4 months, requirements are strict." },
+    { "title": "Golden Visa", "description": "Buying property from 250,000 euros (outside Athens) or 800,000 euros (in the centre) grants a 5-year residence permit." },
+    { "title": "Digital Nomad Visa", "description": "For remote workers with income from 3,500 euros a month — a one-year residence permit, renewable." },
+    { "title": "AFM and AMKA", "description": "A tax number and a social security number. Without them you can't open an account or sign a lease." },
+    { "title": "Bank account", "description": "Eurobank, Piraeus and Alpha Bank open accounts with a residence permit and an AFM. Cards work without restrictions." }
+  ],
+  "faq": [
+    { "question": "How is it with the language in Athens?", "answer": "English is enough for tourism and IT, but for healthcare and school you need Greek." },
+    { "question": "Is Athens good for children?", "answer": "Strong international schools (ACS, Byron, Campion). Prices from 8,000 euros a year." },
+    { "question": "How much does a Golden Visa cost in Athens?", "answer": "From 250,000 euros in property + 2,000–5,000 euros for lawyers and notaries." },
+    { "question": "Can I work for Western companies in Athens?", "answer": "Yes, through a digital nomad visa or by registering as a sole trader. Tax is 22% after the preferential regime." },
+    { "question": "Is the climate harsh in Athens?", "answer": "Summers reach +35–40°C, you need to live with air conditioning. Winters are mild but rainy." },
+    { "question": "Is Athens safe?", "answer": "The city is safe, but there's a lot of petty pickpocketing in the centre. Residential districts — no problems." }
+  ],
+  "reviews": [
+    { "profession": "investor", "text": "I bought an apartment in Glyfada for 320,000 euros and got a Golden Visa for the whole family. My daughter is in an international school, summers are on the islands. I love Greece, but you have to get used to the bureaucracy." },
+    { "profession": "developer", "text": "I got a Digital Nomad Visa and rent a studio in Kolonaki. I work for a startup in Berlin and pay a preferential tax. Athens is both work and a way of life." }
+  ]
+}

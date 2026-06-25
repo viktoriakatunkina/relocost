@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Sharjah 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Sharjah per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The UAE's third-largest emirate, right next to Dubai: visa-free entry for 90 days, zero income tax and noticeably more affordable rents. A 'dry' emirate — alcohol is banned, and the road to Dubai can get congested.",
+  "climate": "+28°C avg.",
+  "language": "Arabic, English",
+  "currency": "Dirham, AED",
+  "population": "1.8 mln",
+  "flight_from_moscow": "5.5 hours",
+  "pros": [
+    "Visa-free entry for 90 days for Russian citizens",
+    "Zero income tax",
+    "Rent noticeably cheaper than Dubai",
+    "High safety and a family-friendly atmosphere",
+    "All of Dubai's services and airports nearby"
+  ],
+  "cons": [
+    "A 'dry' emirate — alcohol is banned",
+    "Traffic jams on the Dubai highway at rush hour",
+    "Very hot summers",
+    "More conservative norms and dress code"
+  ],
+  "best_places": [
+    { "name": "Al Qasba", "description": "A canal with a Ferris wheel, cafés and a waterfront promenade." },
+    { "name": "Blue Souk (Central Market)", "description": "A famous market with carpets, gold and souvenirs." },
+    { "name": "Al Majaz Waterfront", "description": "A lagoon-side park with a fountain, walkways and city views." },
+    { "name": "Museum of Islamic Civilization", "description": "A rich collection housed in a former market building on the waterfront." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Visa-free for up to 90 days on arrival for Russians (as throughout the UAE)." },
+    { "title": "Residence visa", "description": "Through employment, a freelance permit, a company or property." },
+    { "title": "Emirates ID", "description": "The resident ID — required for renting, banking and mobile service." },
+    { "title": "Renting a home", "description": "Cheaper than Dubai; often paid by cheques several months in advance." },
+    { "title": "Bank account", "description": "UAE banks open accounts for residents with an Emirates ID." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Sharjah?", "answer": "No, visa-free for up to 90 days on arrival. For living there, you get a residence visa, just like in Dubai." },
+    { "question": "How much does it cost to live in Sharjah?", "answer": "Cheaper than Dubai, especially rent, with zero income tax. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Sharjah?", "answer": "Arabic is the official language, but English is used everywhere at work and in daily life." },
+    { "question": "Can I pay with a Russian card in Sharjah?", "answer": "No, Russian cards don't work. You need a foreign bank card or cash dirhams." },
+    { "question": "What is the climate like in Sharjah?", "answer": "Desert: very hot summers and warm, comfortable winters — the best season is November to March." },
+    { "question": "Is it true that alcohol is banned in Sharjah?", "answer": "Yes, Sharjah is a 'dry' emirate: the sale and consumption of alcohol are banned, unlike in Dubai." }
+  ],
+  "reviews": [
+    { "profession": "entrepreneur", "text": "I live in Sharjah and work in Dubai — the savings on rent are significant. The downsides are the morning traffic on the highway and the alcohol ban, so we head to the neighbouring emirate for that." },
+    { "profession": "remote manager", "text": "Sharjah is calm and family-friendly, cheaper than Dubai and safe. You need to get used to the more conservative norms, but all the services of a metropolis are right next door." }
+  ]
+}

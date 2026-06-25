@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Ankara 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Ankara per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Turkey in the heart of the country: visa-free entry, a business and student city without the resort markup, cheaper than Istanbul and the coast. The downsides — no sea, a continental climate with cold winters and less of a tourist scene.",
+  "climate": "+12°C avg.",
+  "language": "Turkish, English",
+  "currency": "Lira, TRY",
+  "population": "5.7 mln",
+  "flight_from_moscow": "3.5 hours",
+  "pros": [
+    "Visa-free entry for Russian citizens",
+    "Cheaper than Istanbul and the coast",
+    "A business and student city without the resort markup",
+    "Developed urban infrastructure and transport",
+    "Less tourist bustle"
+  ],
+  "cons": [
+    "No sea — it's an inland city",
+    "Continental climate with cold winters",
+    "Less of an English-speaking, international scene",
+    "Not the most spectacular city in Turkey"
+  ],
+  "best_places": [
+    { "name": "Anıtkabir", "description": "The mausoleum of Atatürk — the country's main memorial, with a museum." },
+    { "name": "The Citadel (Ankara Kalesi)", "description": "An old fortress with narrow streets and a view over the city." },
+    { "name": "Kızılay", "description": "The central business and student district, with cafés and shops." },
+    { "name": "Çankaya", "description": "A prestigious, green district with embassies and rentals for newcomers." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russian citizens don't need a visa for short trips — the stamp is issued at the border." },
+    { "title": "Rental and address", "description": "A long-term lease is the basis for the subsequent residence permit (ikamet)." },
+    { "title": "Tax number and bank account", "description": "The vergi numarası is issued quickly; with it you can open a bank account." },
+    { "title": "Ikamet (residence permit)", "description": "Tourist-based or on other grounds — applied for online through göç idaresi." },
+    { "title": "Transport", "description": "The city has a metro and developed public transport." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Ankara?", "answer": "No, no visa is needed for short trips. For long-term residence you obtain an ikamet." },
+    { "question": "How much does it cost to live in Ankara?", "answer": "Cheaper than Istanbul and the resorts — no tourist markup. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Ankara?", "answer": "Turkish; there's less English than in tourist cities." },
+    { "question": "Can I pay with a Russian card in Ankara?", "answer": "No, Russian cards don't work. You need lira and a card from a foreign or Turkish bank." },
+    { "question": "What is the climate like in Ankara?", "answer": "Continental: hot, dry summers and a cold, sometimes snowy winter — there's no sea nearby." },
+    { "question": "How does Ankara differ from Istanbul?", "answer": "Ankara is cheaper, calmer and more business-oriented, but without the sea or the strait; Istanbul is larger, more spectacular and more expensive." }
+  ],
+  "reviews": [
+    { "profession": "remote analyst", "text": "Ankara is a practical, affordable city without the resort markup, with a convenient metro and infrastructure. The downsides — no sea, cold winters and not much for tourists." },
+    { "profession": "remote manager", "text": "We moved for the prices and the calm: cheaper than Istanbul, less bustle. There's little English, you have to learn Turkish, but daily life is convenient and the student scene is lively." }
+  ]
+}

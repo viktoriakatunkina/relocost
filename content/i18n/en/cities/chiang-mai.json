@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Chiang Mai 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Chiang Mai per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The world capital of digital nomads: low prices, a mild mountain climate, dozens of coworkings and an active international community. Ideal for those who work remotely and value a calm pace of life.",
+  "climate": "+25°C avg.",
+  "language": "Thai, English",
+  "currency": "Baht, THB",
+  "population": "200 thousand",
+  "flight_from_moscow": "13 hours",
+  "pros": [
+    "The world capital of digital nomads, with dozens of coworkings",
+    "Low prices: housing, food and transport 2–3 times cheaper than Moscow",
+    "A mild mountain climate — cooler than Phuket",
+    "A large international community and a developed remote-work infrastructure",
+    "Close to nature: mountains, waterfalls, temples and elephant sanctuaries"
+  ],
+  "cons": [
+    "The Burning Season from February to April brings heavy air pollution",
+    "The rainy season runs from June to October",
+    "Getting around is inconvenient without a motorbike or car",
+    "Difficulties with international payments and Russian cards"
+  ],
+  "best_places": [
+    { "name": "Nimmanhaemin", "description": "A hipster district with dozens of cafés, bars, boutiques and coworkings." },
+    { "name": "Punspace", "description": "Chiang Mai's main coworking chain — an iconic spot among nomads." },
+    { "name": "Old City", "description": "An ancient square of walls and moats, dozens of temples and a calm atmosphere." },
+    { "name": "Doi Suthep", "description": "The city's main temple on the mountain, with a panoramic view over Chiang Mai." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 60 days without a visa on a passport, with a 30-day extension at immigration." },
+    { "title": "Education Visa or DTV", "description": "A study visa (Thai language, Muay Thai) or the DTV for nomads — a year or more of stay." },
+    { "title": "Tax ID (TIN)", "description": "Needed for a bank account and a long-term lease — issued at the Revenue Department." },
+    { "title": "Bank account", "description": "Kasikorn, SCB, Bangkok Bank — open accounts with a visa and a lease contract." },
+    { "title": "Renting a home", "description": "Contracts from 6 months; in the Old City and Nimman prices are lower than in Bangkok or Phuket." }
+  ],
+  "faq": [
+    { "question": "What is the Burning Season in Chiang Mai?", "answer": "February–April — farmers burn their fields and the air becomes hazardous (AQI 200+). Many nomads leave during this period." },
+    { "question": "When is the best season in Chiang Mai?", "answer": "November–January — dry and cool (+20–28°C), perfect for living and working." },
+    { "question": "How is banking in Chiang Mai?", "answer": "Kasikorn and SCB open accounts for Russians with a visa and a contract, but VISA cards are issued selectively." },
+    { "question": "Can I relocate with children to Chiang Mai?", "answer": "Yes, there are many international schools (CMIS, Lanna, Prem) and a strong parents' community." },
+    { "question": "What about transport in Chiang Mai?", "answer": "Most people rent a motorbike (3,000–5,000 ₽/month); there's also Grab and songthaews (shared trucks)." },
+    { "question": "How is the internet in Chiang Mai?", "answer": "Fibre at 300+ Mbps for 1,100–1,900 ₽, 4G/5G everywhere — one of the best cities for remote work." }
+  ],
+  "reviews": [
+    { "profession": "product designer", "text": "Chiang Mai is for those who want to work remotely and spend little. The downside is the Burning Season — I fly to Bali for two months." },
+    { "profession": "illustrator", "text": "I rented a studio in Nimman for 28,000 ₽ and go to the Punspace coworking. Quiet, safe, affordable and lots of nomad friends." }
+  ]
+}

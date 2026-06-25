@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Bali 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Bali per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The region's main digital nomad hub: a warm climate year-round, well-developed infrastructure for remote workers and affordable villa rentals. Visa on arrival plus extension, card payments are limited.",
+  "climate": "+27°C avg.",
+  "language": "Indonesian, English",
+  "currency": "Rupiah, IDR",
+  "population": "4.4 mln (island)",
+  "flight_from_moscow": "14 hours with a layover",
+  "pros": [
+    "A warm climate year-round — +27°C",
+    "Developed infrastructure for remote workers — cafés, coworkings, fast Wi-Fi",
+    "Affordable villa rentals, especially outside Canggu and Ubud",
+    "A huge international digital nomad community",
+    "Unique nature, culture and surfing"
+  ],
+  "cons": [
+    "Visa on Arrival is only for 30 days; you need an extension or a nomad visa",
+    "Lower healthcare quality — serious cases require evacuation to Singapore",
+    "Rainy season from November to March",
+    "Local bureaucracy for long-term living goes through agents",
+    "MIR cards don't work and taking money out is difficult"
+  ],
+  "best_places": [
+    { "name": "Canggu", "description": "The island's main nomad district: cafés, coworkings, beaches, bar-clubs." },
+    { "name": "Ubud", "description": "Jungle, rice terraces, a calm alternative to Canggu — for yoga and long-term work." },
+    { "name": "Outpost Ubud", "description": "The leader among the island's coworkings, networking every day and an on-site café." },
+    { "name": "La Brisa", "description": "A beach club in Canggu — the prime sunset spot with an Instagram-worthy vibe." }
+  ],
+  "visa_steps": [
+    { "title": "Visa on Arrival", "description": "30 days on entry, payment $35 — for short trips and wintering." },
+    { "title": "VoA extension", "description": "Another 30 days through immigration or an agent — for 2,000–3,000 ₽." },
+    { "title": "B211A — socio-cultural visa", "description": "60 days, extendable up to 180 — arranged through a sponsoring agent." },
+    { "title": "Digital Nomad Visa (E33G)", "description": "5 years for remote workers earning from $60,000 — without the right to work for Indonesian clients." },
+    { "title": "KITAS", "description": "A work or retirement residence visa — for long-term stays and a local account." }
+  ],
+  "faq": [
+    { "question": "Can I work for a local company in Bali?", "answer": "Without a KITAS it's a grey area. Many people do it, but there are risks during inspections." },
+    { "question": "Where can I open an account in Bali?", "answer": "Local banks require a KITAS. Without one — only e-wallets and foreign cards." },
+    { "question": "How much does a visa agent cost in Bali?", "answer": "From 3,000 to 10,000 ₽ for an extension, depending on the visa type and urgency." },
+    { "question": "What is healthcare like in Bali?", "answer": "Private clinics in Kuta and Denpasar — an appointment from 3,500 ₽. Serious cases — evacuation to Singapore." },
+    { "question": "How much does it cost to rent a motorbike in Bali?", "answer": "70,000–100,000 IDR ≈ 400–600 ₽ a day. The nomads' main mode of transport." },
+    { "question": "How do I pay in Bali?", "answer": "Cash or a local card. MIR doesn't work. Many places are cash only." }
+  ],
+  "reviews": [
+    { "profession": "frontend developer", "text": "Canggu is an alternative universe. I work in the morning, surf in the afternoon, and mix with an international community — a balance you won't find in Russia." },
+    { "profession": "copywriter", "text": "Bali is perfect for wintering. But living here permanently is hard: average healthcare, frightening bureaucracy, and sometimes you just want a normal city." }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Chisinau 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Chisinau per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Moldova, with 90-day visa-free entry, widely spoken Russian and low prices. A quiet, green city with wineries nearby; the downsides are a small job market and limited international infrastructure.",
+  "climate": "+10°C avg.",
+  "language": "Romanian, Russian",
+  "currency": "Leu, MDL",
+  "population": "530 thousand",
+  "flight_from_moscow": "2.5 hours",
+  "pros": [
+    "Visa-free for 90 days, just 2.5 hours' flight from Moscow",
+    "Russian is widely spoken",
+    "Very low prices for housing and groceries",
+    "A quiet, green city with renowned wineries nearby",
+    "Easy adaptation and a familiar environment"
+  ],
+  "cons": [
+    "A small job market and modest salaries",
+    "Limited international infrastructure",
+    "Few direct flights worldwide",
+    "Overcast and cool in winter"
+  ],
+  "best_places": [
+    { "name": "Ștefan cel Mare Park", "description": "The central park with alleys, a fountain and a monument to ruler Ștefan." },
+    { "name": "Ștefan cel Mare Avenue", "description": "The city's main street with cafés, shops and administrative buildings." },
+    { "name": "Cricova (winery)", "description": "Famous underground wine streets near the city, with tours and tastings." },
+    { "name": "Central Market", "description": "A large market with fresh produce, cheeses and local wines." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 90 days without a visa — all you need is a passport." },
+    { "title": "Registration", "description": "For stays longer than 90 days, residence registration is required." },
+    { "title": "Renting a home", "description": "Apartments are rented affordably; the lease is useful for further procedures." },
+    { "title": "Bank account", "description": "Local banks (maib, Victoriabank) open accounts with a passport and an address." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business, study or family reunification." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Chisinau?", "answer": "No, visa-free for up to 90 days. For a longer stay you arrange registration or a residence permit." },
+    { "question": "How much does it cost to live in Chisinau?", "answer": "Very cheap — one of the most budget-friendly options in Europe. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Chisinau?", "answer": "The official language is Romanian (Moldovan), but Russian is widely understood and used in daily life." },
+    { "question": "Can I pay with a Russian card in Chisinau?", "answer": "The MIR card is accepted only in limited places; a local card or a foreign bank card is more reliable." },
+    { "question": "What is the climate like in Chisinau?", "answer": "Moderately continental: warm summers and cool, sometimes snowy winters." },
+    { "question": "What is Moldova famous for?", "answer": "World-class wineries — Cricova and Mileștii Mici, which have the longest wine cellars in the world." }
+  ],
+  "reviews": [
+    { "profession": "remote analyst", "text": "Chisinau is calm and cheap, the language is no problem, and home is a short flight away. The downside is the limited international services and a modest job market." },
+    { "profession": "accountant", "text": "I moved here for the easy adaptation: everything is clear, prices are low and the wine is wonderful. Winter can feel dreary, but the city blossoms in spring." }
+  ]
+}

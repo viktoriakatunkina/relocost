@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Tivat 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Tivat per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A town on the Bay of Kotor with the Porto Montenegro marina: yachts, mountains by the sea and a calm, premium resort feel. Russian citizens get 30 days visa-free; life here is seasonal and pricier than in neighbouring Budva.",
+  "climate": "+16°C avg.",
+  "language": "Montenegrin, Serbian, Russian",
+  "currency": "Euro, EUR",
+  "population": "15k",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "30 days visa-free for Russian citizens",
+    "The Porto Montenegro marina and a yachting atmosphere",
+    "Mountains right by the sea, the beautiful Bay of Kotor",
+    "A calm, premium resort",
+    "A Russian-speaking community and familiar services"
+  ],
+  "cons": [
+    "More expensive than neighbouring Budva",
+    "Life is seasonal; much of it shuts down in winter",
+    "A small town with a limited choice of services",
+    "Banks are cautious about opening accounts"
+  ],
+  "best_places": [
+    { "name": "Porto Montenegro", "description": "A modern marina with yachts, boutiques, restaurants and a waterfront promenade." },
+    { "name": "Luštica Peninsula", "description": "Wild beaches and coves across from Tivat, reachable by ferry." },
+    { "name": "Island of Flowers (Prevlaka)", "description": "A green peninsula with monastery ruins and quiet beaches." },
+    { "name": "Old Kotor nearby", "description": "A medieval UNESCO-protected town half an hour away." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russian citizens get up to 30 days visa-free — all you need is a passport." },
+    { "title": "Registration", "description": "You must register (beli karton) within the first 24 hours — usually handled by the landlord or hotel." },
+    { "title": "Renting housing", "description": "Prices are higher in summer; a long-term lease is the basis for a residence permit." },
+    { "title": "Boravak (residence permit)", "description": "Through property, setting up a company (d.o.o.) or employment." },
+    { "title": "Bank account", "description": "Montenegrin banks don't open accounts for everyone or right away — you'll need an address and grounds." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Tivat?", "answer": "No, up to 30 days visa-free. For a long stay you obtain a residence permit (boravak)." },
+    { "question": "How much does it cost to live in Tivat?", "answer": "More expensive than Budva and Podgorica — it's a premium resort. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Tivat?", "answer": "Montenegrin (close to Serbian); Russian and English are widely understood in tourism." },
+    { "question": "Can I pay with a Russian card in Tivat?", "answer": "No, Russian cards don't work. You'll need a foreign bank card or euros in cash." },
+    { "question": "What is the climate like in Tivat?", "answer": "Mediterranean: hot summers and mild rainy winters, in a sheltered bay." },
+    { "question": "How is Tivat different from Budva?", "answer": "Tivat is quieter and more upscale thanks to Porto Montenegro; Budva is noisier and more touristy." }
+  ],
+  "reviews": [
+    { "profession": "entrepreneur", "text": "Tivat means mountains, sea and yachts — very beautiful and peaceful. Pricier than Budva, and in winter it's quiet to the point of dozing off, but for living by the sea it's excellent." },
+    { "profession": "remote manager", "text": "We chose Tivat because of Porto Montenegro and the bay. In summer it's expensive and dressed up. The tricky part was the bank — the account didn't open straight away." }
+  ]
+}

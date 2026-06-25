@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Nicosia 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Nicosia per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The business capital of Cyprus with a year-round IT industry and affordable prices compared to Limassol. English everywhere, a transparent tax system and a simplified residence permit procedure for Russians.",
+  "climate": "+20°C avg.",
+  "language": "Greek, English, Russian",
+  "currency": "Euro, EUR",
+  "population": "330 thousand",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "English everywhere — a lower language barrier",
+    "A simple pink slip procedure for Russians (residence permit in 2 months)",
+    "A transparent tax system with benefits for non-residents",
+    "A growing IT industry and major offices of JetBrains, EPAM and Wargaming",
+    "Close to the sea (40 minutes to Larnaca or Limassol)"
+  ],
+  "cons": [
+    "Hot, dry summers of +35°C with no sea breeze",
+    "Cold nights in winter; heating is weak and expensive",
+    "Weak public transport",
+    "A divided island — there is a northern Turkish part"
+  ],
+  "best_places": [
+    { "name": "Laiki Geitonia", "description": "The heart of the old town by the walls: craft workshops, cafés and museums." },
+    { "name": "Mall of Cyprus", "description": "The island's main shopping centre: shops, restaurants, a cinema and a food court." },
+    { "name": "The Hub", "description": "The main coworking of the IT community — meetups, startup events and meeting rooms." },
+    { "name": "Engomi", "description": "A quiet suburb with villas, schools and parks — the choice of families with children." }
+  ],
+  "visa_steps": [
+    { "title": "Pink Slip", "description": "A temporary residence permit for the financially independent: a 24,000 euro deposit in a Cypriot bank and a rental." },
+    { "title": "Trade Office", "description": "Registering a company or becoming an IT-industry resident — a path to the Yellow Slip and tax residency." },
+    { "title": "Yellow Slip", "description": "A residence permit for EU citizens and for Russians through employment. Processing takes 1–2 months." },
+    { "title": "Bank account", "description": "Bank of Cyprus, Hellenic Bank — they open accounts with a residence permit. Proof of source of funds is required." },
+    { "title": "Tax registration", "description": "Obtaining a TIN and a social number — mandatory for work and applying for social benefits." }
+  ],
+  "faq": [
+    { "question": "How is English in Nicosia?", "answer": "In Nicosia English is the second official language. All services, schools and healthcare are conducted in it." },
+    { "question": "Can I work remotely in Nicosia?", "answer": "Yes, through registering as a sole trader or a local company. A reduced 12.5% tax with the IP Box." },
+    { "question": "How much does a residence permit cost in Nicosia?", "answer": "The Pink Slip costs a 24,000 euro deposit + 2,000 euros for processing. A residence permit through employment is free for the employer." },
+    { "question": "Where is the sea in Nicosia?", "answer": "40 minutes to Larnaca or 1 hour to Limassol. Many people live in Nicosia and go to the beach on weekends." },
+    { "question": "Is the climate hard in Nicosia?", "answer": "Very hot, dry summers of +35–40°C and mild winters of +10–15°C. Air conditioning is essential." },
+    { "question": "Are the schools good in Nicosia?", "answer": "Cyprus American Academy, Junior School, English School — top international schools with tuition from 8,000 euros a year." }
+  ],
+  "reviews": [
+    { "profession": "developer at JetBrains", "text": "I moved through relocation and got tax residency after 2 years. A salary in euros, a 12.5% tax, my daughter at the English School. The downside — 40°C and dry in summer." },
+    { "profession": "product manager", "text": "We got a Pink Slip for the whole family, my husband works for a Canadian startup. Nicosia is for those who want Cyprus but without the resort noise of Limassol." }
+  ]
+}

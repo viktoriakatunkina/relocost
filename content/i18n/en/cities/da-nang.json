@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Da Nang 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Da Nang per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Vietnam's rising capital of digital nomads: a long beach, a warm sea year-round, very low prices and a convenient visa. The city blends a resort pace with a developed IT infrastructure.",
+  "climate": "+26°C avg.",
+  "language": "Vietnamese, English",
+  "currency": "Dong, VND",
+  "population": "1.1 mln",
+  "flight_from_moscow": "12 hours",
+  "pros": [
+    "The longest city beach in the region (My Khe)",
+    "Very low prices: housing, food and transport",
+    "A growing community of digital nomads and founders",
+    "Close to Hoi An, the Hai Van Pass and national parks",
+    "Stable 4G/5G and a developed infrastructure for remote work"
+  ],
+  "cons": [
+    "Typhoon season from September to November",
+    "Difficulties with a long-term visa for Russian citizens",
+    "Getting around is hard without a motorbike or car",
+    "A language barrier outside the tourist zone"
+  ],
+  "best_places": [
+    { "name": "My Khe Beach", "description": "30 km of white sand along the city's eastern shore — one of the best city beaches in the world." },
+    { "name": "An Thuong", "description": "An expat quarter by the sea: Western cafés, yoga studios, coworkings and a large international community." },
+    { "name": "Surf Coworking Da Nang", "description": "The main space for remote workers, with meeting rooms, events and a rooftop terrace." },
+    { "name": "Son Tra Peninsula", "description": "A wild reserve in the north: beaches, viewpoints and a giant Buddha statue." }
+  ],
+  "visa_steps": [
+    { "title": "E-Visa", "description": "A 90-day electronic visa for Russian citizens, arranged online in 3 days." },
+    { "title": "DN business visa", "description": "Through an invitation from a Vietnamese company. Valid for up to 1 year with extension." },
+    { "title": "Tax registration", "description": "For working for Western companies — via an MST (tax code). Issued at the local branch of the General Department of Taxation." },
+    { "title": "Bank account", "description": "Vietcombank, Techcombank, VPBank open accounts for foreigners with a DN visa and a lease contract." },
+    { "title": "Renting a home", "description": "Long-term rentals (from 6 months) — through local agents or Facebook groups. The lease is registered with the police." }
+  ],
+  "faq": [
+    { "question": "When is the best season in Da Nang?", "answer": "From March to August — dry and warm. September–November is the season of typhoons and rain." },
+    { "question": "How is banking in Da Nang?", "answer": "Harder than in Thailand: you need a DN visa and a lease contract. Opening an account is almost impossible for tourists." },
+    { "question": "Where to live in Da Nang?", "answer": "An Thuong — expats and the beach. The Han River — modern complexes. Son Tra Peninsula — villas and quiet." },
+    { "question": "Can I relocate with children to Da Nang?", "answer": "Singapore International School Da Nang is the main international school. Fees start from $12,000 a year." },
+    { "question": "What transport is there in Da Nang?", "answer": "Renting a motorbike ($50–70 a month) is the main way to get around. Grab taxis are cheap." },
+    { "question": "How is the internet in Da Nang?", "answer": "Fibre at 100+ Mbps for 600 rubles a month, mobile 4G everywhere. Perfect for remote work." }
+  ],
+  "reviews": [
+    { "profession": "copywriter", "text": "I'm wintering in Da Nang for the second year: a place by the sea for 25,000 rubles, coffee for 80, surfing every day. The downside is the visa every 3 months — I do a visa run to Thailand." },
+    { "profession": "strategist", "text": "I moved from Bangkok: quieter, cheaper, the ocean instead of that gulf-like sea. I work remotely and pay tax in Russia. Da Nang is Vietnam-lite without the megacity noise." }
+  ]
+}

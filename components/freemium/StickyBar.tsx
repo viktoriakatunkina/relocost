@@ -8,6 +8,7 @@ import {
   type PackageType,
 } from "@/lib/unlocked";
 import { PaymentModal } from "./PaymentModal";
+import { RestoreAccess } from "./RestoreAccess";
 
 export function StickyBar({
   slug,
@@ -64,6 +65,9 @@ export function StickyBar({
                 </span>
               )}
             </button>
+          </div>
+          <div className="flex justify-end pt-2">
+            <RestoreAccess slug={slug} />
           </div>
         </div>
       </div>

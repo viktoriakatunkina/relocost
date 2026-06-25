@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Siem Reap 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Siem Reap per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A town next to the temples of Angkor: a simple visa on arrival, very cheap living and a relaxed pace. US dollars are in everyday use; the downsides are the heat, basic healthcare and the rainy season.",
+  "climate": "+28°C avg.",
+  "language": "Khmer, English",
+  "currency": "Riel, KHR (and US dollars)",
+  "population": "245 thousand",
+  "flight_from_moscow": "12 hours with a layover",
+  "pros": [
+    "A simple visa on arrival",
+    "Very cheap living",
+    "The temples of Angkor nearby",
+    "A relaxed pace and an expat community",
+    "US dollars in everyday use"
+  ],
+  "cons": [
+    "Heat and the rainy season",
+    "Basic healthcare",
+    "The town's dependence on tourism",
+    "A language barrier outside tourism"
+  ],
+  "best_places": [
+    { "name": "Angkor Wat", "description": "The greatest temple complex in the world, a UNESCO site — the main reason to come." },
+    { "name": "Pub Street and the Old Market", "description": "The tourist hub with cafés, bars and a night market." },
+    { "name": "Ta Prohm", "description": "A temple entwined by tree roots — the famous jungle of Angkor." },
+    { "name": "Tonle Sap Lake", "description": "The region's largest lake, with floating villages." }
+  ],
+  "visa_steps": [
+    { "title": "Visa on arrival / e-visa", "description": "Russians can get a tourist visa on arrival or online for 30 days." },
+    { "title": "Renting a home", "description": "Houses and apartments are rented monthly very cheaply." },
+    { "title": "Money", "description": "US dollars are in everyday use; riel is given as change. You need a foreign bank card." },
+    { "title": "Business visa (type E)", "description": "For a long-term stay, get a type E visa with a one-year extension." },
+    { "title": "Transport", "description": "Tuk-tuks and bicycles are handy around town; tuk-tuk to Angkor." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Siem Reap?", "answer": "Yes, a simple visa on arrival or e-visa for 30 days. For long-term living, you get a type E business visa." },
+    { "question": "How much does it cost to live in Siem Reap?", "answer": "Very cheap — one of the most budget-friendly options in Asia. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Siem Reap?", "answer": "Khmer; English is widely used in tourism." },
+    { "question": "Can I pay with a Russian card in Siem Reap?", "answer": "No, Russian cards don't work. US dollars in cash and a foreign bank card are in use." },
+    { "question": "What is the climate like in Siem Reap?", "answer": "Tropical: hot year-round, with distinct dry and rainy seasons." },
+    { "question": "How does Siem Reap differ from Phnom Penh?", "answer": "Siem Reap is a quiet temple town by Angkor; Phnom Penh is the capital and business centre." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Siem Reap means Angkor right next door and rock-bottom prices, with dollars everywhere. The downsides are the heat, basic healthcare and the town's heavy reliance on tourism." },
+    { "profession": "illustrator", "text": "A quiet little town with great temples nearby. Living is very cheap and the community is friendly. It's humid in the rains, and for serious medical care people go to Bangkok." }
+  ]
+}

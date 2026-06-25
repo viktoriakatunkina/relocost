@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Saint Petersburg 2026: Rent, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Saint Petersburg per month: rent, food, transport, salaries and reviews from those who relocated. We calculate a realistic moving budget in the Relocost calculator.",
+  "intro_text": "A cultural capital with a European atmosphere and more affordable prices than Moscow. The IT cluster and creative industries are the main employers.",
+  "climate": "+5°C avg.",
+  "language": "Russian",
+  "currency": "Ruble, RUB",
+  "population": "5.4 mln",
+  "flight_from_moscow": "1.5 hours",
+  "pros": [
+    "European-level architecture and culture",
+    "Prices lower than in Moscow, especially for rent",
+    "White Nights and an atmosphere found nowhere else",
+    "A developed IT scene and creative industries",
+    "Proximity to Finland and the Baltic"
+  ],
+  "cons": [
+    "Grey weather for most of the year, little sunshine",
+    "High humidity and heavy rain",
+    "Dark skies in winter from October to March",
+    "Seasonal flooding and problematic tap water"
+  ],
+  "best_places": [
+    { "name": "Petrogradskaya Side", "description": "A spectacular historic district with venues for locals, not tourists." },
+    { "name": "Rubinshteyna Street", "description": "Saint Petersburg's main bar street — dozens of cafés and bars in one spot." },
+    { "name": "Sevkabel Port", "description": "A creative cluster on the Vasilyevsky waterfront — festivals, markets, restaurants." },
+    { "name": "Page", "description": "A modern coworking space for remote workers and teams — meeting rooms and networking." }
+  ],
+  "visa_steps": [
+    { "title": "Registration of residence", "description": "Through an MFC or Gosuslugi — a standard procedure." },
+    { "title": "Finding a rental", "description": "Avito, Cian — the market is large, especially active in Vasilyevsky and Petrogradka." },
+    { "title": "Lease for the MFC", "description": "A copy of the lease is submitted to the MFC for registration." },
+    { "title": "Clinic", "description": "Registration through Gosuslugi by address." },
+    { "title": "Self-employment / sole proprietorship", "description": "Registration via the 'My Tax' app — for remote earnings and local business." }
+  ],
+  "faq": [
+    { "question": "What are IT salaries like in Saint Petersburg?", "answer": "Middle 200,000–350,000 ₽, Senior 350,000–600,000 ₽ — slightly below Moscow levels." },
+    { "question": "Where should I live in Saint Petersburg?", "answer": "The centre is atmospheric but has damp old buildings. Petrogradskaya and Vasilyevsky are the IT crowd's choice." },
+    { "question": "Is the climate hard in Saint Petersburg?", "answer": "Winters are dark and grey, summers short. Many take vitamin D and use light lamps." },
+    { "question": "Is the metro far in Saint Petersburg?", "answer": "The metro is deep, but in the centre stations are close together. On the outskirts it's a bus or marshrutka." },
+    { "question": "What about the water in Saint Petersburg?", "answer": "People don't drink it from the tap — they use filters or buy bottled water." },
+    { "question": "Is Europe nearby?", "answer": "It used to be 4 hours by car to Helsinki — now it's tricky with the Schengen. The Gulf of Finland is close by." }
+  ],
+  "reviews": [
+    { "profession": "designer", "text": "Petersburg is a slow pace and atmosphere. The downside is the greyness — it took me a year to get used to it." },
+    { "profession": "product manager", "text": "Prices are 30% lower than in Moscow, while the infrastructure is almost the same. A perfect balance for remote work." }
+  ]
+}

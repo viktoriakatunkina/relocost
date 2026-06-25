@@ -22,6 +22,10 @@ export type City = {
   lng: number | null;
   unsplash_photo_id: string | null;
   unsplash_url: string | null;
+  // Локальный URL hero-фото в Supabase Storage (доступен с RU-VPS, в отличие
+  // от images.unsplash.com). Фолбэк — unsplash_url. См. lib/photo.ts.
+  // optional: до применения миграции 202606111200 колонки в выборке нет.
+  image_url?: string | null;
   unsplash_author_name: string | null;
   unsplash_author_url: string | null;
   gallery: GalleryPhoto[] | null;

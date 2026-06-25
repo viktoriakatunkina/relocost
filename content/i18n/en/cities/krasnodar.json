@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Krasnodar 2026: Rent, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Krasnodar per month: rent, food, transport, salaries and reviews from those who relocated. We calculate a realistic moving budget in the Relocost calculator.",
+  "intro_text": "The warm south of Russia with no visa and no connecting flights: mild winters, a developed job market, low prices for food and services. Active construction is pushing up housing prices, but overall the city remains affordable.",
+  "climate": "+13°C avg.",
+  "language": "Russian",
+  "currency": "Ruble, RUB",
+  "population": "1.0 mln",
+  "flight_from_moscow": "2 hours",
+  "pros": [
+    "No visa, no language barrier, no new rules",
+    "A warm climate with a short, mild winter",
+    "An active job market — IT, e-commerce, retail",
+    "The Black Sea is a 2-hour drive away",
+    "Low prices for food and services compared to Moscow"
+  ],
+  "cons": [
+    "Chaotic development and traffic in the centre",
+    "Urban infrastructure isn't developed everywhere",
+    "Dirty air during rush hours and construction periods",
+    "Muggy summers, up to +40°C in July",
+    "Little parking, especially in the centre"
+  ],
+  "best_places": [
+    { "name": "Krasnodar Park (Galitsky Park)", "description": "A modern, European-level park — amphitheatres, fountains and scenic walking routes." },
+    { "name": "Teatralnaya Square", "description": "The heart of the pedestrian centre — cafés, shopping streets and walks down to the Kuban." },
+    { "name": "Mayak", "description": "A large coworking space for remote workers and teams — meeting rooms and open spaces." },
+    { "name": "Brodyaga", "description": "A local third-wave coffee shop — roasting on site and signature alternative brewing methods." }
+  ],
+  "visa_steps": [
+    { "title": "Registration at place of residence", "description": "Through the MFC or Gosuslugi — 7 working days." },
+    { "title": "Finding a rental", "description": "Avito, Cian, Yula — the standard platforms. Leases are usually for 11 months." },
+    { "title": "Contract for the MFC", "description": "A copy of the lease is submitted to the MFC for registration." },
+    { "title": "Pension fund and healthcare", "description": "Transfer your work record and register with a clinic via Gosuslugi." },
+    { "title": "Self-employment or sole proprietorship", "description": "Set up via the Moy Nalog app or Gosuslugi — for remote income." }
+  ],
+  "faq": [
+    { "question": "How quickly can you find work in Krasnodar?", "answer": "Krasnodar is growing fast — IT, e-commerce, agriculture, retail. There are plenty of openings and moderate competition." },
+    { "question": "Which districts should I choose in Krasnodar?", "answer": "The centre is pricier and noisier. Yubileyny, Gidrostroy and YuMR are cheaper and quieter, but farther out." },
+    { "question": "What about traffic in Krasnodar?", "answer": "Worse during rush hour, especially in the centre. A 5 km radius from the centre can mean an hour in traffic." },
+    { "question": "How is parking in Krasnodar?", "answer": "Paid in the centre, but spaces are scarce. In courtyards, residents compete for spots." },
+    { "question": "Is the climate comfortable in Krasnodar?", "answer": "Winter is mild, +5°C. Summer is muggy and hot — tough without air conditioning." },
+    { "question": "How much does a renovation cost in Krasnodar?", "answer": "From 8,000 ₽ per sq m turnkey — it depends on the district and materials." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "I moved from Moscow — for the same money I got a two-room flat in the centre and a warm winter. The quality of the urban environment is improving, but traffic is getting worse." },
+    { "profession": "copywriter", "text": "Kuban cuisine, fruit, markets — a whole way of life. The downside is the muggy summer; it's tough without a car." }
+  ]
+}

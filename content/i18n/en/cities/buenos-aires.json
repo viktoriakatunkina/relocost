@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Buenos Aires 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Buenos Aires per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Argentina with a European character: 90 days visa-free, a café culture and affordable prices in the local currency. The downsides are the long flight, peso inflation and the language barrier.",
+  "climate": "+18°C avg.",
+  "language": "Spanish",
+  "currency": "Peso, ARS",
+  "population": "3 mln",
+  "flight_from_moscow": "18 hours with a connection",
+  "pros": [
+    "90 days visa-free for Russian citizens",
+    "A European character and café culture",
+    "Affordable prices in the local currency",
+    "A rich cultural life and tango",
+    "Healthcare that's good by regional standards"
+  ],
+  "cons": [
+    "A very long flight",
+    "Inflation and swings in the peso exchange rate",
+    "A language barrier — you'll need Spanish",
+    "Bureaucracy and an unstable economy"
+  ],
+  "best_places": [
+    { "name": "Palermo", "description": "The trendiest district, with parks, cafés, bars and a nomad crowd." },
+    { "name": "Recoleta", "description": "An elegant district with the famous cemetery and museums." },
+    { "name": "San Telmo", "description": "An old quarter with an antiques market and street tango on weekends." },
+    { "name": "La Boca and Caminito", "description": "A colourful port district — the postcard image of Buenos Aires." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russians get up to 90 days visa-free — all you need is a passport." },
+    { "title": "Renting a home", "description": "Flats are rented monthly; Palermo and Recoleta are popular." },
+    { "title": "Connectivity and money", "description": "A local SIM card is cheap; watch the exchange rates — cash currency is more favourable." },
+    { "title": "Extension", "description": "The visa-free period can be extended at the migration office or with a short trip out." },
+    { "title": "Residency (optional)", "description": "For long-term living, people apply for residency by income (rentista) or on other grounds." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Buenos Aires?", "answer": "No, up to 90 days visa-free. The period can be extended at the migration office." },
+    { "question": "How much does it cost to live in Buenos Aires?", "answer": "Affordable with a favourable currency exchange, but prices jump due to inflation. See the calculator above for an exact budget." },
+    { "question": "What language is spoken in Buenos Aires?", "answer": "Spanish (with a local accent); there's little English, so it's best to learn the language." },
+    { "question": "Can I pay with a Russian card in Buenos Aires?", "answer": "No, Russian cards don't work. Cash currency and a foreign bank card are more convenient." },
+    { "question": "What is the climate like in Buenos Aires?", "answer": "Humid subtropical: hot summers (December–February) and mild winters — the seasons mirror those in the north." },
+    { "question": "Why do Russians move here?", "answer": "Easy visa-free entry, a European atmosphere, culture and relatively affordable living — plus a growing Russian-speaking community." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Buenos Aires is Europe in South America: cafés, parks, culture. The downsides — the long flight and economic ups and downs; getting used to the peso rate takes time." },
+    { "profession": "copywriter", "text": "I fell in love with Palermo and the local rhythm. Visa-free entry and affordable prices are a big plus. It's tricky without Spanish, but people are very open." }
+  ]
+}

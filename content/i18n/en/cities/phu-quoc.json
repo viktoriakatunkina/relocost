@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Phu Quoc 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Phu Quoc per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A tropical island in southern Vietnam: visa-free entry for up to 30 days, white-sand beaches and warm sea year-round. Calmer than the mainland, but everything imported is a bit pricier and healthcare is island-level.",
+  "climate": "+27°C avg.",
+  "language": "Vietnamese, English",
+  "currency": "Dong, VND",
+  "population": "180 thousand",
+  "flight_from_moscow": "12 hours with a layover",
+  "pros": [
+    "Visa-free entry for up to 30 days on arrival",
+    "White-sand beaches and warm sea year-round",
+    "Calmer and greener than the mainland",
+    "Low prices for food and fruit",
+    "Direct seasonal flights and convenient logistics"
+  ],
+  "cons": [
+    "Everything imported is slightly pricier than on the mainland",
+    "Island healthcare — for complex cases you travel to the mainland",
+    "Rainy season (summer–autumn)",
+    "Active construction can be noisy in places"
+  ],
+  "best_places": [
+    { "name": "Long Beach (Bai Truong)", "description": "The island's main sunset beach, with cafés and rental housing." },
+    { "name": "Sao Beach (Bai Sao)", "description": "One of the most beautiful white-sand beaches in the south of the island." },
+    { "name": "Duong Dong Night Market", "description": "Seafood, street food and souvenirs in the island's main town." },
+    { "name": "Hon Thom Cable Car", "description": "One of the longest over-sea cable cars in the world, running to the southern islets." }
+  ],
+  "visa_steps": [
+    { "title": "Visa exemption", "description": "Entry to Phu Quoc is visa-free for up to 30 days." },
+    { "title": "E-visa (for longer stays)", "description": "For longer stays you apply for Vietnam's 90-day e-visa." },
+    { "title": "Renting housing", "description": "Villas and apartments are let by the month; high season is pricier." },
+    { "title": "Connectivity and money", "description": "A local SIM card is cheap; you'll need cash dong and a foreign bank card." },
+    { "title": "Transport", "description": "Renting a scooter is the most convenient way to get around the island." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Phu Quoc?", "answer": "The island grants visa-free entry for up to 30 days. For a longer stay you apply for Vietnam's e-visa." },
+    { "question": "How much does it cost to live in Phu Quoc?", "answer": "Affordable, slightly pricier than mainland Vietnam due to island logistics. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Phu Quoc?", "answer": "Vietnamese; English is common in tourist areas." },
+    { "question": "Can I pay with a Russian card in Phu Quoc?", "answer": "No, Russian cards don't work. You'll need cash dong and a foreign bank card." },
+    { "question": "What is the climate like in Phu Quoc?", "answer": "Tropical: hot year-round, with a dry season in winter and a rainy season in summer and autumn." },
+    { "question": "How does Phu Quoc differ from Nha Trang?", "answer": "Phu Quoc is a calm island with white-sand beaches; Nha Trang is a lively seaside city on the mainland." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Phu Quoc means white beaches and quiet, with visa-free entry for a month. The downsides — everything imported is a bit pricier, and for serious healthcare you have to go to the mainland." },
+    { "profession": "illustrator", "text": "I wintered on the island: warm, cheap fruit, peaceful. In some spots there's heavy construction and noise, but the beaches and sunsets make up for everything." }
+  ]
+}

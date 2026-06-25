@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Sofia 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Sofia per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The most affordable EU capital: a path to the eurozone, low prices and straightforward bureaucracy for Russians. Sofia is popular for relocation via a business residence permit and schooling children at international schools.",
+  "climate": "+12°C avg.",
+  "language": "Bulgarian, Russian, English",
+  "currency": "Lev, BGN",
+  "population": "1.2 mln",
+  "flight_from_moscow": "3.5 hours",
+  "pros": [
+    "The most affordable EU capital: a business residence permit from €250,000",
+    "Prices lower than neighbouring Balkan countries",
+    "An active IT scene and residency at Sofia Tech Park",
+    "Proximity to the Vitosha mountains — skiing and trekking right by the capital",
+    "Russian is understood in cafés, pharmacies and services"
+  ],
+  "cons": [
+    "Bulgarian is needed for public services and healthcare",
+    "An ageing car fleet, traffic and some broken roads",
+    "Bureaucracy is tougher for Russians than in Podgorica or Serbia",
+    "Overcast and foggy in winter in the basin"
+  ],
+  "best_places": [
+    { "name": "Vitosha Boulevard", "description": "The main pedestrian street with cafés, boutiques and the Alexander Nevsky Cathedral in the distance." },
+    { "name": "Mount Vitosha", "description": "A city mountain park 30 minutes from the centre: a ski base in winter, trails in summer." },
+    { "name": "Betahaus Sofia", "description": "The main IT-community coworking at Sofia Tech Park, with events and startup networking." },
+    { "name": "Graf Ignatiev", "description": "A student-bohemian district with dozens of bars, cafés and galleries around Slaveykov Square." }
+  ],
+  "visa_steps": [
+    { "title": "Visa entry", "description": "Bulgaria has been in the Schengen Area since 2024, requiring a C or D visa. For Russians — via the embassy, taking 1–3 months." },
+    { "title": "Residence permit through work or business", "description": "Opening a company or a contract with a local employer grants a 1-year residence permit with renewal." },
+    { "title": "EIK and tax number", "description": "The identification code for business and taxes is issued via a notary within a couple of days." },
+    { "title": "Bank account", "description": "UBB, DSK and Postbank open accounts with a residence permit. Visa and MasterCard work without restrictions." },
+    { "title": "Permanent residence after 5 years", "description": "Permanent residence, then EU citizenship — the standard naturalisation path." }
+  ],
+  "faq": [
+    { "question": "Can I enter Sofia without a visa?", "answer": "No, since 2024 Bulgaria has joined the Schengen Area — you need a visa or a residence permit from another Schengen country." },
+    { "question": "How much does a business residence permit cost in Sofia?", "answer": "The minimum contribution to the share capital is about €5,000, plus lawyer and notary fees." },
+    { "question": "Is Sofia suitable for families?", "answer": "Yes, there are international schools (Anglo-American School, AS Sofia) and a good market for private kindergartens." },
+    { "question": "Is the climate harsh in Sofia?", "answer": "Continental: summer +28°C, winter down to –5°C. Sofia lies in a basin, and fog is common in autumn." },
+    { "question": "Can I work for a Russian company in Sofia?", "answer": "Yes, through a local account and proof of income source for the tax authorities." },
+    { "question": "What is healthcare like in Sofia?", "answer": "Public healthcare is free for residents, but a private clinic like Acibadem or Sofiamed is usually faster." }
+  ],
+  "reviews": [
+    { "profession": "DevOps", "text": "I opened a Bulgarian LLC and moved with my wife and daughter. The school is international, rent in Lozenets is €700. Sofia is slow but stable." },
+    { "profession": "psychologist", "text": "Cheaper than expected: groceries, restaurants, healthcare. The downside is the local language. After a year I started speaking confidently." }
+  ]
+}

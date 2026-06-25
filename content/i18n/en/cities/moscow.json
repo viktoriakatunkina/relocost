@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Moscow 2026: Rent, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Moscow per month: rent, food, transport, salaries and reviews from those who relocated. We calculate a realistic moving budget in the Relocost calculator.",
+  "intro_text": "The most expensive city in Russia and the benchmark for the rest. High salaries and developed infrastructure, but the competition and pace of life are pushed to the limit.",
+  "climate": "+6°C avg.",
+  "language": "Russian",
+  "currency": "Ruble, RUB",
+  "population": "12.6 mln",
+  "flight_from_moscow": "within the city",
+  "pros": [
+    "The most active job market in the country",
+    "The best infrastructure in the country — transport, healthcare, dining",
+    "High-speed internet everywhere, leading digital services",
+    "A rich cultural life and world-class restaurants",
+    "No visa, no language barrier"
+  ],
+  "cons": [
+    "The highest rents in Russia",
+    "Long distances even within districts",
+    "Poor air in winter when there's no wind",
+    "The pace of life and overtime are the norm"
+  ],
+  "best_places": [
+    { "name": "Patriarch's Ponds", "description": "The main bohemian area of the centre — cafés, shops, quiet side streets." },
+    { "name": "Depo.Moskva", "description": "A gastro-market with food courts on Lesnaya — the best choice of cuisines in one place." },
+    { "name": "Kofemania Zhukovka", "description": "The chain standard of a quality city café — breakfasts and lunches." },
+    { "name": "Mospolytech Coworking", "description": "A modern coworking at the Polytech — networking and meeting rooms." }
+  ],
+  "visa_steps": [
+    { "title": "Registration at place of stay", "description": "Through an MFC or Gosuslugi — a standard procedure." },
+    { "title": "Finding a rental", "description": "Avito, Cian, Yandex.Realty — the market is huge, the lease is usually for 11 months." },
+    { "title": "Compulsory health insurance and a clinic", "description": "Registering with the nearest clinic via Gosuslugi." },
+    { "title": "Self-employment or a sole proprietorship", "description": "Set up via the 'My Tax' app or Gosuslugi — for remote earnings." },
+    { "title": "Parking permit", "description": "A resident permit via mos.ru — for residents of paid zones." }
+  ],
+  "faq": [
+    { "question": "What are IT salaries in Moscow?", "answer": "Middle 250,000–400,000 ₽, Senior 400,000–700,000 ₽ — 1.5–2 times higher than in the regions." },
+    { "question": "Where should I live in Moscow?", "answer": "Inside the Third Ring Road is more expensive, the centre is walkable. Beyond the MKAD it's cheaper, but you need a car or metro nearby." },
+    { "question": "How much does school cost in Moscow?", "answer": "State — free, private from 50,000 ₽/month, international from 250,000 ₽/month." },
+    { "question": "Does the metro reach the outskirts in Moscow?", "answer": "Yes, the Big Circle Line has covered all districts, and new lines are being built constantly." },
+    { "question": "What about parking in Moscow?", "answer": "Paid in the centre, with competition for courtyard spots. Residents get discounts." },
+    { "question": "What is the environment like in Moscow?", "answer": "There can be smog in winter when there's no wind. Summer is fine, especially near the parks." }
+  ],
+  "reviews": [
+    { "profession": "PM in IT", "text": "I moved from Yekaterinburg — my salary doubled. The downside is that it's hard without a car, and the city is expensive without subscriptions to services." },
+    { "profession": "developer", "text": "Moscow is convenience taken to the point of absurdity. Couriers in 15 minutes, the metro every 90 seconds. The air is heavy in winter." }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Tbilisi 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Tbilisi per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The most popular city for relocation from Russia: a liberal visa policy, affordable prices, a thriving Russian-speaking community and an active IT scene. Ideal for living car-free and getting started quickly.",
+  "climate": "+13°C avg.",
+  "language": "Georgian, Russian",
+  "currency": "Lari, GEL",
+  "population": "1.2 mln",
+  "flight_from_moscow": "3 hours",
+  "pros": [
+    "Visa-free entry for 365 days for Russian citizens",
+    "Very affordable housing and food prices",
+    "A large and active Russian-speaking community",
+    "A developed IT scene with plenty of coworkings and meetups",
+    "Sulphur baths and wine regions just an hour away"
+  ],
+  "cons": [
+    "Chaotic traffic and little parking in the centre",
+    "Uneven pavement quality",
+    "Hot, dry summers; heating isn't available everywhere",
+    "Rising rents driven by the influx of relocators"
+  ],
+  "best_places": [
+    { "name": "Sololaki district", "description": "Old balconies, wine cellars and atmospheric cafés just minutes from Freedom Square." },
+    { "name": "Vino Underground", "description": "Craft Georgian wines, cheeses and qvevri experiments in a basement bar." },
+    { "name": "Dry Bridge", "description": "A weekend antiques market — Soviet porcelain, icons, paintings and vintage finds." },
+    { "name": "Fabrika", "description": "A former sewing factory, now the city's main coworking and hangout for remote workers." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 365 days without a visa — all you need is a passport; the stamp is issued at the border." },
+    { "title": "Personal Number", "description": "Get an ID at the House of Justice — it takes a few days and is needed for renting and opening a bank account." },
+    { "title": "Bank account", "description": "Bank of Georgia or TBC Bank — both open accounts for Russians with a passport and ID." },
+    { "title": "Registered rental", "description": "The lease is recorded in the state registry — this is required for subsequent procedures." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business or buying property from $100,000 — a path to long-term status." }
+  ],
+  "faq": [
+    { "question": "Which language should I learn in Tbilisi?", "answer": "Georgian for simple situations, but most people in Tbilisi understand Russian and English." },
+    { "question": "Can I pay with a Russian ruble card in Tbilisi?", "answer": "No, you need lari or foreign currency to exchange. The MIR card doesn't work." },
+    { "question": "Where can I open a bank account in Tbilisi?", "answer": "Bank of Georgia and TBC Bank — both work with Russians and issue cards with international payments." },
+    { "question": "What is healthcare like in Tbilisi?", "answer": "A private clinic appointment costs from 3,000 ₽. Quality is higher than at public facilities." },
+    { "question": "How is the internet in Tbilisi?", "answer": "Stable fibre in most districts, plans run 1,000–2,500 ₽ for 100+ Mbps." },
+    { "question": "Is Tbilisi safe?", "answer": "One of the safest cities in the region — low crime and friendly people." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "Tbilisi is the best trade-off between cost and quality of life. In six months I opened a bank account, found an apartment and built a social circle." },
+    { "profession": "designer", "text": "The cultural difference scared me, but Tbilisi turned out to be an open city. Prices are rising, but it's still 2–3 times cheaper than Moscow." }
+  ]
+}

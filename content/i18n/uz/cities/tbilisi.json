@@ -1,0 +1,48 @@
+{
+  "seo_title": "Tbilisida yashash narxi 2026: viza, narxlar, sharhlar | Relocost",
+  "seo_description": "Tbilisida bir oy yashash qancha turadi, ruslarga viza kerakmi, ish, ijara va ko'chib o'tganlarning sharhlari. Ko'chish uchun real byudjet — Relocost kalkulyatorida.",
+  "intro_text": "Rossiyadan ko'chib o'tish uchun eng ommabop shahar: liberal viza siyosati, hamyonbop narxlar, rivojlangan rusiyzabon hamjamiyat va faol IT-muhit. Mashinasiz yashash va tez boshlash uchun qulay.",
+  "climate": "+13°C o'rt.",
+  "language": "Gruzincha, ruscha",
+  "currency": "Lari, GEL",
+  "population": "1,2 mln",
+  "flight_from_moscow": "3 soat",
+  "pros": [
+    "Rossiya fuqarolari uchun 365 kun vizasiz kirish",
+    "Uy-joy va oziq-ovqatning juda hamyonbop narxlari",
+    "Katta va faol rusiyzabon hamjamiyat",
+    "Rivojlangan IT-muhit, ko'plab kovorkinglar va miitaplar",
+    "Bir soatlik masofada oltingugurtli hammomlar va vino mintaqalari"
+  ],
+  "cons": [
+    "Markazda tartibsiz harakat va kam avtoturargoh",
+    "Piyodalar yo'lkalari sifati notekis",
+    "Issiq va quruq yoz; isitish hamma joyda ham ishlamaydi",
+    "Ko'chib keluvchilar oqimi tufayli o'sib borayotgan ijara narxi"
+  ],
+  "best_places": [
+    { "name": "Sololaki tumani", "description": "Erkinlik maydonidan bir necha daqiqa narida eski balkonlar, vino yerto'lalari va o'ziga xos kafelar." },
+    { "name": "Vino Underground", "description": "Yerto'la barida mualliflik gruzin vinolari, pishloqlar va kvevri tajribalari." },
+    { "name": "Quruq ko'prik (Dry Bridge)", "description": "Dam olish kunidagi antikvar bozor — sovet farfori, ikonalar, suratlar va vintaj buyumlar." },
+    { "name": "Fabrika", "description": "Sobiq tikuvchilik fabrikasi, hozir esa masofadan ishlovchilar uchun asosiy kovorking va uchrashuv joyi." }
+  ],
+  "visa_steps": [
+    { "title": "Vizasiz kirish", "description": "365 kungacha vizasiz — faqat chet el pasporti kerak, muhr chegarada qo'yiladi." },
+    { "title": "Shaxsiy raqam (Personal Number)", "description": "Adliya uyida ID rasmiylashtirish bir necha kun oladi, ijara va hisob ochish uchun zarur." },
+    { "title": "Bankdagi hisob", "description": "Bank of Georgia yoki TBC Bank — ruslarga pasport va ID bo'yicha hisob ochadi." },
+    { "title": "Ro'yxatdan o'tgan ijara", "description": "Ijara shartnomasi davlat reyestrida qayd etiladi — keyingi jarayonlar uchun kerak." },
+    { "title": "Yashash ruxsatnomasi (ixtiyoriy)", "description": "Ish, biznes yoki $100 000 dan ko'chmas mulk sotib olish orqali — uzoq muddatli maqom yo'li." }
+  ],
+  "faq": [
+    { "question": "Tbilisida qaysi tilni o'rganish kerak?", "answer": "Oddiy holatlar uchun gruzin tili, ammo Tbilisida ko'pchilik ruscha va inglizchani tushunadi." },
+    { "question": "Tbilisida rubl kartasi bilan to'lash mumkinmi?", "answer": "Yo'q, lari yoki ayirboshlash uchun valyuta kerak. MIR kartasi ishlamaydi." },
+    { "question": "Tbilisida qayerda hisob ochish mumkin?", "answer": "Bank of Georgia va TBC Bank — ikkalasi ham ruslar bilan ishlaydi va xalqaro to'lovli kartalar beradi." },
+    { "question": "Tbilisida tibbiyot qanday?", "answer": "Xususiy klinikada qabul 3 000 ₽ dan. Sifati davlat muassasalaridan yuqori." },
+    { "question": "Tbilisida internet qanday?", "answer": "Aksariyat tumanlarda barqaror optika, 100+ Mbit uchun tariflar 1 000–2 500 ₽." },
+    { "question": "Tbilisi xavfsizmi?", "answer": "Mintaqadagi eng xavfsiz shaharlardan biri — jinoyatchilik past, odamlar do'stona." }
+  ],
+  "reviews": [
+    { "profession": "dasturchi", "text": "Tbilisi narx va hayot sifati o'rtasidagi eng yaxshi muvozanat. Olti oyda hisob ochdim, kvartira topdim va muloqot doirasini shakllantirdim." },
+    { "profession": "dizayner", "text": "Madaniy farq meni qo'rqitgan edi, biroq Tbilisi ochiq shahar bo'lib chiqdi. Narxlar o'sayapti, lekin baribir Moskvadan 2–3 baravar arzon." }
+  ]
+}

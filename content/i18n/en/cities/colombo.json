@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Colombo 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Colombo per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Sri Lanka's largest city on the ocean: a 30-day ETA electronic visa, English in everyday use and very affordable prices. Year-round tropics and tea plantations nearby, but noisy traffic and a monsoon season.",
+  "climate": "+28°C avg.",
+  "language": "Sinhala, Tamil, English",
+  "currency": "Rupee, LKR",
+  "population": "650 thousand",
+  "flight_from_moscow": "9 hours with a layover",
+  "pros": [
+    "The ETA electronic visa for 30 days is arranged online",
+    "English is widely spoken",
+    "Very affordable prices and year-round tropics",
+    "The ocean within the city, tea plantations nearby",
+    "A friendly attitude toward foreigners"
+  ],
+  "cons": [
+    "Noisy, heavy traffic",
+    "Monsoon seasons with heavy rain",
+    "Island logistics and mid-level healthcare",
+    "Bureaucracy and occasional import disruptions"
+  ],
+  "best_places": [
+    { "name": "Galle Face Green", "description": "An oceanfront promenade in the centre with street food and sunsets." },
+    { "name": "Colombo Fort", "description": "A historic business district with colonial architecture and hotels." },
+    { "name": "Pegradasi and Pettah", "description": "Bustling bazaars with spices, fabrics and electronics." },
+    { "name": "Gangaramaya Temple", "description": "The city's main Buddhist temple, with a museum and a lakeside pavilion." }
+  ],
+  "visa_steps": [
+    { "title": "ETA electronic visa", "description": "Arranged online before the trip, granting entry for 30 days with the option to extend." },
+    { "title": "Renting a home", "description": "Apartments and houses are rented monthly; prices are affordable, with a wider choice in the suburbs." },
+    { "title": "Connectivity and money", "description": "A local SIM card with cheap internet; you'll need cash rupees and a foreign bank card." },
+    { "title": "Visa extension", "description": "The ETA is extended at the Colombo Department of Immigration." },
+    { "title": "Long-term stay", "description": "For living beyond the visa, work or resident visas are considered." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Colombo?", "answer": "Yes, an ETA electronic visa for 30 days is arranged — done online before the trip or on arrival." },
+    { "question": "How much does it cost to live in Colombo?", "answer": "Affordable: cheaper than most Asian capitals, especially food and housing in the suburbs. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Colombo?", "answer": "Sinhala and Tamil, but English is widely used in business and tourism." },
+    { "question": "Can I pay with a Russian card in Colombo?", "answer": "No, Russian cards don't work. You'll need cash rupees and a foreign bank card." },
+    { "question": "What is the climate like in Colombo?", "answer": "Tropical: hot and humid year-round, with pronounced monsoon seasons." },
+    { "question": "What is near Colombo?", "answer": "The beaches of the southwest, the highland tea plantations and ancient cities — all a few hours' drive away." }
+  ],
+  "reviews": [
+    { "profession": "remote marketer", "text": "Colombo is the ocean, warmth and English everywhere. The prices are great, but the traffic and noise are exhausting, and there's a lot of rain in the monsoon." },
+    { "profession": "photographer", "text": "The island is incredibly beautiful and the people are kind. Colombo itself is hectic, so I often head to the coast. The downside is island logistics and healthcare." }
+  ]
+}

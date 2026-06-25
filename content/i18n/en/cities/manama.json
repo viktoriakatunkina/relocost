@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Manama 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Manama per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of the island nation of Bahrain in the Persian Gulf: zero income tax, more liberal than its neighbours and a compact way of life. For Russians — a visa on arrival or an eVisa; hot, humid summers.",
+  "climate": "+27°C avg.",
+  "language": "Arabic, English",
+  "currency": "Dinar, BHD",
+  "population": "700 thousand metro area",
+  "flight_from_moscow": "5.5 hours with a layover",
+  "pros": [
+    "Zero income tax",
+    "More liberal than the neighbouring Gulf countries",
+    "A compact island — everything is close",
+    "English in everyday use, plenty of expats",
+    "High level of safety"
+  ],
+  "cons": [
+    "Russian citizens need a visa on arrival or an eVisa",
+    "Hot, humid summers",
+    "Expensive housing rent",
+    "The country's small size limits variety"
+  ],
+  "best_places": [
+    { "name": "Bab Al Bahrain and the old souk", "description": "The gateway to the historic market, with spices, fabrics and gold." },
+    { "name": "Bahrain Fort (Qal'at al-Bahrain)", "description": "An ancient fortress under UNESCO protection on the gulf shore." },
+    { "name": "Manama waterfront", "description": "A modern walking area with views of the skyscrapers." },
+    { "name": "Al-Fateh Mosque", "description": "One of the largest mosques in the region, in the city centre." }
+  ],
+  "visa_steps": [
+    { "title": "Visa on arrival / eVisa", "description": "Russians can get a visa on arrival or an electronic visa applied for online." },
+    { "title": "Resident visa", "description": "For long-term living you need residency through an employer or a business." },
+    { "title": "Renting housing", "description": "A lease usually requires a deposit and payment in advance." },
+    { "title": "CPR (resident ID)", "description": "Needed for renting, the bank and services during a long stay." },
+    { "title": "Bank account", "description": "Bahrain's banks open accounts for residents with a CPR." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Manama?", "answer": "Yes, you obtain a visa on arrival or an electronic eVisa. To live there you need a resident visa." },
+    { "question": "How much does it cost to live in Manama?", "answer": "Expensive on rent, but with no income tax. See the exact budget in the calculator above." },
+    { "question": "What language is spoken in Manama?", "answer": "Arabic is the official language; English is widely used in business and everyday life." },
+    { "question": "Can I pay with a Russian card in Manama?", "answer": "No, Russian cards don't work. You need a foreign bank card or dinars in cash." },
+    { "question": "What is the climate like in Manama?", "answer": "Desert: a very hot, humid summer and a mild, pleasant winter." },
+    { "question": "Is Bahrain more liberal than its neighbours?", "answer": "Yes, the norms are noticeably more relaxed than in most Gulf countries, which expats appreciate." }
+  ],
+  "reviews": [
+    { "profession": "financier", "text": "Manama is compact and convenient: everything is close, there's no tax and there are plenty of expats. The downside — the summer humidity and expensive rent. Bahrain is more laid-back than its neighbours." },
+    { "profession": "remote analyst", "text": "The island is small but comfortable and safe, and English is enough. Living is expensive, but it's calm and liberal by Gulf standards." }
+  ]
+}

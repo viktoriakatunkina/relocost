@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Abu Dhabi 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Abu Dhabi per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of the UAE: visa-free entry for 90 days, zero income tax, high safety and modern infrastructure. Calmer and slightly cheaper than Dubai, though housing and everyday life are still expensive.",
+  "climate": "+28°C avg.",
+  "language": "Arabic, English",
+  "currency": "Dirham, AED",
+  "population": "1.5 mln",
+  "flight_from_moscow": "5.5 hours",
+  "pros": [
+    "Visa-free entry for 90 days, zero income tax",
+    "High safety and modern infrastructure",
+    "Calmer and greener than Dubai, yet with a capital-city standard of living",
+    "English is widely used, with strong healthcare and schools",
+    "Direct flights and a convenient aviation hub"
+  ],
+  "cons": [
+    "Expensive housing and everyday life, as everywhere in the UAE",
+    "Extreme summer heat (+45), life spent in air conditioning",
+    "Conservative norms of behaviour and dress code",
+    "Alcohol is expensive and licence-based"
+  ],
+  "best_places": [
+    { "name": "Al Reem Island", "description": "A modern residential island with skyscrapers and a waterfront — a favourite among expats." },
+    { "name": "Corniche", "description": "A long seaside promenade with a city beach right in the centre." },
+    { "name": "Al Maryah", "description": "A business and premium district with malls and restaurants." },
+    { "name": "Louvre Abu Dhabi", "description": "A landmark museum on Saadiyat Island next to the beaches." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 90 days within any 180-day period on a passport." },
+    { "title": "Residence visa and Emirates ID", "description": "For long-term stay — a visa through an employer, business or Golden Visa, followed by an Emirates ID." },
+    { "title": "Bank account", "description": "ENBD, ADCB or FAB — they open accounts for residents with an Emirates ID." },
+    { "title": "Tenancy (Tawtheeq)", "description": "The lease is registered in the Tawtheeq system; payment is usually made several months in advance." },
+    { "title": "Health insurance", "description": "Mandatory for a residence visa — arranged through employment or separately." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Abu Dhabi?", "answer": "No, visa-free for up to 90 days per six months. To live and work you obtain a residence visa and an Emirates ID." },
+    { "question": "Is it expensive to live in Abu Dhabi?", "answer": "Yes: rent and everyday life are expensive, like in Dubai, but there is no income tax. See the exact budget in the calculator above." },
+    { "question": "How is Abu Dhabi different from Dubai?", "answer": "Calmer, greener and slightly cheaper on rent, but less party-oriented and dynamic." },
+    { "question": "Can I pay with a Russian card in Abu Dhabi?", "answer": "Russian cards don't work. People open a local account with an Emirates ID or pay with a foreign bank card." },
+    { "question": "What is the climate like in Abu Dhabi?", "answer": "Desert: very hot summers up to +45 with humidity, and a mild, comfortable winter." },
+    { "question": "Is Abu Dhabi safe?", "answer": "One of the safest cities in the world — low crime and strict laws." }
+  ],
+  "reviews": [
+    { "profession": "financier", "text": "I moved on a work visa: no taxes, safe, everything is new. Summer is brutal — the air conditioning saves you. Rent is paid in large sums upfront." },
+    { "profession": "PR manager", "text": "Abu Dhabi is calmer than Dubai, with the sea and culture. English is enough. It's expensive, but the quality of life is high." }
+  ]
+}

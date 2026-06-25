@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Budva 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Budva per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A resort town on the Adriatic with 30 days visa-free entry and a large Russian-speaking community of relocators. Ideal for seaside living with a clear path to a residence permit through property.",
+  "climate": "+17°C avg.",
+  "language": "Montenegrin, Serbian",
+  "currency": "Euro, EUR",
+  "population": "19k",
+  "flight_from_moscow": "5 hours",
+  "pros": [
+    "The sea, beaches and a Mediterranean climate",
+    "30 days visa-free entry plus an easy path to a residence permit through property",
+    "A large Russian-speaking community in the resort area",
+    "The euro — a stable currency",
+    "Close to Kotor, Tivat and ferry connections to Italy"
+  ],
+  "cons": [
+    "Strong seasonality — a tourist boom in summer, empty in winter",
+    "Prices are higher than in Podgorica, especially in high season",
+    "A weak job market — almost everyone works remotely",
+    "Local healthcare is expensive and limited"
+  ],
+  "best_places": [
+    { "name": "Budva Old Town", "description": "A Venetian fortress on a cliff by the sea — narrow streets, restaurants and boutiques." },
+    { "name": "Mogren Beach", "description": "The most beautiful beach of the Budva Riviera, surrounded by cliffs — 10 minutes from the old town." },
+    { "name": "Sveti Stefan", "description": "A postcard island-hotel 15 minutes from Budva — a symbol of Montenegro." },
+    { "name": "Konoba Stari Grad", "description": "Classic seafood in the old town — fish, squid and Njeguši prosciutto." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 30 days without a visa; extend by leaving to Serbia or Bosnia." },
+    { "title": "Registration (Beli karton)", "description": "Within 24 hours of moving in — the landlord registers it at the police." },
+    { "title": "Residence permit through property", "description": "Buying any home grants a 1-year residence permit — the most popular route for Russians." },
+    { "title": "Residence permit through business", "description": "Opening a DOO (LLC) — a 1-month process, with a 9% corporate profit tax." },
+    { "title": "Bank account", "description": "CKB, NLB, Erste — they open accounts for Russians but require a residence permit or proof of residence." }
+  ],
+  "faq": [
+    { "question": "How does Budva differ from Podgorica?", "answer": "Budva is the sea and resort life, Podgorica is the capital and work. Many live in Podgorica and holiday in Budva." },
+    { "question": "What is winter like in Budva?", "answer": "+8–12°C, few tourists, quiet. Some restaurants and shops close until Easter." },
+    { "question": "Where to live with children in Budva?", "answer": "Budva, Bečići, Sveti Stefan — there are international kindergartens and one school, Adriatic College." },
+    { "question": "Is it hard to buy property in Budva?", "answer": "Russians can buy freely; the minimum threshold is from €50,000, and a residence permit is issued automatically." },
+    { "question": "What about banks in Budva?", "answer": "CKB, NLB, Erste — they work with Russians who hold a residence permit. Without one, opening an account is difficult." },
+    { "question": "Can I work remotely in Budva?", "answer": "Yes, many freelancers register a DOO — a 9% tax and access to EU routes." }
+  ],
+  "reviews": [
+    { "profession": "architect", "text": "We bought a flat in Bečići with a sea view for €120,000 and got a residence permit. Winters are quiet and overcast, but summer is paradise." },
+    { "profession": "producer", "text": "I lived in Podgorica, then we moved to Budva. The sea, the quiet, friends from the relocator community. The downside — high season is exhausting." }
+  ]
+}

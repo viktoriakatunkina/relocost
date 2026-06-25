@@ -6,6 +6,7 @@ import {
   PACKAGE_DESCRIPTIONS,
   addUnlocked,
   setPendingPayment,
+  savePurchaseEmail,
   type PackageType,
 } from "@/lib/unlocked";
 
@@ -65,8 +66,10 @@ export function PaymentModal({
       }
 
       // Боевой режим: запоминаем платеж для серверной проверки после возврата
-      // и уходим на страницу оплаты ЮKassa.
+      // и уходим на страницу оплаты ЮKassa. Email кладём в localStorage —
+      // по нему восстановим доступ, даже если sessionStorage потеряется.
       if (data?.confirmation_url) {
+        savePurchaseEmail(email);
         if (data?.payment_id) {
           setPendingPayment({ payment_id: data.payment_id, slug, pkg: pkg! });
         }
@@ -116,7 +119,7 @@ export function PaymentModal({
         <form onSubmit={onSubmit} className="space-y-4">
           <label className="block">
             <span className="block text-brandy/70 text-sm mb-2">
-              Email для отправки отчета
+              Email для чека и доступа к материалам
             </span>
             <input
               type="email"
@@ -143,7 +146,9 @@ export function PaymentModal({
         </form>
 
         <p className="text-brandy/50 text-xs mt-4 text-center">
-          Оплата картой через ЮKassa. Доступ откроется сразу после оплаты.
+          Оплата картой или СБП через ЮKassa. Доступ откроется сразу после
+          оплаты — а если что-то пойдёт не так, его всегда можно вернуть по
+          этому email.
         </p>
       </div>
     </div>

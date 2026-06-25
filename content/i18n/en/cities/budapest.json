@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Budapest 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Budapest per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A European capital on the Danube with history and prices that are affordable by EU standards. Schengen access, clear healthcare and education, but a difficult language and slow bureaucracy.",
+  "climate": "+11°C avg.",
+  "language": "Hungarian, English",
+  "currency": "Forint, HUF",
+  "population": "1.7 mln",
+  "flight_from_moscow": "3.5 hours",
+  "pros": [
+    "Schengen visa — free movement across the EU",
+    "Affordable rent for a European capital",
+    "Developed healthcare and education (including tuition-free universities)",
+    "An active IT scene and startup community",
+    "A warm continental climate — summers up to +30°C"
+  ],
+  "cons": [
+    "Hungarian is one of the hardest languages in Europe",
+    "Bureaucracy is slow and unpredictable",
+    "Strict visa and banking requirements for Russians",
+    "Cold and overcast in winter",
+    "The Russian-speaking community is small"
+  ],
+  "best_places": [
+    { "name": "District VII (Erzsébetváros)", "description": "The former Jewish quarter — ruin bars, graffiti and the city's main nightlife." },
+    { "name": "Great Market Hall (Nagyvásárcsarnok)", "description": "A late-19th-century architectural gem packed with Hungarian specialities." },
+    { "name": "Mazel Tov", "description": "The city's flagship ruin bar — Jewish cuisine and an atmospheric courtyard." },
+    { "name": "Loffice Coworking", "description": "One of Budapest's oldest coworkings — networking and events." }
+  ],
+  "visa_steps": [
+    { "title": "Schengen Visa D", "description": "A long-stay national visa for employment, study or family — applied for through the embassy." },
+    { "title": "Address registration", "description": "Mandatory within the first 3 months, done at the district town hall." },
+    { "title": "TAJ number (insurance)", "description": "For residents — grants access to public healthcare." },
+    { "title": "Address card (Lakcímkártya)", "description": "Proof of registration — required for a bank account and contracts." },
+    { "title": "Bank account", "description": "OTP, K&H, Erste — they work with Russians but require more documents after 2022." }
+  ],
+  "faq": [
+    { "question": "Do I need to learn Hungarian in Budapest?", "answer": "Not for daily life — English is enough in Budapest. For paperwork and long-term integration, yes." },
+    { "question": "What about visas for Russians in Budapest?", "answer": "Tourist Schengen visas aren't issued. Only a long-stay D visa through work, study or family." },
+    { "question": "How long does a residence permit take in Budapest?", "answer": "From application to decision: 30–90 days. Bureaucracy is slow and requires patience." },
+    { "question": "Where to live in Budapest?", "answer": "Districts VI and VII are the trendy centre. XIII is business-oriented, IX is creative. Further out it's calmer and cheaper." },
+    { "question": "What are IT salaries in Budapest?", "answer": "Middle €2,500–4,000 net, Senior €4,000–6,500. Taxes are around 33%." },
+    { "question": "Can I get permanent residency in Budapest?", "answer": "After 3 years of legal residence; citizenship after 8 years." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "Budapest offers European life at an affordable price. The downside — without Hungarian, paperwork takes a while and banks are cautious." },
+    { "profession": "PM", "text": "Architecture, thermal baths, walks along the Danube. But Schengen was hard for me — I had to legalise through study." }
+  ]
+}

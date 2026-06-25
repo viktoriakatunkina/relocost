@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Cairo 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Cairo per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Egypt and the largest city in the Arab world: a visa on arrival, low prices, history and the pyramids right next door. The downsides — a noisy, chaotic megacity, traffic and air quality.",
+  "climate": "+22°C avg.",
+  "language": "Arabic, English",
+  "currency": "Pound, EGP",
+  "population": "10 mln",
+  "flight_from_moscow": "4.5 hours",
+  "pros": [
+    "A visa on arrival, with direct flights from Russia",
+    "Very low cost of living",
+    "History and the pyramids right next door",
+    "The largest city in the Arab world, with every service imaginable",
+    "Warm, mild winters"
+  ],
+  "cons": [
+    "A noisy, chaotic megacity",
+    "Heavy traffic and air quality issues",
+    "Hot, dusty summers",
+    "A language barrier outside tourist areas"
+  ],
+  "best_places": [
+    { "name": "Pyramids of Giza", "description": "The only surviving wonder of the world, on the city's edge." },
+    { "name": "Zamalek", "description": "A green, prestigious island district on the Nile with cafés, embassies and rentals for expats." },
+    { "name": "Khan el-Khalili", "description": "A famous medieval bazaar with spices, copperware and souvenirs." },
+    { "name": "Old (Coptic) Cairo", "description": "Ancient churches, mosques and atmospheric narrow lanes." }
+  ],
+  "visa_steps": [
+    { "title": "Visa on arrival", "description": "Russians get a visa on arrival (a 30-day tourist visa)." },
+    { "title": "Renting a home", "description": "Flats rent cheaply; Zamalek, Maadi and Heliopolis are popular." },
+    { "title": "Connectivity and money", "description": "A local SIM card is cheap; you'll need pounds in cash and a foreign bank card." },
+    { "title": "Extension", "description": "A tourist visa can be extended at the Mogamma or a passport office." },
+    { "title": "Long-term stay", "description": "For settled living, people consider a residence permit through work, study or property." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Cairo?", "answer": "A visa is issued on arrival for 30 days, with the option to extend." },
+    { "question": "How much does it cost to live in Cairo?", "answer": "Very cheap — one of the most budget-friendly megacities. See the calculator above for an exact budget." },
+    { "question": "What language is spoken in Cairo?", "answer": "Arabic; English is understood in tourism and business, but there can be a barrier in everyday life." },
+    { "question": "Can I pay with a Russian card in Cairo?", "answer": "No, Russian cards don't work. You'll need pounds in cash and a foreign bank card." },
+    { "question": "What is the climate like in Cairo?", "answer": "Desert: hot, dry summers and warm, mild winters, with the best season running from autumn to spring." },
+    { "question": "Is Cairo safe?", "answer": "Tourist and residential areas are generally calm, but a megacity calls for the usual urban caution." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Cairo is cheap and lively, with history at every turn and the pyramids visible from the bus window. The downsides — the chaos, traffic and dust; the rhythm takes some getting used to." },
+    { "profession": "translator", "text": "It's a tough city, but it draws you in: delicious food, dirt-cheap prices, hospitality. Zamalek is quiet and green. The air and noise are the main downsides." }
+  ]
+}

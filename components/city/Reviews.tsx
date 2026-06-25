@@ -4,6 +4,7 @@ import { useUnlocked, isUnlocked } from "@/lib/unlocked";
 import { LockedSection } from "@/components/freemium/LockedSection";
 import type { CityContent } from "@/lib/cities-content";
 import { typo } from "@/lib/typography";
+import { movedVerbRu } from "@/lib/gender";
 
 function ReviewCard({
   r,
@@ -25,7 +26,11 @@ function ReviewCard({
         {r.profession ? <span className="text-brandy/50">·</span> : null}
         {r.profession ? <span>{r.profession}</span> : null}
         {r.moved_year ? <span className="text-brandy/50">·</span> : null}
-        {r.moved_year ? <span>переехал(а) в {r.moved_year}</span> : null}
+        {r.moved_year ? (
+          <span>
+            {movedVerbRu(r.author)} в {r.moved_year}
+          </span>
+        ) : null}
       </footer>
     </article>
   );
@@ -49,9 +54,9 @@ export function Reviews({
   const locked = useLock ? reviews.slice(1) : [];
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-20">
+    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
       <span className="eyebrow">Опыт</span>
-      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-10">
+      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10">
         Отзывы переехавших
       </h2>
 

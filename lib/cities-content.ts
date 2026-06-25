@@ -31,6 +31,24 @@ export type CityContent = {
     moved_year: number;
     text: string;
   }>;
+  // --- Расширенные блоки (опциональные, заполняются по городам постепенно) ---
+  // #17: развёрнутое описание города 250-350 слов — SEO-«тело» страницы.
+  intro_long?: string;
+  // #13: районы для проживания — название, характер, аренда-ориентир, для кого.
+  districts?: Array<{
+    name: string;
+    vibe: string;
+    rent: string;
+    for_whom: string;
+  }>;
+  // #14 + #16: работа и удалёнка — рынок труда, зарплаты, сферы, связь/интернет.
+  work?: {
+    summary: string;
+    salary: string;
+    sectors: string[];
+    remote: string;
+    internet: string;
+  };
 };
 
 export const DIFFICULTY_LABELS: Record<

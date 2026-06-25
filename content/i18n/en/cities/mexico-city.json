@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Mexico City 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Mexico City per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Mexico's capital up in the highlands: a mild climate year-round, a rich culture and a growing community of remote workers. Russian citizens need a visa or an electronic SAE authorization; the downsides are the altitude, the traffic and the language barrier.",
+  "climate": "+18°C avg.",
+  "language": "Spanish",
+  "currency": "Peso, MXN",
+  "population": "9 mln",
+  "flight_from_moscow": "14 hours with a layover",
+  "pros": [
+    "A mild climate year-round in the highlands",
+    "A rich culture, museums and gastronomy",
+    "A growing community of remote workers",
+    "Affordable prices for North America",
+    "A hub for travelling around the region"
+  ],
+  "cons": [
+    "Russian citizens need a visa or an SAE authorization",
+    "Altitude of 2,200 m — a few days to adjust",
+    "Heavy megacity traffic",
+    "A language barrier — you'll need Spanish"
+  ],
+  "best_places": [
+    { "name": "Roma and Condesa", "description": "Green, trendy districts with cafés, coworkings and a digital-nomad crowd." },
+    { "name": "Historic Centre (Zócalo)", "description": "The main square with the cathedral and the ruins of the Aztec Templo Mayor." },
+    { "name": "Coyoacán", "description": "A bohemian district with the Frida Kahlo House Museum and markets." },
+    { "name": "Chapultepec", "description": "A huge city park with a castle and museums." }
+  ],
+  "visa_steps": [
+    { "title": "Visa or SAE", "description": "Russians need a Mexican visa or an electronic SAE authorization when arriving by plane." },
+    { "title": "Renting a home", "description": "Apartments are rented monthly; Roma, Condesa and Polanco are popular." },
+    { "title": "Connectivity and money", "description": "A local SIM card is cheap; you'll need cash in pesos and a card from a foreign bank." },
+    { "title": "Residency (optional)", "description": "For a long stay you obtain temporary residency based on income or investment." },
+    { "title": "Adjusting to the altitude", "description": "Allow a few days to acclimatise to the 2,200 m altitude." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Mexico City?", "answer": "Yes, you need a visa or an electronic SAE authorization (issued online when arriving by plane)." },
+    { "question": "How much does it cost to live in Mexico City?", "answer": "Affordable for North America, cheaper than the US. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Mexico City?", "answer": "Spanish; not much English — it's better to learn the language to live here." },
+    { "question": "Can I pay with a Russian card in Mexico City?", "answer": "No, Russian cards don't work. You'll need cash in pesos and a card from a foreign bank." },
+    { "question": "What is the climate like in Mexico City?", "answer": "Mild highland climate: a not-too-hot rainy summer and warm, dry winters." },
+    { "question": "What is the SAE?", "answer": "An electronic authorization to enter by plane — issued online, it simplifies the trip without a classic visa." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Mexico City means culture, food and an eternal spring of a climate; Roma and Condesa are full of nomads. The downsides are the altitude for the first few days, the traffic and mandatory Spanish." },
+    { "profession": "designer", "text": "The city is huge and rich, with endless museums and cafés. The visa/SAE and the language are the main barriers, but life here is vibrant and affordable." }
+  ]
+}

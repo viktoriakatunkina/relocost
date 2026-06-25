@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Playa del Carmen 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Playa del Carmen per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A Caribbean resort on the Riviera Maya: turquoise sea, white sand and a large nomad community. Russian citizens need a visa or the electronic SAE authorisation; the downsides are tourist prices, humidity and hurricane season.",
+  "climate": "+27°C avg.",
+  "language": "Spanish, English",
+  "currency": "Peso, MXN",
+  "population": "330 thousand",
+  "flight_from_moscow": "16 hours with a layover",
+  "pros": [
+    "The Caribbean Sea and white-sand beaches",
+    "A large international nomad community",
+    "English is common in tourism",
+    "Tropics and warmth year-round",
+    "Cenotes, Tulum and Cozumel nearby"
+  ],
+  "cons": [
+    "Russian citizens need a visa or SAE authorisation",
+    "Tourist prices higher than in the capital",
+    "High humidity and hurricane season",
+    "Seaweed problems (sargassum) in places"
+  ],
+  "best_places": [
+    { "name": "Fifth Avenue (Quinta Avenida)", "description": "A pedestrian street with cafés, shops and nightlife running along the beach." },
+    { "name": "Cenotes", "description": "Natural karst sinkholes with crystal-clear water for swimming and diving." },
+    { "name": "Cozumel", "description": "The island across the water with the region's best diving, reached by ferry from town." },
+    { "name": "Tulum", "description": "A trendy neighbouring town with Maya ruins on the ocean shore." }
+  ],
+  "visa_steps": [
+    { "title": "Visa or SAE", "description": "Russian citizens need a Mexican visa or the electronic SAE authorisation when arriving by air." },
+    { "title": "Renting housing", "description": "Condos and studios are let by the month; prices are higher in high season." },
+    { "title": "Connectivity and money", "description": "A local SIM card is cheap; you'll need cash pesos and a foreign bank card." },
+    { "title": "Residency (optional)", "description": "For a long-term stay you apply for temporary residency based on income or investment." },
+    { "title": "Transport", "description": "The town is compact — plenty of walking, cycling and taxis." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Playa del Carmen?", "answer": "Yes, you need a visa or the electronic SAE authorisation when arriving by air." },
+    { "question": "How much does it cost to live in Playa del Carmen?", "answer": "Pricier than the capital because of tourism, but cheaper than the US. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Playa del Carmen?", "answer": "Spanish; English is widely used in tourism." },
+    { "question": "Can I pay with a Russian card in Playa del Carmen?", "answer": "No, Russian cards don't work. You'll need cash pesos and a foreign bank card." },
+    { "question": "What is the climate like in Playa del Carmen?", "answer": "Tropical: hot and humid year-round, with hurricane season from June to November." },
+    { "question": "What is sargassum?", "answer": "Brown seaweed that washes up on Caribbean beaches in certain months — worth factoring in when choosing your season." }
+  ],
+  "reviews": [
+    { "profession": "remote marketer", "text": "Playa means the Caribbean, cenotes and loads of nomads, and English gets you by. The downsides — tourist prices, humidity and sargassum in some months." },
+    { "profession": "remote designer", "text": "The sea is turquoise, the community is big, and Tulum and Cozumel are nearby. The visa/SAE is the main catch for Russians, but living by the Caribbean is worth it." }
+  ]
+}

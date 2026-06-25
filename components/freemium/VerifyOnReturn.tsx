@@ -3,31 +3,36 @@
 import { useEffect, useRef } from "react";
 import {
   addUnlocked,
+  addManyUnlocked,
   readPendingPayment,
   clearPendingPayment,
+  readPurchaseEmail,
+  type PackageType,
 } from "@/lib/unlocked";
 
 /**
- * После возврата с оплаты ЮKassa проверяет платеж на сервере и только при
- * реальном succeeded разблокирует пакет. id платежа берется из sessionStorage
- * (положен перед уходом на оплату) — URL-параметрам не доверяем.
+ * После возврата с оплаты ЮKassa разблокирует контент ДВУМЯ путями:
  *
- * Если платеж еще обрабатывается (pending/waiting_for_capture) — несколько
- * повторов с паузой (например, для СБП). При отмене/неуспехе — ничего не открываем.
+ * 1) Быстрый путь — по payment_id из sessionStorage (положен перед уходом на
+ *    оплату): сервер сверяет реальный статус платежа (succeeded) и открывает.
+ *
+ * 2) Надёжный путь — по email из localStorage. sessionStorage часто теряется
+ *    при возврате через СБП / на телефоне / в новой вкладке; email durable, и
+ *    по нему /api/payment/access находит оплаченные пакеты в БД и открывает их.
+ *    Так доступ восстанавливается автоматически на том же устройстве.
  */
 export function VerifyOnReturn({ slug }: { slug: string }) {
   const done = useRef(false);
 
   useEffect(() => {
     if (done.current) return;
-    const pending = readPendingPayment();
-    if (!pending || pending.slug !== slug) return;
     done.current = true;
-
     let cancelled = false;
-    const MAX_TRIES = 6;
 
-    async function check(attempt: number): Promise<void> {
+    // --- Путь 1: payment_id из sessionStorage ---
+    const pending = readPendingPayment();
+    const MAX_TRIES = 6;
+    async function checkPayment(attempt: number): Promise<void> {
       if (cancelled || !pending) return;
       try {
         const res = await fetch(
@@ -35,29 +40,46 @@ export function VerifyOnReturn({ slug }: { slug: string }) {
           { cache: "no-store" },
         );
         const data = await res.json();
-
         if (data?.ok && data.slug === slug) {
           addUnlocked(slug, pending.pkg);
           clearPendingPayment();
           return;
         }
-
-        // Платеж в обработке — повторяем; иначе прекращаем.
         const transient =
           data?.status === "pending" || data?.status === "waiting_for_capture";
         if (transient && attempt < MAX_TRIES) {
-          setTimeout(() => check(attempt + 1), 2500);
+          setTimeout(() => checkPayment(attempt + 1), 2500);
           return;
         }
-
-        // Терминальный неуспех (canceled и т.п.) — убираем ожидание.
         if (data?.status === "canceled") clearPendingPayment();
       } catch {
-        if (attempt < MAX_TRIES) setTimeout(() => check(attempt + 1), 2500);
+        if (attempt < MAX_TRIES) setTimeout(() => checkPayment(attempt + 1), 2500);
       }
     }
+    if (pending && pending.slug === slug) checkPayment(0);
 
-    check(0);
+    // --- Путь 2: восстановление по сохранённому email ---
+    const email = readPurchaseEmail();
+    async function recoverByEmail(): Promise<void> {
+      if (cancelled || !email) return;
+      try {
+        const res = await fetch("/api/payment/access", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ slug, email }),
+          cache: "no-store",
+        });
+        const data = await res.json();
+        const pkgs: PackageType[] = Array.isArray(data?.packages)
+          ? data.packages
+          : [];
+        if (pkgs.length) addManyUnlocked(slug, pkgs);
+      } catch {
+        /* тихо: ручное восстановление доступно через RestoreAccess */
+      }
+    }
+    recoverByEmail();
+
     return () => {
       cancelled = true;
     };

@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Samui 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live on Samui per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A tropical island in the Gulf of Thailand: visa-free for 60 days, with beaches and palm trees year-round. Calmer and greener than Phuket, convenient to live on under the DTV visa, but everything imported is a bit pricier than on the mainland, and healthcare and logistics are island-style.",
+  "climate": "+28°C avg.",
+  "language": "Thai, English",
+  "currency": "Baht, THB",
+  "population": "70 thsd",
+  "flight_from_moscow": "13 hours with a layover",
+  "pros": [
+    "Visa-free for 60 days, convenient to live on under the DTV visa",
+    "Tropics year-round: beaches, palms, a warm sea",
+    "Calmer and greener than Phuket",
+    "Well-developed infrastructure for expats and great food",
+    "A large Russian-speaking and digital-nomad community"
+  ],
+  "cons": [
+    "Everything imported is slightly pricier than on the mainland",
+    "Island healthcare and logistics — for anything complex people go to Bangkok",
+    "Rainy season (October–December) with heavy downpours",
+    "You need a scooter: there's almost no public transport"
+  ],
+  "best_places": [
+    { "name": "Maenam Beach", "description": "A quiet northern beach chosen for long-term living by families and remote workers." },
+    { "name": "Chaweng", "description": "The main resort area with shopping malls, cafés and nightlife." },
+    { "name": "Fisherman's Village (Bophut)", "description": "An atmospheric street with restaurants, a weekend market and sunset views." },
+    { "name": "Big Buddha (Wat Phra Yai)", "description": "A 12-metre golden Buddha statue — the island's main temple landmark." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 60 days without a visa for Russians, with the option to extend by 30 days at the immigration office." },
+    { "title": "DTV visa (for long-term living)", "description": "A 5-year multi-entry visa for remote workers — up to 180 days per entry without leaving." },
+    { "title": "Renting a home", "description": "Villas and condos are rented monthly; prices and demand are higher during the winter high season." },
+    { "title": "Account and connectivity", "description": "A local SIM card with a large data plan; a Thai bank account is possible with a visa and an address." },
+    { "title": "Transport", "description": "Renting a scooter is the main way to get around; you'll need an international driving licence." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Samui?", "answer": "No, visa-free for up to 60 days with the option to extend. For long-term living it's more convenient to arrange a 5-year DTV visa." },
+    { "question": "How much does it cost to live on Samui?", "answer": "Comparable to Phuket: slightly pricier than mainland Thailand because of island logistics. See the exact budget in the calculator above." },
+    { "question": "What language is spoken on Samui?", "answer": "Thai; English is widely used in tourist areas, and Russian also turns up in the service sector." },
+    { "question": "Can I pay with a Russian card on Samui?", "answer": "No, Russian cards don't work. You'll need baht in cash and a card from a foreign bank." },
+    { "question": "What is the climate like on Samui?", "answer": "Tropical: hot year-round, with the main rainy season from October to December." },
+    { "question": "How do I get to Samui?", "answer": "Via Bangkok: a domestic flight to the island, or a bus and ferry. There are no direct flights from Russia." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "I moved from Phuket — Samui is quieter and greener. I live on a DTV, work remotely, and the beach is five minutes away by scooter. The downside is that I flew to Bangkok for serious healthcare." },
+    { "profession": "illustrator", "text": "An island for those who want the sea and tranquillity. The community is warm and the food is amazing. The rainy season can be gloomy, but in winter it's paradise." }
+  ]
+}

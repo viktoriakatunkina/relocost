@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Sousse 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Sousse per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A resort on Tunisia's Mediterranean coast: visa-free entry for 90 days, a mild climate, a UNESCO-protected medina and affordable prices. The downsides — the seasonal nature of the resort and the prevalence of French over English.",
+  "climate": "+19°C avg.",
+  "language": "Arabic, French",
+  "currency": "Dinar, TND",
+  "population": "270 thsd",
+  "flight_from_moscow": "5.5 hours",
+  "pros": [
+    "Visa-free for 90 days for Russian citizens",
+    "A mild Mediterranean climate and beaches",
+    "A UNESCO-protected medina",
+    "Low prices",
+    "A well-developed resort infrastructure"
+  ],
+  "cons": [
+    "The seasonal nature of the resort — quieter in winter",
+    "French is more widespread than English",
+    "Mid-level healthcare",
+    "Alcohol is sold under restrictions"
+  ],
+  "best_places": [
+    { "name": "Medina of Sousse", "description": "An old walled town with a ribat and bazaars, protected by UNESCO." },
+    { "name": "Port El Kantaoui", "description": "A resort marina with yachts, cafés and beaches a few kilometres away." },
+    { "name": "Corniche seafront", "description": "A coastal promenade lined with hotels, cafés and the beachfront." },
+    { "name": "Ribat and Great Mosque", "description": "Ancient fortifications and a mosque in the historic centre." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russians enjoy visa-free stays of up to 90 days — all you need is a passport." },
+    { "title": "Renting a home", "description": "Seaside apartments are rented monthly and are cheaper out of season." },
+    { "title": "Connectivity and money", "description": "A local SIM card is cheap; you'll need dinars in cash and a foreign bank card." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business or long-term residence you obtain a carte de séjour." },
+    { "title": "Transport", "description": "Louages (shared minibuses) and trains are convenient for travel between cities." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Sousse?", "answer": "No, visa-free for up to 90 days. For long-term residence you apply for a residence permit." },
+    { "question": "How much does it cost to live in Sousse?", "answer": "Cheap, especially out of season. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Sousse?", "answer": "Arabic and French; English is found in tourism." },
+    { "question": "Can I pay with a Russian card in Sousse?", "answer": "No, Russian cards don't work. You'll need dinars in cash and a foreign bank card." },
+    { "question": "What is the climate like in Sousse?", "answer": "Mediterranean: hot dry summers and mild rainy winters." },
+    { "question": "Can you spend the winter there?", "answer": "Yes, but in winter the resort quiets down and many things operate on a reduced schedule." }
+  ],
+  "reviews": [
+    { "profession": "remote manager", "text": "Sousse is a warm sea, the medina and dirt-cheap prices. In winter the resort empties out and you need French more than English, but for summer and autumn it's great." },
+    { "profession": "illustrator", "text": "A calm seaside town with history. Visa-free entry and low prices are the main pluses. The downsides — the seasonality and healthcare; for anything serious it's better to go to the capital." }
+  ]
+}

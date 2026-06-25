@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Heraklion 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Heraklion per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Crete on the seafront: a mild Mediterranean climate, the Palace of Knossos and a long beach season. Russian citizens need a Schengen visa, and the island empties out noticeably in winter.",
+  "climate": "+19°C avg.",
+  "language": "Greek, English",
+  "currency": "Euro, EUR",
+  "population": "180 thousand",
+  "flight_from_moscow": "4.5 hours with a layover",
+  "pros": [
+    "A mild Mediterranean climate and a long season",
+    "Rich history: the Palace of Knossos and museums",
+    "Fresh Cretan cuisine and produce",
+    "Sea and mountains nearby, beautiful nature",
+    "Well-developed island infrastructure"
+  ],
+  "cons": [
+    "Russian citizens need a Schengen visa",
+    "The island empties out noticeably in winter",
+    "High European prices",
+    "Island logistics — much is imported"
+  ],
+  "best_places": [
+    { "name": "Palace of Knossos", "description": "The legendary Minoan palace with its labyrinth, a few kilometres from the city." },
+    { "name": "Venetian Harbour and the Koules Fortress", "description": "The old port with a fortress and views over the sea." },
+    { "name": "25th August Street", "description": "A pedestrian street in the centre with cafés, shops and Venetian architecture." },
+    { "name": "Archaeological Museum", "description": "One of the world's most important collections of Minoan culture." }
+  ],
+  "visa_steps": [
+    { "title": "Schengen visa", "description": "Russian citizens need a Schengen visa to enter Greece." },
+    { "title": "Renting a home", "description": "Long-term rentals are cheaper off-season; in summer prices and demand are higher." },
+    { "title": "Tax number (AFM)", "description": "Needed for a bank account, renting and services; issued by the tax office." },
+    { "title": "Bank account", "description": "Greek banks open accounts once you have an AFM and an address." },
+    { "title": "Residence permit (optional)", "description": "Through work, study, a digital visa or financial independence (FIP)." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Heraklion?", "answer": "Yes, you need a Schengen visa — Greece is part of the Schengen Area." },
+    { "question": "How much does it cost to live in Heraklion?", "answer": "European prices, but cheaper than the mainland capitals. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Heraklion?", "answer": "Greek; English is widely used in tourism." },
+    { "question": "Can I pay with a Russian card in Heraklion?", "answer": "No, Russian cards don't work. You'll need a card from a foreign bank or euros in cash." },
+    { "question": "What is the climate like in Crete?", "answer": "One of the warmest in Europe: hot summers and mild winters, with a long swimming season." },
+    { "question": "What is there to see nearby?", "answer": "Knossos, beaches and the mountain villages of Crete — the island is large and varied." }
+  ],
+  "reviews": [
+    { "profession": "remote architect", "text": "Crete is sunshine, history and wonderful food. Heraklion works well as a base. The downsides for us are the Schengen visa and the fact that the resort empties out in winter." },
+    { "profession": "illustrator", "text": "I fell in love with Crete's nature and cuisine. Prices are European and the visa is the main hurdle, but for a sea and climate like this it's worth it." }
+  ]
+}

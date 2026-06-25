@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Doha 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Doha per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Qatar on the shore of the Persian Gulf: 30-day visa-free entry, zero income tax, high safety and ultramodern infrastructure. Expensive rent and very hot summers, with alcohol restricted.",
+  "climate": "+27°C avg.",
+  "language": "Arabic, English",
+  "currency": "Riyal, QAR",
+  "population": "1.2 mln",
+  "flight_from_moscow": "5 hours",
+  "pros": [
+    "Visa-free for 30 days for Russian citizens",
+    "Zero income tax",
+    "One of the safest cities in the world",
+    "Ultramodern infrastructure and a hub airport",
+    "English is widely spoken"
+  ],
+  "cons": [
+    "Very expensive housing rent",
+    "Sweltering summer heat (up to +45 and above)",
+    "Alcohol is sold in limited amounts and is expensive",
+    "Conservative norms and a dress code"
+  ],
+  "best_places": [
+    { "name": "Souq Waqif", "description": "An atmospheric traditional bazaar with spices, shops and restaurants." },
+    { "name": "Corniche", "description": "A long waterfront along the bay with a view of the West Bay skyscrapers." },
+    { "name": "Museum of Islamic Art", "description": "The famous I. M. Pei building with a rich collection on the shore." },
+    { "name": "The Pearl-Qatar", "description": "An artificial island with a marina, premium housing and a waterfront." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "For Russian citizens — visa-free for up to 30 days, with the stamp issued on arrival." },
+    { "title": "Resident visa", "description": "For long-term living you need residency through an employer or a business." },
+    { "title": "Qatar ID", "description": "A resident's ID — needed for renting, banking and connectivity." },
+    { "title": "Renting a home", "description": "A lease usually requires cheques for several months in advance." },
+    { "title": "Bank account", "description": "Local banks open accounts for residents with a Qatar ID." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Doha?", "answer": "No, visa-free for up to 30 days. For living and working you need a resident visa through an employer or a business." },
+    { "question": "How much does it cost to live in Doha?", "answer": "Expensive, especially rent; but there's no income tax. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Doha?", "answer": "Arabic is the official language, but English is used everywhere in work and daily life." },
+    { "question": "Can I pay with a Russian card in Doha?", "answer": "No, Russian cards don't work. You'll need a foreign bank card or cash riyals." },
+    { "question": "What is the climate like in Doha?", "answer": "Desert: very hot, humid summers and warm, mild winters — the best season runs from November to March." },
+    { "question": "How freely is alcohol available in Doha?", "answer": "Alcohol is sold in limited amounts — in licensed hotel bars and with a special permit." }
+  ],
+  "reviews": [
+    { "profession": "oil and gas engineer", "text": "Doha means safety, cleanliness and zero tax. I moved on a contract. The downside is expensive rent and brutal summer heat — only air conditioning saves you." },
+    { "profession": "remote designer", "text": "The city is very comfortable and modern, and English is enough. It's expensive to live and tricky with alcohol, but it's calm and safe." }
+  ]
+}

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<title>Relocost — Брендбук</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
+:root{
+  --pine-tree:#1A2105; --surface:#28321A; --kombu:#2C3A24; --elevated:#34401F;
+  --dim:#5A6A45; --dingley:#6A784D; --muted:#8A9A6E;
+  --copper:#E89B6E; --pale-copper:#D89478; --brandy:#E6CFA8; --cream:#F6F1E8;
+  --hairline:rgba(222,197,158,0.16);
+}
+@page{ size:A4; margin:18mm 16mm; }
+*{ box-sizing:border-box; }
+body{
+  font-family:'Manrope',system-ui,sans-serif;
+  background:var(--pine-tree); color:var(--brandy);
+  font-size:11.5px; line-height:1.62; margin:0; padding:0;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+.page{ padding:0; }
+
+/* ОБЛОЖКА */
+.cover{
+  height:261mm; display:flex; flex-direction:column; justify-content:center;
+  page-break-after:always; padding:0 6mm;
+  background:radial-gradient(120% 80% at 80% 10%, rgba(232,155,110,0.12), transparent 55%), var(--pine-tree);
+}
+.cover .mark{
+  width:84px; height:84px; border-radius:22px; background:var(--pine-tree);
+  border:1px solid var(--hairline); display:flex; align-items:center; justify-content:center;
+  margin-bottom:34px; box-shadow:0 24px 80px -32px rgba(232,155,110,0.55);
+}
+.cover .mark svg{ width:48px; height:48px; }
+.cover h1{
+  font-family:'Cormorant Garamond',Georgia,serif; font-weight:600;
+  font-size:88px; line-height:1.0; letter-spacing:-0.02em; color:var(--cream);
+  margin:0 0 6px;
+}
+.cover .sub{
+  font-family:'Cormorant Garamond',Georgia,serif; font-size:30px; color:var(--copper);
+  margin:0 0 28px; font-weight:500;
+}
+.cover .meta{
+  font-size:11px; text-transform:uppercase; letter-spacing:0.18em; color:var(--muted);
+  border-top:1px solid var(--hairline); padding-top:18px; max-width:520px;
+}
+.cover .meta code{ color:var(--brandy); }
+
+/* ТИПОГРАФИКА КОНТЕНТА */
+h1,h2,h3{ font-family:'Cormorant Garamond',Georgia,serif; color:var(--cream); font-weight:600; line-height:1.1; }
+h2{
+  font-size:30px; margin:30px 0 12px; padding-bottom:8px;
+  border-bottom:1px solid var(--hairline); page-break-after:avoid;
+}
+h2::before{
+  content:""; display:inline-block; width:22px; height:2px; background:var(--copper);
+  vertical-align:middle; margin-right:12px; transform:translateY(-5px);
+}
+h3{ font-size:18px; margin:20px 0 8px; color:var(--brandy); page-break-after:avoid; }
+p{ margin:8px 0; text-wrap:pretty; }
+strong{ color:var(--cream); font-weight:600; }
+a{ color:var(--copper); text-decoration:none; }
+hr{ display:none; }
+ul,ol{ margin:8px 0; padding-left:20px; }
+li{ margin:4px 0; }
+li::marker{ color:var(--copper); }
+
+code{
+  font-family:'SF Mono','Menlo',monospace; font-size:9.5px;
+  background:rgba(222,197,158,0.08); color:var(--brandy);
+  padding:1px 5px; border-radius:5px; border:1px solid var(--hairline);
+}
+
+blockquote{
+  margin:14px 0; padding:10px 16px; background:var(--kombu);
+  border-left:3px solid var(--copper); border-radius:0 10px 10px 0;
+  color:var(--brandy); font-size:11px;
+}
+blockquote p{ margin:0; }
+
+/* ТАБЛИЦЫ */
+table{
+  width:100%; border-collapse:collapse; margin:12px 0; font-size:10px;
+  background:var(--surface); border-radius:10px; overflow:hidden;
+  page-break-inside:avoid; border:1px solid var(--hairline);
+}
+th{
+  background:var(--elevated); color:var(--cream); text-align:left; font-weight:600;
+  padding:8px 10px; font-size:9.5px; text-transform:uppercase; letter-spacing:0.05em;
+}
+td{ padding:7px 10px; border-top:1px solid var(--hairline); vertical-align:top; }
+tr:nth-child(even) td{ background:rgba(222,197,158,0.03); }
+
+.swatch{
+  display:inline-block; width:11px; height:11px; border-radius:3px;
+  border:1px solid rgba(246,241,232,0.25); margin-right:6px; vertical-align:-1px;
+}
+
+section.block{ page-break-inside:avoid; }
+</style></head>
+<body>
+<div class="cover">
+  <div class="mark">
+<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M24 6c-8 0-14 6-14 14 0 9.5 11.5 19 13.2 20.4a1.2 1.2 0 0 0 1.6 0C26.5 39 38 29.5 38 20c0-8-6-14-14-14z" fill="#E89B6E"/>
+  <circle cx="24" cy="20" r="6" fill="#1A2105"/>
+</svg>
+</div>
+  <h1>Relocost</h1>
+  <div class="sub">Брендбук</div>
+  <div class="meta">
+    Версия 0.1 · черновик на утверждение · 2026<br>
+    Живой источник токенов: <code>app/globals.css</code>, <code>tailwind.config.ts</code>, <code>app/layout.tsx</code>
+  </div>
+</div>
+<div class="page">
+<h2>1. Суть и позиционирование</h2>
+<p><strong>Relocost</strong> — калькулятор стоимости жизни для тех, кто планирует переезд: по России
+и за рубеж. Человек выбирает город, считает реальный месячный бюджет (аренда, еда,
+транспорт, ЖКХ, кафе, здоровье, развлечения), читает про визы и отзывы переехавших —
+и решает, потянет ли он этот город.</p>
+<p>Модель — <strong>freemium</strong>. Базовая информация открыта, детальные данные открываются
+покупкой пакетов (📍 Лучшие места — 79 ₽, 🧭 Гайд по жизни — 149 ₽, 📊 Точный
+бюджет — 199 ₽, 🎁 Всё вместе — 299 ₽).</p>
+<p><strong>Для кого:</strong>
+- Те, кто впервые задумался о переезде и не знает, с чего начать.
+- Те, кто выбирает между несколькими городами и сравнивает бюджеты.
+- Те, кто уже решился и хочет точные цифры перед стартом.</p>
+<p><strong>Обещание бренда:</strong> «Поможем разобраться, во сколько обойдётся переезд — спокойно,
+по-человечески и без сюрпризов». Мы не продаём мечту и не пугаем — мы даём ясность.</p>
+<hr />
+<h2>2. Тон голоса — «дружелюбный помощник»</h2>
+<p>Relocost разговаривает как знающий друг, который сам через это прошёл: тепло, просто,
+ободряюще. Без пафоса, канцелярита и давления.</p>
+<p><strong>Принципы:</strong>
+1. <strong>Тепло, а не официально.</strong> «Поможем посчитать», а не «Сервис предоставляет расчёт».
+2. <strong>Просто, а не умно.</strong> Короткие фразы. Объясняем термины, не сыплем ими.
+3. <strong>Ободряюще, а не тревожно.</strong> Переезд — это волнительно; мы снижаем тревогу, а не растим её.
+4. <strong>Честно, а не приукрашенно.</strong> Реальные цифры, в том числе неприятные. Доверие важнее красивой картинки.
+5. <strong>С уважением к «ты»-границе.</strong> Обращаемся на «вы», но по-доброму и легко.</p>
+<p><strong>Как пишем / как НЕ пишем:</strong></p>
+<table>
+<thead>
+<tr>
+<th>✅ Как пишем</th>
+<th>❌ Как НЕ пишем</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>«Давайте прикинем, сколько уйдёт на жизнь в Тбилиси»</td>
+<td>«Осуществите расчёт стоимости проживания»</td>
+</tr>
+<tr>
+<td>«Аренда здесь обычно от 35 000 ₽ — мы собрали реальные цены»</td>
+<td>«Эксклюзивные данные о рынке недвижимости»</td>
+</tr>
+<tr>
+<td>«Не переживайте, виза оформляется проще, чем кажется»</td>
+<td>«Визовый процесс сопряжён с рядом сложностей»</td>
+</tr>
+<tr>
+<td>«Откройте точный бюджет — покажем все цифры до рубля»</td>
+<td>«Разблокируйте премиум-доступ к полному функционалу»</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Словарь бренда:</strong>
+- Говорим: <em>переезд, прикинуть, реальные цены, разобраться, спокойно, по-человечески, бюджет, открыть (пакет).</em>
+- Избегаем: <em>релокация (в заголовках для людей — ок в SEO), функционал, осуществить, оптимальный, премиум-доступ, эксклюзив.</em>
+- Орфография: везде <strong>«е» вместо «ё»</strong> (общее правило проекта).
+- Типографика текста — через хелпер <code>lib/typography.ts</code> (неразрывные пробелы у предлогов, тире).</p>
+<hr />
+<h2>3. Логотип</h2>
+<p>Направление: <strong>знак + wordmark</strong>. Слева — лаконичный фирменный знак, справа — наборный
+текст «Relocost» шрифтом Cormorant Garamond.</p>
+<h3>Знак (mark)</h3>
+<p>Дружелюбный, скруглённый. На утверждение — <strong>3 варианта</strong> (см. <code>preview-marks.png</code>):</p>
+<ol>
+<li><strong>Пин</strong> (<code>mark-1-pin.svg</code>) — мягкий маркер локации с круглым «окном». Эволюция текущего
+   фавикона, самый универсальный и считываемый в мелком размере. <strong>Вариант по умолчанию.</strong></li>
+<li><strong>Монограмма R</strong> (<code>mark-2-monogram.svg</code>) — округлая дружелюбная «R» в сквиркле. Хорошо
+   работает как аватарка, более «бренд-ориентированный».</li>
+<li><strong>Пин + R</strong> (<code>mark-3-pin-r.svg</code>) — гибрид: «R» внутри пина. Самый отличительный, но
+   требует чуть большего минимального размера для читаемости «R».</li>
+</ol>
+<p>Знак работает <strong>отдельно</strong> (фавикон, аватарки соцсетей, app-иконка). Базовый знак —
+персиковый (<span class="swatch" style="background:#E89B6E"></span><code>#E89B6E</code>) на тёмно-зелёном (<span class="swatch" style="background:#1A2105"></span><code>#1A2105</code>); есть инверсия и монохром.</p>
+<h3>Wordmark</h3>
+<p>«Relocost», Cormorant Garamond 600, цвет <code>--white</code> (<span class="swatch" style="background:#F6F1E8"></span><code>#F6F1E8</code>) на тёмном фоне.
+В SVG текст задан через <code>font-family</code> с фоллбэком на Georgia — при необходимости
+печати/стабильности его можно перевести в кривые.</p>
+<h3>Файлы (<code>public/brand/</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Файл</th>
+<th>Назначение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logo-full.svg</code></td>
+<td>Полный логотип (знак + wordmark), для шапки на тёмном</td>
+</tr>
+<tr>
+<td><code>logo-mark.svg</code></td>
+<td>Только знак в сквиркле, для фавикона/аватарок</td>
+</tr>
+<tr>
+<td><code>logo-full-mono.svg</code></td>
+<td>Монохром, цвет через <code>currentColor</code></td>
+</tr>
+<tr>
+<td><code>logo-mark-mono.svg</code></td>
+<td>Монохром-знак, цвет через <code>currentColor</code></td>
+</tr>
+<tr>
+<td><code>mark-1-pin.svg</code>, <code>mark-2-monogram.svg</code>, <code>mark-3-pin-r.svg</code></td>
+<td>Варианты знака на выбор</td>
+</tr>
+<tr>
+<td><code>app/icon.svg</code></td>
+<td>Фавикон (на базе пина)</td>
+</tr>
+</tbody>
+</table>
+<h3>Правила</h3>
+<ul>
+<li><strong>Охранное поле:</strong> свободное пространство вокруг логотипа ≥ высоте знака (≈ одна «R» wordmark’а).</li>
+<li><strong>Минимальный размер:</strong> знак — не меньше <strong>24×24 px</strong> на экране (вариант 3 — от 32 px); полный логотип — не уже <strong>120 px</strong>.</li>
+<li><strong>Нельзя:</strong> растягивать/сжимать непропорционально, менять цвета вне палитры, добавлять
+  тени/обводки/градиенты, ставить на пёстрое фото без подложки, наклонять, заменять шрифт
+  wordmark’а, разворачивать знак.</li>
+</ul>
+<hr />
+<h2>4. Цвет</h2>
+<p>Базовые значения — из <code>app/globals.css</code> (<code>:root</code>). Промежуточные оттенки шкал и светлая
+тема — <strong>производные</strong> от базовых, для отступов/градиентов/состояний.</p>
+<h3>4.1 Фон и поверхности (тёмно-зелёные) — БАЗА из кода</h3>
+<table>
+<thead>
+<tr>
+<th>Токен</th>
+<th>Hex</th>
+<th>CSS-переменная</th>
+<th>Назначение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pine-tree</td>
+<td><span class="swatch" style="background:#1A2105"></span><code>#1A2105</code></td>
+<td><code>--pine-tree</code></td>
+<td>Основной фон, навигация, hero</td>
+</tr>
+<tr>
+<td>surface</td>
+<td><span class="swatch" style="background:#28321A"></span><code>#28321A</code></td>
+<td><code>--surface</code></td>
+<td>Поверхность карточек</td>
+</tr>
+<tr>
+<td>kombu-green</td>
+<td><span class="swatch" style="background:#2C3A24"></span><code>#2C3A24</code></td>
+<td><code>--kombu-green</code></td>
+<td>Вторичный фон, карточки</td>
+</tr>
+<tr>
+<td>surface-elevated</td>
+<td><span class="swatch" style="background:#34401F"></span><code>#34401F</code></td>
+<td><code>--surface-elevated</code></td>
+<td>Приподнятая поверхность, sticky-панель</td>
+</tr>
+<tr>
+<td>dim</td>
+<td><span class="swatch" style="background:#5A6A45"></span><code>#5A6A45</code></td>
+<td><code>--dim</code></td>
+<td>Неактивные, плейсхолдеры, бордеры</td>
+</tr>
+<tr>
+<td>dingley</td>
+<td><span class="swatch" style="background:#6A784D"></span><code>#6A784D</code></td>
+<td><code>--dingley</code></td>
+<td>Акценты-зелёные, прогресс-бары</td>
+</tr>
+<tr>
+<td>muted</td>
+<td><span class="swatch" style="background:#8A9A6E"></span><code>#8A9A6E</code></td>
+<td><code>--muted</code></td>
+<td>Второстепенный текст, подписи</td>
+</tr>
+</tbody>
+</table>
+<p>Шкала зелёного (производная, от тёмного к светлому):
+<code>#12180B → #1A2105 → #28321A → #2C3A24 → #34401F → #5A6A45 → #6A784D → #8A9A6E → #A9B88C</code></p>
+<h3>4.2 Акцент (персик / медь) — БАЗА из кода</h3>
+<table>
+<thead>
+<tr>
+<th>Токен</th>
+<th>Hex</th>
+<th>CSS-переменная</th>
+<th>Назначение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>copper</td>
+<td><span class="swatch" style="background:#E89B6E"></span><code>#E89B6E</code></td>
+<td><code>--copper</code></td>
+<td>Основной CTA, цены, ссылки-акценты, знак логотипа</td>
+</tr>
+<tr>
+<td>pale-copper</td>
+<td><span class="swatch" style="background:#D89478"></span><code>#D89478</code></td>
+<td><code>--pale-copper</code></td>
+<td>Акцент-фокус (outline), мягкие выделения</td>
+</tr>
+<tr>
+<td>brandy</td>
+<td><span class="swatch" style="background:#E6CFA8"></span><code>#E6CFA8</code></td>
+<td><code>--brandy</code></td>
+<td>Основной текст на тёмном (тёплый), eyebrow</td>
+</tr>
+</tbody>
+</table>
+<p>Шкала персика (производная):
+<code>#8A4F33 → #B86A45 → #D17A52 → #E89B6E → #EFB48F → #F3C7AB → #F8DDC9</code></p>
+<h3>4.3 Нейтрали и текст</h3>
+<table>
+<thead>
+<tr>
+<th>Токен</th>
+<th>Hex</th>
+<th>Назначение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>white (cream)</td>
+<td><span class="swatch" style="background:#F6F1E8"></span><code>#F6F1E8</code></td>
+<td>Заголовки, текст максимального контраста</td>
+</tr>
+<tr>
+<td>brandy</td>
+<td><span class="swatch" style="background:#E6CFA8"></span><code>#E6CFA8</code></td>
+<td>Основной body-текст на тёмном</td>
+</tr>
+<tr>
+<td>muted</td>
+<td><span class="swatch" style="background:#8A9A6E"></span><code>#8A9A6E</code></td>
+<td>Подписи, метаданные</td>
+</tr>
+<tr>
+<td>dim</td>
+<td><span class="swatch" style="background:#5A6A45"></span><code>#5A6A45</code></td>
+<td>Дизейбл, плейсхолдер</td>
+</tr>
+<tr>
+<td>hairline</td>
+<td><code>rgba(222,197,158,0.14)</code></td>
+<td>Тонкие разделители и бордеры (<code>--hairline</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3>4.4 Семантические (производные, согласованы с тёплой палитрой)</h3>
+<table>
+<thead>
+<tr>
+<th>Роль</th>
+<th>Hex</th>
+<th>На тёмном</th>
+<th>Применение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>success</td>
+<td><span class="swatch" style="background:#7FB069"></span><code>#7FB069</code></td>
+<td>текст/иконка</td>
+<td>«бюджетный город», подтверждения</td>
+</tr>
+<tr>
+<td>warning</td>
+<td><span class="swatch" style="background:#E0A93E"></span><code>#E0A93E</code></td>
+<td>текст/иконка</td>
+<td>«средняя сложность», предупреждения</td>
+</tr>
+<tr>
+<td>error</td>
+<td><span class="swatch" style="background:#D9685B"></span><code>#D9685B</code></td>
+<td>текст/иконка</td>
+<td>ошибки оплаты, «дорого»</td>
+</tr>
+<tr>
+<td>info</td>
+<td><span class="swatch" style="background:#7FA8B8"></span><code>#7FA8B8</code></td>
+<td>текст/иконка</td>
+<td>подсказки, нейтральные факты</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Семантику использовать <strong>точечно</strong> (иконки, бейджи, точки сложности — ср. <code>DotIcon</code>
+в <code>CityCard</code>). Основной акцент сайта остаётся персиковым, семантика его не вытесняет.</p>
+</blockquote>
+<h3>4.5 Светлая тема для статей (производная)</h3>
+<p>Длинный контент блога читается легче на светлом. Тёплая «кремовая» тема:
+| Роль | Hex |
+|---|---|
+| Фон страницы | <span class="swatch" style="background:#F6F1E8"></span><code>#F6F1E8</code> (cream) |
+| Поверхность/карточка | <span class="swatch" style="background:#FBF7EF"></span><code>#FBF7EF</code> |
+| Бордер/hairline | <code>rgba(26,33,5,0.12)</code> |
+| Текст основной | <span class="swatch" style="background:#262B17"></span><code>#262B17</code> |
+| Текст вторичный | <span class="swatch" style="background:#5A6A45"></span><code>#5A6A45</code> (dim) |
+| Заголовки | <span class="swatch" style="background:#1A2105"></span><code>#1A2105</code> (pine-tree) |
+| Акцент/ссылки | <span class="swatch" style="background:#C2774F"></span><code>#C2774F</code> (затемнённый copper для контраста на светлом) |</p>
+<h3>4.6 Правила контраста и применения</h3>
+<ul>
+<li><strong>Акцент (copper) — только для действия и ценности:</strong> кнопки «Посчитать»/CTA, цены,
+  активные ссылки, знак логотипа. Не заливать им большие плоскости.</li>
+<li><strong>Фон — зелёный, текст — тёплый:</strong> body — <code>brandy</code>, заголовки — <code>white</code>.</li>
+<li>На светлой теме акцент брать <strong>затемнённый</strong> (<span class="swatch" style="background:#C2774F"></span><code>#C2774F</code>), персик <span class="swatch" style="background:#E89B6E"></span><code>#E89B6E</code> на кремовом
+  не даёт нужного контраста для текста.</li>
+<li>Цена/CTA на персике пишется тёмным <code>pine-tree</code> (как в Header и StickyBar) — даёт контраст AA.</li>
+<li>Минимум AA (4.5:1) для текста, 3:1 для крупных заголовков и UI-элементов.</li>
+</ul>
+<hr />
+<h2>5. Типографика</h2>
+<p>Шрифты подключены через <code>next/font/google</code> в <code>app/layout.tsx</code>, subsets <code>latin</code> + <code>cyrillic</code>.</p>
+<ul>
+<li><strong>Заголовки — Cormorant Garamond</strong> (serif), переменная <code>--font-cormorant</code>, weights 400/500/600/700.
+  Фоллбэк: Georgia, serif.</li>
+<li><strong>Текст / UI — Manrope</strong> (sans), переменная <code>--font-manrope</code>. Фоллбэк: system-ui, sans-serif.</li>
+</ul>
+<p>В Tailwind: <code>font-serif</code> → Cormorant, <code>font-sans</code> → Manrope (по умолчанию).
+<code>font-feature-settings: "kern","liga","calt"</code> для заголовков (см. <code>globals.css</code>).</p>
+<h3>Типографическая шкала</h3>
+<table>
+<thead>
+<tr>
+<th>Уровень</th>
+<th>Размер</th>
+<th>Шрифт</th>
+<th>Применение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Display</td>
+<td><code>clamp(2.75rem, 6vw+1rem, 6rem)</code>, line-height 1.02, tracking −0.02em</td>
+<td>Cormorant 600</td>
+<td>Hero (<code>text-display</code>)</td>
+</tr>
+<tr>
+<td>H1</td>
+<td>48–72px</td>
+<td>Cormorant 600</td>
+<td>Заголовок страницы</td>
+</tr>
+<tr>
+<td>H2</td>
+<td>32–48px (<code>text-4xl</code>…<code>text-6xl</code>)</td>
+<td>Cormorant 600</td>
+<td>Секции</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>24–28px (<code>text-2xl</code>)</td>
+<td>Cormorant</td>
+<td>Карточки, подзаголовки</td>
+</tr>
+<tr>
+<td>Body L</td>
+<td>18px (<code>text-lg</code>)</td>
+<td>Manrope</td>
+<td>Лиды, вводные абзацы</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>14–16px</td>
+<td>Manrope</td>
+<td>Основной текст</td>
+</tr>
+<tr>
+<td>Caption</td>
+<td>11–12px, uppercase, tracking 0.15–0.18em</td>
+<td>Manrope 500</td>
+<td>Метаданные, eyebrow, чипы</td>
+</tr>
+</tbody>
+</table>
+<h3>Правила</h3>
+<ul>
+<li>Заголовки — <code>text-balance</code>; абзацы — <code>text-pretty</code> (утилиты в <code>globals.css</code>).</li>
+<li>Русский текст прогонять через <code>typo()</code> из <code>lib/typography.ts</code>.</li>
+<li><code>eyebrow</code> — надзаголовок: persик, uppercase, tracking 0.18em, с короткой чертой слева.</li>
+<li>Цифры бюджета — <code>tabular-nums</code> для ровных колонок.</li>
+<li>Не использовать сторонние шрифты; не вводить новые начертания.</li>
+</ul>
+<hr />
+<h2>6. Компоненты</h2>
+<h3>Кнопки</h3>
+<table>
+<thead>
+<tr>
+<th>Тип</th>
+<th>Стиль (из кода)</th>
+<th>Где</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary</strong> («Посчитать»)</td>
+<td><code>bg-copper text-pine-tree font-semibold rounded-pill</code>, hover → <code>bg-brandy</code></td>
+<td>Header CTA, главный CTA</td>
+</tr>
+<tr>
+<td><strong>Bundle / акцент</strong></td>
+<td><code>bg-copper text-pine-tree</code>, шире, может нести экономию «−N ₽»</td>
+<td>StickyBar</td>
+</tr>
+<tr>
+<td><strong>Secondary / ghost</strong></td>
+<td><code>border hairline text-cream/85 rounded-pill</code>, hover → <code>border-copper</code></td>
+<td>«Все статьи», вторичные ссылки</td>
+</tr>
+<tr>
+<td><strong>Nav-link</strong></td>
+<td><code>text-brandy/85 hover:text-cream hover:bg-cream/5 rounded-pill</code></td>
+<td>Навигация</td>
+</tr>
+</tbody>
+</table>
+<p>Высота тач-целей на мобайле <strong>≥ 44px</strong>. Все кнопки — <code>rounded-pill</code> (100px).</p>
+<h3>Карточки</h3>
+<ul>
+<li>Города (<code>CityCard</code>): <code>aspect-[4/5] rounded-3xl</code>, фото-обложка с градиентом
+  <code>from-pine-tree</code>, hover <code>-translate-y-1 hover:shadow-card</code>, фото <code>scale-110</code> на hover.</li>
+<li>Блог (<code>BlogCard</code>): <code>rounded-3xl bg-surface border hairline</code>, hover → <code>border-copper/40</code>,
+  <code>bg-surface-elevated</code>, <code>-translate-y-1</code>.</li>
+<li>Радиус карточек — <code>rounded-3xl</code> (24px) или <code>rounded-2xl</code> (16px) для панелей.</li>
+</ul>
+<h3>Чипы / теги</h3>
+<ul>
+<li><code>.chip</code> — pill, фон <code>rgba(222,197,158,0.10)</code>, текст brandy, бордер <code>rgba(222,197,158,0.16)</code>, 11px.</li>
+<li><code>.chip-accent</code> — персиковая версия (фон/текст/бордер на copper) для тегов статей.</li>
+</ul>
+<h3>Бейдж времени чтения</h3>
+<p><code>text-brandy/55 text-[11px] uppercase tracking-[0.15em]</code> → «N мин чтения» (см. <code>BlogCard</code>).</p>
+<h3>Sticky-панель (freemium)</h3>
+<p><code>fixed bottom-0</code>, <code>rounded-2xl bg-surface-elevated/95 backdrop-blur-md border-copper/25 shadow-2xl</code>.
+Видна, пока есть незакрытые пакеты; кнопка Bundle выделена персиком и прижата вправо (<code>ml-auto</code>).</p>
+<hr />
+<h2>7. Скругления, тени, сетка, отступы</h2>
+<p><strong>Радиусы:</strong>
+- <code>rounded-pill</code> = <strong>100px</strong> (кнопки, чипы, навигация).
+- <code>rounded-3xl</code> = 24px (карточки), <code>rounded-2xl</code> = 16px (панели), <code>rounded-2xl</code>/<code>rounded-[16px]</code> для знака.
+- Фокус-радиус 4px (<code>globals.css</code>).</p>
+<p><strong>Тени (<code>tailwind.config.ts</code>):</strong>
+- <code>shadow-card</code> = <code>0 32px 64px -32px rgba(0,0,0,0.6)</code> — карточки на hover.
+- <code>shadow-glow</code> = <code>0 24px 80px -32px rgba(196,134,109,0.55)</code> — персиковое свечение под акцентами.</p>
+<p><strong>Сетка и отступы:</strong>
+- Контейнер: <code>max-w-6xl mx-auto px-6</code> (шапка/контент), <code>max-w-5xl</code> для sticky-панели.
+- Вертикальные секции: <code>py-24</code> (96px) между крупными блоками.
+- Сетки карточек: <code>grid md:grid-cols-2 lg:grid-cols-3 gap-6</code>.</p>
+<p><strong>Движение:</strong>
+- <code>fadeUp</code> 0.6s ease-out, <code>fadeIn</code> 0.4s (<code>globals.css</code>); hover-карточек <code>-translate-y-1</code>.
+- Уважать <code>prefers-reduced-motion</code> (анимации отключаются — уже в <code>globals.css</code>).</p>
+<p><strong>Фактура:</strong>
+- <code>.grain</code> / <code>bg-noise</code> — лёгкий шум <code>opacity ~0.05–0.07</code>, <code>mix-blend-mode: overlay</code> поверх тёмных плоскостей.</p>
+<hr />
+<h2>8. Фотостиль</h2>
+<ul>
+<li>Источник — <strong>Unsplash</strong> (через <code>lib/unsplash.ts</code>). Все картинки — <code>next/image</code>, с <code>alt</code>.</li>
+<li><strong>Подходит:</strong> тёплые «живые» кадры городов — улицы, рынки, кафе, люди, бытовая повседневность,
+  мягкий золотистый/тёплый свет, ощущение «здесь можно жить».</li>
+<li><strong>Не подходит:</strong> холодные стоковые открытки, пустые глянцевые небоскрёбы, агрессивный HDR,
+  банальные «достопримечательности под синим небом», водяные знаки.</li>
+<li><strong>Обработка:</strong> допустимо лёгкое потепление; фото всегда под тёмным градиентом
+  <code>from-pine-tree</code> для читаемости текста (см. <code>CityCard</code>). Текст поверх фото — с <code>text-shadow-hero</code>/<code>text-shadow-body</code>.</li>
+<li><strong>Атрибуция:</strong> обязательна по правилам Unsplash — имя автора со ссылкой и UTM
+  (<code>unsplashAuthorUrlWithUtm</code>, <code>utm_source=relocost</code>). В БД хранятся <code>unsplash_author_name</code>/<code>_url</code>.</li>
+</ul>
+<hr />
+<h2>9. Иконография</h2>
+<ul>
+<li>Стиль — <strong>тонкие линии, скруглённые торцы</strong>: <code>stroke-width 2</code>, <code>stroke-linecap/linejoin: round</code>
+  (ср. <code>PlaneIcon</code>, <code>ArrowIcon</code> в <code>CityCard</code>). 24×24 viewBox, цвет — <code>currentColor</code>.</li>
+<li>Дружелюбные, простые пиктограммы; без заливок-силуэтов в основном UI.</li>
+<li>Эмодзи — только разрешённые: пакеты 📍🧭📊🎁 и флаги стран. Больше эмодзи в UI не вводим.</li>
+<li>Источник: собственные inline-SVG в стиле Lucide/Feather (тонкая линия). Цвет — токены палитры.</li>
+</ul>
+<hr />
+<h2>10. Do / Don't — чек-лист</h2>
+<p><strong>Do</strong>
+- Тёмно-зелёный фон + персиковый акцент точечно (действие/ценность).
+- Cormorant в заголовках, Manrope в тексте.
+- Тон «дружелюбный помощник»: тепло, просто, ободряюще, честно.
+- <code>rounded-pill</code> для кнопок/чипов, <code>rounded-3xl</code> для карточек.
+- Реальные тёплые фото городов с атрибуцией Unsplash.
+- «е» вместо «ё», <code>typo()</code> для русского текста.
+- Знак работает отдельно (фавикон/аватарка), соблюдать охранное поле.</p>
+<p><strong>Don't</strong>
+- Не заливать персиком большие плоскости.
+- Не использовать бренд-зелёный Агентства Связи <span class="swatch" style="background:#3ACA95"></span><code>#3ACA95</code> — у Relocost своя палитра.
+- Не вводить новые шрифты/цвета вне этого документа.
+- Не писать канцеляритом и не пугать пользователя.
+- Не ставить логотип на пёстрое фото без подложки, не наклонять, не перекрашивать знак.
+- Не злоупотреблять семантическими цветами — они точечные.
+- Не коммитить персик <span class="swatch" style="background:#E89B6E"></span><code>#E89B6E</code> как текст на светлой теме (брать <span class="swatch" style="background:#C2774F"></span><code>#C2774F</code>).</p>
+</div>
+</body></html>

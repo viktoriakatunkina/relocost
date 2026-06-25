@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Dubai 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Dubai per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A high standard of service, safety and zero income tax. Ideal for professionals earning $4,000+ and for entrepreneurs: steep rent and school fees are offset by the quality of life.",
+  "climate": "+28°C avg.",
+  "language": "Arabic, English",
+  "currency": "Dirham, AED",
+  "population": "3.6 mln",
+  "flight_from_moscow": "5.5 hours",
+  "pros": [
+    "Zero income tax for residents",
+    "Excellent safety and infrastructure",
+    "A hub airport — convenient for flying around the world",
+    "A developed English-speaking environment, many Russian speakers in IT",
+    "Premium service in healthcare, schools and restaurants"
+  ],
+  "cons": [
+    "Very high cost of housing and schooling for children",
+    "Unbearable heat and humidity from May to September",
+    "Residency status depends on your employer or company",
+    "Cultural restrictions and a strict daily life",
+    "Alcohol — only in licensed venues and with a resident's certificate"
+  ],
+  "best_places": [
+    { "name": "JLT (Jumeirah Lake Towers)", "description": "The most convenient district for remote work — metro, restaurants and gyms nearby." },
+    { "name": "Dubai Marina", "description": "A pedestrian waterfront, premium rentals, restaurants and yachts — the main lifestyle district." },
+    { "name": "The Pavilion d3", "description": "A concept coworking in the Design District, home to the creative and startup crowd." },
+    { "name": "Time Out Market", "description": "The city's best food hall — signature eateries under one roof at Souk Al Bahar." }
+  ],
+  "visa_steps": [
+    { "title": "Tourist visa", "description": "60 days on arrival, free for Russian citizens. Can be extended by another 30 days." },
+    { "title": "Residence visa", "description": "Through an employer, a Free Zone company or a Golden Visa — grants an Emirates ID and access to banks." },
+    { "title": "Free Zone company", "description": "IFZA, RAKEZ, Dubai Internet City — from $5,000–10,000 a year. Includes a 2-year work visa." },
+    { "title": "Bank account", "description": "Mashreq and Emirates NBD are the most welcoming. Opened after you receive your Emirates ID, in 2–4 weeks." },
+    { "title": "Rental via Ejari", "description": "All leases are registered in the state registry — required for bank accounts and visa renewal." }
+  ],
+  "faq": [
+    { "question": "Which visa suits a long-term relocation to Dubai?", "answer": "A residence visa through a Free Zone company is the most popular route. Costs from $5,000 a year." },
+    { "question": "What are the taxes in Dubai?", "answer": "0% income tax, 9% corporate tax on profits above $100,000. VAT is 5% on goods and services." },
+    { "question": "How much does school cost in Dubai?", "answer": "From $5,000 to $25,000 a year per child — depends on the curriculum (British, American, IB)." },
+    { "question": "Which banks work with Russians in Dubai?", "answer": "Mashreq and Emirates NBD are welcoming. Accounts open after the Emirates ID, usually in 2–4 weeks." },
+    { "question": "What about alcohol in Dubai?", "answer": "Allowed in licensed restaurants and bars. To buy it in a shop you need a Liquor Licence as a resident." },
+    { "question": "How much is health insurance in Dubai?", "answer": "From $1,500 a year for a basic plan — mandatory for all residents." }
+  ],
+  "reviews": [
+    { "profession": "IT director", "text": "Dubai is expensive, but for a family it's the best option in the East: schools, safety, the airport. It pays off with a salary higher than in Moscow." },
+    { "profession": "trader", "text": "The tax haven is real. But the first six months go into setting up the company, insurance and daily life." }
+  ]
+}

@@ -2,29 +2,26 @@ import type { CountryContent } from "@/lib/countries-content";
 import { typo } from "@/lib/typography";
 
 export function CountryFAQ({
-  countryName,
   content,
+  eyebrow,
+  title,
+  questions,
 }: {
-  countryName: string;
   content: CountryContent;
+  eyebrow: string;
+  title: string;
+  questions: {
+    visa: string;
+    climate: string;
+    language: string;
+    mentality: string;
+  };
 }) {
   const items = [
-    {
-      q: `Нужна ли виза в ${countryName} для россиян в 2026 году?`,
-      a: content.visa_note,
-    },
-    {
-      q: `Какой климат в ${countryName}?`,
-      a: content.climate,
-    },
-    {
-      q: `На каком языке говорят в ${countryName}?`,
-      a: content.language_note,
-    },
-    {
-      q: `Какой менталитет в ${countryName}?`,
-      a: content.mentality,
-    },
+    { q: questions.visa, a: content.visa_note },
+    { q: questions.climate, a: content.climate },
+    { q: questions.language, a: content.language_note },
+    { q: questions.mentality, a: content.mentality },
   ];
 
   const schema = {
@@ -38,14 +35,14 @@ export function CountryFAQ({
   };
 
   return (
-    <section className="max-w-4xl mx-auto px-6 pt-20">
+    <section className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <span className="eyebrow">FAQ</span>
-      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-10 text-balance">
-        Частые вопросы про {countryName}
+      <span className="eyebrow">{eyebrow}</span>
+      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10 text-balance">
+        {title}
       </h2>
       <div className="space-y-3">
         {items.map((it, i) => (

@@ -44,9 +44,9 @@ export function BestPlaces({
   const locked = places.slice(2);
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-20">
+    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
       <span className="eyebrow">Локации</span>
-      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-3">
+      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
         Лучшие места
       </h2>
       <p className="text-brandy/75 text-lg mb-10 max-w-xl text-pretty">

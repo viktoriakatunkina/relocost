@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Kazan 2026: Rent, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Kazan per month: rent, food, transport, salaries and reviews from those who relocated. We calculate a realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Tatarstan on the Volga: a modern, well-maintained city with a strong IT sector, a UNESCO kremlin and a blend of cultures. One of the best options for an internal move; the downside is the cold, snowy winter.",
+  "climate": "+5°C avg.",
+  "language": "Russian, Tatar",
+  "currency": "Ruble, RUB",
+  "population": "1.3 mln",
+  "flight_from_moscow": "1.5 hours",
+  "pros": [
+    "A modern, well-maintained city",
+    "A strong IT sector and good salaries",
+    "A UNESCO kremlin and a blend of cultures",
+    "Developed transport and infrastructure",
+    "Close to Moscow — a 1.5-hour flight"
+  ],
+  "cons": [
+    "Cold, snowy winters",
+    "Prices above the regional average",
+    "Rising rents in the centre",
+    "It can get muggy in summer"
+  ],
+  "best_places": [
+    { "name": "Kazan Kremlin", "description": "A white-stone UNESCO fortress with the Kul Sharif Mosque and the Söyembikä Tower." },
+    { "name": "Bauman Street", "description": "The main pedestrian street with cafés, shops and street musicians." },
+    { "name": "Old Tatar Quarter", "description": "A historic district with mosques, colourful houses and museums." },
+    { "name": "Kaban Lake Embankment", "description": "A modern, well-designed waterfront for strolls." }
+  ],
+  "visa_steps": [
+    { "title": "Moving without a visa", "description": "For Russian citizens this is an internal move — no visa or paperwork required." },
+    { "title": "Housing", "description": "Rent is cheaper than in Moscow; the choice is wider in residential districts." },
+    { "title": "Registration", "description": "When you change residence, you register at your new address." },
+    { "title": "Work", "description": "A strong IT cluster (Innopolis is nearby) and major companies." },
+    { "title": "Daily life", "description": "Developed transport, a metro and city services." }
+  ],
+  "faq": [
+    { "question": "Is it worth moving to Kazan?", "answer": "Kazan is one of the most comfortable cities in Russia for living and working, especially in IT. See the budget in the calculator above." },
+    { "question": "How much does it cost to live in Kazan?", "answer": "Cheaper than Moscow and St Petersburg, but pricier than many regional centres. See the exact budget in the calculator above." },
+    { "question": "What is the climate like in Kazan?", "answer": "Moderately continental: warm summers and cold, snowy winters." },
+    { "question": "Is there work in Kazan?", "answer": "Yes — a strong IT sector, the government bodies of Tatarstan and large businesses; Innopolis is nearby." },
+    { "question": "Is Kazan safe?", "answer": "One of the most well-maintained and peaceful large cities in Russia." },
+    { "question": "What makes Kazan appealing?", "answer": "A combination of a comfortable urban environment, culture, infrastructure and proximity to Moscow." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "Kazan is clean, convenient and there's work in IT, and Moscow is just over an hour away. The downside is the long, cold winter, but the city really is comfortable." },
+    { "profession": "marketer", "text": "I moved from a small town: the infrastructure, culture and waterfronts are all top-notch. Prices have crept up, but living here is pleasant and safe." }
+  ]
+}

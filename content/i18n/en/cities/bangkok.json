@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Bangkok 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Bangkok per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Cheap and delicious street food, convenient transport, and quality healthcare at reasonable prices. One of the best Asian cities for a long winter stay or a freelancer's relocation.",
+  "climate": "+28°C avg.",
+  "language": "Thai, English",
+  "currency": "Baht, THB",
+  "population": "10.5 mln",
+  "flight_from_moscow": "10 hours",
+  "pros": [
+    "Cheap and tasty street food — lunch for 250 ₽",
+    "A well-developed BTS/MRT transport network",
+    "Quality healthcare meeting international standards",
+    "Plenty of long-term visas — LTR, DTV, ED",
+    "A steadily warm climate of +28–32°C"
+  ],
+  "cons": [
+    "Smog season from January to April",
+    "Traffic jams beyond the BTS radius",
+    "The language barrier is stronger than it seems",
+    "Everyday bureaucracy has poor English",
+    "High humidity all year round"
+  ],
+  "best_places": [
+    { "name": "Sukhumvit (Asok–Phrom Phong)", "description": "The best apartments near the BTS for expats — restaurants, gyms and an English-speaking environment." },
+    { "name": "Ari", "description": "A trendy district with young Thais, third-wave coffee shops and creative little stores." },
+    { "name": "Chatuchak Market", "description": "The largest weekend market in Southeast Asia — clothes, food and antiques." },
+    { "name": "Hubba-To", "description": "A large coworking space with a conference room, suited to teams and meetups." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "30 days on arrival for Russian citizens, extendable by 30 days at immigration." },
+    { "title": "Tourist Visa TR", "description": "60 days through the consulate, with a 30-day extension available in Thailand." },
+    { "title": "Long-Term Resident (LTR)", "description": "10 years for remote workers earning from $80,000 — a premium visa with perks." },
+    { "title": "Destination Thailand Visa (DTV)", "description": "5 years for digital nomads — launched in 2024, with minimal requirements of $14,000 in the bank." },
+    { "title": "Education Visa (ED)", "description": "1 year for language-school students — a popular grey-zone path for long stays." }
+  ],
+  "faq": [
+    { "question": "Which bank should I choose in Bangkok?", "answer": "Bangkok Bank — the most foreigner-friendly, opening an account with a visa and a visa sticker." },
+    { "question": "Does the MIR card work in Bangkok?", "answer": "No, only Visa/Mastercard or a local card." },
+    { "question": "How much does private insurance cost in Bangkok?", "answer": "From $800 a year for a basic plan at Bumrungrad or Bangkok Hospital." },
+    { "question": "Where should a foreigner live in Bangkok?", "answer": "Sukhumvit or Sathorn — close to the BTS, convenient for remote work and services." },
+    { "question": "How is English in Bangkok?", "answer": "It's fine in the centre, but in the outskirts you'll need basic Thai phrases or Google Translate." },
+    { "question": "How much does a motorbike taxi cost in Bangkok?", "answer": "50–100 ₽ for 3 km — the fastest way to get around the traffic jams." }
+  ],
+  "reviews": [
+    { "profession": "product manager", "text": "Bangkok is convenience multiplied by prices. Cheap world-class healthcare, the BTS, thousands of cafés. The downside — the English-speaking environment is limited to a few districts." },
+    { "profession": "designer", "text": "The DTV visa solved everything — 5 years of legal residence. Bangkok is noisy, but it has the energy of New York." }
+  ]
+}

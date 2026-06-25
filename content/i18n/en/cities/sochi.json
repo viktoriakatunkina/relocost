@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Sochi 2026: Rent, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Sochi per month: rent, food, transport, salaries and reviews from those who relocated. We calculate a realistic moving budget in the Relocost calculator.",
+  "intro_text": "The sea, subtropics and a ski resort an hour away. Prices are comparable to Moscow — you pay for the quality of life with expensive rent and groceries, but there's no visa and no language barrier.",
+  "climate": "+15°C avg.",
+  "language": "Russian",
+  "currency": "Ruble, RUB",
+  "population": "0.5 mln",
+  "flight_from_moscow": "2.5 hours",
+  "pros": [
+    "Sea and mountains in one city",
+    "Modern infrastructure after the Olympics",
+    "No visa and no language barrier",
+    "A developed restaurant scene and coffee culture",
+    "A warm climate with a short winter"
+  ],
+  "cons": [
+    "Very high rents — above Moscow in the centre",
+    "A tourist influx in summer and at New Year",
+    "A limited job market outside tourism",
+    "An overcrowded centre in season",
+    "Expensive groceries due to logistics"
+  ],
+  "best_places": [
+    { "name": "Krasnaya Polyana", "description": "Ski resorts 50 minutes from the centre — Gazprom, Rosa Khutor, Gorki Gorod." },
+    { "name": "Olympic Park", "description": "A modern district with beaches, cycle paths, concert venues and cafés." },
+    { "name": "Berlogo", "description": "A city bistro in the centre — good coffee, signature breakfasts, business lunches." },
+    { "name": "Sirius Coworking", "description": "For remote workers and entrepreneurs in the Olympic district — meeting rooms and networking." }
+  ],
+  "visa_steps": [
+    { "title": "Registration at place of stay", "description": "Through an MFC or Gosuslugi — a standard procedure." },
+    { "title": "Finding a rental", "description": "Long-term rentals via Avito and Cian. Contracts run 11 months, with prices above short-stay rates." },
+    { "title": "Contract and copy", "description": "The lease is submitted to the MFC for registration." },
+    { "title": "Clinic", "description": "Enroll via Gosuslugi at your registered or temporary address." },
+    { "title": "Self-employment / sole proprietor", "description": "Registered via the 'My Tax' app — for remote work or a local business." }
+  ],
+  "faq": [
+    { "question": "Are prices comparable to Moscow?", "answer": "Yes, rent in the centre and along the seafront is even higher. Groceries cost more due to logistics." },
+    { "question": "Can you live without a car in Sochi?", "answer": "It's hard outside the Olympic district — public transport is limited and taxis are the main option." },
+    { "question": "When is the season in Sochi?", "answer": "Peaks are summer (June–September) and New Year. Prices rise by 30–50%." },
+    { "question": "Which districts to choose in Sochi?", "answer": "The Olympic district is modern and convenient. The centre is touristy. Adler is quieter, by the sea." },
+    { "question": "How is the internet in Sochi?", "answer": "Good in new districts, mediocre in older housing stock." },
+    { "question": "What is the climate like in Sochi?", "answer": "Subtropical — +25–30°C in summer, +10 in winter. Humid, especially between seasons." }
+  ],
+  "reviews": [
+    { "profession": "IT entrepreneur", "text": "Sochi is a compromise: sea, mountains, a warm climate. But rent is expensive and so are groceries. In winter it's empty and comfortable." },
+    { "profession": "designer", "text": "The Olympic Park is the best place to live. But in summer the city bursts with tourists, and you only get away to the mountains." }
+  ]
+}

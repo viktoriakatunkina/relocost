@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { readFavorites, toggleFavorite } from "@/lib/favorites";
 
+const EVENT = "relocost:favorites-changed";
+
 export function FavoriteButton({
   slug,
   cityName,
@@ -15,16 +17,30 @@ export function FavoriteButton({
   const [active, setActive] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  // Читаем актуальное состояние при монтировании и подписываемся на изменения,
+  // чтобы все карточки оставались синхронными: добавление/удаление в любом месте
+  // (другая карточка, hero города, страница «Избранное», другая вкладка) сразу
+  // отражается на этой кнопке. Это чинит рассинхрон, когда город уже в избранном,
+  // но сердечко на карточке оставалось контурным.
   useEffect(() => {
-    setActive(readFavorites().includes(slug));
+    function sync() {
+      setActive(readFavorites().includes(slug));
+    }
+    sync();
     setMounted(true);
+    window.addEventListener(EVENT, sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener(EVENT, sync);
+      window.removeEventListener("storage", sync);
+    };
   }, [slug]);
 
   function onClick(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    const next = toggleFavorite(slug);
-    setActive(next.includes(slug));
+    const { favorites } = toggleFavorite(slug);
+    setActive(favorites.includes(slug));
   }
 
   if (variant === "hero") {
@@ -35,13 +51,13 @@ export function FavoriteButton({
         aria-label={active ? `Убрать ${cityName} из избранного` : `Добавить ${cityName} в избранное`}
         aria-pressed={active}
         className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-pill border text-sm transition ${
-          active
-            ? "bg-copper/20 border-copper text-copper"
+          mounted && active
+            ? "bg-red-500/15 border-red-500/50 text-red-500"
             : "border-cream/10 text-brandy hover:text-cream hover:border-copper/30"
         }`}
       >
-        <Heart filled={active} />
-        <span>{active ? "В избранном" : "В избранное"}</span>
+        <Heart filled={mounted && active} />
+        <span>{mounted && active ? "В избранном" : "В избранное"}</span>
       </button>
     );
   }
@@ -54,7 +70,7 @@ export function FavoriteButton({
       aria-pressed={active}
       className={`absolute top-3 right-3 w-9 h-9 rounded-full backdrop-blur flex items-center justify-center transition z-10 ${
         mounted && active
-          ? "bg-copper/90 text-pine-tree"
+          ? "bg-black/40 text-red-500"
           : "bg-pine-tree/50 text-brandy hover:bg-pine-tree/70 hover:text-copper"
       }`}
     >

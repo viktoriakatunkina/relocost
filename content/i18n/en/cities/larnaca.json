@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Larnaca 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Larnaca per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A coastal city in Cyprus with an international airport: a warm sea, English and Russian widely spoken, and cheaper than Limassol. Russian citizens need a visa; summers are hot and the beaches get crowded.",
+  "climate": "+20°C avg.",
+  "language": "Greek, English, Russian",
+  "currency": "Euro, EUR",
+  "population": "85 thousand",
+  "flight_from_moscow": "4.5 hours with a layover",
+  "pros": [
+    "International airport right in the city",
+    "Warm sea and a long beach season",
+    "English and Russian widely spoken",
+    "Cheaper and calmer than Limassol",
+    "Safe and comfortable for families"
+  ],
+  "cons": [
+    "Russian citizens need a visa (Cyprus is outside Schengen but still requires one)",
+    "High prices for rent and groceries",
+    "Very hot and crowded in summer",
+    "Island logistics and expensive healthcare"
+  ],
+  "best_places": [
+    { "name": "Finikoudes Promenade", "description": "A palm-lined seafront promenade with cafés and restaurants in the centre." },
+    { "name": "Salt Lake and Hala Sultan Tekke Mosque", "description": "A lake with flamingos in winter and an important Islamic shrine on its shore." },
+    { "name": "Church of Saint Lazarus", "description": "A 9th-century Byzantine church in the historic centre." },
+    { "name": "Mouttalos / Old Town district", "description": "Narrow streets, taverns and the atmosphere of old Cyprus." }
+  ],
+  "visa_steps": [
+    { "title": "Visa", "description": "Russians need a Cypriot visa (a pro-visa is issued online if you have grounds) or a Schengen visa." },
+    { "title": "Renting housing", "description": "Long-term rentals are pricier in summer; a lease is needed for the procedures that follow." },
+    { "title": "Registration (yellow slip)", "description": "For long stays you obtain a registration certificate." },
+    { "title": "Bank account", "description": "Cypriot banks open accounts once you have an address and grounds to stay." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business, a nomad visa or property." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Larnaca?", "answer": "Yes, you need a Cypriot visa or a Schengen one — Cyprus requires a visa for Russians." },
+    { "question": "How much does it cost to live in Larnaca?", "answer": "High European prices, but cheaper than Limassol. See the exact budget in the calculator above." },
+    { "question": "What language is spoken in Larnaca?", "answer": "Greek; English is everywhere, and there's a Russian-speaking community too." },
+    { "question": "Can I pay with a Russian card in Larnaca?", "answer": "No, Russian cards don't work. You need a foreign bank card or euros in cash." },
+    { "question": "What is the climate like in Larnaca?", "answer": "Mediterranean: hot, dry summers and mild winters — you can swim for half the year." },
+    { "question": "Why is Larnaca more convenient than Limassol?", "answer": "The airport is within the city, it's calmer and cheaper, yet the sea is just as warm." }
+  ],
+  "reviews": [
+    { "profession": "entrepreneur", "text": "Larnaca is handy with the airport right next door and an easy pace. It's expensive, especially rent, but the sea and safety are top-notch." },
+    { "profession": "remote manager", "text": "We moved over from Limassol — it's cheaper and quieter here, with the same beach. The main hassle for Russians is the visa and paperwork." }
+  ]
+}

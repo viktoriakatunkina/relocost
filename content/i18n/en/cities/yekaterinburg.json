@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Yekaterinburg 2026: Rent, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Yekaterinburg per month: rent, food, transport, salaries and reviews from those who relocated. We work out a realistic moving budget in the Relocost calculator.",
+  "intro_text": "The largest city in the Urals: a business hub with a developed IT scene, a rich cultural life and good salaries. Convenient for a domestic move; the downside is a long cold winter and a sharply continental climate.",
+  "climate": "+3°C avg.",
+  "language": "Russian",
+  "currency": "Ruble, RUB",
+  "population": "1.5 mln",
+  "flight_from_moscow": "2.5 hours",
+  "pros": [
+    "A major business hub of the Urals",
+    "A developed IT scene and good salaries",
+    "A rich cultural and dining life",
+    "Developed transport and infrastructure",
+    "A gateway to the Urals and Siberia"
+  ],
+  "cons": [
+    "A long cold winter",
+    "A sharply continental climate",
+    "The ecology of an industrial city",
+    "Overcast weather for much of the year"
+  ],
+  "best_places": [
+    { "name": "Plotinka and the Historical Square", "description": "The heart of the city on the Iset River — a spot for walks and celebrations." },
+    { "name": "Vainera Street", "description": "A pedestrian street with shops, cafés and sculptures." },
+    { "name": "Yeltsin Center", "description": "A modern museum and public centre on the embankment." },
+    { "name": "Vysotsky (observation deck)", "description": "A skyscraper with an observation deck and panoramic city views." }
+  ],
+  "visa_steps": [
+    { "title": "Moving without a visa", "description": "For Russian citizens this is a domestic move — no visa or paperwork needed." },
+    { "title": "Housing", "description": "Rent is cheaper than in Moscow; a wide choice across districts." },
+    { "title": "Registration", "description": "When changing your place of residence, you register at the new address." },
+    { "title": "Work", "description": "A strong IT sector, industry and business services." },
+    { "title": "Daily life", "description": "A metro, developed transport and urban infrastructure." }
+  ],
+  "faq": [
+    { "question": "Is it worth moving to Yekaterinburg?", "answer": "It's a major economic and cultural centre with jobs and a developed environment. The budget is in the calculator above." },
+    { "question": "How much does it cost to live in Yekaterinburg?", "answer": "Cheaper than Moscow and St. Petersburg, comparable to other million-plus cities. The exact budget is in the calculator above." },
+    { "question": "What is the climate like in Yekaterinburg?", "answer": "Sharply continental: a warm short summer and a long cold winter." },
+    { "question": "Is there work in Yekaterinburg?", "answer": "Yes, a developed IT sector, industry, retail and the service sphere." },
+    { "question": "What is Yekaterinburg known for?", "answer": "As the business capital of the Urals, for its constructivism, a rich cultural life and its proximity to the Europe–Asia border." },
+    { "question": "Is it worth going for IT?", "answer": "Yes, it's one of the largest IT centres in Russia outside the capitals." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "Yekaterinburg is a big city with jobs, culture and drive, and prices below Moscow's. The downside is the long winter and the gloom — you learn to ration daylight." },
+    { "profession": "product manager", "text": "I moved for a career in IT: lots of vacancies, decent salaries. The city is lively, with restaurants and events on a high level. The harsh climate is the main drawback." }
+  ]
+}

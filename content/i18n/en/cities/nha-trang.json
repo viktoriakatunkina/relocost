@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Nha Trang 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Nha Trang per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A resort with the largest Russian-speaking community in Southeast Asia: menus in Russian, direct flights from Russia, low prices and a warm ocean year-round. Ideal for wintering and long-term remote work.",
+  "climate": "+27°C avg.",
+  "language": "Vietnamese, English, Russian",
+  "currency": "Dong, VND",
+  "population": "535 thousand",
+  "flight_from_moscow": "10 hours",
+  "pros": [
+    "The largest Russian-speaking community in Southeast Asia",
+    "Direct charter flights from Russia",
+    "Low prices for housing and food",
+    "A long beach and a warm sea year-round",
+    "Menus in Russian at most restaurants in the resort area"
+  ],
+  "cons": [
+    "A very touristy and at times chaotic city",
+    "Poor infrastructure quality outside the centre",
+    "Air and beaches lose their cleanliness in high season",
+    "Difficulties with long-term visas and legal work"
+  ],
+  "best_places": [
+    { "name": "Tran Phu Beach", "description": "A 7 km city beach with a palm-lined promenade — the main hub of resort life." },
+    { "name": "Vinpearl", "description": "An island with an amusement park, a water park and a cable car over the sea." },
+    { "name": "Po Nagar Cham Towers", "description": "An ancient 9th-century religious site on a cliff by the river." },
+    { "name": "Hub Coworking Nha Trang", "description": "The main spot for remote workers and winterers, with meeting rooms and open space." }
+  ],
+  "visa_steps": [
+    { "title": "E-Visa", "description": "An electronic visa for 90 days for Russian citizens, issued online." },
+    { "title": "DN Business Visa", "description": "Through an invitation from a Vietnamese company or agent. Up to 1 year with extension." },
+    { "title": "Tax registration", "description": "An MST (tax code) is required for a bank account and long-term rental." },
+    { "title": "Bank account", "description": "Vietcombank, BIDV, Sacombank — they open accounts with a DN visa and a rental contract." },
+    { "title": "Renting housing", "description": "Long-term contracts from 3 months, usually arranged through Russian-speaking agents." }
+  ],
+  "faq": [
+    { "question": "Best season in Nha Trang?", "answer": "January to August — dry and warm. September to November — rain and storms." },
+    { "question": "Is Nha Trang good for children?", "answer": "There are several international schools and Russian kindergartens. But the choice is smaller than in Da Nang or Bangkok." },
+    { "question": "Which district should I choose in Nha Trang?", "answer": "Tran Phu — the beach centre. Vinhomes — modern complexes. Hon Chong — quieter, for families." },
+    { "question": "What is healthcare like in Nha Trang?", "answer": "Vinmec Nha Trang is the main private clinic. Complex cases are taken to Ho Chi Minh City or Singapore." },
+    { "question": "What about bank cards in Nha Trang?", "answer": "Russian cards don't work. Local banks open accounts with a DN visa." },
+    { "question": "Should I learn Vietnamese in Nha Trang?", "answer": "You can get by with English and Russian in the resort area, but beyond it basic Vietnamese helps." }
+  ],
+  "reviews": [
+    { "profession": "travel agency owner", "text": "I've been wintering in Nha Trang for the fifth year: housing in Vinhomes, a business with Russians. It's resort-like and a bit noisy in summer, but in the off-season it's calm and warm." },
+    { "profession": "psychologist", "text": "We rent an apartment by the sea for 25,000 rubles, the kids go to an international school. The downside — Nha Trang is still a resort, and sometimes you miss the quiet." }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Yerevan 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Yerevan per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Simple bureaucracy for Russian citizens, low rent and food costs, and an easy daily routine. A good choice for those who want to relocate visa-free and start working remotely right away.",
+  "climate": "+12°C avg.",
+  "language": "Armenian, Russian",
+  "currency": "Dram, AMD",
+  "population": "1.1 mln",
+  "flight_from_moscow": "3 hours",
+  "pros": [
+    "Visa-free entry for 180 days",
+    "Minimal bureaucracy — a sole proprietorship opens in a day",
+    "Russian is widely used in everyday life",
+    "Cheap and high-quality private healthcare",
+    "A walkable city with no need for a car"
+  ],
+  "cons": [
+    "Hot dry summers, +35°C is the norm",
+    "Banking-system restrictions for non-residents",
+    "Much of the infrastructure is Soviet-era, without major upgrades",
+    "Proximity to geopolitical tension"
+  ],
+  "best_places": [
+    { "name": "Cascade", "description": "A staircase with contemporary art and views of Ararat — the city's main visual symbol." },
+    { "name": "GUM Market", "description": "A produce market with local fruit, spices and the best lavash in the city." },
+    { "name": "Achajour", "description": "European cuisine and good steaks — a popular choice for business dinners." },
+    { "name": "Imagine Coworking", "description": "The main coworking for remote workers and freelancers — right by the metro." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "180 days on a Russian passport, with a stamp at the border." },
+    { "title": "SSN (social number)", "description": "Obtained at the tax office in a single day — needed for an account and a sole proprietorship." },
+    { "title": "Opening a sole proprietorship", "description": "Through the OSS office — set up in a day, with a 5% tax on turnover." },
+    { "title": "Bank account", "description": "Ameriabank or Inecobank — both are friendly to Russians and offer online banking." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business or marriage — obtained in 2–3 months." }
+  ],
+  "faq": [
+    { "question": "Can I pay with a Russian card in Yerevan?", "answer": "No, you need dram or foreign currency. Local cards with international payments are issued after you open an account." },
+    { "question": "Which bank should I choose in Yerevan?", "answer": "Ameriabank — friendly to Russians, with good online banking. Inecobank — for business." },
+    { "question": "How much does a sole proprietorship cost in Yerevan?", "answer": "Registration is free. The tax is 5% of turnover for microbusiness, with 18% VAT on turnover above $80,000." },
+    { "question": "What is healthcare like in Yerevan?", "answer": "Private clinics are good, with appointments at 2,500–4,500 ₽. Many doctors speak Russian." },
+    { "question": "Is winter harsh in Yerevan?", "answer": "No, usually +0…+5°C. Heating works everywhere and snow is rare." },
+    { "question": "Is the internet good in Yerevan?", "answer": "Yes, fibre at 100+ Mbps, with plans at 1,200–2,000 ₽ a month." }
+  ],
+  "reviews": [
+    { "profession": "IT entrepreneur", "text": "I opened a sole proprietorship in a day and got a residence permit in two months. Yerevan isn't touristy, and that's a plus — you feel like a resident." },
+    { "profession": "marketer", "text": "Low prices, a calm atmosphere, great coffee. The downside — in summer you can't survive without air conditioning." }
+  ]
+}

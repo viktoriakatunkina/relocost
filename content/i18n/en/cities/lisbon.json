@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Lisbon 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Lisbon per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A warm, friendly Atlantic city with D7 and Digital Nomad visas. The most open part of Europe for remote workers, but with rising rental prices.",
+  "climate": "+17°C avg.",
+  "language": "Portuguese, English",
+  "currency": "Euro, EUR",
+  "population": "0.55 mln",
+  "flight_from_moscow": "5 hours",
+  "pros": [
+    "Digital Nomad Visa and D7 for remote workers and passive income",
+    "A mild Atlantic climate — a warm winter at +15°C",
+    "The safest destination in Europe",
+    "English is widespread in Lisbon and Porto",
+    "The NHR tax break (though it's being wound down)"
+  ],
+  "cons": [
+    "Rent has doubled in five years",
+    "Slow, complicated Portuguese bureaucracy",
+    "Distance from the EU centre and expensive flights",
+    "NHR was reformed in 2024 — fewer tax advantages",
+    "A competitive job market for local positions"
+  ],
+  "best_places": [
+    { "name": "Príncipe Real", "description": "A trendy central district — artisan cafés, galleries and wine bars." },
+    { "name": "Time Out Market", "description": "A food market in Ribeira — Lisbon's best chefs under one roof." },
+    { "name": "LX Factory", "description": "A creative cluster in a former factory — coworkings, bars and concept stores." },
+    { "name": "Cowork Central", "description": "A large coworking chain in the centre — convenient for the DNV and startups." }
+  ],
+  "visa_steps": [
+    { "title": "Digital Nomad Visa", "description": "For remote workers with income from €3,280/month — issued at the embassy." },
+    { "title": "D7 Visa", "description": "For the financially independent with passive income — pension, rent, dividends." },
+    { "title": "NIF (tax number)", "description": "Obtained remotely through a lawyer or in person — needed for everything." },
+    { "title": "Bank account", "description": "Activobank, Millennium BCP — work with Russians given a NIF and visa documents." },
+    { "title": "Registered lease (Renda)", "description": "A registered rental contract for the residence permit — a notary is required." }
+  ],
+  "faq": [
+    { "question": "Which visa suits a remote worker in Lisbon?", "answer": "The Digital Nomad Visa — issued for income from €3,280/month. The D7 is for passive income." },
+    { "question": "What about NHR in Lisbon?", "answer": "From 2024 the benefits were cut. For those arriving in 2024+ it's IFICI, with a 20% tax on professional income for 5 years." },
+    { "question": "Is English enough day to day in Lisbon?", "answer": "In Lisbon and Porto — yes. In the regions Portuguese is essential." },
+    { "question": "How much is rent in Lisbon?", "answer": "A one-bedroom in the centre runs 100,000–160,000 ₽, the outskirts 60,000–95,000 ₽. It depends heavily on the district." },
+    { "question": "How is banking for Russians in Lisbon?", "answer": "Activobank is the most accommodating and opens accounts remotely. Millennium — after VR processing." },
+    { "question": "Where should I live in Lisbon?", "answer": "Príncipe Real and Campo de Ourique are trendy. Alvalade is for families. Almada is cheaper, across the bridge." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "Got the DNV in 4 months. Lisbon means calm, the ocean and English. The downside — rent has risen and NHR is shrinking." },
+    { "profession": "consultant", "text": "The best climate in Europe, safety like Scandinavia. The bureaucracy runs at a Portuguese pace — you have to get used to it." }
+  ]
+}

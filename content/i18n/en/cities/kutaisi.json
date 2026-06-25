@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Kutaisi 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Kutaisi per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A quiet alternative to Tbilisi: the same 365 days visa-free, even lower prices, with mountains and canyons nearby. The Wizz Air low-cost hub makes the city a convenient base for travelling around Europe.",
+  "climate": "+13°C avg.",
+  "language": "Georgian, Russian",
+  "currency": "Lari, GEL",
+  "population": "150k",
+  "flight_from_moscow": "5 hours",
+  "pros": [
+    "Visa-free entry for 365 days — just like Tbilisi",
+    "Prices are even lower than in Tbilisi and Batumi",
+    "A Wizz Air hub — cheap flights to Europe",
+    "A 'Small Business' sole proprietorship with a 1% tax",
+    "Close to mountains, canyons and the Prometheus Cave"
+  ],
+  "cons": [
+    "A small city with limited infrastructure",
+    "A weaker IT community than in Tbilisi",
+    "Few international schools and little quality private healthcare",
+    "A modest selection of restaurants and shops"
+  ],
+  "best_places": [
+    { "name": "Bagrati Cathedral", "description": "A UNESCO site on a hill with a panorama of the city and a view of the mountains." },
+    { "name": "Kutaisi Airport", "description": "A Wizz Air hub: cheap flights to Europe — Budapest, Warsaw, Berlin, Rome." },
+    { "name": "Pheasant's Tears", "description": "A wine restaurant of the local school — natural Georgian wines and seasonal cuisine." },
+    { "name": "Okatse Canyon", "description": "Suspension bridges over the canyon an hour's drive away — the region's most beautiful spot." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 365 days without a visa — all you need is a passport; the stamp is issued at the border." },
+    { "title": "Personal Number (ID)", "description": "Get one at the House of Justice in Kutaisi — needed for renting, banking and sole proprietorship." },
+    { "title": "Bank account", "description": "Bank of Georgia, TBC and Liberty Bank open accounts for Russians in Kutaisi." },
+    { "title": "'Small Business' sole proprietorship", "description": "A 1% tax with turnover up to 500,000 GEL, set up in a day at RS.ge." },
+    { "title": "Registered rental", "description": "The lease is recorded in the registry; the market is small — start looking early." }
+  ],
+  "faq": [
+    { "question": "How is Kutaisi different from Tbilisi?", "answer": "Cheaper, quieter, closer to the mountains and the low-cost airport. But there's less of an IT scene and fewer amenities." },
+    { "question": "What about banks in Kutaisi?", "answer": "Bank of Georgia and TBC are the main ones. The terms are the same as in Tbilisi." },
+    { "question": "Can I fly to Europe?", "answer": "Yes, Kutaisi Airport is the main Wizz Air hub in the region. Tickets from 30 €." },
+    { "question": "What about healthcare in Kutaisi?", "answer": "There's a private clinic, MediClub, but for complex cases many go to Tbilisi." },
+    { "question": "What about families with children in Kutaisi?", "answer": "There are no international schools, but there are good local and online options." },
+    { "question": "What is the climate like in Kutaisi?", "answer": "Humid subtropical: +12°C in winter, +28°C in summer, with plenty of rainfall." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "I moved over from Tbilisi: rent is 1.5 times cheaper, the airport is 20 minutes away, and Europe is a 30 € flight. The downside — fewer cafés and groceries to choose from." },
+    { "profession": "editor", "text": "Kutaisi is for those who want quiet and a convenient travel hub. It's not a tourist city, it's a working base." }
+  ]
+}

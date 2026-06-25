@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Astana 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Astana per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Visa-free entry for 90 days, Russian used in everyday life and minimal bureaucracy for Russian citizens. A modern capital with a growing IT scene and new housing — but with harsh steppe winters.",
+  "climate": "+4°C avg.",
+  "language": "Kazakh, Russian",
+  "currency": "Tenge, KZT",
+  "population": "1.4 mln",
+  "flight_from_moscow": "3.5 hours",
+  "pros": [
+    "Visa-free entry for 90 days, Russian used everywhere in daily life",
+    "Minimal bureaucracy: an IIN and a bank account in 1–2 days",
+    "Low cost of living and modern new housing",
+    "Convenient fintech: Kaspi and Halyk — transfers and payments in a couple of clicks",
+    "Direct flights to Moscow and a growing IT scene (Astana Hub)"
+  ],
+  "cons": [
+    "Very harsh winters: frosts down to −30 to −40 and strong steppe winds",
+    "Little greenery, flat terrain, a city that gets blown through",
+    "Heat and dust in summer — a sharply continental climate",
+    "Rents rose after the influx of relocators in 2022–2023"
+  ],
+  "best_places": [
+    { "name": "Left Bank (Esil)", "description": "The modern administrative centre: Bayterek, Khan Shatyr, new residential complexes and the Ishim embankment." },
+    { "name": "Mega Silk Way", "description": "A large mall by Khan Shatyr — shops, a food court and an indoor ice rink." },
+    { "name": "Astana Hub", "description": "An international tech park and a magnet for IT relocators: residents, events, networking." },
+    { "name": "Old City (Right Bank)", "description": "More affordable rentals, bazaars and established neighbourhoods by the river." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 90 days within 180 — you only need a passport, the stamp is issued at the border." },
+    { "title": "Registration", "description": "The host (the landlord or hotel) notifies the migration service within 3 days." },
+    { "title": "IIN", "description": "An individual identification number at a Public Service Centre — needed for a bank, a rental and a SIM card." },
+    { "title": "Bank account", "description": "Kaspi, Halyk or Freedom Bank open accounts for Russians with a passport and IIN." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business, study or family reunification — a path to long-term status." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Astana?", "answer": "No, visa-free entry for up to 90 days per six months. For long-term stays you obtain a residence permit or a status through work/study." },
+    { "question": "Which language is spoken in Astana?", "answer": "Kazakh is the state language, but almost everyone understands Russian, and it's ubiquitous in daily life and business." },
+    { "question": "Can I pay with a Russian card in Astana?", "answer": "The MIR card doesn't work. It's easier to open a local Kaspi or Halyk card — that's a matter of 1–2 days." },
+    { "question": "How harsh is the winter in Astana?", "answer": "Very: frosts down to −30 to −40 with wind are not rare. It's one of the coldest capitals in the world, warm clothing is a must." },
+    { "question": "How is it with work and IT in Astana?", "answer": "The market is growing, there's the Astana Hub tech park; most relocators work remotely for foreign or Russian companies." },
+    { "question": "Is Astana safe?", "answer": "Yes, the level of petty crime is low, the city is calm and well-lit." }
+  ],
+  "reviews": [
+    { "profession": "DevOps", "text": "I arrived with a single suitcase and within two days I had an IIN and a Kaspi card. Winter is tough — minus forty with wind — but in summer and autumn the city is great, and daily life is cheap." },
+    { "profession": "marketer", "text": "We rented a two-room apartment on the Left Bank, everything new and convenient. Russian everywhere, almost zero adaptation. The main downside — the climate and the lack of greenery." }
+  ]
+}

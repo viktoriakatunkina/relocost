@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Dubrovnik 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Dubrovnik per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A Schengen city on the Adriatic with a 1-year digital nomad visa and access to the entire EU. It combines medieval tourism and calm remote work by the sea.",
+  "climate": "+17°C avg.",
+  "language": "Croatian, English",
+  "currency": "Euro, EUR",
+  "population": "42 thousand",
+  "flight_from_moscow": "5 hours",
+  "pros": [
+    "A Schengen country with a 1-year digital nomad visa",
+    "The sea and Adriatic infrastructure year-round",
+    "Low taxes for DNV residents (income tax exemption)",
+    "Close to Italy, Bosnia, Montenegro and Albania",
+    "UNESCO heritage and a relaxed pace"
+  ],
+  "cons": [
+    "Extreme tourist seasonality in summer",
+    "Expensive rent in high season",
+    "Complex bureaucracy for off-season residents",
+    "A small job market — almost everyone works remotely"
+  ],
+  "best_places": [
+    { "name": "Stari Grad", "description": "A UNESCO site within the fortress walls — narrow streets, marble pavements and countless churches." },
+    { "name": "Lapad", "description": "A resort peninsula with beaches, villas and a quieter life year-round." },
+    { "name": "Saltwater Workspace", "description": "The main digital nomad coworking in Lapad, with meeting rooms and an event venue." },
+    { "name": "Lokrum Island", "description": "A nature reserve 15 minutes by boat: olive groves, peacocks and hidden coves." }
+  ],
+  "visa_steps": [
+    { "title": "Digital Nomad Visa", "description": "A Croatian visa for remote workers with an income from 2,870 euros a month. Residency for 1 year without extension." },
+    { "title": "Residence permit through work", "description": "A contract with a local employer — the standard route, but Dubrovnik's job market is small." },
+    { "title": "OIB (tax ID)", "description": "An identification number for a bank account, lease and company registration. Issued at the Porezna uprava." },
+    { "title": "Bank account", "description": "OTP, Erste, PBZ open accounts with a residence permit. Visa and MasterCard work all along the Adriatic." },
+    { "title": "Address registration", "description": "MUP — police registration of your place of residence. Without it you can't arrange health insurance." }
+  ],
+  "faq": [
+    { "question": "Can I stay in Dubrovnik without a visa?", "answer": "No, you need a Schengen visa or a residence permit through the DNV." },
+    { "question": "Which language is spoken in Dubrovnik?", "answer": "Croatian, with English in tourism and IT. Russian is found among the older generation." },
+    { "question": "What is winter like in Dubrovnik?", "answer": "Tourists leave, there are fewer restaurants, but the climate stays +10–15°C. The city becomes quiet and local." },
+    { "question": "What are the downsides of the DNV in Dubrovnik?", "answer": "The visa can't be extended — after a year you either change your status or leave for six months." },
+    { "question": "How is healthcare in Dubrovnik?", "answer": "State HZZO is available with a residence permit. Private clinics are in Split; for complex cases people fly to Zagreb or Italy." },
+    { "question": "Is it worth relocating with children to Dubrovnik?", "answer": "There are international schools in Split (1.5 hours away). In Dubrovnik itself — only Croatian ones." }
+  ],
+  "reviews": [
+    { "profession": "art director", "text": "I got a one-year DNV: I work remotely from an apartment in Lapad. The sea outside the window, islands on weekends. But in a year I'll have to decide what's next — the visa can't be extended." },
+    { "profession": "copywriter", "text": "I lived here for half a year over summer — there were lots of tourists. In winter it got calmer. Dubrovnik is beautiful, but it's not for long-term settled living." }
+  ]
+}

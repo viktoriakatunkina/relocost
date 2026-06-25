@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Kaliningrad 2026: Rent, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Kaliningrad per month: rent, food, transport, salaries and reviews from those who relocated. We calculate a realistic moving budget in the Relocost calculator.",
+  "intro_text": "A European atmosphere in a Russian region: cobblestones, Prussian architecture and the Baltic Sea. Rent and grocery prices are below Moscow's, but logistics are complicated by the exclave location.",
+  "climate": "+9°C avg.",
+  "language": "Russian",
+  "currency": "Ruble, RUB",
+  "population": "0.5 mln",
+  "flight_from_moscow": "2 hours",
+  "pros": [
+    "European architecture and atmosphere",
+    "The Baltic Sea 30 minutes away",
+    "No visa or language barrier, and the ruble",
+    "Modest rent and grocery prices for the region",
+    "A developed IT industry and startup scene"
+  ],
+  "cons": [
+    "Exclave location — logistics and delivery are slower",
+    "Difficulties transiting from mainland Russia",
+    "Overcast weather for much of the year",
+    "Fewer job openings compared with the million-plus cities",
+    "Limited air links with other regions"
+  ],
+  "best_places": [
+    { "name": "Fish Village", "description": "A themed quarter on the Pregolya River — restaurants, an embankment and views of the Cathedral." },
+    { "name": "Zelenogradsk", "description": "A resort town 30 minutes away, with amber beaches and pre-war architecture." },
+    { "name": "Britanika", "description": "The main local café with its own roastery — specialty coffee and breakfasts." },
+    { "name": "Calltouch Hub", "description": "A coworking and space for the IT community — meetups, talks and open spaces." }
+  ],
+  "visa_steps": [
+    { "title": "Registration", "description": "Through an MFC or Gosuslugi — the standard procedure for Russians." },
+    { "title": "Finding a rental", "description": "Avito, Yula and local VK groups — the market is small but active." },
+    { "title": "Contract for the MFC", "description": "A copy of the rental contract for registration at your place of stay." },
+    { "title": "Polyclinic", "description": "Registering through Gosuslugi at your new address." },
+    { "title": "Self-employment / sole proprietorship", "description": "Registration via the 'My Tax' app — for remote work and local orders." }
+  ],
+  "faq": [
+    { "question": "Can you drive to Russia by car?", "answer": "Only through Lithuania on a Schengen visa — currently heavily restricted." },
+    { "question": "What is the climate like in Kaliningrad?", "answer": "Atlantic — mild winters, but a lot of rain and overcast skies." },
+    { "question": "Are prices in Kaliningrad comparable to Russia?", "answer": "Rent is a bit above the regional average, and groceries are pricier because of logistics." },
+    { "question": "Is the sea close to Kaliningrad?", "answer": "30 minutes to Zelenogradsk, 40 to Svetlogorsk — the usual weekend radius." },
+    { "question": "What are the districts in Kaliningrad?", "answer": "The centre is pricier. Selma has modern development. The A-district and Severnaya Gora are quiet." },
+    { "question": "Is there work in Kaliningrad?", "answer": "IT, logistics, tourism and the amber industry. Startups and remote work are a strong sector." }
+  ],
+  "reviews": [
+    { "profession": "team lead", "text": "Kaliningrad is a European exclave without a visa. The downside is the overcast summer and the exclave logistics. But the architecture and the sea outweigh that." },
+    { "profession": "brand manager", "text": "Quiet, tidy and inexpensive. After Moscow it feels like a vacation that never ends." }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Varna 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Varna per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Bulgaria's maritime capital: beaches, a mild climate, affordable rent and a large Russian-speaking community. A genuine path to residency through buying property and a peaceful life by the sea with EU prospects.",
+  "climate": "+13°C avg.",
+  "language": "Bulgarian, Russian",
+  "currency": "Lev, BGN",
+  "population": "335k",
+  "flight_from_moscow": "3 hours",
+  "pros": [
+    "A seaside city with beaches running along the entire boulevard",
+    "Prices lower than Sofia at the same level of comfort",
+    "A large Russian-speaking community dating back to the USSR",
+    "Easy property purchases and a clear path to residency",
+    "Direct flights from Russia in the holiday season"
+  ],
+  "cons": [
+    "Strong seasonality: tourists in summer, the city empties in winter",
+    "Some services only operate from May to October",
+    "An old housing stock; new developments cost more",
+    "Overcast and damp by the sea in winter"
+  ],
+  "best_places": [
+    { "name": "Sea Garden", "description": "An 8 km waterfront park with fountains, an aquarium and old plane trees along the sea." },
+    { "name": "Greek Quarter", "description": "The Greek quarter of the old centre: cafés, narrow streets, a food market and wine bars." },
+    { "name": "Aladzha", "description": "A rock-cut monastery near Varna, with the Golden Sands nature park close by." },
+    { "name": "Workspace Varna", "description": "The city's main coworking with digital nomads and an active English-speaking scene." }
+  ],
+  "visa_steps": [
+    { "title": "Schengen visa", "description": "Bulgaria has been in Schengen since 2024 — you need a C or D visa via the embassy." },
+    { "title": "Residency through business or property", "description": "Buying a home or setting up a Bulgarian LLC grants the right to a 1-year residence permit with renewal." },
+    { "title": "EIK and tax registration", "description": "A standard procedure through a notary and the Registry Agency." },
+    { "title": "Account and insurance", "description": "UBB and DSK work with Russians who hold a residence permit. Health insurance is mandatory." },
+    { "title": "Municipal registration", "description": "Registration at your place of residence after obtaining a residence permit — needed for healthcare and school." }
+  ],
+  "faq": [
+    { "question": "How is Varna different from Sofia?", "answer": "The sea, a more resort-like pace, slightly cheaper and warmer. But there's less work and worse healthcare." },
+    { "question": "How is swimming in Varna?", "answer": "The season runs June to September, with water up to +25°C. The beach is sandy and has free sections." },
+    { "question": "Which district should I choose in Varna?", "answer": "The centre and the Greek Quarter — for living. Levski, Chayka — modern developments. Vinitsa — quieter and cheaper." },
+    { "question": "How are the internet and infrastructure in Varna?", "answer": "Fibre at 100+ Mbps for 1,500 rubles. 4G/5G across the city." },
+    { "question": "Is Varna safe?", "answer": "Yes, one of the safest cities in Bulgaria. Crime is low." },
+    { "question": "Is it worth buying property in Varna?", "answer": "Prices are affordable (from €50,000 for a studio by the sea), but the rental market is seasonal — it's easy to let in summer." }
+  ],
+  "reviews": [
+    { "profession": "agency owner", "text": "I moved my family and business to Varna: a home by the sea, my child in an international school. Winter is dreary, but summer makes up for it." },
+    { "profession": "translator", "text": "We rent an apartment in a new building for €500 and work remotely. The sea, peace and quiet, and an understandable Europe without the culture shock." }
+  ]
+}

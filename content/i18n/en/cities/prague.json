@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Prague 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Prague per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The educational and IT capital of Central Europe, with a large post-Soviet diaspora. Since 2022 visas for Russians have been restricted, but a path remains through work or study.",
+  "climate": "+10°C avg.",
+  "language": "Czech, English, Russian",
+  "currency": "Koruna, CZK",
+  "population": "1.3 mln",
+  "flight_from_moscow": "3 hours",
+  "pros": [
+    "A Schengen country and the centre of Europe — a convenient hub for travel",
+    "A large Russian- and Ukrainian-speaking diaspora dating back to Soviet times",
+    "A strong education system: international schools and Charles University",
+    "Developed healthcare (Motol, Na Homolce) at an EU level",
+    "Rent that's affordable relative to other EU capitals"
+  ],
+  "cons": [
+    "Since 2022 visas for Russians have been heavily restricted",
+    "The Russian language is often received coldly after 2022",
+    "Czech is mandatory for public services and healthcare",
+    "Cold, damp winters of +0–5°C"
+  ],
+  "best_places": [
+    { "name": "Vinohrady", "description": "A bohemian residential quarter with parks, cafés, wine bars and an international vibe." },
+    { "name": "Zizkov", "description": "Prague's cheapest and most hipster district: bars, graffiti, the TV tower and a '90s vibe." },
+    { "name": "Locus Workspace", "description": "The main English-language coworking with an international community and startup events." },
+    { "name": "Old Town Square", "description": "The Old Town's main square with the astronomical clock and medieval houses." }
+  ],
+  "visa_steps": [
+    { "title": "D visa or residency", "description": "For Russians since 2022 — only through work, study or family reunification. Tourists are not admitted." },
+    { "title": "Work: blue card / employee card", "description": "Residency via a contract with a Czech employer. Processing takes 2–6 months." },
+    { "title": "Study: studentka visa", "description": "Admission to a Czech university (Charles, CTU, VSE) grants a study visa for the duration of your studies." },
+    { "title": "ICO identifier and Rodne cislo", "description": "A tax ID and personal number for an account, rental and healthcare." },
+    { "title": "Bank account", "description": "Ceska sporitelna, CSOB, Komercni banka — they open accounts with residency. Without it — only Revolut and N26." }
+  ],
+  "faq": [
+    { "question": "Can I get a visa for Prague in 2026?", "answer": "A tourist visa — no. Through work, study or family — yes, but with a much longer wait and tighter checks." },
+    { "question": "Where should I live in Prague?", "answer": "Vinohrady — premium. Zizkov — budget and hipster. Prague 6 — quiet and family-friendly. Karlin — a modern, growing district." },
+    { "question": "Can I move to Prague with kids?", "answer": "Strong international schools (PBIS, AIS, English College) — from €15,000 a year. Public schools are in Czech." },
+    { "question": "Which language is spoken in Prague?", "answer": "Czech is mandatory for public services and healthcare. English in IT and tourism. Russian is found among the older generation." },
+    { "question": "What are the internet and daily life like in Prague?", "answer": "Fibre at 250+ Mbps for 600 koruna. Transport is convenient — metro, trams, a monthly pass at 350 koruna." },
+    { "question": "What salary is considered comfortable in Prague?", "answer": "From 60,000 koruna net for one person, from 100,000 koruna for a family. IT salaries are higher." }
+  ],
+  "reviews": [
+    { "profession": "developer at Avast", "text": "I got a blue card before 2022 and moved with my family. It's harder now: companies invite Russians less often. But Prague is convenient — the centre of Europe, with schools and healthcare at a good level." },
+    { "profession": "master's student at VSE", "text": "I got into Charles University and received a study visa. I rent a studio in Zizkov for 18,000 koruna. Classes are in English, and I'm building up my Czech." }
+  ]
+}

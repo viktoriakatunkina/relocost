@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Istanbul 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Istanbul per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A bridge between Europe and Asia and one of the most popular cities for Russians relocating. Visa-free for 60 days, an active IT community and affordable food — though rent keeps rising.",
+  "climate": "+15°C avg.",
+  "language": "Turkish, English",
+  "currency": "Lira, TRY",
+  "population": "15.5 mln",
+  "flight_from_moscow": "3 hours",
+  "pros": [
+    "Visa-free for 60 days with the option to extend",
+    "Street food among the best in the world and very affordable",
+    "A large Russian-speaking and IT community",
+    "Direct flights anywhere — a hub airport",
+    "A historic atmosphere where two continents meet"
+  ],
+  "cons": [
+    "A seismic zone — Istanbul is at risk of earthquakes",
+    "Turkish inflation — rents rise fast",
+    "Huge traffic jams at rush hour",
+    "The language barrier is stronger than it seems",
+    "Difficulties opening a bank account"
+  ],
+  "best_places": [
+    { "name": "Kadıköy", "description": "A trendy Asian-side district — cafés, wine bars, local fashion and street art." },
+    { "name": "Karaköy", "description": "A bohemian European-side quarter with the best breakfasts and Bosphorus views." },
+    { "name": "Çiya Sofrası", "description": "The go-to restaurant for Anatolian cuisine — forget kebabs, this place reveals the whole region." },
+    { "name": "Workinton Maslak", "description": "A large coworking chain for remote workers — Wi-Fi, meeting rooms and coffee." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "60 days on a Russian passport; the stamp is issued at the border." },
+    { "title": "Extension via ikamet", "description": "A tourist residence permit for 1 year — arranged at the immigration office." },
+    { "title": "Tax Number", "description": "Obtained at the tax office in a single day — needed for a bank account and rental." },
+    { "title": "Bank account", "description": "Ziraat, Vakıfbank, Garanti — they open accounts for Russians with an ikamet and passport." },
+    { "title": "Long-term ikamet", "description": "Through employment, business, buying property from $200,000 or marriage." }
+  ],
+  "faq": [
+    { "question": "Does the MIR card work in Istanbul?", "answer": "No, you need Visa/Mastercard or a local Ziraat / Vakıfbank card." },
+    { "question": "Which district should I choose in Istanbul?", "answer": "Kadıköy (the Asian side) — trendy and calmer. Şişli and Beşiktaş are on the European side, closer to the action." },
+    { "question": "Is the lira falling fast in Istanbul?", "answer": "Yes, inflation is high. It's better to earn your salary in foreign currency; rent is usually indexed annually." },
+    { "question": "Is it dangerous with earthquakes in Istanbul?", "answer": "There is a risk. Buildings since 2000 are constructed to code. Older ones are less reliable." },
+    { "question": "Is English used day to day in Istanbul?", "answer": "In Kadıköy, Karaköy and Beşiktaş — yes. In the old city and outside the centre you'll need some Turkish phrases." },
+    { "question": "How much is long-term rent in Istanbul?", "answer": "A one-bedroom in the centre is 70,000–110,000 ₽ — rising by 30–50% every year." }
+  ],
+  "reviews": [
+    { "profession": "product manager", "text": "Istanbul is pure energy. Kadıköy on the Asian side is cheaper and calmer. Renting is stressful — it's indexed every year." },
+    { "profession": "marketer", "text": "Eastern Europe and Asia at once. The downside — opening a bank account without an ikamet is nearly impossible." }
+  ]
+}

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { City, Price, PriceCategory } from "@/lib/types";
 import { formatRub } from "@/lib/cities";
 

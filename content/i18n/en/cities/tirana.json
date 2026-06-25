@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Tirana 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Tirana per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Albania at the foot of the mountains: Russian citizens enjoy visa-free entry during the tourist season, prices are among the lowest in Europe, and both the Adriatic and Ionian coasts are nearby. The downsides are chaotic traffic and still-modest infrastructure for expats.",
+  "climate": "+16°C avg.",
+  "language": "Albanian, English, Italian",
+  "currency": "Lek, ALL",
+  "population": "600k",
+  "flight_from_moscow": "5 hours with a layover",
+  "pros": [
+    "Visa-free entry for Russian citizens during the tourist season",
+    "Some of the lowest prices in Europe",
+    "The sea nearby: the Adriatic and Ionian coasts are a couple of hours away",
+    "English and Italian are widely spoken",
+    "A mild Mediterranean climate and friendly people"
+  ],
+  "cons": [
+    "Chaotic traffic and congestion in the centre",
+    "Still-modest infrastructure for expats",
+    "Inconsistent quality of roads and utility networks",
+    "Albanian is hard to learn and there are few Russian speakers"
+  ],
+  "best_places": [
+    { "name": "Skanderbeg Square", "description": "The capital's main square with a museum, the Et'hem Bey Mosque and the Clock Tower." },
+    { "name": "Blloku", "description": "A former closed district of the party elite, now a hub of cafés, bars and trendy venues." },
+    { "name": "Mount Dajti (cable car)", "description": "The Dajti Ekspres cable car up the mountain with panoramic city views and walking trails." },
+    { "name": "Pazari i Ri (New Bazaar)", "description": "A renovated market with fresh produce and street food." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russian citizens enjoy visa-free entry during the tourist season — check the current dates and durations before travelling." },
+    { "title": "Renting housing", "description": "Apartments are rented through listing sites and agents; prices are noticeably lower than elsewhere in Europe." },
+    { "title": "Tax number (NIPT)", "description": "Needed for a long stay, business and a bank account; issued by the tax office." },
+    { "title": "Bank account", "description": "Local banks (Raiffeisen, Credins) open accounts with a passport and an address." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business, study or family reunification at the migration service." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Tirana?", "answer": "Visa-free entry applies during the tourist season; Albania sets the dates and durations each year — check before travelling." },
+    { "question": "How much does it cost to live in Tirana?", "answer": "Some of the lowest prices in Europe — cheaper than the Balkans and Southern Europe. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Tirana?", "answer": "Albanian; English and Italian are common in tourism and among young people, while Russian speakers are few." },
+    { "question": "Can I pay with a Russian card in Tirana?", "answer": "No, Russian cards don't work. You'll need lek in cash and a card from a foreign bank." },
+    { "question": "What is the climate like in Tirana?", "answer": "Mediterranean: hot dry summers and mild rainy winters." },
+    { "question": "How far is Tirana from the sea?", "answer": "About an hour to the Adriatic coast (Durrës) and 2–3 hours to the Ionian Sea beaches." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Tirana is cheap and sunny, and the sea is right there. The downside is the everyday chaos and traffic, and almost no one speaks Russian — English saves the day." },
+    { "profession": "copywriter", "text": "Albania turned out to be a pleasant discovery: delicious food, warm people, low prices. The infrastructure for expats is still weak, but the city is changing fast." }
+  ]
+}

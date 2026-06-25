@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Thessaloniki 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Thessaloniki per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Greece's second city on the shore of the gulf: a rich history, a student vibe and excellent cuisine. Cheaper than Athens; Russian citizens need a Schengen visa, and in winter it can get cool and windy.",
+  "climate": "+16°C avg.",
+  "language": "Greek, English",
+  "currency": "Euro, EUR",
+  "population": "320 thsd",
+  "flight_from_moscow": "4 hours with a layover",
+  "pros": [
+    "Cheaper than Athens and many European capitals",
+    "A rich history and a student, lively atmosphere",
+    "Excellent Greek cuisine and coffee houses",
+    "The sea within the city and a long warm season",
+    "A convenient base for trips around northern Greece"
+  ],
+  "cons": [
+    "Russian citizens need a Schengen visa",
+    "In winter it can get cool and windy",
+    "European prices for rent and groceries",
+    "Bureaucracy with paperwork for residents"
+  ],
+  "best_places": [
+    { "name": "White Tower", "description": "The city's symbol on the waterfront, with a museum and a panorama of the gulf." },
+    { "name": "Nea Paralia promenade", "description": "A renovated seaside promenade for walking and cycling." },
+    { "name": "Upper Town (Ano Poli)", "description": "Old quarters with Byzantine walls and sea views." },
+    { "name": "Rotunda and Arch of Galerius", "description": "Ancient Roman monuments in the very centre of the city." }
+  ],
+  "visa_steps": [
+    { "title": "Schengen visa", "description": "Russians need a Schengen visa to enter Greece." },
+    { "title": "Renting a home", "description": "Long-term rent is more affordable than in Athens and on the islands." },
+    { "title": "Tax number (AFM)", "description": "Needed for a bank account, renting and services; issued at the tax office." },
+    { "title": "Bank account", "description": "Greek banks open accounts once you have an AFM and an address." },
+    { "title": "Residence permit (optional)", "description": "Through employment, study, a digital nomad visa or financial independence (FIP)." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Thessaloniki?", "answer": "Yes, you need a Schengen visa — Greece is part of the Schengen Area." },
+    { "question": "How much does it cost to live in Thessaloniki?", "answer": "Cheaper than Athens and the islands, but prices are European. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Thessaloniki?", "answer": "Greek; thanks to students and tourism, English is widespread." },
+    { "question": "Can I pay with a Russian card in Thessaloniki?", "answer": "No, Russian cards don't work. You'll need a foreign bank card or euros in cash." },
+    { "question": "What is the climate like in Thessaloniki?", "answer": "Mediterranean with a continental touch: hot summers and winters cooler than in the south." },
+    { "question": "How is Thessaloniki different from Athens?", "answer": "Thessaloniki is more compact, cheaper and younger in spirit, with the sea right in the city centre." }
+  ],
+  "reviews": [
+    { "profession": "remote analyst", "text": "Thessaloniki is an underrated city: history, the sea and student energy, cheaper than Athens. The downside for Russians — the Schengen and the winter wind off the gulf." },
+    { "profession": "illustrator", "text": "I fell in love with the coffee houses and the waterfront. The city is lively and cosy, prices lower than on the islands. The difficulty — the visa and gathering documents for a long stay." }
+  ]
+}

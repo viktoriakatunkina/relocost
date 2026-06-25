@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Pattaya 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Pattaya per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A resort on the shore of the Gulf of Thailand: visa-free entry for 60 days, a warm sea year-round and a large Russian-speaking community. Cheaper than Phuket and close to Bangkok, but noisy and touristy.",
+  "climate": "+28°C avg.",
+  "language": "Thai, Russian, English",
+  "currency": "Baht, THB",
+  "population": "320 thousand",
+  "flight_from_moscow": "11 hours",
+  "pros": [
+    "Visa-free for 60 days, a warm Gulf of Thailand sea year-round",
+    "Cheaper than Phuket, with a developed Russian-speaking infrastructure",
+    "Close to Bangkok (≈2 hours) and the airports",
+    "Plenty of housing: from budget condos to villas",
+    "A 5-year DTV visa for remote workers"
+  ],
+  "cons": [
+    "A reputation as a noisy party resort, lots of tourists",
+    "City beaches are average — the best are nearby (Jomtien, the islands)",
+    "A hot, humid climate and a rainy season",
+    "There is no local job market, you need remote income"
+  ],
+  "best_places": [
+    { "name": "Jomtien", "description": "A calmer beach area with condos — the choice of families and winterers." },
+    { "name": "Pratamnak", "description": "A quiet green hill between Pattaya and Jomtien, with good rentals." },
+    { "name": "Walking Street", "description": "Pattaya's main nightlife street — bars and entertainment." },
+    { "name": "Thepprasit Night Market", "description": "A large market: street food, clothes and souvenirs." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 60 days without a visa, extendable by another 30 at the immigration office." },
+    { "title": "DTV visa (optional)", "description": "A digital nomad visa for 5 years, up to 180 days per entry." },
+    { "title": "Renting housing", "description": "Condos are rented monthly, often with a pool; a contract is needed for extensions." },
+    { "title": "Bank account", "description": "Bangkok Bank or Kasikorn — easier with a long-term visa." },
+    { "title": "Address registration", "description": "The landlord submits the address (TM30); for a long stay — check-ins every 90 days." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Pattaya?", "answer": "No, visa-free for up to 60 days with a 30-day extension. For long-term living — a 5-year DTV visa." },
+    { "question": "Is Pattaya cheaper than Phuket?", "answer": "Usually yes — rent and daily life are noticeably more affordable, and there's more housing to choose from." },
+    { "question": "Are there many Russians in Pattaya?", "answer": "Yes, a developed Russian-speaking environment: shops, cafés, services and schools." },
+    { "question": "Can I pay with a Russian card in Pattaya?", "answer": "No, Russian cards don't work. Cash, local apps or a foreign bank card." },
+    { "question": "What are the beaches like in Pattaya?", "answer": "The city beach is average; cleaner and calmer in Jomtien and on the islands (Koh Larn)." },
+    { "question": "How much does it cost to live in Pattaya?", "answer": "Budget-friendly by resort standards: a warm sea and affordable rent. The exact budget is in the calculator above." }
+  ],
+  "reviews": [
+    { "profession": "entrepreneur", "text": "I winter in Jomtien: a condo by the sea is cheap, everything can be sorted out in Russian, and Bangkok is a stone's throw away. The centre of Pattaya is noisy — I live to the side." },
+    { "profession": "marketer", "text": "Sea, warmth and familiar service. I did a visa run, next I'm thinking about the DTV. The downside — the tourist bustle and the heat." }
+  ]
+}

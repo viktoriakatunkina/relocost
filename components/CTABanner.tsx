@@ -1,9 +1,18 @@
-import Link from "next/link";
-import { typo } from "@/lib/typography";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 
-export function CTABanner() {
+export async function CTABanner({
+  cityCount,
+  countryCount,
+}: {
+  cityCount: number;
+  countryCount: number;
+}) {
+  const t = await getTranslations("cta");
+  const th = await getTranslations("home");
+
   return (
-    <section className="py-24 px-6">
+    <section className="py-12 px-6">
       <div className="relative max-w-6xl mx-auto rounded-[2rem] overflow-hidden border hairline">
         <div
           aria-hidden
@@ -17,36 +26,38 @@ export function CTABanner() {
 
         <div className="relative px-8 md:px-16 py-16 md:py-24 grid md:grid-cols-[1.4fr,1fr] gap-10 items-center">
           <div>
-            <span className="eyebrow">Готовы начать?</span>
+            <span className="eyebrow">{t("eyebrow")}</span>
             <h2 className="font-serif text-4xl md:text-6xl text-cream mt-6 mb-6 text-balance">
-              Считаем сколько денег <span className="text-copper">понадобится</span> в первый месяц
+              {t("titlePre")}
+              <span className="text-copper">{t("titleAccent")}</span>
+              {t("titlePost")}
             </h2>
             <p className="text-brandy/85 text-lg md:text-xl max-w-xl text-pretty">
-              {typo("Выберите город — собираем бюджет, расскажем про визу, документы и быт. Бесплатно.")}
+              {t("text")}
             </p>
 
             <div className="flex flex-wrap gap-3 mt-10">
               <Link
-                href="#popular"
+                href="/#popular"
                 className="inline-flex items-center gap-2 px-7 py-4 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy hover:shadow-glow"
               >
-                Выбрать город
+                {t("chooseCity")}
                 <Arrow />
               </Link>
               <Link
-                href="/search"
+                href="/countries"
                 className="inline-flex items-center gap-2 px-7 py-4 rounded-pill border hairline text-cream/90 hover:text-cream hover:border-copper transition"
               >
-                Все направления
+                {t("chooseCountry")}
               </Link>
             </div>
           </div>
 
           <div className="hidden md:grid grid-cols-2 gap-3">
-            <Stat label="городов" value="27" />
-            <Stat label="цен в базе" value="540" />
-            <Stat label="статей" value="9" />
-            <Stat label="обновление" value="2026" />
+            <Stat label={th("statCities")} value={String(cityCount)} />
+            <Stat label={th("statCountries")} value={String(countryCount)} />
+            <Stat label={t("statRealPrices")} value="✓" />
+            <Stat label={t("statVisa")} value="✓" />
           </div>
         </div>
       </div>
@@ -57,7 +68,7 @@ export function CTABanner() {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl bg-pine-tree/40 backdrop-blur p-5 border hairline">
-      <div className="font-serif text-4xl text-cream leading-none">{value}</div>
+      <div className="font-serif text-4xl text-cream leading-none tabular-nums lining-nums">{value}</div>
       <div className="text-brandy/70 text-xs uppercase tracking-wider mt-2">{label}</div>
     </div>
   );

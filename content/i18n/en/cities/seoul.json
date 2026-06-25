@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Seoul 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Seoul per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of South Korea: visa-free for Russians for up to 60 days (a K-ETA authorisation is required), ultra-fast internet, safety and convenient transport. Downsides are high rents, the language barrier and the intense pace.",
+  "climate": "+13°C avg.",
+  "language": "Korean, English",
+  "currency": "Won, KRW",
+  "population": "9.5 mln",
+  "flight_from_moscow": "9 hours",
+  "pros": [
+    "Visa-free for up to 60 days (a K-ETA authorisation is required)",
+    "Ultra-fast internet and mobile connectivity",
+    "One of the safest megacities",
+    "An ideal public transport system",
+    "Rich culture, food and 24/7 services"
+  ],
+  "cons": [
+    "High rents",
+    "A serious language barrier",
+    "A very intense pace and high density",
+    "Cold winters and hot, humid summers"
+  ],
+  "best_places": [
+    { "name": "Hongdae", "description": "A youthful district by the university with street music, cafés and nightlife." },
+    { "name": "Gyeongbokgung Palace", "description": "The main royal palace of the Joseon dynasty in the historic centre." },
+    { "name": "Myeongdong", "description": "A shopping and dining district with street food and cosmetics." },
+    { "name": "Cheonggyecheon Stream", "description": "A restored urban stream-park for strolls in the city centre." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Visa-free for Russians for up to 60 days. You need to arrange a K-ETA online authorisation in advance." },
+    { "title": "Renting a home", "description": "Deposit systems (jeonse/wolse) are common — the deposit can be substantial." },
+    { "title": "Connectivity and payments", "description": "A local SIM card and payment apps make daily life easier." },
+    { "title": "ARC (alien registration card)", "description": "For a long-term stay through work or study, registration and an ARC are required." },
+    { "title": "Long-term stay", "description": "Consider work or student visas or a digital-nomad visa." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Seoul?", "answer": "No, visa-free for up to 60 days, but you need to arrange a K-ETA online authorisation in advance." },
+    { "question": "How much does it cost to live in Seoul?", "answer": "Expensive, especially rent; but the service and transport are world-class. See the exact budget in the calculator above." },
+    { "question": "What language is spoken in Seoul?", "answer": "Korean; there's little English in daily life, so translation apps come in handy." },
+    { "question": "Can I pay with a Russian card in Seoul?", "answer": "No, Russian cards don't work. You'll need a card from a foreign bank or local payment apps." },
+    { "question": "What is the climate like in Seoul?", "answer": "Temperate monsoon: cold, dry winters and hot, humid summers with rain." },
+    { "question": "What is K-ETA?", "answer": "An electronic travel authorisation arranged online before the trip under the visa-free regime." }
+  ],
+  "reviews": [
+    { "profession": "IT specialist", "text": "Seoul means internet, transport and safety at their best — the city never sleeps. The downsides are expensive rent and the language barrier; Korean is almost a must." },
+    { "profession": "remote designer", "text": "I fell in love with the service and the culture, everything works perfectly. Living is expensive and intense, and it's tricky in places without Korean, but it's incredibly high-tech." }
+  ]
+}

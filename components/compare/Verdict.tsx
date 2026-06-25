@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { City } from "@/lib/types";
 
 export function Verdict({
@@ -13,7 +13,7 @@ export function Verdict({
   scoreB: number;
 }) {
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-20">
+    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
       <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
         Итог
       </h2>

@@ -1,77 +1,100 @@
-import Link from "next/link";
+import Image from "next/image";
+import { useTranslations, useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import type { CountryAggregate } from "@/lib/countries";
 import { formatRub } from "@/lib/cities";
+import { photoSrc } from "@/lib/photo";
+import { getDifficulty } from "@/lib/difficulty";
+import { countryName } from "@/lib/i18n-content";
+import type { Locale } from "@/i18n/routing";
 
-const DIFF_LABEL: Record<number, string> = {
-  1: "Легкий",
-  2: "Средний",
-  3: "Средний+",
-  4: "Сложный",
-  5: "Сложный+",
-};
+const DIFFICULTY_KEY = { green: "easy", yellow: "medium", red: "hard" } as const;
 
 export function CountryCard({ country }: { country: CountryAggregate }) {
+  const locale = useLocale() as Locale;
+  const td = useTranslations("difficulty");
+  const tc = useTranslations("common");
+
+  const name = countryName(country, locale);
+  // Фон карточки — фото репрезентативного города страны (см. lib/countries).
+  const photo = photoSrc(null, country.photo_url, { w: 720, q: 80 });
+  // Сложность страны сводим к тем же 3 уровням, что у городов.
+  const difficulty = getDifficulty({
+    difficulty_score: country.avg_difficulty > 0 ? country.avg_difficulty : null,
+  });
+
   return (
     <Link
       href={`/country/${country.slug}`}
-      className="group relative flex flex-col gap-5 p-6 md:p-7 rounded-3xl bg-surface border hairline transition hover:-translate-y-1 hover:border-copper/40 hover:bg-surface-elevated min-h-[16rem]"
+      className="group relative flex h-full min-h-[16rem] flex-col overflow-hidden rounded-3xl border hairline bg-surface transition hover:-translate-y-1 hover:border-copper/40 hover:shadow-card"
     >
-      <div className="flex items-start justify-between gap-3">
-        <span className="text-5xl md:text-6xl leading-none drop-shadow-lg" aria-hidden>
-          {country.flag_emoji}
-        </span>
-        <span className="chip shrink-0">
-          {country.city_count} {pluralize(country.city_count, ["город", "города", "городов"])}
-        </span>
-      </div>
+      {photo ? (
+        <Image
+          src={photo}
+          alt={name}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition duration-700 group-hover:scale-105"
+        />
+      ) : (
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-kombu-green via-kombu-green to-pine-tree"
+          aria-hidden
+        />
+      )}
 
-      <div className="flex-1">
-        <h3 className="font-serif text-3xl md:text-[2rem] text-cream leading-tight mb-2 group-hover:text-copper transition">
-          {country.country_ru}
-        </h3>
-        {country.cities_preview.length > 0 && (
-          <p className="text-brandy/70 text-sm leading-relaxed">
-            {country.cities_preview.join(", ")}
-            {country.city_count > country.cities_preview.length && " и др."}
-          </p>
-        )}
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/55 to-pine-tree/20" />
+      <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+      <div className="absolute inset-0 ring-1 ring-inset ring-cream/5 rounded-3xl" />
 
-      <div className="flex items-end justify-between gap-4 pt-2 border-t hairline">
-        <div>
-          <p className="text-brandy/55 text-[11px] uppercase tracking-[0.15em] mb-1">
-            Аренда от
-          </p>
-          <p className="text-cream font-semibold tabular-nums">
-            {country.min_rent > 0 ? `${formatRub(country.min_rent)}/мес` : "—"}
-          </p>
+      <div className="relative flex h-full flex-col justify-between gap-5 p-6 md:p-7">
+        <div className="flex items-start justify-between gap-3">
+          <span
+            className="text-5xl md:text-6xl leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]"
+            aria-hidden
+          >
+            {country.flag_emoji}
+          </span>
+          <span className="inline-flex shrink-0 items-center gap-1.5 px-2.5 py-1 rounded-pill text-[11px] font-medium bg-black/55 backdrop-blur-md border border-white/20 text-white">
+            {tc("cityCount", { count: country.city_count })}
+          </span>
         </div>
-        {country.avg_difficulty > 0 && (
-          <div className="text-right">
-            <p className="text-brandy/55 text-[11px] uppercase tracking-[0.15em] mb-1">
-              Сложность
+
+        <div className="mt-auto">
+          <h3 className="font-serif text-3xl md:text-[2rem] text-cream leading-tight mb-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)] group-hover:text-copper transition">
+            {name}
+          </h3>
+          {country.cities_preview.length > 0 && (
+            <p className="text-cream/80 text-sm leading-relaxed line-clamp-2 min-h-[2.5rem] drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
+              {country.cities_preview.join(", ")}
+              {country.city_count > country.cities_preview.length &&
+                ` ${tc("more")}`}
             </p>
-            <span className="inline-flex items-center gap-1.5 text-cream text-sm">
-              <DotIcon score={country.avg_difficulty} />
-              {DIFF_LABEL[country.avg_difficulty] ?? "—"}
-            </span>
+          )}
+
+          <div className="flex items-end justify-between gap-3 pt-4 border-t border-white/15">
+            {difficulty && (
+              <span className="inline-flex items-center gap-1.5 text-cream text-sm drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
+                <span
+                  className={`w-2 h-2 rounded-full ${difficulty.dotClass}`}
+                  aria-hidden
+                />
+                {td(DIFFICULTY_KEY[difficulty.color])}
+              </span>
+            )}
+            <div className="text-right">
+              <p className="text-cream/60 text-xs drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
+                {tc("rentFrom")}
+              </p>
+              <p className="text-cream font-semibold drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
+                {country.min_rent > 0
+                  ? `${formatRub(country.min_rent)}${tc("perMonth")}`
+                  : "—"}
+              </p>
+            </div>
           </div>
-        )}
+        </div>
       </div>
     </Link>
   );
-}
-
-function DotIcon({ score }: { score: number }) {
-  const color =
-    score <= 2 ? "bg-emerald-400" : score === 3 ? "bg-amber-400" : "bg-copper";
-  return <span className={`w-2 h-2 rounded-full ${color}`} aria-hidden />;
-}
-
-function pluralize(n: number, forms: [string, string, string]) {
-  const mod10 = n % 10;
-  const mod100 = n % 100;
-  if (mod10 === 1 && mod100 !== 11) return forms[0];
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return forms[1];
-  return forms[2];
 }

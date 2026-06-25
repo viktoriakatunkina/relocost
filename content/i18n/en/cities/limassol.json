@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Limassol 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Limassol per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Cyprus's main IT hub, with a large Russian-speaking diaspora and a thriving fintech scene. A Mediterranean climate and English in everyday life, but high prices and tricky banking.",
+  "climate": "+20°C avg.",
+  "language": "Greek, English, Russian",
+  "currency": "Euro, EUR",
+  "population": "0.18 mln",
+  "flight_from_moscow": "3.5 hours",
+  "pros": [
+    "Europe's leading fintech and crypto hub for Russian speakers",
+    "English is effectively the second everyday language",
+    "EU-standard living: healthcare, schools, safety",
+    "Warm Mediterranean climate",
+    "A large Russian-speaking community in IT"
+  ],
+  "cons": [
+    "Very expensive rent — higher than central Moscow",
+    "Difficulties opening a bank account for Russians",
+    "High taxes and a mandatory corporate structure",
+    "A small island — you can only fly out via Athens or Dubai",
+    "Strict D-visa requirements after 2022"
+  ],
+  "best_places": [
+    { "name": "Old Marina", "description": "The main pedestrian seafront zone — restaurants, bars and a promenade." },
+    { "name": "Germasogeia", "description": "An old quarter with artisan coffee shops and wine bars — a local favourite." },
+    { "name": "Cubico Suites Coworking", "description": "A premium coworking space for remote workers and crypto teams." },
+    { "name": "Pyxida", "description": "Classic fish and seafood delivered straight from the fishermen." }
+  ],
+  "visa_steps": [
+    { "title": "Tourist visa", "description": "A 90-day Pro Visa for Russians — issued online before arrival." },
+    { "title": "Open Permit (category F)", "description": "A residence permit for the financially independent — requires a €30,000 deposit and income of €24,000+ per year." },
+    { "title": "Employment Permit", "description": "Through a job at a Cypriot company or through your own firm." },
+    { "title": "Setting up a company", "description": "A Cypriot LTD is set up by a lawyer in 2–4 weeks, with €1 minimum capital." },
+    { "title": "Bank account", "description": "Bank of Cyprus, Hellenic Bank — hard for Russians without a local firm and a lawyer." }
+  ],
+  "faq": [
+    { "question": "Can I just arrive and rent an apartment in Limassol?", "answer": "Only for 90 days on a Pro Visa. Longer stays require a residence permit, ideally through a company." },
+    { "question": "What's the situation with banks in Limassol?", "answer": "Very difficult for Russians. Realistically only via a lawyer + a Cypriot LTD + due diligence." },
+    { "question": "What are the taxes in Limassol?", "answer": "Income tax 0–35%, with a non-dom exemption for new residents — no tax on dividends and passive income." },
+    { "question": "Do I need English in Limassol?", "answer": "English is enough for everyday life. Greek helps with paperwork but isn't required." },
+    { "question": "Where should I live in Limassol?", "answer": "The seafront is premium. Germasogeia and Kolossi are calmer and cheaper. Dherynia is good for families." },
+    { "question": "How is healthcare in Limassol?", "answer": "GeSY is the state insurance for residents. Private cover starts from €1,500/year." }
+  ],
+  "reviews": [
+    { "profession": "CFO", "text": "Limassol is ideal for remote work in IT/fintech. The downside — banks demand the maximum paperwork, all through a lawyer." },
+    { "profession": "product manager", "text": "Sea, English, calm. But rent doubled in two years — the market is overheated by relocators." }
+  ]
+}

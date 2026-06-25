@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Tashkent 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Tashkent per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Visa-free entry for Russians for 60 days, low prices for housing and food, a developed Russian-speaking environment and a rapidly growing IT scene. A good choice for a family relocation.",
+  "climate": "+15°C avg.",
+  "language": "Uzbek, Russian",
+  "currency": "Som, UZS",
+  "population": "2.7 mln",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "Visa-free entry for 60 days for Russian citizens",
+    "Low prices for rent and groceries alongside quality infrastructure",
+    "Russian is everywhere — schools, healthcare, business",
+    "A rapidly growing IT industry and state support for the IT Park",
+    "A mild winter and a long, warm spring"
+  ],
+  "cons": [
+    "Very hot dry summers — up to +40°C in July and August",
+    "Difficulties with international transfers and payment systems",
+    "Smog in the centre and traffic jams at rush hour",
+    "Bureaucracy for long-term legalisation is harder than in Georgia"
+  ],
+  "best_places": [
+    { "name": "Chorsu", "description": "A huge oriental bazaar under a dome — flatbreads, melons, fabrics, spices." },
+    { "name": "Magic City", "description": "A park-promenade along the Ankhor canal — fountains, restaurants, rides." },
+    { "name": "IT Park Uzbekistan", "description": "A tech park with benefits for residents and a large coworking — the city's main IT hub." },
+    { "name": "Bon!", "description": "The main local bakery chain — coffee, pastries, breakfasts until 11." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 60 days without a visa for Russians, the stamp is issued at the border." },
+    { "title": "Registration", "description": "If you stay more than 15 days — register via e-mehmon.uz or through your landlord." },
+    { "title": "PINFL", "description": "An equivalent of the tax ID: needed for a bank account, a sole proprietorship, school. Issued at the public services centre in a couple of days." },
+    { "title": "Bank account", "description": "Kapitalbank, Uzum Bank, Hamkorbank — open accounts with a passport and PINFL." },
+    { "title": "Sole proprietorship or IT Park resident", "description": "For a long stay — self-employment or registration in the IT Park (tax benefits)." }
+  ],
+  "faq": [
+    { "question": "Can I work remotely in Tashkent?", "answer": "Yes, many open a sole proprietorship and work for foreign clients, with a 4% tax." },
+    { "question": "What about payments in Tashkent?", "answer": "UZCARD/HUMO work locally; for international use it's Visa/MasterCard via Kapitalbank or Uzum." },
+    { "question": "What about the language in Tashkent?", "answer": "Uzbek is the state language, but almost everyone understands Russian, and in Tashkent it's often the main language." },
+    { "question": "Which districts are good for living in Tashkent?", "answer": "Mirabad and Yunusabad — modern developments. Chilanzar — older and budget-friendly." },
+    { "question": "Families with children in Tashkent?", "answer": "Good private Russian-language schools, with prices from 30,000 ₽ per month." },
+    { "question": "What's the climate in Tashkent?", "answer": "Winter is mild, down to –5°C. Summer is hot and dry, +35–40°C is normal from June to August." }
+  ],
+  "reviews": [
+    { "profession": "product manager", "text": "An IT Park resident, 4% tax, home in a modern complex for 60,000 ₽. The summer heat is tough, but otherwise it's the best balance of price and convenience I've found." },
+    { "profession": "teacher", "text": "We moved with my husband and child: a Russian-language school, decent healthcare, we visit our Uzbek neighbours. Prices are 2 times lower than in Moscow." }
+  ]
+}

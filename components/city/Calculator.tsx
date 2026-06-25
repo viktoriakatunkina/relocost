@@ -194,9 +194,9 @@ export function Calculator({
   const budget = PACKAGES.budget;
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-20">
+    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
       <span className="eyebrow">Бюджет</span>
-      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-3">
+      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
         Калькулятор переезда
       </h2>
       <p className="text-brandy/80 text-lg mb-10 max-w-xl text-pretty">
@@ -257,7 +257,7 @@ export function Calculator({
               <p className="text-copper text-xs uppercase tracking-[0.18em] mb-2 font-medium">
                 Итого за месяц
               </p>
-              <p className="font-serif text-4xl md:text-5xl text-cream tabular-nums">
+              <p className="font-serif text-3xl md:text-5xl text-cream tabular-nums">
                 {formatRub(result.totalMin)} – {formatRub(result.totalMax)}
               </p>
             </div>

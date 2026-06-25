@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Manila 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Manila per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of the Philippines: visa-free entry for 30 days, English as a second official language, the tropics and low prices. The downsides are heavy traffic, typhoons and the air quality of a megacity.",
+  "climate": "+28°C avg.",
+  "language": "English, Tagalog",
+  "currency": "Peso, PHP",
+  "population": "1.8 mln",
+  "flight_from_moscow": "13 hours with a layover",
+  "pros": [
+    "Visa-free entry for 30 days for Russian citizens",
+    "English as a second official language",
+    "The tropics and low prices",
+    "A business hub with jobs and services",
+    "A friendly attitude towards foreigners"
+  ],
+  "cons": [
+    "Heavy megacity traffic",
+    "Typhoon and downpour season",
+    "Air quality and population density",
+    "Sharp contrasts of poverty and wealth"
+  ],
+  "best_places": [
+    { "name": "Makati", "description": "The business and financial district, with offices, restaurants and coworkings." },
+    { "name": "Bonifacio Global City (BGC)", "description": "A modern, well-kept district with parks and rentals for expats." },
+    { "name": "Intramuros", "description": "The old Spanish walled city, with Fort Santiago." },
+    { "name": "Manila Bay Waterfront", "description": "A promenade with views of the bay's famous sunsets." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "For Russians — visa-free up to 30 days; the stamp is issued on arrival." },
+    { "title": "Extension", "description": "The visa is easy to extend at the Bureau of Immigration, step by step, up to several months." },
+    { "title": "Renting a home", "description": "Condos are rented monthly; Makati and BGC are popular." },
+    { "title": "Connectivity and money", "description": "A local SIM card is cheap; you'll need cash in pesos and a card from a foreign bank." },
+    { "title": "Long-term stay", "description": "For settling down, the SRRV (retirement) or work visas are worth considering." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Manila?", "answer": "No, visa-free up to 30 days, with the option to extend at the local Bureau of Immigration." },
+    { "question": "How much does it cost to live in Manila?", "answer": "Affordable, especially food and transport. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Manila?", "answer": "Tagalog, but English is a second official language and is used everywhere." },
+    { "question": "Can I pay with a Russian card in Manila?", "answer": "No, Russian cards don't work. You'll need cash in pesos and a card from a foreign bank." },
+    { "question": "What is the climate like in Manila?", "answer": "Tropical: hot year-round, with a rainy and typhoon season roughly from June to November." },
+    { "question": "How does Manila differ from Cebu?", "answer": "Manila is a large business megacity, while Cebu is quieter and closer to the sea and the islands." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Manila is convenient thanks to English and the job market; in BGC everything feels modern. The downsides are the traffic jams, the density and the typhoons — I escape to the islands to relax." },
+    { "profession": "HR specialist", "text": "The city is full of contrasts, but lively and cheap, and language isn't a barrier. Makati is comfortable. The traffic and rainy season are the main inconveniences." }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Gyumri 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Gyumri per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Armenia's second city with a rich cultural heritage: visa-free entry, Russian spoken in daily life and some of the lowest prices around. The downsides are cold winters at altitude, a small job market and a provincial pace.",
+  "climate": "+7°C avg.",
+  "language": "Armenian, Russian",
+  "currency": "Dram, AMD",
+  "population": "110k",
+  "flight_from_moscow": "3.5 hours",
+  "pros": [
+    "Visa-free entry and Russian spoken in daily life",
+    "Some of the lowest prices around",
+    "A rich cultural heritage and architecture",
+    "A friendly attitude towards Russians",
+    "A calm, unhurried pace"
+  ],
+  "cons": [
+    "Cold winters at altitude",
+    "A small job market",
+    "Provincial infrastructure",
+    "Few international services"
+  ],
+  "best_places": [
+    { "name": "Vardanants Square", "description": "The central square with churches and historic buildings." },
+    { "name": "Kumayri district", "description": "A historic quarter with 19th-century black-and-russet tuff architecture." },
+    { "name": "Museum of Urban Life (Dzitoghtsyan House)", "description": "An old mansion-museum telling the story of life in old Gyumri." },
+    { "name": "Victory Park", "description": "A green area for walks with views over the city." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russian citizens don't need a visa — entry is by internal or international passport." },
+    { "title": "Renting a home", "description": "Apartments rent very cheaply; the lease will come in handy for procedures." },
+    { "title": "Bank account and connectivity", "description": "A local SIM card and an Armenian bank card — issued with a passport." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business (sole proprietorship), property or family ties." },
+    { "title": "Taxes", "description": "Simple sole-proprietor registration is a convenient basis for long-term status." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Gyumri?", "answer": "No, entry is visa-free. For long-term status you apply for a residence permit, for example through a sole proprietorship." },
+    { "question": "How much does it cost to live in Gyumri?", "answer": "Very cheap — cheaper than Yerevan and most cities in the region. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Gyumri?", "answer": "Armenian; Russian is widely understood and used in daily life." },
+    { "question": "Can I pay with a Russian card in Gyumri?", "answer": "The MIR card is accepted on a limited basis; a local Armenian bank card is more reliable." },
+    { "question": "What is the climate like in Gyumri?", "answer": "Continental at altitude: warm summers and cold, snowy winters." },
+    { "question": "How does Gyumri differ from Yerevan?", "answer": "Gyumri is smaller, cheaper and more provincial, with distinctive architecture; Yerevan is a large capital with a developed scene." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Gyumri is very cheap, Russian is in common use, people are warm and the architecture is atmospheric. The downsides are cold winters and little work and few services on the ground." },
+    { "profession": "artist", "text": "I moved for the quiet, the culture and the low prices. The city is soulful, with history. I miss big services, and winter can get genuinely freezing." }
+  ]
+}

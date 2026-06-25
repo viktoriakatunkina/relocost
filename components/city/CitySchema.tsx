@@ -1,12 +1,12 @@
 import type { City } from "@/lib/types";
-import { unsplashSrc } from "@/lib/unsplash";
+import { photoSrc } from "@/lib/photo";
 
 const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://relocost.ru"
 ).replace(/\/$/, "");
 
 export function CitySchema({ city }: { city: City }) {
-  const image = unsplashSrc(city.unsplash_url, { w: 1200, q: 80 });
+  const image = photoSrc(city.image_url, city.unsplash_url, { w: 1200, q: 80 });
 
   const schema = {
     "@context": "https://schema.org",

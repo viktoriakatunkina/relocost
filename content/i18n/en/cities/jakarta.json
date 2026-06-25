@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Jakarta 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Jakarta per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Indonesia's capital and the country's business hub: a 30-day visa on arrival, low prices and year-round tropics. The downsides are the famous traffic jams, the humidity and the air quality of a megacity.",
+  "climate": "+28°C avg.",
+  "language": "Indonesian, English",
+  "currency": "Rupiah, IDR",
+  "population": "11 mln",
+  "flight_from_moscow": "13 hours with a layover",
+  "pros": [
+    "A 30-day visa on arrival",
+    "Low prices for housing and food",
+    "Year-round tropics",
+    "A business hub with work and services",
+    "A friendly attitude towards foreigners"
+  ],
+  "cons": [
+    "The famous megacity traffic jams",
+    "High humidity and air quality issues",
+    "Few beaches within the city itself",
+    "A language barrier outside the business centre"
+  ],
+  "best_places": [
+    { "name": "Old Town (Kota Tua)", "description": "A colonial quarter with a square, museums and cafés." },
+    { "name": "SCBD", "description": "A modern business district with offices, restaurants and coworkings." },
+    { "name": "Monas (National Monument)", "description": "The city's symbol, with a plaza and an observation deck." },
+    { "name": "Menteng", "description": "A green, prestigious district with villas, cafés and rentals for expats." }
+  ],
+  "visa_steps": [
+    { "title": "Visa on arrival", "description": "Russian citizens can get a visa on arrival (VOA) for 30 days, with renewal." },
+    { "title": "Renting a home", "description": "Apartments are rented by the month; the SCBD and Menteng districts are popular." },
+    { "title": "Connectivity and money", "description": "A local SIM card is cheap; you'll need rupiah in cash and a card from a foreign bank." },
+    { "title": "Visa extension", "description": "The VOA can be extended once at the immigration office." },
+    { "title": "Long-term stay", "description": "For living there longer, people consider KITAS visas (work or retirement)." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Jakarta?", "answer": "Yes, a visa on arrival (VOA) for 30 days with the option to extend." },
+    { "question": "How much does it cost to live in Jakarta?", "answer": "Affordable: cheaper than many Asian capitals, especially food. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Jakarta?", "answer": "Indonesian; English is widely used in business circles and in tourism." },
+    { "question": "Can I pay with a Russian card in Jakarta?", "answer": "No, Russian cards don't work. You'll need rupiah in cash and a card from a foreign bank." },
+    { "question": "What is the climate like in Jakarta?", "answer": "Tropical: hot and humid year-round, with a pronounced rainy season." },
+    { "question": "How does Jakarta differ from Bali?", "answer": "Jakarta is a business megacity without beaches; Bali is a resort island. Many choose Bali for living and Jakarta for work." }
+  ],
+  "reviews": [
+    { "profession": "remote manager", "text": "Jakarta is a working megacity: cheap, warm, with infrastructure. The downside is the hellish traffic and the air — on weekends I escape to the sea." },
+    { "profession": "HR specialist", "text": "It's not a resort city, but it's convenient for work and life, and the prices are pleasing. English is enough in business circles, but the traffic really wears you out." }
+  ]
+}

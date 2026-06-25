@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Bukhara 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Bukhara per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "An ancient Silk Road city with 60 days visa-free entry and some of the lowest prices around. Russian is used in everyday life and the climate is warm, but the pace is provincial and the infrastructure modest.",
+  "climate": "+15°C avg.",
+  "language": "Uzbek, Tajik, Russian",
+  "currency": "Som, UZS",
+  "population": "280k",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "60 days visa-free, with Russian used in everyday life",
+    "Some of the lowest prices for housing and food",
+    "The atmosphere of a living Silk Road, with UNESCO monuments",
+    "A warm, dry climate and cheap fruit",
+    "Simple registration and a friendly attitude towards Russians"
+  ],
+  "cons": [
+    "A provincial pace and few international services",
+    "Modest IT infrastructure and job market",
+    "Hot, dusty summers — up to +40",
+    "Few direct flights — usually via Tashkent"
+  ],
+  "best_places": [
+    { "name": "Lyab-i Hauz", "description": "An ensemble around a pond in the heart of the old town — tea houses and madrasas." },
+    { "name": "Poi Kalyan (old town)", "description": "The Kalyan Minaret, madrasas and bazaars all within walking distance." },
+    { "name": "Covered bazaars (Toqi)", "description": "Historic trading domes: spices, carpets and crafts." },
+    { "name": "Sitorai Mokhi-Khosa", "description": "The emir's summer palace on the city's outskirts." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 60 days without a visa — all you need is a passport." },
+    { "title": "Registration", "description": "If you stay longer than 15 days, arrange a temporary registration at your place of residence." },
+    { "title": "Renting a home", "description": "Houses and flats rent cheaply; the lease is the basis for registration." },
+    { "title": "Account and card", "description": "Kapitalbank or Hamkorbank — they issue UZCARD/Humo and Visa cards to Russians with a passport." },
+    { "title": "Residence permit (optional)", "description": "Through work, property or family reunification, at the migration department of the Interior Ministry." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Bukhara?", "answer": "No, up to 60 days visa-free. For stays longer than 15 days, a temporary registration is required." },
+    { "question": "How much does it cost to live in Bukhara?", "answer": "Very cheap — one of the most budget-friendly options, cheaper than Tashkent and Samarkand. See the calculator above for an exact budget." },
+    { "question": "What language is spoken in Bukhara?", "answer": "Uzbek and Tajik; Russian is understood in everyday life, especially by the older generation." },
+    { "question": "Can I pay with a Russian card in Bukhara?", "answer": "The MIR card is accepted only in limited places; a local UZCARD/Humo or Visa card is more reliable." },
+    { "question": "What is the climate like in Bukhara?", "answer": "Sharply continental and desert-like: hot, dry summers up to +40 and cool winters." },
+    { "question": "How do I get to Bukhara?", "answer": "Most often via Tashkent (a domestic flight or the high-speed Afrosiyob train); there are seasonal direct flights." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "Bukhara is a time machine with dirt-cheap prices. I rented a house for next to nothing and work remotely. The downside — it's provincial and there's little IT environment." },
+    { "profession": "artist", "text": "I moved for the quiet, the warmth and the history. People understand Russian and are kind, and the food is tasty and cheap. I just miss the big-city services." }
+  ]
+}

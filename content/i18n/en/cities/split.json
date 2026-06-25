@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Split 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Split per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The main city of Dalmatia, home to Diocletian's Palace: a mild Mediterranean climate, the clean Adriatic Sea and islands nearby. Russian citizens need a Schengen visa, and in summer it's crowded and expensive.",
+  "climate": "+17°C avg.",
+  "language": "Croatian, English",
+  "currency": "Euro, EUR",
+  "population": "180 thsd",
+  "flight_from_moscow": "5 hours with a layover",
+  "pros": [
+    "Diocletian's Palace and living history in the centre",
+    "The clean Adriatic Sea and islands nearby",
+    "A mild Mediterranean climate",
+    "Developed infrastructure and safety",
+    "An excellent base for travelling around Dalmatia"
+  ],
+  "cons": [
+    "Russian citizens need a Schengen visa",
+    "Very crowded and expensive in summer",
+    "Part of the tourist business shuts down in winter",
+    "High housing prices by the sea"
+  ],
+  "best_places": [
+    { "name": "Diocletian's Palace", "description": "A 4th-century ancient palace-city — the living heart of Split, protected by UNESCO." },
+    { "name": "Riva promenade", "description": "A palm-lined waterfront along the harbour with cafés and sea views." },
+    { "name": "Marjan Park", "description": "A wooded hilltop peninsula with trails, beaches and panoramic views." },
+    { "name": "Hvar and Brač islands", "description": "Popular Adriatic islands an hour away by ferry." }
+  ],
+  "visa_steps": [
+    { "title": "Schengen visa", "description": "Russians need a Schengen visa — Croatia is part of the Schengen Area." },
+    { "title": "Renting a home", "description": "Rent is cheaper off-season; in summer prices and demand surge." },
+    { "title": "OIB (identification number)", "description": "Needed for a bank account, renting and services; issued at the tax office." },
+    { "title": "Bank account", "description": "Croatian banks open accounts once you have an OIB and an address." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business, a digital nomad visa or family reunification." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Split?", "answer": "Yes, you need a Schengen visa — Croatia is part of the Schengen Area." },
+    { "question": "How much does it cost to live in Split?", "answer": "European prices, especially rent by the sea in summer. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Split?", "answer": "Croatian; English is widespread in tourism." },
+    { "question": "Can I pay with a Russian card in Split?", "answer": "No, Russian cards don't work. You'll need a foreign bank card or euros in cash." },
+    { "question": "What is the climate like in Split?", "answer": "Mediterranean: hot dry summers and mild rainy winters, with a long beach season." },
+    { "question": "Does Croatia have a digital nomad visa?", "answer": "Yes, there is a digital nomad visa, but Russians first need a Schengen visa to enter." }
+  ],
+  "reviews": [
+    { "profession": "remote product manager", "text": "Split is history, the sea and islands right next door. The city is beautiful and convenient. The main difficulty for us is the Schengen, and in summer it's packed with tourists." },
+    { "profession": "photographer", "text": "Dalmatia is incredible, the water crystal clear. In winter it's quiet, much is closed, but prices are lower. The visa is the only serious barrier." }
+  ]
+}

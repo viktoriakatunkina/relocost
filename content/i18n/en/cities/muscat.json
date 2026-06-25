@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Muscat 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Muscat per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Oman's capital between the mountains and the Arabian Sea: a calm and safe city with zero income tax and a preserved Arabian character. Russian citizens need an electronic visa; the summers are very hot.",
+  "climate": "+28°C avg.",
+  "language": "Arabic, English",
+  "currency": "Rial, OMR",
+  "population": "1.5 mln",
+  "flight_from_moscow": "6 hours with a layover",
+  "pros": [
+    "Zero income tax",
+    "High safety and a calm rhythm",
+    "A preserved Arabian character without the skyscraper gloss",
+    "A clean sea and scenic mountains nearby",
+    "English is widely spoken"
+  ],
+  "cons": [
+    "Russian citizens need an electronic visa",
+    "Exhausting heat in summer",
+    "Alcohol is sold in a limited way",
+    "Expensive rent and you need a car"
+  ],
+  "best_places": [
+    { "name": "Sultan Qaboos Grand Mosque", "description": "The country's main mosque, with a huge handwoven carpet and a serene atmosphere." },
+    { "name": "Mutrah Old Market (Souq)", "description": "A maze of stalls with frankincense, silver and spices by the waterfront." },
+    { "name": "Mutrah Corniche", "description": "A seaside promenade along the harbour with old dhows and forts." },
+    { "name": "Qurum Beach", "description": "A popular coastal area with cafés, a park and sunsets." }
+  ],
+  "visa_steps": [
+    { "title": "Electronic visa", "description": "Russians need a tourist e-visa — issued online before the trip." },
+    { "title": "Resident visa", "description": "For long-term living you need residency through an employer or business." },
+    { "title": "Renting a home", "description": "A lease usually requires a deposit and several months' payment up front." },
+    { "title": "Bank account", "description": "Omani banks open accounts for residents with a local ID." },
+    { "title": "Transport", "description": "The city is spread out — you need a car for a comfortable life." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Muscat?", "answer": "Yes, you need an electronic tourist visa — it's issued online before the trip." },
+    { "question": "How much does it cost to live in Muscat?", "answer": "Expensive, especially rent; but there's no income tax. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Muscat?", "answer": "Arabic is the official language, but English is widely used at work and in daily life." },
+    { "question": "Can I pay with a Russian card in Muscat?", "answer": "No, Russian cards don't work. You'll need a card from a foreign bank or cash in rials." },
+    { "question": "What is the climate like in Muscat?", "answer": "Hot desert: a very hot, humid summer and a warm, mild winter — the best season is November to March." },
+    { "question": "How does Muscat differ from Dubai?", "answer": "Muscat is calmer, lower-rise and more characterful: fewer skyscrapers and more Arabian authenticity." }
+  ],
+  "reviews": [
+    { "profession": "engineer", "text": "Muscat is quiet, safe and beautiful — the mountains and sea are nearby. I moved here on a contract. The downsides are the summer heat and expensive rent, and it's hard without a car." },
+    { "profession": "remote marketer", "text": "Oman pleasantly surprised me with its calm and character, without the Dubai rush. English is enough. The visa and prices are the main nuances for the budget." }
+  ]
+}

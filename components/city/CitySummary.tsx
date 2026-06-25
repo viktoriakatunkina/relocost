@@ -1,6 +1,8 @@
 import type { City } from "@/lib/types";
 import type { CityContent } from "@/lib/cities-content";
 import { cityIn } from "@/lib/city-prepositional";
+import { getDifficulty } from "@/lib/difficulty";
+import { cityVerdict } from "@/lib/city-verdict";
 import { typo } from "@/lib/typography";
 
 // SEO-блок-выжимка: бьёт в топ-запросы «стоит ли переезжать в X», «виза в X
@@ -14,15 +16,15 @@ export function CitySummary({
   content?: CityContent;
 }) {
   const phrase = cityIn(city.slug, city.name_ru); // «в Тбилиси» / «на Бали»
+  // Уникальный вывод вместо повтора intro_text (правка 17.2): собран из
+  // сложности/визы/плюсов/минусов, не дублирует вступление из hero.
+  const verdict = cityVerdict(city, phrase, content);
 
   const visaValue = city.is_foreign
     ? content?.visa_steps?.[0]?.title ?? "Зависит от страны — см. раздел «Виза»"
     : "Не нужна — переезд внутри России";
 
-  const DIFFICULTY = ["", "Легкий", "Средний", "Средний", "Сложный", "Сложный"];
-  const difficultyValue = city.difficulty_score
-    ? DIFFICULTY[Math.min(city.difficulty_score, 5)] || "—"
-    : "—";
+  const difficultyValue = getDifficulty(city)?.label ?? "—";
 
   const tiles: Array<{ icon: string; label: string; value: string }> = [
     {
@@ -45,11 +47,9 @@ export function CitySummary({
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-5 text-balance">
         {typo(`Стоит ли переезжать ${phrase}?`)}
       </h2>
-      {city.intro_text && (
-        <p className="text-brandy/90 text-lg leading-relaxed text-pretty max-w-3xl">
-          {typo(city.intro_text)}
-        </p>
-      )}
+      <p className="text-brandy/90 text-lg leading-relaxed text-pretty max-w-3xl">
+        {typo(verdict)}
+      </p>
 
       <dl className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-8">
         {tiles.map((t) => (

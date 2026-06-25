@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Fethiye 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Fethiye per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A resort on Turkey's turquoise coast: visa-free entry, a mild Mediterranean climate, the famous Ölüdeniz and yacht-filled bays. Cheaper than Bodrum and more laid-back; in winter the resort life quiets down.",
+  "climate": "+19°C avg.",
+  "language": "Turkish, English, Russian",
+  "currency": "Lira, TRY",
+  "population": "165k",
+  "flight_from_moscow": "4.5 hours with a layover",
+  "pros": [
+    "Visa-free entry for Russian citizens",
+    "A turquoise sea and the famous Ölüdeniz",
+    "A mild Mediterranean climate",
+    "Cheaper and more laid-back than Bodrum",
+    "A Russian-speaking community and familiar services"
+  ],
+  "cons": [
+    "Resort life winds down in winter",
+    "Some coastal districts are closed to the tourist residence permit",
+    "Hot and crowded in summer",
+    "No airport of its own — the nearest is in Dalaman"
+  ],
+  "best_places": [
+    { "name": "Ölüdeniz and the Blue Lagoon", "description": "One of the most beautiful beaches in the world and a spot for paragliding flights." },
+    { "name": "Lycian rock tombs", "description": "Ancient rock-cut tombs above the town with views over the bay." },
+    { "name": "The waterfront and marina", "description": "A promenade area with yachts, fish restaurants and a market." },
+    { "name": "Butterfly Valley", "description": "A secluded cove with a waterfall, reachable by boat." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russian citizens don't need a visa for short trips — the stamp is issued at the border." },
+    { "title": "Check the district", "description": "Before renting, make sure the neighbourhood is open for issuing residence permits to foreigners." },
+    { "title": "Tax number and account", "description": "A vergi numarası is issued quickly; with it you can open a bank account." },
+    { "title": "Residence permit (ikamet)", "description": "Tourist-based or property-based — filed online through the göç idaresi." },
+    { "title": "Registered lease", "description": "A long-term lease is the basis for the residence permit." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Fethiye?", "answer": "No, you don't need a visa for short trips. For long-term living you apply for a residence permit (ikamet)." },
+    { "question": "How much does it cost to live in Fethiye?", "answer": "Cheaper and more laid-back than Bodrum. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Fethiye?", "answer": "Turkish; English is common in tourist areas, and you'll hear Russian too." },
+    { "question": "Can I pay with a Russian card in Fethiye?", "answer": "Russian cards don't work. You'll need cash lira and a card from a foreign or Turkish bank." },
+    { "question": "What is the climate like in Fethiye?", "answer": "Mediterranean: hot, dry summers and mild, rainy winters." },
+    { "question": "How do I get to Fethiye?", "answer": "The nearest airport is Dalaman, about an hour's drive; in summer there are direct flights from Russia." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Fethiye means a turquoise sea and mountains, quieter and cheaper than Bodrum. The resort goes quiet in winter, and I had to wrestle with the residence permit because of the closed districts." },
+    { "profession": "remote marketer", "text": "We moved for Ölüdeniz and the climate. It's beautiful in summer but crowded. There are plenty of Russian speakers, and settling in went smoothly." }
+  ]
+}

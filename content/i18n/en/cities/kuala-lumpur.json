@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Kuala Lumpur 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Kuala Lumpur per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A tropical metropolis with the MM2H programme — a long-term visa for remote workers. English is everywhere, ultra-modern towers stand next to Asian markets, and the region's best private schools and healthcare are here.",
+  "climate": "+27°C avg.",
+  "language": "Malay, English, Chinese",
+  "currency": "Ringgit, MYR",
+  "population": "1.8 mln",
+  "flight_from_moscow": "11 hours",
+  "pros": [
+    "The MM2H programme — a long-term visa for remote workers and investors",
+    "English everywhere — a low language barrier",
+    "The developed infrastructure of an Asian capital: metro, malls, healthcare",
+    "Direct flights to Russia and access to all of Asia",
+    "Affordable world-class healthcare (Gleneagles, Prince Court)"
+  ],
+  "cons": [
+    "A tropical climate with high humidity year-round",
+    "Hard to manage without a car or Grab — distances are large",
+    "A traditional local society (a Muslim country)",
+    "MM2H was tightened in 2024 — the deposit rose to 1 mln ringgit"
+  ],
+  "best_places": [
+    { "name": "Bukit Bintang", "description": "The central shopping and food district: markets, restaurants, bars and the Petronas Twin Towers nearby." },
+    { "name": "Mont Kiara", "description": "A premium expat district: international schools, spas, restaurants and condominiums with pools." },
+    { "name": "Common Ground", "description": "A network of coworking spaces in premium buildings: meeting rooms, events and an active community." },
+    { "name": "Bukit Tabur", "description": "A quartz ridge on the outskirts for trekking: one of the longest quartz formations in the world." }
+  ],
+  "visa_steps": [
+    { "title": "Tourist entry", "description": "Up to 30 days visa-free on a passport. Extendable at immigration for 30 days." },
+    { "title": "DE Rantau (Digital Nomad)", "description": "A visa for remote workers earning from 24,000 dollars a year. A 1-year residence permit, renewable." },
+    { "title": "MM2H Visa", "description": "A long-term visa for the financially independent: a deposit from 1 mln ringgit and active income from 40,000 ringgit a month." },
+    { "title": "Tax ID (Income Tax File)", "description": "Set up at LHDN after getting the visa. Needed for a bank account and official work." },
+    { "title": "Bank account", "description": "Maybank, CIMB and RHB open accounts with a visa and a lease. Cards work across Southeast Asia." }
+  ],
+  "faq": [
+    { "question": "Why bother with MM2H if there's DE Rantau in Kuala Lumpur?", "answer": "MM2H runs 5–10 years with the right to buy property. DE Rantau is simpler and faster, but only for 1 year." },
+    { "question": "What about children in Kuala Lumpur?", "answer": "Top international schools: Mont Kiara International, Garden, Alice Smith. From 13,000 dollars a year." },
+    { "question": "Is the climate hard to handle in Kuala Lumpur?", "answer": "Hot (+27–32°C) and humid year-round, with frequent downpours. Air conditioning is a must." },
+    { "question": "Where should I live in Kuala Lumpur?", "answer": "Bangsar — expats and hipsters. Mont Kiara — families. KLCC — the very centre and work. Sri Hartamas — quiet." },
+    { "question": "What about alcohol and food in Kuala Lumpur?", "answer": "Malaysia is a Muslim country, but alcohol is sold in most districts. Pork is only in Chinese and Western restaurants." },
+    { "question": "Can I work for Western companies in Kuala Lumpur?", "answer": "Yes, on DE Rantau or MM2H. Tax for non-residents is 30%, for residents up to 24% progressively." }
+  ],
+  "reviews": [
+    { "profession": "managing partner of an agency", "text": "We got DE Rantau as a family and moved from Bangkok. School in Mont Kiara, Gleneagles for healthcare, a house in Bangsar. KL is easier than Bangkok and the infrastructure is cleaner." },
+    { "profession": "product manager", "text": "I work for a Singapore startup. I rent a studio in KLCC with a view of the towers for 800 dollars. People speak English everywhere, the visa is simple, and the climate is bearable." }
+  ]
+}

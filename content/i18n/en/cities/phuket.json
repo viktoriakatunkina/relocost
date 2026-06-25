@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Phuket 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Phuket per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A tropical island with a large Russian-speaking community of freelancers and visa-free entry for 60 days. The ocean, a warm climate year-round and a developed infrastructure for remote work.",
+  "climate": "+28°C avg.",
+  "language": "Thai, English",
+  "currency": "Baht, THB",
+  "population": "420 thousand",
+  "flight_from_moscow": "11 hours",
+  "pros": [
+    "Visa-free entry for 60 days with an option to extend",
+    "The ocean and a warm climate year-round",
+    "A large Russian-speaking community, especially in Rawai and Chalong",
+    "A developed infrastructure for remote work",
+    "Affordable, high-quality private healthcare"
+  ],
+  "cons": [
+    "Rainy season from May to October — frequent downpours and rough seas",
+    "High rental costs during the tourist season",
+    "Transport is limited without a car or scooter",
+    "Difficulties with international payments from Russia"
+  ],
+  "best_places": [
+    { "name": "Rawai", "description": "The quiet south of the island, with a seafood market and a large Russian community — a favourite of families." },
+    { "name": "Patong", "description": "The island's tourist hub: nightlife, cafés, shopping and Patong Beach." },
+    { "name": "Hatch Coworking", "description": "Chalong's main coworking for nomads — open 24/7, with events and open-space areas." },
+    { "name": "Old Phuket Town", "description": "Sino-Portuguese mansions, street art and coffee shops — the historic heart of the island." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 60 days without a visa on a passport, extendable by 30 days at immigration." },
+    { "title": "Education Visa or DTV", "description": "A study visa or the Destination Thailand Visa (for nomads) — up to 5 years of stay." },
+    { "title": "Tax ID (TIN)", "description": "Needed for a bank account and a long-term stay — issued by the Revenue Department." },
+    { "title": "Bank account", "description": "Kasikorn, Bangkok Bank — they open accounts with a visa and ID; it's harder for tourists." },
+    { "title": "Renting housing", "description": "Contracts from 6 months — pricier in the tourist season, with discounts up to 40% in the low season." }
+  ],
+  "faq": [
+    { "question": "When is the best season in Phuket?", "answer": "November–April — dry, +28–32°C. May–October is the rainy season and cheaper." },
+    { "question": "What are banks like in Phuket?", "answer": "It's harder for Russians, but Kasikorn and Bangkok Bank open accounts with a visa and proof of residence." },
+    { "question": "Can I move to Phuket with kids?", "answer": "Yes, there are many international schools (UWC Thailand, BCIS, HeadStart) and private kindergartens." },
+    { "question": "What's the internet like in Phuket?", "answer": "Fibre at 300+ Mbps for 1,500–2,000 ₽, with 4G/5G everywhere. Suitable for remote work." },
+    { "question": "How do I get to Russia?", "answer": "There are no direct flights; convenient connections run via Dubai, Doha and Istanbul — 14–18 hours." },
+    { "question": "Which district should I choose in Phuket?", "answer": "Families — Rawai and Chalong. Nightlife — Patong and Kamala. Quiet life — Nai Harn and Nai Yang." }
+  ],
+  "reviews": [
+    { "profession": "product manager", "text": "I moved my family to Rawai: a house with a pool for 80,000 ₽, my daughter at UWC. The main thing — the ocean is 10 minutes away and the healthcare is reasonable." },
+    { "profession": "photographer", "text": "I've wintered in Phuket three years running: coworking, surfing, friends. In summer I head back to Moscow — you get tired of the humidity." }
+  ]
+}

@@ -1,12 +1,12 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { BlogPost } from "@/lib/blog";
 import { coverGradient } from "@/lib/blog";
-import { unsplashSrc } from "@/lib/unsplash";
+import { photoSrc } from "@/lib/photo";
 import { typo } from "@/lib/typography";
 
 export function BlogCard({ post }: { post: BlogPost }) {
-  const cover = unsplashSrc(post.cover_url, { w: 720, q: 80 });
+  const cover = photoSrc(post.cover_image_url, post.cover_url, { w: 720, q: 80 });
   return (
     <Link
       href={`/blog/${post.slug}`}

@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Batumi 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Batumi per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A Black Sea resort with visa-free stays of 365 days, low prices and a large Russian-speaking community of freelancers. Ideal for remote work by the sea with a mild winter.",
+  "climate": "+15°C avg.",
+  "language": "Georgian, Russian",
+  "currency": "Lari, GEL",
+  "population": "170 thousand",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "Visa-free entry for 365 days — the longest in the region",
+    "The sea and palm trees at prices below Sochi",
+    "A large Russian-speaking community of freelancers and IT workers",
+    "Low taxes for sole proprietors — 1% on turnover up to 500,000 GEL",
+    "Well-developed infrastructure for remote work"
+  ],
+  "cons": [
+    "Strong seasonality — a tourist boom and traffic jams in summer",
+    "Lots of rain and overcast skies in winter; heating isn't available everywhere",
+    "High humidity from the sea — hard for asthmatics",
+    "Rents have risen noticeably since 2022"
+  ],
+  "best_places": [
+    { "name": "Old Batumi", "description": "19th-century quarters between the boulevard and Piazza square — cafés, wine bars and boutiques." },
+    { "name": "Batumi Boulevard", "description": "8 km of seafront with palm trees, bike paths and fountains — the main spot for walks." },
+    { "name": "Porta Coworking", "description": "The leading coworking space for digital nomads: meetups, events and an open space with a sea view." },
+    { "name": "Botanical Garden", "description": "One of the largest in the world, on Green Cape — subtropics and coastal views." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 365 days without a visa — all you need is a passport; the stamp is issued at the border." },
+    { "title": "Personal Number (ID)", "description": "Issued at the House of Justice — needed for renting, banking and registering as a sole proprietor." },
+    { "title": "Bank account", "description": "Bank of Georgia or TBC — both open accounts for Russians and issue cards with international payments." },
+    { "title": "Small Business sole proprietorship", "description": "1% tax on turnover up to 500,000 GEL/year — one of the most favourable schemes in the region." },
+    { "title": "Registered rental", "description": "The lease is recorded in the registry — required for long-term residence." }
+  ],
+  "faq": [
+    { "question": "How does Batumi differ from Tbilisi?", "answer": "The sea, a milder winter, less of an IT scene and more tourists in summer. Prices are comparable." },
+    { "question": "What is winter like in Batumi?", "answer": "+8–12°C, lots of rain and wind off the sea. Part of the city empties out until April." },
+    { "question": "Can you swim in Batumi?", "answer": "The season runs from May to October, with water up to +25°C in summer. The beach is pebbly." },
+    { "question": "Which districts are best in Batumi?", "answer": "Old Batumi and the Boulevard — close to the action. Khimaleuri — modern complexes, quieter and cheaper." },
+    { "question": "How is the internet in Batumi?", "answer": "Stable fibre at 100+ Mbps for 1,500–2,500 ₽, with 4G/5G mobile across the city." },
+    { "question": "Is Batumi good for families with children?", "answer": "There are private Russian-speaking schools and kindergartens; for healthcare — the private MediClub Batumi clinic." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "I moved from Tbilisi to be by the sea — a 1% sole proprietorship, a swim in the morning and the boulevard in the evening. It's overcast in winter, but that's the only downside." },
+    { "profession": "copywriter", "text": "We rent an apartment in a new complex with a sea view for 70,000 ₽. Our daughter goes to an international kindergarten and my husband works from a coworking space." }
+  ]
+}

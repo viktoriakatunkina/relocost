@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Baku 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Baku per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Azerbaijan on the shore of the Caspian: visa-free for 90 days, direct flights from Moscow and widely spoken Russian. A modern centre with a seaside boulevard, mild winters, but windy, and rents higher than the regional average.",
+  "climate": "+15°C avg.",
+  "language": "Azerbaijani, Russian",
+  "currency": "Manat, AZN",
+  "population": "2.3 mln",
+  "flight_from_moscow": "3 hours",
+  "pros": [
+    "Visa-free for 90 days, direct flights from Moscow in 3 hours",
+    "Russian is widely spoken in everyday life",
+    "A modern seaside centre and a waterfront boulevard",
+    "Mild winters, a warm Caspian Sea in summer",
+    "Low crime and a friendly attitude towards Russians"
+  ],
+  "cons": [
+    "Rents are higher than the regional average",
+    "Constant winds — Baku is called the 'city of winds'",
+    "A modest IT scene and few coworkings",
+    "Hot and humid in summer, the air near industrial zones isn't ideal"
+  ],
+  "best_places": [
+    { "name": "Icherisheher (Old City)", "description": "Fortress walls, the Maiden Tower and narrow streets in the heart of Baku, under UNESCO protection." },
+    { "name": "Seaside Boulevard", "description": "A long Caspian promenade with parks, cafés and a view of the Flame Towers." },
+    { "name": "Heydar Aliyev Centre", "description": "The famous Zaha Hadid building with flowing white forms and exhibitions." },
+    { "name": "Fountains Square", "description": "A pedestrian centre with restaurants, shops and evening life." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 90 days without a visa — you only need a passport, the stamp is issued at the border." },
+    { "title": "Registration", "description": "For stays over 15 days, registration at the place of residence is arranged (often done by the landlord or hotel)." },
+    { "title": "Renting housing", "description": "Apartments are rented through agents and platforms; the lease is useful for registration and the bank." },
+    { "title": "Account and card", "description": "Kapital Bank, PASHA Bank — they open accounts for Russians with a passport, cards with international payments." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business, study or property — arranged at the State Migration Service." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Baku?", "answer": "No, visa-free for up to 90 days. For stays over 15 days, registration at the place of residence is arranged." },
+    { "question": "How much does it cost to live in Baku?", "answer": "Moderate for the region: cheaper than Moscow, but rents are higher than in Yerevan or Tbilisi. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Baku?", "answer": "Azerbaijani is the state language, but Russian is widely understood and used in daily life, especially in the centre." },
+    { "question": "Can I pay with a Russian card in Baku?", "answer": "The MIR card is accepted only in limited places; it's more reliable to open a local Visa/Mastercard." },
+    { "question": "What is the climate like in Baku?", "answer": "Semi-arid subtropical: mild winters, hot summers and strong winds year-round." },
+    { "question": "How do I get to Baku?", "answer": "There are direct flights from Moscow and a number of Russian cities, with a travel time of around 3 hours." }
+  ],
+  "reviews": [
+    { "profession": "marketer", "text": "Baku was a pleasant surprise: a clean modern centre, the sea right there and almost everyone speaks Russian. Rent bites, but it's safe and convenient to fly home." },
+    { "profession": "remote manager", "text": "I moved because of the direct flights and the language — adaptation went easily. The wind is genuinely strong, but you get used to it. There's not much of an IT scene." }
+  ]
+}

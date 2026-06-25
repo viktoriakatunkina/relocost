@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "relocost_favorites";
 const EVENT = "relocost:favorites-changed";
+export const LIMIT_EVENT = "relocost:favorites-limit";
+export const MAX_FAVORITES = 20;
 
 export function readFavorites(): string[] {
   if (typeof window === "undefined") return [];
@@ -24,13 +26,26 @@ export function writeFavorites(slugs: string[]) {
   window.dispatchEvent(new CustomEvent(EVENT));
 }
 
-export function toggleFavorite(slug: string): string[] {
+export type ToggleResult = { favorites: string[]; limitReached: boolean };
+
+export function toggleFavorite(slug: string): ToggleResult {
   const cur = readFavorites();
-  const next = cur.includes(slug)
-    ? cur.filter((s) => s !== slug)
-    : [...cur, slug];
+  // Удаление из избранного — всегда разрешено.
+  if (cur.includes(slug)) {
+    const next = cur.filter((s) => s !== slug);
+    writeFavorites(next);
+    return { favorites: next, limitReached: false };
+  }
+  // Добавление — упираемся в лимит: ничего не пишем, сигналим модалке.
+  if (cur.length >= MAX_FAVORITES) {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent(LIMIT_EVENT));
+    }
+    return { favorites: cur, limitReached: true };
+  }
+  const next = [...cur, slug];
   writeFavorites(next);
-  return next;
+  return { favorites: next, limitReached: false };
 }
 
 export function useFavorites(): string[] {

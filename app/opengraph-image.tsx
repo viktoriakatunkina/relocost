@@ -1,11 +1,13 @@
 import { ImageResponse } from "next/og";
+import { getSiteStats } from "@/lib/site-stats";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const alt = "Relocost — калькулятор стоимости жизни для переезжающих";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function OG() {
+  const { cityCount } = await getSiteStats();
   return new ImageResponse(
     (
       <div
@@ -49,7 +51,7 @@ export default async function OG() {
             fontFamily: "system-ui, sans-serif",
           }}
         >
-          Калькулятор · 10+ направлений · реальные цены
+          {`Калькулятор · ${cityCount} направлений · реальные цены`}
         </div>
       </div>
     ),

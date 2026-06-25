@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Izmir 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Izmir per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Turkey's third-largest city on the Aegean Sea: visa-free entry for 90 days, a mild climate and a calmer pace than Istanbul. Great for remote work by the sea, though some districts are closed to residence permits.",
+  "climate": "+18°C avg.",
+  "language": "Turkish, English",
+  "currency": "Turkish lira, TRY",
+  "population": "4.4 mln",
+  "flight_from_moscow": "3.5 hours",
+  "pros": [
+    "Visa-free entry for 90 days within six months",
+    "A mild Mediterranean climate and a six-month swimming season",
+    "Calmer and cheaper than Istanbul, yet still a big seaside city",
+    "A secular, European-spirited city with the Kordon waterfront",
+    "Fresh seafood, markets and a strong coffee culture"
+  ],
+  "cons": [
+    "Some districts are closed to the tourist residence permit — getting an ikamet is harder",
+    "High lira inflation: prices and rents are rising fast",
+    "A smaller Russian-speaking community than in Antalya or Alanya",
+    "Hot and crowded in summer — tough without air conditioning"
+  ],
+  "best_places": [
+    { "name": "Alsancak", "description": "A central district with bars, the Kordon waterfront and nightlife." },
+    { "name": "Karsiyaka", "description": "The calm, family side of the bay with a promenade and good schools." },
+    { "name": "Kemeralti", "description": "Izmir's historic bazaar: spices, textiles, coffee houses and old-town atmosphere." },
+    { "name": "Bornova", "description": "A student district by Ege University — cheaper rent and a young crowd." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 90 days within 180 — on a passport, with a stamp at the border." },
+    { "title": "Rental with a contract", "description": "An ikamet requires a notarised rental contract; check in advance whether the district is open." },
+    { "title": "Tax number", "description": "A vergi numarası is issued free at the tax office — needed for a bank and bills." },
+    { "title": "Bank account", "description": "Enpara, Ziraat or DenizBank — opening is possible with a passport and tax number." },
+    { "title": "Ikamet (residence permit)", "description": "A short-term one-year permit via rental, study or business; in some Izmir districts issuance is restricted." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Izmir?", "answer": "No, up to 90 days visa-free. For living there people get an ikamet (residence permit), but in some Izmir districts issuance via rental is restricted." },
+    { "question": "Which language is spoken in Izmir?", "answer": "Turkish; English is known in tourist spots and among young people, with little Russian in everyday life." },
+    { "question": "Can I pay with a Russian card in Izmir?", "answer": "MIR cards and Russian Visa/Mastercard don't work. People open a local card with a Turkish bank." },
+    { "question": "What is the climate like in Izmir?", "answer": "Mediterranean: hot dry summers and mild rainy winters. You can swim from May to October." },
+    { "question": "How does Izmir differ from Istanbul?", "answer": "Calmer, cheaper and right by the sea, without Istanbul's traffic or scale — but with less work and community." },
+    { "question": "How is work in Izmir?", "answer": "Mostly remote; the local market requires Turkish. Freelancing and online business are popular." }
+  ],
+  "reviews": [
+    { "profession": "product manager", "text": "We moved from Istanbul for the sea and the calm. Alsancak is top for living, but we did the ikamet through an agent: the open-district rules are a hassle." },
+    { "profession": "English tutor", "text": "A dream climate and affordable seafood. The downside is the volatile lira — they raised our rent almost twofold in a year." }
+  ]
+}

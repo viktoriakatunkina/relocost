@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Madrid 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Madrid per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Spain at the heart of the country: a rich cultural life, excellent gastronomy and developed infrastructure. Russian citizens need a visa (a nomad visa works); it's pricier than the coast, with hot summers and a winter that's cool for the south.",
+  "climate": "+15°C avg.",
+  "language": "Spanish, English",
+  "currency": "Euro, EUR",
+  "population": "3.3 mln",
+  "flight_from_moscow": "5.5 hours with a layover",
+  "pros": [
+    "Capital-city cultural life and world-class museums",
+    "Excellent gastronomy and developed infrastructure",
+    "Convenient transport and connections across Europe",
+    "Suitable for Spain's nomad visa",
+    "A safe and comfortable city to live in"
+  ],
+  "cons": [
+    "Russian citizens need a visa (Schengen/national)",
+    "Pricier than the Spanish coast",
+    "Hot summers and a cool winter (no sea nearby)",
+    "NIE bureaucracy and queues for cita previa"
+  ],
+  "best_places": [
+    { "name": "Prado Museum", "description": "One of the world's greatest art museums in the heart of the city." },
+    { "name": "Retiro Park", "description": "A large historic park with a pond — the city's main spot for relaxing." },
+    { "name": "Malasaña", "description": "A bohemian district with bars, vintage shops and nightlife." },
+    { "name": "Mercado de San Miguel", "description": "A gourmet market with tapas and local delicacies." }
+  ],
+  "visa_steps": [
+    { "title": "Visa", "description": "Russians need a Schengen or national visa (for example, a nomad visa)." },
+    { "title": "NIE", "description": "A foreigner's identification number — needed for almost every procedure." },
+    { "title": "Registration (empadronamiento)", "description": "Registering your place of residence at the district town hall." },
+    { "title": "Bank account", "description": "Spanish banks open accounts once you have a NIE and an address." },
+    { "title": "Residence permit (TIE)", "description": "The resident card is issued after arrival on a long-term visa." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Madrid?", "answer": "Yes, you need a Schengen or national visa — Spain is in the Schengen area." },
+    { "question": "How much does it cost to live in Madrid?", "answer": "Pricier than the coast, but cheaper than Paris and London. See the exact budget in the calculator above." },
+    { "question": "What language is spoken in Madrid?", "answer": "Spanish; English is common in tourism and among young people." },
+    { "question": "Can I pay with a Russian card in Madrid?", "answer": "No, Russian cards don't work. You need a foreign bank card or euros in cash." },
+    { "question": "What is the climate like in Madrid?", "answer": "Continental: hot, dry summers and a cool, sometimes snowy winter — there's no sea nearby." },
+    { "question": "Is Madrid suitable for remote work?", "answer": "Yes, there's Spain's nomad visa; the city is loved for its culture, transport and infrastructure." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Madrid is museums, tapas and easy living in the centre of Europe. I got the nomad visa. The downsides — NIE bureaucracy and the fact there's no sea nearby." },
+    { "profession": "art director", "text": "A lively, cultural, safe city with great food. Hot in summer, cool in winter. The main hurdle for Russians is getting the visa and getting through all the cita previa." }
+  ]
+}

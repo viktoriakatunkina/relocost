@@ -18,13 +18,13 @@ export function CityFAQ({ faq }: { faq: CityContent["faq"] }) {
   };
 
   return (
-    <section className="max-w-4xl mx-auto px-6 pt-20">
+    <section className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <span className="eyebrow">FAQ</span>
-      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-10">
+      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10">
         Частые вопросы
       </h2>
       <div className="space-y-3">

@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Cebu 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Cebu per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "An island city in the Philippines: 30 days visa-free, English as a second official language and affordable prices. Tropics year-round, with diving and beaches nearby; the downsides are traffic, typhoons and island logistics.",
+  "climate": "+28°C avg.",
+  "language": "English, Cebuano, Tagalog",
+  "currency": "Peso, PHP",
+  "population": "1 mln",
+  "flight_from_moscow": "13 hours with a connection",
+  "pros": [
+    "30 days visa-free for Russian citizens",
+    "English is a second official language",
+    "Affordable prices and tropics year-round",
+    "Diving, islands and beaches nearby",
+    "A friendly attitude towards foreigners"
+  ],
+  "cons": [
+    "Heavy city traffic",
+    "A typhoon and downpour season",
+    "Island logistics and mid-level healthcare",
+    "Power outages in the provinces"
+  ],
+  "best_places": [
+    { "name": "IT Park", "description": "A modern business district with coworkings, cafés and nightlife." },
+    { "name": "Taoist Temple", "description": "A scenic Taoist temple on a hill with views over the city." },
+    { "name": "Mactan Island", "description": "A resort area with beaches, hotels and dive centres next to the airport." },
+    { "name": "Magellan's Cross", "description": "A historic symbol of the city in the colonial centre." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russians get up to 30 days visa-free, with a stamp issued on arrival." },
+    { "title": "Extending your stay", "description": "The visa is easy to extend at the Bureau of Immigration on the spot, in stages up to several months." },
+    { "title": "Renting a home", "description": "Condos and houses rent monthly; IT Park and Mactan Island are popular." },
+    { "title": "Connectivity and money", "description": "A local SIM card is cheap; you'll need pesos in cash and a foreign bank card." },
+    { "title": "Long-term stay", "description": "For settled living, people consider the SRRV (retirement) visa or work visas." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Cebu?", "answer": "No, up to 30 days visa-free, with the option to extend at the local Bureau of Immigration." },
+    { "question": "How much does it cost to live in Cebu?", "answer": "Affordable: cheaper than most Western destinations, especially food and housing. See the calculator above for an exact budget." },
+    { "question": "What language is spoken in Cebu?", "answer": "Cebuano and Tagalog, but English is a second official language and is used everywhere." },
+    { "question": "Can I pay with a Russian card in Cebu?", "answer": "No, Russian cards don't work. You'll need pesos in cash and a foreign bank card." },
+    { "question": "What is the climate like in Cebu?", "answer": "Tropical: hot year-round, with a rainy and typhoon season roughly from June to November." },
+    { "question": "What's near Cebu?", "answer": "The islands of Bohol, Malapascua and Camotes — diving, whale sharks and white beaches a few hours away." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Cebu is convenient for its English and prices, with the sea and diving within easy reach. City traffic is heavy, and in typhoon season it can flood." },
+    { "profession": "dive instructor", "text": "I stayed for the ocean and the islands. People are very friendly and the language is no barrier. The downsides — logistics and occasional power cuts in the provinces." }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Kathmandu 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Kathmandu per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Nepal in a valley at the foot of the Himalayas: visa on arrival, very low prices, ancient temples and mountains nearby. The downsides are basic infrastructure, power outages and air quality.",
+  "climate": "+19°C avg.",
+  "language": "Nepali, English",
+  "currency": "Rupee, NPR",
+  "population": "1 mln",
+  "flight_from_moscow": "10 hours with a layover",
+  "pros": [
+    "Visa on arrival for Russian citizens",
+    "Very low prices",
+    "Ancient temples and an old-town atmosphere",
+    "The Himalayas and trekking nearby",
+    "Friendly people and a calm pace of life"
+  ],
+  "cons": [
+    "Basic infrastructure",
+    "Power and water outages",
+    "Air quality in the valley",
+    "Chaotic traffic and dust"
+  ],
+  "best_places": [
+    { "name": "Thamel", "description": "The tourist hub with cafés, shops, trekking gear and guesthouses." },
+    { "name": "Durbar Square", "description": "The old royal complex of temples, a UNESCO World Heritage Site." },
+    { "name": "Boudhanath Stupa", "description": "One of the largest Buddhist stupas in the world and the centre of the Tibetan community." },
+    { "name": "Swayambhunath (Monkey Temple)", "description": "An ancient hilltop stupa with a panorama of the valley." }
+  ],
+  "visa_steps": [
+    { "title": "Visa on arrival", "description": "Russians get the visa at the airport (for 15, 30 or 90 days)." },
+    { "title": "Renting a home", "description": "Apartments and houses are rented by the month very cheaply." },
+    { "title": "SIM card and money", "description": "A local SIM card is cheap; you'll need rupees in cash and a foreign bank card." },
+    { "title": "Extension", "description": "The visa is extended at the Kathmandu immigration office." },
+    { "title": "Long-term stay", "description": "For a settled life, work or business visas are an option." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Kathmandu?", "answer": "A visa is issued on arrival for 15, 30 or 90 days, with the option to extend." },
+    { "question": "How much does it cost to live in Kathmandu?", "answer": "Very cheap — one of the most budget-friendly options in Asia. See the exact budget in the calculator above." },
+    { "question": "What language is spoken in Kathmandu?", "answer": "Nepali; English is widely used in tourism." },
+    { "question": "Can I pay with a Russian card in Kathmandu?", "answer": "No, Russian cards don't work. You need rupees in cash and a foreign bank card." },
+    { "question": "What is the climate like in Kathmandu?", "answer": "Mild in the valley: warm summers with a monsoon and cool, dry winters." },
+    { "question": "Why move to Kathmandu?", "answer": "Low prices, a spiritual atmosphere and proximity to the Himalayas — the main base for trekking in Nepal." }
+  ],
+  "reviews": [
+    { "profession": "remote designer", "text": "Kathmandu means dirt-cheap prices, temples and the Himalayas right there. The downsides are weak infrastructure, power cuts and dust, and the internet sometimes lets you down." },
+    { "profession": "yoga instructor", "text": "I stayed for the atmosphere and the mountains. People are kind and life is cheap. There's plenty of day-to-day hassle, but spiritually and naturally this is a special place." }
+  ]
+}

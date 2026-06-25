@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Antalya 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Antalya per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Visa-free entry for 90 days, mild winters, well-developed Russian-speaking infrastructure and affordable healthcare. A favourite city for families with children and those moving to the sea.",
+  "climate": "+19°C avg.",
+  "language": "Turkish, Russian, English",
+  "currency": "Turkish lira, TRY",
+  "population": "1.4 mln",
+  "flight_from_moscow": "3.5 hours",
+  "pros": [
+    "Visa-free entry for 90 days, with the option to obtain a residence permit",
+    "Mild winters at +15°C and a 7-month swimming season",
+    "A large Russian-speaking community — schools, doctors, cafés",
+    "Affordable, high-quality healthcare",
+    "Direct flights from many Russian cities"
+  ],
+  "cons": [
+    "Hot summers at +35–40°C — tough without air conditioning",
+    "Rents rose sharply in 2023–2024",
+    "The Turkish lira is volatile — saving in TRY is risky",
+    "Difficulties with banks for Russians: opening an account has become harder"
+  ],
+  "best_places": [
+    { "name": "Kaleiçi", "description": "The old town — Ottoman mansions, boutiques, restaurants and a Roman harbour." },
+    { "name": "Konyaaltı", "description": "A beach district with a long promenade and modern complexes — the main choice for Russians." },
+    { "name": "Workinton Antalya", "description": "A chain of coworkings inside malls — meeting rooms, open space and a café." },
+    { "name": "Düden", "description": "A park with a waterfall flowing into the sea — a popular spot for walks and photos." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 90 days within 180. A stamp at the border with a passport." },
+    { "title": "Residence permit via rental or property", "description": "A tourist ikamet for 1–2 years through a long-term lease or buying property from $200,000." },
+    { "title": "Tax number (Vergi numarası)", "description": "Issued at the tax office within a day — needed for an account and a rental." },
+    { "title": "Bank account", "description": "Ziraat, Denizbank, Kuveyt Türk — they work with Russians but require a residence permit or a tax number." },
+    { "title": "Address registration (Adres beyanı)", "description": "At the Nüfus office after getting the residence permit — for healthcare, school and services." }
+  ],
+  "faq": [
+    { "question": "Is Antalya suitable for families with children?", "answer": "Yes, there are Russian private schools and kindergartens, healthcare such as Memorial Antalya, and affordable prices." },
+    { "question": "What is healthcare like in Antalya?", "answer": "World-class private clinics (Medical Park, Memorial); most procedures are cheaper than in the EU." },
+    { "question": "Which district should I choose in Antalya?", "answer": "Konyaaltı — beach and modern complexes; Lara — premium; Muratpaşa — the centre; Kepez — budget-friendly." },
+    { "question": "Is it worth moving to Antalya in winter?", "answer": "January–February is +12–15°C, occasionally rainy. It's warm, but comfortable swimming starts in May." },
+    { "question": "How is it with the language in Antalya?", "answer": "Turkish is the main language, but in the tourist zone people speak Russian and English." },
+    { "question": "Is it hard to get a residence permit in Antalya?", "answer": "Since 2023 Antalya has many closed districts (kapalı bölge) — you need to look for housing in open districts." }
+  ],
+  "reviews": [
+    { "profession": "travel agency owner", "text": "I bought an apartment in Konyaaltı and got a residence permit. Life by the sea, my daughter in an international school, and I moved my business here. The downside — the lira keeps jumping." },
+    { "profession": "cosmetic doctor", "text": "I opened a practice for a Russian-speaking audience — the demand is huge. Antalya is work and leisure at the same time." }
+  ]
+}

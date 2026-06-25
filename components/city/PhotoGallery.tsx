@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { GalleryPhoto } from "@/lib/types";
-import { unsplashSrc, unsplashAuthorUrlWithUtm } from "@/lib/unsplash";
+import { unsplashAuthorUrlWithUtm } from "@/lib/unsplash";
+import { photoSrc, isLocalStorageUrl } from "@/lib/photo";
 
 const UNSPLASH_REF =
   "https://unsplash.com/?utm_source=relocost&utm_medium=referral";
@@ -61,7 +62,11 @@ export function PhotoGallery({
         }
       >
         {photos.map((p, i) => {
-          const src = unsplashSrc(p.u, single ? { w: 1800, q: 85 } : { w: 800, q: 80 });
+          // p.u — после миграции это storage-URL; до неё — Unsplash base-URL.
+          const opts = single ? { w: 1800, q: 85 } : { w: 800, q: 80 };
+          const src = isLocalStorageUrl(p.u)
+            ? photoSrc(p.u, null, opts)
+            : photoSrc(null, p.u, opts);
           if (!src) return null;
           const credited = unsplashAuthorUrlWithUtm(p.h || null);
           return (

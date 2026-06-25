@@ -3,19 +3,27 @@ import { typo } from "@/lib/typography";
 export function ProsCons({
   pros,
   cons,
+  eyebrow = "За и против",
+  title = "Плюсы и минусы",
+  prosTitle = "Сильные стороны",
+  consTitle = "Что учитывать",
 }: {
   pros: string[];
   cons: string[];
+  eyebrow?: string;
+  title?: string;
+  prosTitle?: string;
+  consTitle?: string;
 }) {
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-20">
-      <span className="eyebrow">За и против</span>
-      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-10">
-        Плюсы и минусы
+    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
+      <span className="eyebrow">{eyebrow}</span>
+      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10">
+        {title}
       </h2>
       <div className="grid md:grid-cols-2 gap-5">
-        <Column title="Сильные стороны" items={pros} variant="pros" />
-        <Column title="Что учитывать" items={cons} variant="cons" />
+        <Column title={prosTitle} items={pros} variant="pros" />
+        <Column title={consTitle} items={cons} variant="cons" />
       </div>
     </section>
   );

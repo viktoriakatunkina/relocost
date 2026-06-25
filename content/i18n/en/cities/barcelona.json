@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Barcelona 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Barcelona per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The cosmopolitan capital of Catalonia, with the sea, an IT scene and well-developed infrastructure for nomads. More expensive than Valencia, but it offers more opportunities for work and cultural life.",
+  "climate": "+17°C avg.",
+  "language": "Spanish, Catalan, English",
+  "currency": "Euro, EUR",
+  "population": "1.6 mln",
+  "flight_from_moscow": "5 hours",
+  "pros": [
+    "The sea and the Barceloneta and Bogatell beaches within the city",
+    "A strong IT industry and startup scene (22@)",
+    "A digital nomad visa with a 24% tax rate",
+    "Well-developed international infrastructure for families with children",
+    "Proximity to the Pyrenees and the French Riviera"
+  ],
+  "cons": [
+    "High rental costs and a tourist season that lasts all year",
+    "Complex bureaucracy around the NIE and empadronamiento",
+    "Catalan is mandatory in public services and schools",
+    "Pickpocketing in the centre — the highest in Europe"
+  ],
+  "best_places": [
+    { "name": "El Born", "description": "A bohemian medieval district behind the Santa Caterina market: galleries, restaurants and boutiques." },
+    { "name": "Gràcia", "description": "Quarters with an independent character, squares and small bars — the old Catalan Barcelona." },
+    { "name": "OneCoWork Plaza Catalunya", "description": "The main coworking space of the international community, right in the centre with panoramic meeting rooms." },
+    { "name": "Park Güell", "description": "Gaudí's flagship park with mosaic terraces and a view over the whole city." }
+  ],
+  "visa_steps": [
+    { "title": "Schengen visa or residence permit", "description": "For long stays — a national D visa through the consulate." },
+    { "title": "Digital Nomad Visa", "description": "For remote workers earning from €2,763 a month. A residence permit for 1 year, extendable up to 5 years." },
+    { "title": "NIE and TIE", "description": "An identification number and a physical resident card. Apply through the consulate or the extranjería office." },
+    { "title": "Empadronamiento", "description": "Address registration at the Ayuntamiento. Without it you can't arrange schooling, healthcare or a phone contract." },
+    { "title": "Bank account", "description": "BBVA, CaixaBank, Sabadell. For digital nomads, N26 or Revolut works well to start with." }
+  ],
+  "faq": [
+    { "question": "How does Barcelona differ from Valencia?", "answer": "Barcelona is bigger, more expensive and more dynamic: the IT scene is stronger, but the cost of living is 30–40% higher." },
+    { "question": "Which language should I learn in Barcelona?", "answer": "Spanish is essential. Catalan — for school and public services. English is used in the IT industry and tourism." },
+    { "question": "Where should I live in Barcelona?", "answer": "Eixample — central and pricey. Poblenou — a trendy IT district by the sea. Gràcia — quiet and Catalan. Sarrià — premium for families." },
+    { "question": "What about schools for children in Barcelona?", "answer": "International schools (Benjamin Franklin, BFIS, Kensington) — from €12,000 a year. Public schools are in Catalan." },
+    { "question": "How safe is Barcelona?", "answer": "The city is safe in terms of violent crime, but pickpocketing is the highest in Europe — especially on La Rambla and in the metro." },
+    { "question": "How is healthcare in Barcelona?", "answer": "Public care through residency, private clinics (Quironsalud, Teknon) — at EU level." }
+  ],
+  "reviews": [
+    { "profession": "product designer", "text": "I got the DNV and rent an apartment in Poblenou for €1,800. The sea is 10 minutes away and I work for an American startup. The downsides — pickpockets in the metro and the noise of tourists." },
+    { "profession": "UX researcher", "text": "I'm learning Catalan for my daughter's school. Barcelona is expensive, but the balance of work, the sea and cultural life is the best I've found in Europe." }
+  ]
+}

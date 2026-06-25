@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Seville 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Seville per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Andalusia in southern Spain: a hot climate, flamenco, Moorish architecture and an unhurried southern pace. Cheaper than Madrid and Barcelona; Russian citizens need a visa, and summers are scorching.",
+  "climate": "+19°C avg.",
+  "language": "Spanish, English",
+  "currency": "Euro, EUR",
+  "population": "680 thsd",
+  "flight_from_moscow": "6 hours with a layover",
+  "pros": [
+    "A hot climate and a long warm season",
+    "Flamenco, fiestas and southern colour",
+    "Moorish architecture and atmosphere",
+    "Cheaper than Madrid and Barcelona",
+    "An unhurried, relaxed pace"
+  ],
+  "cons": [
+    "Russian citizens need a visa (Schengen)",
+    "Very scorching summers (up to +40 and above)",
+    "Fewer international companies and jobs",
+    "No sea in the city (you have to travel to the coast)"
+  ],
+  "best_places": [
+    { "name": "The Cathedral and the Giralda", "description": "A huge Gothic cathedral with a minaret tower in the centre." },
+    { "name": "The Alcázar", "description": "A royal palace with Moorish halls and gardens." },
+    { "name": "Plaza de España", "description": "A famous semicircular ensemble with a canal and azulejo tilework." },
+    { "name": "Triana", "description": "A colourful district across the river, the birthplace of flamenco and ceramics." }
+  ],
+  "visa_steps": [
+    { "title": "Schengen visa", "description": "Russian citizens need a Schengen or national visa — Spain is part of the Schengen area." },
+    { "title": "NIE", "description": "A foreigner's identification number — required for almost all procedures." },
+    { "title": "Registration (empadronamiento)", "description": "Registration at your place of residence with the city hall." },
+    { "title": "Bank account", "description": "Spanish banks open accounts once you have an NIE and an address." },
+    { "title": "Residence permit (TIE)", "description": "A resident card is issued after entry on a long-term visa (for example, a nomad visa)." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Seville?", "answer": "Yes, you need a Schengen or national visa — Spain is part of the Schengen area." },
+    { "question": "How much does it cost to live in Seville?", "answer": "Cheaper than Madrid and Barcelona. See the exact budget in the calculator above." },
+    { "question": "What language is spoken in Seville?", "answer": "Spanish (with an Andalusian accent); there's little English." },
+    { "question": "Can I pay with a Russian card in Seville?", "answer": "No, Russian cards don't work. You'll need a card from a foreign bank or euros in cash." },
+    { "question": "What is the climate like in Seville?", "answer": "Hot Mediterranean: very scorching summers and mild winters — one of the warmest cities in Europe." },
+    { "question": "Is Seville suitable for remote work?", "answer": "Yes, with Spain's nomad visa; it's valued for its climate, culture and affordability relative to the major cities." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Seville is sun, flamenco and an unhurried pace, cheaper than Madrid. The downsides are the brutal summer heat and the Schengen for entry, and there's no sea in the city." },
+    { "profession": "art director", "text": "Southern colour, beautiful architecture, a warm winter. Living is pleasant and not too expensive by Spanish standards. The main challenge is the visa and Spanish." }
+  ]
+}

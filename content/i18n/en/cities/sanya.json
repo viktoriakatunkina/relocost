@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Sanya 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Sanya per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A tropical resort on Hainan Island: Russian citizens enjoy visa-free entry to Hainan for up to 30 days, a warm sea year-round and well-developed resort infrastructure. Downsides are the language barrier and China's internet restrictions.",
+  "climate": "+26°C avg.",
+  "language": "Chinese, English",
+  "currency": "Yuan, CNY",
+  "population": "1 mln",
+  "flight_from_moscow": "12 hours with a layover",
+  "pros": [
+    "Visa-free entry to Hainan for up to 30 days",
+    "Tropics and a warm sea year-round",
+    "Well-developed resort infrastructure",
+    "Clean air and good ecology on the island",
+    "A beach destination familiar to Russians"
+  ],
+  "cons": [
+    "Language barrier — little English",
+    "China's internet restrictions (you need a VPN)",
+    "The winter high season drives prices up",
+    "Payments are tied to WeChat/Alipay"
+  ],
+  "best_places": [
+    { "name": "Yalong Bay", "description": "The main resort bay with white sand and hotels." },
+    { "name": "Dadonghai", "description": "A lively beach area with cafés, surfing and Russian-language signs." },
+    { "name": "Nanshan Park", "description": "A Buddhist complex with the giant statue of the goddess Guanyin by the sea." },
+    { "name": "Sanya Bay", "description": "A city waterfront with palm trees and a long stretch of beach." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry to Hainan", "description": "Russian citizens have visa-free entry to Hainan Island for up to 30 days." },
+    { "title": "Renting a home", "description": "Apartments and flats are rented monthly; they cost more in the winter season." },
+    { "title": "Payments", "description": "Almost everything goes through WeChat Pay and Alipay — worth setting up in advance." },
+    { "title": "Internet", "description": "You'll need a VPN for familiar services due to China's restrictions." },
+    { "title": "Long-term stay", "description": "To live longer than 30 days you need a regular Chinese visa." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Sanya?", "answer": "No, Hainan Island offers visa-free entry for up to 30 days. For a longer stay you need a Chinese visa." },
+    { "question": "How much does it cost to live in Sanya?", "answer": "Moderately expensive in season, cheaper in summer. See the exact budget in the calculator above." },
+    { "question": "What language is spoken in Sanya?", "answer": "Chinese; there's little English, so a phone translator and the Russian-language signs in Dadonghai come in handy." },
+    { "question": "Can I pay with a Russian card in Sanya?", "answer": "No. Almost all payments go through WeChat Pay and Alipay, and you'll also need yuan in cash." },
+    { "question": "What is the climate like in Sanya?", "answer": "Tropical: hot and humid, with swimming possible year-round; the peak season is winter." },
+    { "question": "Do I need a VPN in Sanya?", "answer": "Yes, many familiar sites and services are blocked in China — it's worth setting up a VPN in advance." }
+  ],
+  "reviews": [
+    { "profession": "remote entrepreneur", "text": "Sanya means a winter sea with no visa, clean and warm. The downsides are the language and payments only through Chinese apps, and you can't get anywhere without a VPN." },
+    { "profession": "blogger", "text": "I wintered in Dadonghai: beaches, fruit, a Russian-speaking environment. It's a bit tricky without Chinese, and you have to work around the internet, but the sea is worth it." }
+  ]
+}

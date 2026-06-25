@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Penang 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Penang per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Malaysia's island state with UNESCO-protected George Town: English in everyday life, legendary street food and affordable prices. Visa-free for 30 days, then DE Rantau or MM2H.",
+  "climate": "+28°C avg.",
+  "language": "Malay, English, Chinese",
+  "currency": "Ringgit, MYR",
+  "population": "750 thousand",
+  "flight_from_moscow": "12 hours with a connection",
+  "pros": [
+    "English everywhere, calmer and cheaper than Kuala Lumpur",
+    "UNESCO-protected George Town and legendary street food",
+    "An island with the sea and yet urban infrastructure",
+    "Popular under the MM2H programme for long-term living",
+    "Good private healthcare at affordable prices"
+  ],
+  "cons": [
+    "Visa-free for only 30 days — a visa is needed for a long stay",
+    "A hot, humid climate with downpours year-round",
+    "Beaches are more modest than Thailand's, the water near the city is murky",
+    "Without a car or scooter it's inconvenient in places"
+  ],
+  "best_places": [
+    { "name": "George Town", "description": "The historic UNESCO centre: shophouses, street art, coffee shops and temples." },
+    { "name": "Gurney", "description": "Modern condos by the waterfront with shopping centres." },
+    { "name": "Batu Ferringhi", "description": "A beach area in the north of the island with resorts." },
+    { "name": "Chulia Street", "description": "Penang's famous night street-food stalls." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 30 days; a digital MDAC card is filled in before the trip." },
+    { "title": "Extension / visa run", "description": "The stamp is extended, or you exit and re-enter." },
+    { "title": "MM2H / DE Rantau", "description": "Long-term residence (MM2H) or a nomad visa with confirmed income." },
+    { "title": "Bank account", "description": "Maybank or CIMB — easier with a long-term visa." },
+    { "title": "Rental with a contract", "description": "Condos are rented for 6–12 months, usually with a pool." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Penang?", "answer": "Visa-free for up to 30 days (an MDAC form is required). After that — MM2H or DE Rantau." },
+    { "question": "How does Penang differ from Kuala Lumpur?", "answer": "Quieter, cheaper and by the sea, with historic George Town, but with less work and buzz." },
+    { "question": "Do I need English in Penang?", "answer": "Yes, and it's enough — English is in widespread use everywhere." },
+    { "question": "How much does it cost to live in Penang?", "answer": "Affordable: cheap food and moderate rent, cheaper than the capital. The exact budget is in the calculator above." },
+    { "question": "Can I pay with a Russian card in Penang?", "answer": "No, Russian cards don't work. A local card or a foreign bank card." },
+    { "question": "Are the beaches good in Penang?", "answer": "There are beaches (Batu Ferringhi), but they're more modest than Thailand's; people come here more for the city and the food." }
+  ],
+  "reviews": [
+    { "profession": "architect", "text": "Penang is food, culture and calm. English sorts everything out, the healthcare is excellent. The beaches are so-so, but the city is wonderful." },
+    { "profession": "illustrator", "text": "George Town is inspiring: shophouses, coffee shops, street art. We got an MM2H. The downside — the humidity, and without a scooter it's far." }
+  ]
+}

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { City } from "@/lib/types";
 
 const GRADIENTS: Record<string, string> = {
@@ -54,7 +54,7 @@ function Side({ city }: { city: City }) {
     >
       <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/30 to-transparent" />
       <div className="relative h-full p-5 md:p-7 flex flex-col justify-between">
-        <span className="text-4xl md:text-5xl" aria-hidden>
+        <span className="text-3xl md:text-5xl" aria-hidden>
           {city.flag_emoji}
         </span>
         <div>

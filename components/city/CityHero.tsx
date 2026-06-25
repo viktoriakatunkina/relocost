@@ -1,7 +1,8 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { City } from "@/lib/types";
-import { unsplashSrc } from "@/lib/unsplash";
+import { photoSrc } from "@/lib/photo";
+import { getDifficulty } from "@/lib/difficulty";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { ShareButton } from "@/components/ShareButton";
 import { typo } from "@/lib/typography";
@@ -29,17 +30,23 @@ const GRADIENTS: Record<string, string> = {
 export function CityHero({ city }: { city: City }) {
   const gradient =
     GRADIENTS[city.slug] ?? "from-kombu-green/60 via-pine-tree to-pine-tree";
-  const photo = unsplashSrc(city.unsplash_url, { w: 1600, q: 80 });
+  const photo = photoSrc(city.image_url, city.unsplash_url, { w: 1600, q: 80 });
+  const difficulty = getDifficulty(city);
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden bg-pine-tree">
       {photo ? (
         <Image
           src={photo}
           alt={`${city.name_ru} — ${city.country_ru}`}
           fill
           priority
+          fetchPriority="high"
+          loading="eager"
           sizes="100vw"
+          quality={72}
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAEElEQVR42mOQUmSFIwbiOABphAQBZ5neoAAAAABJRU5ErkJggg=="
           className="object-cover"
         />
       ) : (
@@ -60,28 +67,30 @@ export function CityHero({ city }: { city: City }) {
         aria-hidden
       />
 
-      <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-24">
+      <div className="relative max-w-6xl mx-auto px-6 pt-12 pb-16 md:pt-16 md:pb-24">
         <Link
           href={`/country/${city.country_slug}`}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill bg-pine-tree/55 backdrop-blur-sm text-brandy hover:text-copper text-sm mb-12 transition border hairline"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-pill bg-black/55 backdrop-blur-md border border-cream/20 text-cream hover:text-copper hover:border-copper/40 text-sm mb-8 md:mb-12 transition shadow-card"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
           Все города {city.country_ru === "Россия" ? "России" : `· ${city.country_ru}`}
         </Link>
 
-        <div className="flex items-start gap-6 mb-8">
-          <span className="text-7xl md:text-9xl leading-none drop-shadow-2xl" aria-hidden>
+        <div className="flex items-start gap-4 mb-6 md:gap-6 md:mb-8">
+          <span className="text-6xl md:text-9xl leading-none drop-shadow-2xl" aria-hidden>
             {city.flag_emoji}
           </span>
           <div className="pt-2">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="h-px w-10 bg-copper" />
-              <p className="text-copper uppercase text-xs tracking-[0.2em] font-medium text-shadow-body">
-                {city.country_ru}
-              </p>
+            <div className="mb-4">
+              <span className="inline-flex items-center gap-2.5 px-3 py-1 rounded-pill bg-black/50 backdrop-blur-md border border-cream/15">
+                <span className="h-px w-7 bg-copper" />
+                <span className="text-copper uppercase text-xs tracking-[0.2em] font-semibold text-shadow-body">
+                  {city.country_ru}
+                </span>
+              </span>
             </div>
             <h1 className="font-serif text-cream leading-[0.98] tracking-tight text-shadow-hero">
-              <span className="block text-5xl md:text-8xl">{city.name_ru}</span>
+              <span className="block text-4xl md:text-8xl">{city.name_ru}</span>
               <span className="block mt-3 font-sans text-base md:text-lg text-brandy/90 uppercase tracking-[0.2em] font-medium">
                 Стоимость жизни в 2026 году
               </span>
@@ -97,12 +106,8 @@ export function CityHero({ city }: { city: City }) {
 
         <div className="flex flex-wrap gap-2 mb-8">
           {city.is_foreign ? <Tag>За рубежом</Tag> : <Tag>Внутри России</Tag>}
-          {city.difficulty_score !== null && city.difficulty_score <= 2 && (
-            <Tag accent>Простой переезд</Tag>
-          )}
-          {city.difficulty_score !== null && city.difficulty_score >= 4 && (
-            <Tag>Сложный переезд</Tag>
-          )}
+          {difficulty?.label === "Легко" && <Tag accent>Простой переезд</Tag>}
+          {difficulty?.label === "Сложно" && <Tag>Сложный переезд</Tag>}
           {city.is_popular && <Tag>Популярное</Tag>}
         </div>
 

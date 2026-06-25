@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Krabi 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Krabi per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A province in southern Thailand with karst cliffs and the turquoise Andaman Sea: visa-free for 60 days, quieter than Phuket and surrounded by nature. The downsides are the rainy season and the need for a motorbike to get around.",
+  "climate": "+28°C avg.",
+  "language": "Thai, English",
+  "currency": "Baht, THB",
+  "population": "60k",
+  "flight_from_moscow": "12 hours with a layover",
+  "pros": [
+    "Visa-free for 60 days for Russian citizens",
+    "Stunning nature: karst cliffs and islands",
+    "Calmer and more authentic than Phuket",
+    "Affordable prices and great Thai cuisine",
+    "The Andaman Sea and world-class beaches"
+  ],
+  "cons": [
+    "The rainy season (roughly May to October)",
+    "You need a motorbike — there's little public transport",
+    "Island-level healthcare — for complex cases people go to Phuket or Bangkok",
+    "Fewer things to do than in Phuket"
+  ],
+  "best_places": [
+    { "name": "Railay Beach", "description": "A famous beach among the cliffs, reachable only by sea." },
+    { "name": "Ao Nang", "description": "The main resort town with cafés, rentals and boats to the islands." },
+    { "name": "Emerald Pool and hot springs", "description": "Natural pools in the jungle not far from town." },
+    { "name": "Phi Phi and Hong Islands", "description": "Popular islands for diving and snorkelling nearby." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 60 days without a visa for Russian citizens, with the option to extend by 30 days." },
+    { "title": "DTV visa (for long-term living)", "description": "A 5-year multiple-entry visa for remote workers — up to 180 days per entry." },
+    { "title": "Renting a home", "description": "Houses and apartments are rented by the month; Ao Nang has the widest choice." },
+    { "title": "Connectivity and money", "description": "A local SIM card with plenty of data; you'll need baht in cash and a foreign bank card." },
+    { "title": "Transport", "description": "You need a motorbike to get around; boats from Ao Nang reach the islands." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Krabi?", "answer": "No, it's visa-free for up to 60 days with the option to extend. For long-term living, the DTV visa is convenient." },
+    { "question": "How much does it cost to live in Krabi?", "answer": "Affordable, comparable to the rest of southern Thailand. See the exact budget in the calculator above." },
+    { "question": "What language is spoken in Krabi?", "answer": "Thai; English is common in tourist areas." },
+    { "question": "Can I pay with a Russian card in Krabi?", "answer": "No, Russian cards don't work. You need baht in cash and a foreign bank card." },
+    { "question": "What is the climate like in Krabi?", "answer": "Tropical: hot year-round, with a rainy season roughly from May to October." },
+    { "question": "How is Krabi different from Phuket?", "answer": "Krabi is calmer, cheaper and more natural; Phuket is bigger, with more infrastructure and nightlife." }
+  ],
+  "reviews": [
+    { "profession": "remote designer", "text": "Krabi is cliffs, sea and quiet — more beautiful than Phuket and cheaper. The downsides: you need a motorbike, it pours during the rains, and you go to Phuket for healthcare." },
+    { "profession": "remote manager", "text": "I fell in love with Krabi's nature: lagoons, islands, jungle. There's less to do than in Phuket, but it's calm and authentic." }
+  ]
+}

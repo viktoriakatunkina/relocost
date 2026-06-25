@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Goa 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Goa per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "India's main wintering spot for Russian-speaking nomads: long beaches, cheap housing and well-developed infrastructure for remote work. A simple e-visa and a year-round swimming season.",
+  "climate": "+27°C avg.",
+  "language": "Konkani, Hindi, English",
+  "currency": "Rupee, INR",
+  "population": "1.5 mln",
+  "flight_from_moscow": "9 hours",
+  "pros": [
+    "The cheapest oceanside wintering option for Russian speakers",
+    "A simple 90-day e-visa",
+    "A large Russian-speaking and Western digital-nomad community",
+    "Ocean, palm trees and a warm climate from October to April",
+    "Well-developed infrastructure for remote work in North Goa"
+  ],
+  "cons": [
+    "Monsoon season from June to September — rain and many cafés closed",
+    "Poor road quality and chaotic traffic",
+    "Weak healthcare outside the big clinics in Panaji",
+    "Bureaucracy and instability with bank transfers"
+  ],
+  "best_places": [
+    { "name": "Morjim", "description": "North Goa's main Russian-speaking village: menus in Russian, a beach, cafés and coworkings." },
+    { "name": "Assagao", "description": "A hipster village with boutique hotels, coffee shops and villas for long-term rent." },
+    { "name": "Anjuna Hub", "description": "North Goa's main nomad coworking with meeting rooms and an event space." },
+    { "name": "Old Goa", "description": "The former Portuguese colonial capital with UNESCO cathedrals and museums." }
+  ],
+  "visa_steps": [
+    { "title": "E-Visa", "description": "An electronic tourist visa for Russian citizens for 30 or 90 days, issued online in 3 days." },
+    { "title": "X-Visa (for families)", "description": "A long-term visa for those with an Indian spouse or child. Valid for up to 5 years." },
+    { "title": "OCI (for those with Indian roots)", "description": "An Overseas Citizen of India card — lifelong for those with Indian ancestors." },
+    { "title": "Tax PAN", "description": "A tax ID is needed for a bank account, renting a villa and buying a long-term SIM card." },
+    { "title": "Bank account", "description": "HDFC, ICICI and SBI open accounts with a PAN and a long-term lease. Tourists rely on Wise and Revolut only." }
+  ],
+  "faq": [
+    { "question": "North or South Goa?", "answer": "The north (Morjim, Arambol, Assagao) is for nomads — the scene and the infrastructure. The south (Palolem, Agonda) is calmer and quieter." },
+    { "question": "How much is rent in Goa?", "answer": "A studio in Morjim starts at 35,000 rubles a month, a villa with a pool from 90,000. In high season prices double." },
+    { "question": "When is the best season in Goa?", "answer": "October to April — dry, +28–32°C. May to September brings monsoons and torrential rain, and many cafés close." },
+    { "question": "What's the internet like in Goa?", "answer": "Fibre at 100+ Mbps in Morjim and Assagao for 1,500 rubles. Mobile JIO/Airtel 4G is almost everywhere." },
+    { "question": "Is Goa good with children?", "answer": "There are international schools (Sharada Mandir, EuroSchool) and Russian groups. But healthcare is weak, and complex cases are taken to Mumbai." },
+    { "question": "Is Goa safe?", "answer": "Petty crime is low, but be careful with water and food at the start of the season. Only rent a scooter with a helmet." }
+  ],
+  "reviews": [
+    { "profession": "producer", "text": "I've been wintering in Goa for 4 years: a villa with a pool in Assagao for 90,000 rubles, the ocean 5 minutes away, friends from the nomad community. The downside is the monsoons and weak healthcare." },
+    { "profession": "illustrator", "text": "I rent a studio in Morjim for 40,000 rubles and work remotely. Russian is spoken in every café, surfing and yoga every day. Goa is a way of life, not a permanent relocation." }
+  ]
+}

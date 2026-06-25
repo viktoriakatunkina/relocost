@@ -1,0 +1,49 @@
+{
+  "seo_title": "Cost of Living in Porto 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Porto per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "An Atlantic alternative to Lisbon — roughly 15% cheaper, with a mild climate and a historic setting. Relocation goes through the D7/D8 visas and requires proven income and patience with AIMA bureaucracy.",
+  "climate": "+15°C avg.",
+  "language": "Portuguese, English",
+  "currency": "Euro, EUR",
+  "population": "230 thousand",
+  "flight_from_moscow": "5–8 hours with a layover",
+  "pros": [
+    "A mild Atlantic climate: no heat and no frost",
+    "About 15% cheaper than Lisbon for the same quality of life",
+    "A historic setting, the ocean and the Douro Valley nearby",
+    "A growing community of remote workers and good coworkings",
+    "Clear visa routes — D7/D8 into the Schengen area"
+  ],
+  "cons": [
+    "A Schengen visa and long AIMA bureaucracy — appointments take months to get",
+    "Proven income required: D7 from €920, D8 from ~€3,500 per month",
+    "The Portuguese language and a strict check on the source of funds",
+    "Frequent rain and damp in winter, with weak heating",
+    "Rents have risen, and good apartments are snapped up quickly"
+  ],
+  "best_places": [
+    { "name": "Foz do Douro", "description": "A prestigious ocean-side district with villas, a promenade and sunsets over the Atlantic." },
+    { "name": "Cedofeita and Bonfim", "description": "Fashionable, lived-in neighbourhoods with cafés and more affordable rent, loved by expats." },
+    { "name": "Ribeira", "description": "The UNESCO-protected Douro waterfront; the port wine cellars are on the other bank of the river." },
+    { "name": "Matosinhos", "description": "A seaside suburb with a beach and the best fish restaurants — cheaper than the centre." }
+  ],
+  "visa_steps": [
+    { "title": "D7 or D8 visa", "description": "D7 — for passive income from €920/month, D8 — for remote workers from ~€3,500/month. Submitted at the consulate." },
+    { "title": "NIF and account", "description": "A NIF tax number and an account at a Portuguese bank (Millennium BCP, ActivoBank) — the basic step." },
+    { "title": "Rental with a contract", "description": "You need a registered rental contract as proof of address." },
+    { "title": "Entry and AIMA", "description": "After the visa — an AIMA appointment for biometrics and the residency card; the wait can drag on for months." },
+    { "title": "Residency and renewal", "description": "The first residency is for 2 years, then a renewal; after 5 years — a path to permanent residency and citizenship." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Porto?", "answer": "Yes, Portugal is in the Schengen area. For relocation you apply for a national D7 (passive income) or D8 (remote work) visa." },
+    { "question": "How much money do you need for a Porto visa?", "answer": "D7 — proven income from €920 a month, D8 (digital nomad) — from ~€3,500 a month for one person." },
+    { "question": "Is Porto cheaper than Lisbon?", "answer": "Yes, rent and living costs in Porto are roughly 15% lower than in the capital, at a comparable level." },
+    { "question": "What is the climate like in Porto?", "answer": "Atlantic and mild: no heat and no frost, but with lots of rain and damp in winter." },
+    { "question": "Can I pay with a Russian card in Porto?", "answer": "No, Russian cards don't work. You need an account and card from a local bank, which require a NIF." },
+    { "question": "How do I open an account in Porto?", "answer": "Through a NIF (tax number) at Millennium BCP or ActivoBank; a lawyer-intermediary often helps." }
+  ],
+  "reviews": [
+    { "profession": "backend developer", "text": "We did the D8 for the two of us: our income was enough, but we waited half a year for an AIMA appointment. Porto is quiet and beautiful, the ocean is 20 minutes away, and the rain is the price of the climate." },
+    { "profession": "translator", "text": "I did the D7 based on rental income from an apartment in Russia. The bureaucracy wears you down, but after residency — the whole Schengen area and a calm life by the water." }
+  ]
+}

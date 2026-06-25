@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Samarkand 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Samarkand per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "An ancient Silk Road city with visa-free entry for 60 days, very low prices and Russian widely spoken in daily life. A calm option for a budget relocation, though the IT infrastructure is more modest than Tashkent's.",
+  "climate": "+15°C avg.",
+  "language": "Uzbek, Tajik, Russian",
+  "currency": "Som, UZS",
+  "population": "560 thsd",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "Visa-free entry for 60 days, Russian spoken in daily life",
+    "Very low prices for housing, food and services",
+    "Rich history: Registan, Bibi-Khanym, Shah-i-Zinda",
+    "A warm, dry climate and an abundance of cheap fruit",
+    "Simple registration and a friendly attitude toward Russians"
+  ],
+  "cons": [
+    "IT infrastructure and the job market are more modest than in Tashkent",
+    "The Russian-speaking community is small",
+    "Hot, dusty summers — up to +40",
+    "Fewer international flights and services than in the capital"
+  ],
+  "best_places": [
+    { "name": "Registan and the centre", "description": "The heart of the city: three madrasahs on the main square, evening illumination and teahouses nearby." },
+    { "name": "Siab Bazaar", "description": "The main market by Bibi-Khanym: flatbreads, spices, dried fruit and local food." },
+    { "name": "European quarter (University Boulevard)", "description": "Green streets of Soviet-era architecture with cafés — convenient for long-term rentals." },
+    { "name": "IT Park Samarkand", "description": "A branch of the state technopark: residents, IT incentives and a hub for remote workers." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 60 days without a visa — all you need is a passport." },
+    { "title": "Registration", "description": "For stays over 15 days, arrange temporary registration; when moving from another city, do so within 3 days." },
+    { "title": "Renting a home", "description": "A lease with the owner is the basis for registration and everyday life." },
+    { "title": "Account and card", "description": "Kapitalbank, Ipak Yuli or Hamkorbank — UZCARD/Humo and Visa cards are issued to Russians with a passport." },
+    { "title": "Residence permit (optional)", "description": "Through employment, property or family reunification at the migration department of the Ministry of Internal Affairs." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Samarkand?", "answer": "No, visa-free entry for up to 60 days. For stays longer than 15 days you need temporary registration." },
+    { "question": "What language is spoken in Samarkand?", "answer": "Uzbek and Tajik; Russian is understood in everyday life, especially among the older generation and in the service sector." },
+    { "question": "Can I pay with a Russian card in Samarkand?", "answer": "The MIR card is accepted only in limited places; it's more reliable to open a local UZCARD/Humo or Visa card." },
+    { "question": "How much does it cost to live in Samarkand?", "answer": "One of the most budget-friendly options: rent, groceries and services are noticeably cheaper than in Tashkent. See the exact budget in the calculator above." },
+    { "question": "What is the climate like in Samarkand?", "answer": "Sharply continental: hot, dry summers up to +40 and mild, cool winters." },
+    { "question": "What about work and internet in Samarkand?", "answer": "The job market is modest, so most newcomers work remotely; the internet in the city is stable and there's a branch of IT Park." }
+  ],
+  "reviews": [
+    { "profession": "web developer", "text": "I rented an apartment in the centre for a ridiculously low price and work remotely for the EU. The Registan is right outside my window and people are kind. The downside is the summer heat and the small IT crowd." },
+    { "profession": "teacher", "text": "We moved for the calm and the low prices. People understand Russian, and the food is cheap and tasty. What's missing are big chain stores and direct flights." }
+  ]
+}

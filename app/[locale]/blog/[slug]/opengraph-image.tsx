@@ -1,0 +1,83 @@
+import { ImageResponse } from "next/og";
+import { supabase } from "@/lib/supabase";
+
+export const runtime = "nodejs";
+export const alt = "Relocost блог";
+export const size = { width: 1200, height: 630 };
+export const contentType = "image/png";
+
+// og-картинки генерируются по запросу (краулерами соцсетей), а не при сборке.
+export const dynamicParams = true;
+export async function generateStaticParams() {
+  return [];
+}
+
+export default async function OG({ params }: { params: { slug: string } }) {
+  const { data: post } = await supabase
+    .from("blog_posts")
+    .select("title, tag, read_time")
+    .eq("slug", params.slug)
+    .maybeSingle();
+
+  const title = post?.title ?? "Статья Relocost";
+  const tag = post?.tag ?? "Блог";
+  const readTime = post?.read_time;
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          background:
+            "linear-gradient(135deg, #33432B 0%, #202808 55%, #5A3D2A 100%)",
+          padding: "72px",
+          fontFamily: "Georgia, serif",
+          color: "#F5F0E8",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <span
+            style={{
+              color: "#C4866D",
+              fontSize: 24,
+              letterSpacing: 4,
+              textTransform: "uppercase",
+            }}
+          >
+            Relocost · {tag}
+          </span>
+          {readTime ? (
+            <span
+              style={{
+                color: "#8A9A6E",
+                fontSize: 22,
+                fontFamily: "system-ui, sans-serif",
+              }}
+            >
+              · {readTime} мин чтения
+            </span>
+          ) : null}
+        </div>
+
+        <div style={{ fontSize: 78, lineHeight: 1.1, maxWidth: 1050 }}>
+          {title}
+        </div>
+
+        <div
+          style={{
+            color: "#DEC59E",
+            fontSize: 26,
+            fontFamily: "system-ui, sans-serif",
+          }}
+        >
+          relocost.ru
+        </div>
+      </div>
+    ),
+    size,
+  );
+}

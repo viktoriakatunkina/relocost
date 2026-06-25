@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Paphos 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Paphos per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The warmest resort in Cyprus with a mild winter and a developed infrastructure for Russian speakers. A real path to permanent residency through buying property from 300,000 euros, with high-level schools and healthcare.",
+  "climate": "+20°C avg.",
+  "language": "Greek, English, Russian",
+  "currency": "Euro, EUR",
+  "population": "36 thousand",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "The warmest climate on the island — a mild winter and a long resort season",
+    "A large Russian-speaking community with Russian schools and doctors",
+    "Access to the Golden Visa and permanent residency through property",
+    "A clean sea with Blue Flag beaches",
+    "Close to UNESCO archaeological sites"
+  ],
+  "cons": [
+    "A small job market — most people move with remote work",
+    "In winter, many restaurants and shops close",
+    "Weak public transport",
+    "Expensive rent in summer and high season"
+  ],
+  "best_places": [
+    { "name": "Kato Paphos", "description": "A seaside resort area: a promenade, a castle and seafood restaurants." },
+    { "name": "Pano Paphos", "description": "The old upper town with local markets, churches and authentic tavernas." },
+    { "name": "Aphrodite Hills", "description": "A premium resort complex with golf, a spa and villas for long-term rental." },
+    { "name": "Coral Bay", "description": "The region's most popular sandy beach, 15 minutes from the city centre." }
+  ],
+  "visa_steps": [
+    { "title": "Pink Slip", "description": "A temporary residence permit for the financially independent, with a 24,000 euro deposit and a long-term rental." },
+    { "title": "Permanent Residency", "description": "Permanent residency through buying property from 300,000 euros — processed in 2 months." },
+    { "title": "Golden Visa", "description": "The Cypriot investment programme for businesses and major investors." },
+    { "title": "Account and insurance", "description": "Bank of Cyprus, Hellenic Bank, RCB. GeSY medical insurance is available to residents with a permit." },
+    { "title": "Registration with the Dimos", "description": "Registering an address with the municipality is needed for school, healthcare and taxes." }
+  ],
+  "faq": [
+    { "question": "Is it worth buying property in Paphos?", "answer": "Yes, prices are more stable than in Limassol, and permanent residency is granted directly when buying from 300,000 euros." },
+    { "question": "What is winter like in Paphos?", "answer": "+12–17°C, little rain. You can walk and work, but not swim." },
+    { "question": "Where are the Russian-speaking schools in Paphos?", "answer": "Aspire Private Academy, Tsiolis School — teaching in both languages. Russian kindergartens in Kato Paphos." },
+    { "question": "What is healthcare like in Paphos?", "answer": "Strong private clinics: Iasis, Evangelistria. Public care through GeSY after getting a residence permit." },
+    { "question": "Which district should I choose in Paphos?", "answer": "Kato Paphos — by the sea, resort-like. Pano Paphos — local, cheaper. Coral Bay — beach and villas. Emba — the outskirts for families." },
+    { "question": "Where can I fly to?", "answer": "Paphos Airport (PFO) — direct flights to Athens, London, Tel Aviv. To Russia with a connection." }
+  ],
+  "reviews": [
+    { "profession": "law firm owner", "text": "We bought a villa in Aphrodite Hills for 450,000 euros and got permanent residency for the whole family. My daughter is at an international school, I work online. Quiet in winter, paradise in summer." },
+    { "profession": "SMM manager", "text": "We rent an apartment in Kato Paphos for 1,100 euros, I work remotely. The sea is 5 minutes away, everyone speaks Russian. Not pure Europe, but not Russia either." }
+  ]
+}

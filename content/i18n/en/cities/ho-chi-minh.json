@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Ho Chi Minh City 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Ho Chi Minh City per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Vietnam's economic hub and the country's largest metropolis: international offices, a lively startup scene and an affordable standard of living. A good fit for those who want to work in Asia without the resort format.",
+  "climate": "+28°C avg.",
+  "language": "Vietnamese, English",
+  "currency": "Dong, VND",
+  "population": "9 mln",
+  "flight_from_moscow": "11 hours",
+  "pros": [
+    "Well-developed international infrastructure and a large expat zone",
+    "The lowest prices among the region's capitals",
+    "An English-speaking environment in Districts 1 and 2",
+    "An active startup scene and dozens of coworkings",
+    "Direct flights to every Asian capital"
+  ],
+  "cons": [
+    "Chaotic traffic and constant jams",
+    "Air pollution during rush hour",
+    "A hot, humid climate with no seasons",
+    "A complicated visa for long-term stays"
+  ],
+  "best_places": [
+    { "name": "District 1", "description": "The business centre with skyscrapers, restaurants and the rooftop bar at Bitexco." },
+    { "name": "Thao Dien (District 2)", "description": "The main expat district with international schools, spas, restaurants and condominiums." },
+    { "name": "Toong Coworking", "description": "Vietnam's leading coworking chain, with meeting rooms and an active community of founders." },
+    { "name": "Ben Thanh Market", "description": "The city's central market: spices, textiles, street food and souvenirs — a starting point for tourists." }
+  ],
+  "visa_steps": [
+    { "title": "E-Visa", "description": "An electronic 90-day visa for Russian citizens, issued online in 3 days." },
+    { "title": "DN business visa", "description": "Via an invitation from a Vietnamese company. Up to 1 year with renewal." },
+    { "title": "Tax code (MST)", "description": "Needed for long-term rentals and for working with local employers." },
+    { "title": "Bank account", "description": "Vietcombank, Techcombank and ACB open accounts with a DN visa and a rental contract." },
+    { "title": "Long-term rental", "description": "Contracts from 6 months with police registration. Prices are higher in Districts 1-2 and lower in District 7 and Phu Nhuan." }
+  ],
+  "faq": [
+    { "question": "How does Ho Chi Minh City differ from Da Nang?", "answer": "Ho Chi Minh City is a business metropolis, Da Nang is a resort town. Ho Chi Minh City has more international work and infrastructure, but also more noise." },
+    { "question": "Where should I live in Ho Chi Minh City?", "answer": "Thao Dien (D2) — expats, schools, quiet. District 1 — the centre and work. District 7 — modern developments for families." },
+    { "question": "How is English in Ho Chi Minh City?", "answer": "In Districts 1 and 2 English is everywhere. In other districts Google Translate and basic Vietnamese help." },
+    { "question": "How is banking in Ho Chi Minh City?", "answer": "It's harder for Russians, but Vietcombank and ACB open accounts with a DN visa. SWIFT transfers work." },
+    { "question": "What schools are there in Ho Chi Minh City?", "answer": "International School Ho Chi Minh, BIS, Renaissance, AIS — from $18,000 a year." },
+    { "question": "How is the internet in Ho Chi Minh City?", "answer": "Fibre at 200+ Mbps for 700-1,000 ₽, plus 4G/5G mobile — excellent for remote work." }
+  ],
+  "reviews": [
+    { "profession": "backend team lead", "text": "I moved my family to Thao Dien: a house for $1,200 with a pool, my daughter at BIS. I work for a Singapore bank and pay taxes in Russia. The downside is the long summer and the traffic jams." },
+    { "profession": "SMM manager", "text": "I rented a studio in District 1 for $500 and work remotely. The city is lively and the cafés and street food are superb. The downside is that getting around is hard without a motorbike." }
+  ]
+}

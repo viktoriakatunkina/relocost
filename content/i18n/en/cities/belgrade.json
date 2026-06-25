@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Belgrade 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Belgrade per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A European city with a culture and language close to ours. One of the main IT hubs for Russian-speaking professionals: company registration, bank accounts and work residence permits — without aggressive bureaucracy.",
+  "climate": "+12°C avg.",
+  "language": "Serbian (Cyrillic)",
+  "currency": "Dinar, RSD",
+  "population": "1.4 mln",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "Visa-free entry for 30 days + extension",
+    "A large Russian-speaking community with its own infrastructure",
+    "An IT-friendly country with legal employment for remote workers",
+    "Close to Europe — Budapest is 6 hours away by train",
+    "Cheap and hearty Balkan cuisine"
+  ],
+  "cons": [
+    "Bureaucracy is slow and unpredictable",
+    "Smog and poor air quality in winter",
+    "Rents have risen 1.5 times over 2 years",
+    "Long-term visas turned out to be harder than expected"
+  ],
+  "best_places": [
+    { "name": "Dorćol", "description": "A trendy district with independent cafés, galleries and wine bars — the expats' choice." },
+    { "name": "Skadarlija", "description": "A bohemian pedestrian street with traditional kafanas and live music." },
+    { "name": "Beton Hala", "description": "A row of restaurants on the banks of the Danube and Sava — the best view of the sunset." },
+    { "name": "Mokrin House", "description": "The country's main coworking space for Russian speakers — with residencies and networking." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "30 days with a passport, stamped at the border." },
+    { "title": "White card", "description": "Registration of your place of residence with the police — mandatory within 24 hours." },
+    { "title": "Registering a sole proprietorship or company", "description": "Through a lawyer — 2–3 weeks, gaining PR-entrepreneur or DOO status." },
+    { "title": "Bank account", "description": "Raiffeisen, OTP, Komercijalna — all work with Russians; you'll need company documents or a residence permit." },
+    { "title": "Residence permit", "description": "Through work, a company or family — submitted to the police at your place of residence, with review in 1–3 months." }
+  ],
+  "faq": [
+    { "question": "Which language is spoken in Belgrade?", "answer": "Serbian in Cyrillic, but many people in Belgrade speak Russian and English." },
+    { "question": "Can I use a MIR card in Belgrade?", "answer": "No, you need a local or a foreign non-MIR card." },
+    { "question": "What is healthcare like in Belgrade?", "answer": "Private care from 3,500 ₽ per appointment. Public care under insurance is available after getting a residence permit." },
+    { "question": "How is the internet in Belgrade?", "answer": "Good fibre across the city, plans run 1,500–2,500 ₽ a month." },
+    { "question": "Is Belgrade safe?", "answer": "Yes, crime is low and Serbs are friendly towards Russians." },
+    { "question": "Can I work remotely without a residence permit in Belgrade?", "answer": "Technically yes, but there are tax risks — it's better to set up a PR or DOO." }
+  ],
+  "reviews": [
+    { "profession": "project manager", "text": "Serbs are open people and the language is quick to learn. The downside — local bureaucracy can take 2–3 months for a simple procedure." },
+    { "profession": "frontend developer", "text": "I set up a company and got a residence permit through work. Prices are rising, but Belgrade is still cheaper than Prague and Berlin." }
+  ]
+}

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { BlogPost } from "@/lib/blog";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { typo } from "@/lib/typography";
@@ -6,9 +6,9 @@ import { typo } from "@/lib/typography";
 export function BlogPreview({ posts }: { posts: BlogPost[] }) {
   if (!posts.length) return null;
   return (
-    <section className="py-24 px-6">
+    <section className="py-12 px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-end justify-between mb-12 gap-6">
+        <div className="flex items-end justify-between mb-6 gap-6">
           <div>
             <span className="eyebrow">Журнал</span>
             <h2 className="font-serif text-4xl md:text-6xl text-cream mt-6 mb-3 text-balance">

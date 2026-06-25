@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Bodrum 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Bodrum per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A resort on Turkey's Aegean coast: visa-free entry, a mild Mediterranean climate and a yachting atmosphere. Pricier and more upscale than Antalya and Alanya; crowded in summer, while resort life quiets down noticeably in winter.",
+  "climate": "+19°C avg.",
+  "language": "Turkish, English",
+  "currency": "Lira, TRY",
+  "population": "180 thousand",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "Visa-free entry for Russian citizens",
+    "A mild Mediterranean climate and the clean Aegean Sea",
+    "A yachting, resort atmosphere and beautiful nature",
+    "Well-developed infrastructure and good private healthcare",
+    "Direct flights from Russia in season, 4 hours en route"
+  ],
+  "cons": [
+    "Pricier than Antalya and Alanya, especially rent in summer",
+    "In winter the resort quiets down and some venues close",
+    "Crowded and hot in summer",
+    "Some coastal districts are closed to the tourist residence permit"
+  ],
+  "best_places": [
+    { "name": "Bodrum Castle (St. Peter's)", "description": "A medieval fortress in the harbour with a museum of underwater archaeology." },
+    { "name": "Marina and seafront", "description": "Yachts, fish restaurants and evening strolls along the bay." },
+    { "name": "Gümbet and Turgutreis", "description": "Residential seaside districts with beaches and rentals for any season." },
+    { "name": "Ancient amphitheatre", "description": "An ancient theatre with a panoramic view of the bay and the city." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russian citizens don't need a visa for short trips — the stamp is issued at the border." },
+    { "title": "Rental and address", "description": "A long-term lease is the basis for a later residence permit; check whether the district is open." },
+    { "title": "Tax number and account", "description": "The Vergi numarası is issued quickly; with it you can open an account at a Turkish bank." },
+    { "title": "Residence permit (ikamet)", "description": "Tourist or property-based — submitted online via göç idaresi, followed by biometrics." },
+    { "title": "Check the district", "description": "Before renting, make sure the neighbourhood isn't closed to residence permits for foreigners." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Bodrum?", "answer": "No, no visa is needed for short trips. For long-term living, you obtain a residence permit (ikamet)." },
+    { "question": "How much does it cost to live in Bodrum?", "answer": "More than Antalya and Alanya: resort prices and high summer rents. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Bodrum?", "answer": "Turkish; English is widespread in the tourist sector, and Russian is heard here and there." },
+    { "question": "Can I pay with a Russian card in Bodrum?", "answer": "Russian cards don't work. You'll need cash in lira and a card from a foreign or Turkish bank." },
+    { "question": "What is the climate like in Bodrum?", "answer": "Mediterranean: hot dry summers and mild rainy winters, with a long swimming season." },
+    { "question": "Can I get a residence permit in Bodrum?", "answer": "Yes, through a rental or property, but some coastal districts are closed to the tourist residence permit — check the address in advance." }
+  ],
+  "reviews": [
+    { "profession": "entrepreneur", "text": "I chose Bodrum for the sea and the atmosphere — it's calmer and more aesthetic here than in Antalya. Summer is expensive and crowded, but winter is quiet and beautiful." },
+    { "profession": "remote designer", "text": "We moved here as a family from another coast: the climate is mild and the healthcare is good. The main hassle was the residence permit — we had to find an apartment in an open district." }
+  ]
+}

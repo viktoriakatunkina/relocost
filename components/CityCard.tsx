@@ -1,8 +1,14 @@
-import Link from "next/link";
 import Image from "next/image";
+import { useTranslations, useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import type { CityWithMinRent } from "@/lib/types";
 import { formatRub } from "@/lib/cities";
-import { unsplashSrc } from "@/lib/unsplash";
+import { photoSrc } from "@/lib/photo";
+import { getDifficulty } from "@/lib/difficulty";
+import { getVisa } from "@/lib/visa";
+import { currencyLabel } from "@/lib/currency";
+import { cityName, countryName } from "@/lib/i18n-content";
+import type { Locale } from "@/i18n/routing";
 import { FavoriteButton } from "@/components/FavoriteButton";
 
 const GRADIENTS = [
@@ -14,7 +20,7 @@ const GRADIENTS = [
   "from-orange-900 via-kombu-green to-pine-tree",
 ];
 
-const DIFFICULTY = ["", "Легкий", "Средний", "Средний+", "Сложный", "Сложный+"];
+const DIFFICULTY_KEY = { green: "easy", yellow: "medium", red: "hard" } as const;
 
 export function CityCard({
   city,
@@ -23,20 +29,26 @@ export function CityCard({
   city: CityWithMinRent;
   index: number;
 }) {
+  const locale = useLocale() as Locale;
+  const td = useTranslations("difficulty");
+  const tv = useTranslations("visa");
+  const tc = useTranslations("common");
+
   const gradient = GRADIENTS[index % GRADIENTS.length];
-  const photo = unsplashSrc(city.unsplash_url, { w: 720, q: 80 });
-  const diffLabel = city.difficulty_score
-    ? DIFFICULTY[Math.min(city.difficulty_score, 5)] || ""
-    : null;
+  const photo = photoSrc(city.image_url, city.unsplash_url, { w: 720, q: 80 });
+  const difficulty = getDifficulty(city);
+  const visa = getVisa(city);
+  const name = cityName(city, locale);
+  const country = countryName(city, locale);
 
   return (
     <div className="group relative aspect-[4/5] overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1 hover:shadow-card">
-      <FavoriteButton slug={city.slug} cityName={city.name_ru} variant="card" />
+      <FavoriteButton slug={city.slug} cityName={name} variant="card" />
       <Link href={`/city/${city.slug}`} className="absolute inset-0 block">
         {photo ? (
           <Image
             src={photo}
-            alt={`${city.name_ru} — фото города`}
+            alt={name}
             fill
             sizes="(max-width: 1024px) 50vw, 33vw"
             className="object-cover transition duration-700 group-hover:scale-110"
@@ -46,46 +58,47 @@ export function CityCard({
         )}
 
         <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/65 to-pine-tree/25" />
+        <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="absolute inset-0 ring-1 ring-inset ring-cream/5 rounded-3xl" />
 
         <div className="relative h-full flex flex-col justify-between p-5 md:p-6">
           <div className="flex items-start justify-between gap-3">
             <span
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill bg-pine-tree/80 backdrop-blur-md text-xs uppercase tracking-[0.15em] text-cream font-medium mr-12 max-w-[70%] border hairline"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill bg-black/45 backdrop-blur-md text-xs uppercase tracking-[0.15em] text-white font-semibold mr-12 max-w-[70%] border border-white/15 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"
             >
               <span className="text-base leading-none" aria-hidden>{city.flag_emoji}</span>
-              <span className="truncate">{city.country_ru}</span>
+              <span className="truncate">{country}</span>
             </span>
           </div>
 
           <div className="space-y-3">
             <div>
-              <h3 className="font-serif text-[2.2rem] md:text-[2.6rem] leading-[1] text-cream drop-shadow-[0_2px_24px_rgba(0,0,0,0.4)]">
-                {city.name_ru}
+              <h3 className="font-serif text-[2.2rem] md:text-[2.6rem] leading-[1] text-cream drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">
+                {name}
               </h3>
               {city.min_rent > 0 && (
-                <p className="mt-2 text-copper text-sm font-medium tracking-wide">
-                  Аренда от <span className="text-cream font-semibold">{formatRub(city.min_rent)}</span>/мес
+                <p className="mt-2 text-copper text-sm font-medium tracking-wide drop-shadow-[0_1px_8px_rgba(0,0,0,0.7)]">
+                  {tc("rentFrom")}{" "}
+                  <span className="text-cream font-semibold">{formatRub(city.min_rent)}</span>
+                  {tc("perMonth")}
                 </p>
               )}
             </div>
 
             <div className="flex flex-wrap items-center gap-1.5 pt-1">
-              {diffLabel && (
+              {difficulty && (
                 <span className="chip">
-                  <DotIcon score={city.difficulty_score} />
-                  {diffLabel}
+                  <span className={`w-2 h-2 rounded-full ${difficulty.dotClass}`} aria-hidden />
+                  {td(DIFFICULTY_KEY[difficulty.color])}
                 </span>
               )}
-              {city.flight_from_moscow && (
-                <span className="chip">
-                  <PlaneIcon />
-                  {city.flight_from_moscow}
-                </span>
-              )}
+              <span className="chip">
+                {visa.status === "visa_free" ? <VisaFreeIcon /> : <VisaRequiredIcon />}
+                {visa.status === "visa_free" ? tv("free") : tv("required")}
+              </span>
               {city.currency && (
                 <span className="chip hidden md:inline-flex">
-                  {city.currency.split(",")[0]}
+                  {currencyLabel(city.currency)}
                 </span>
               )}
             </div>
@@ -100,19 +113,21 @@ export function CityCard({
   );
 }
 
-function DotIcon({ score }: { score: number | null }) {
-  const color =
-    !score ? "bg-muted-green" :
-    score <= 2 ? "bg-emerald-400" :
-    score === 3 ? "bg-amber-400" :
-    "bg-rose-400";
-  return <span className={`w-2 h-2 rounded-full ${color}`} aria-hidden />;
+function VisaFreeIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="text-emerald-300">
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
 }
 
-function PlaneIcon() {
+function VisaRequiredIcon() {
   return (
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="text-copper">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="8" y1="13" x2="16" y2="13" />
+      <line x1="8" y1="17" x2="13" y2="17" />
     </svg>
   );
 }

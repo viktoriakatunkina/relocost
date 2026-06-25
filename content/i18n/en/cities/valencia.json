@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Valencia 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Valencia per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A Mediterranean alternative to Barcelona: 30% cheaper, the same climate and a more relaxed pace. Popular for relocation among freelancers via the digital nomad visa and families with children.",
+  "climate": "+18°C avg.",
+  "language": "Spanish, Valencian, English",
+  "currency": "Euro, EUR",
+  "population": "790k",
+  "flight_from_moscow": "5 hours",
+  "pros": [
+    "The Mediterranean, mild winters and over 300 sunny days a year",
+    "Prices 30% lower than Barcelona with the same climate",
+    "A digital nomad visa for remote workers and a 24% tax regime",
+    "Good international schools and developed private healthcare",
+    "Turia Park — 9 km of cycle paths running across the whole city"
+  ],
+  "cons": [
+    "Hot summers of +35°C and high humidity off the sea",
+    "Complicated NIE and TIE bureaucracy",
+    "Weaker business infrastructure than Madrid and Barcelona",
+    "Rents are rising due to the influx of digital nomads"
+  ],
+  "best_places": [
+    { "name": "El Carmen", "description": "A bohemian old quarter with graffiti, bars and narrow streets behind the Serranos Towers." },
+    { "name": "City of Arts and Sciences", "description": "Calatrava's futuristic complex: an oceanarium, a science museum and an opera house." },
+    { "name": "Wayco", "description": "A coworking chain with meeting rooms, events and an active Russian-speaking community." },
+    { "name": "Ruzafa", "description": "A foodie district with a growing street-food market and wine bars." }
+  ],
+  "visa_steps": [
+    { "title": "Schengen visa or residence permit", "description": "For a long stay — a national D visa with an appointment at the consulate." },
+    { "title": "Digital Nomad Visa", "description": "For remote workers earning from €2,763 a month. A 1-year residence permit, extendable up to 5 years." },
+    { "title": "NIE and TIE", "description": "An identification number and a physical resident card. You can book an appointment about a month out." },
+    { "title": "Empadronamiento", "description": "Registration at your address with the Ayuntamiento. Needed for school, healthcare and a bank." },
+    { "title": "Bank account", "description": "Sabadell, BBVA and CaixaBank work with residents. The online bank N26 suits digital nomads." }
+  ],
+  "faq": [
+    { "question": "How is Valencia different from Barcelona?", "answer": "Smaller, calmer and cheaper. Fewer tourists and easier to arrange a rental." },
+    { "question": "How is the language situation in Valencia?", "answer": "Spanish is essential for daily life, English works in tourism and IT. The Valencian dialect comes up but isn't critical." },
+    { "question": "Which districts are good for families in Valencia?", "answer": "Benimaclet — student and family-friendly. Campanar — modern. L'Alqueria — outskirts with villas." },
+    { "question": "Should I learn the language before moving to Valencia?", "answer": "Yes, at least A2 — otherwise you'll struggle with public services, school and healthcare." },
+    { "question": "Where is the sea in Valencia?", "answer": "Malvarrosa and Las Arenas beaches are 15 minutes by tram from the centre. Perfect in summer." },
+    { "question": "How is the internet in Valencia?", "answer": "Fibre at 600+ Mbps for €30. 4G everywhere. Excellent infrastructure for remote work." }
+  ],
+  "reviews": [
+    { "profession": "product manager", "text": "We got the DNV for the whole family and rent an apartment in Ruzafa for €1,200. My daughter is at an international school and I work for a US company. Valencia is a balance of climate, price and Europe." },
+    { "profession": "illustrator", "text": "I moved from Tbilisi: Schengen, the sea, and I'm learning the language from scratch. Rent is expensive, but the cafés and Turia Park make up for it." }
+  ]
+}

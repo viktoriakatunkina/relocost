@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Bishkek 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Bishkek per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Visa-free entry for 30 days with the option to extend, prices below Georgia's, and Russian everywhere in daily life. Suited to those who value minimal bureaucracy and a quick start.",
+  "climate": "+11°C avg.",
+  "language": "Kyrgyz, Russian",
+  "currency": "Som, KGS",
+  "population": "1.05 mln",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "Visa-free entry for 30 days with easy extension by exiting the country",
+    "One of the cheapest cities in the region for rent and food",
+    "Russian is the de facto language of business and communication",
+    "Simple sole-proprietor registration and a patent within a day",
+    "The nearby Ala-Archa mountains — a trip into nature in half an hour"
+  ],
+  "cons": [
+    "Heavy smog in winter from private boilers and traffic",
+    "Weak banking infrastructure for Russians after sanctions",
+    "Sharp temperature swings and a dry climate",
+    "A limited choice of international schools and healthcare"
+  ],
+  "best_places": [
+    { "name": "Ala-Archa", "description": "A national park 40 minutes from the centre — mountain trails, waterfalls and snow year-round." },
+    { "name": "Osh Bazaar", "description": "The city's main market: spices, nuts, manti and plov straight from the cauldron." },
+    { "name": "Sierra Coffee", "description": "A chain of local coffee shops with decent specialty coffee and Wi-Fi for remote work." },
+    { "name": "Ololo House", "description": "The main hub of the digital community — talks, networking and an open space." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Up to 30 days without a visa on a passport; extension by crossing into Kazakhstan and back." },
+    { "title": "Registration with the Interior Ministry", "description": "If staying more than 30 days — registration with the State Registration Service." },
+    { "title": "Patent or sole proprietorship", "description": "Self-employment is set up within a day, with one of the lowest tax rates in the CIS." },
+    { "title": "Bank account", "description": "Optima Bank, Demir Bank — open accounts for Russians on a passport, though terms change." },
+    { "title": "Renting a home", "description": "Through house.kg or local WhatsApp chats — the lease is usually simple, for a year." }
+  ],
+  "faq": [
+    { "question": "How are the banks in Bishkek?", "answer": "Most local banks accept Russians, but terms change often — MasterCard cards are issued selectively." },
+    { "question": "Can I work for a Russian company in Bishkek?", "answer": "Yes, through a sole proprietorship in Kyrgyzstan — the tax rate starts at 2%, and payments in rubles are accepted." },
+    { "question": "Is the climate harsh in Bishkek?", "answer": "Summers are dry at +30°C, winters drop to –15°C; the main nuisance is smog in the cold months." },
+    { "question": "Which districts are best in Bishkek?", "answer": "The centre and Vostok-5 — convenient for work. Djal — modern development for families." },
+    { "question": "Where can children study in Bishkek?", "answer": "There are several international schools (AISB, Hope Academy), but places are scarce — enrol in advance." },
+    { "question": "Is Bishkek safe?", "answer": "The level of petty crime is moderate; at night it's better to use Yandex Go or Namba Taxi." }
+  ],
+  "reviews": [
+    { "profession": "developer", "text": "I moved from Moscow for the budget and the mountains. I set up a sole proprietorship in a day, pay 2% tax, and spend weekends in Ala-Archa. The downside — it's genuinely hard to breathe in winter." },
+    { "profession": "copywriter", "text": "Bishkek is a convenient base for nomads: cheap, Russian-speaking, and not far to fly home. It's no resort, but it's ideal for remote work." }
+  ]
+}

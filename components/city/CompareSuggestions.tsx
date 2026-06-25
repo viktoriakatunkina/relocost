@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { CityWithMinRent, City } from "@/lib/types";
 
 export function CompareSuggestions({
@@ -20,9 +20,9 @@ export function CompareSuggestions({
   if (pairs.length === 0) return null;
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-20">
+    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
       <span className="eyebrow">Сравнение</span>
-      <h2 className="font-serif text-4xl md:text-5xl text-cream mt-6 mb-3 text-balance">
+      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3 text-balance">
         {current.name_ru} рядом с другим городом
       </h2>
       <p className="text-brandy/80 text-lg mb-10 max-w-xl text-pretty">

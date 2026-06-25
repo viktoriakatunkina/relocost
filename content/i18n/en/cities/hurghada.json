@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Hurghada 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Hurghada per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A resort on the Red Sea: a visa on arrival, a warm sea and sunshine almost year-round, and a large Russian-speaking community. Cheaper than Europe, but the summers are very hot and the urban setting is resort-simple.",
+  "climate": "+25°C avg.",
+  "language": "Arabic, English, Russian",
+  "currency": "Pound, EGP",
+  "population": "300 thousand",
+  "flight_from_moscow": "5 hours",
+  "pros": [
+    "Visa on arrival, direct flights from Russia",
+    "A warm Red Sea and sunshine almost year-round",
+    "A large Russian-speaking community and services",
+    "Low prices for housing and food",
+    "Excellent diving and snorkelling"
+  ],
+  "cons": [
+    "Very hot summers",
+    "A resort-simple urban setting",
+    "Poor tap water quality — you need bottled water",
+    "Mid-level healthcare"
+  ],
+  "best_places": [
+    { "name": "El Gouna", "description": "A resort town with lagoons and canals 20 minutes away — the choice for those who prefer a quieter pace." },
+    { "name": "Marina and the waterfront", "description": "A promenade with yachts, cafés and restaurants in the city centre." },
+    { "name": "Old Town (Ad-Dahar)", "description": "Local markets, shops and a more authentic atmosphere." },
+    { "name": "Giftun Islands", "description": "Marine reserves with white beaches and snorkelling, an hour away by boat." }
+  ],
+  "visa_steps": [
+    { "title": "Visa on arrival", "description": "Russian citizens are issued a visa on arrival (a 30-day tourist visa) that can be extended." },
+    { "title": "Renting a home", "description": "Apartments and studios are rented by the month, especially cheaply off-season." },
+    { "title": "Connectivity and money", "description": "A local SIM card is inexpensive; you'll need pounds in cash and a card from a foreign bank." },
+    { "title": "Extension", "description": "A tourist visa is extended at the passport office in Hurghada." },
+    { "title": "Long-term stay", "description": "For settled living, people consider a residence permit through property or work." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Hurghada?", "answer": "A visa is issued on arrival for 30 days, with the option to extend." },
+    { "question": "How much does it cost to live in Hurghada?", "answer": "It's cheap, especially housing and food off-season. The exact budget is in the calculator above." },
+    { "question": "Which language is spoken in Hurghada?", "answer": "Arabic; English and Russian are widely used in tourism." },
+    { "question": "Can I pay with a Russian card in Hurghada?", "answer": "No, Russian cards don't work. You'll need pounds in cash and a card from a foreign bank." },
+    { "question": "What is the climate like in Hurghada?", "answer": "Desert by the sea: hot summers, warm winters and almost year-round sunshine." },
+    { "question": "Can you spend the winter there?", "answer": "Yes, Hurghada is one of the popular winter destinations for Russians thanks to the warmth and prices." }
+  ],
+  "reviews": [
+    { "profession": "diving instructor", "text": "Hurghada is sea, sun and affordable living, with plenty of Russian speakers. The downsides are the scorching summer and a resort-simple town, but it's great for working by the sea." },
+    { "profession": "remote manager", "text": "I winter here every year: warm, cheap, a direct flight. The infrastructure is resort-grade and you'd better not test serious healthcare, but the sea is beautiful." }
+  ]
+}

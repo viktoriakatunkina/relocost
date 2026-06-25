@@ -38,30 +38,47 @@ export async function getPricesByCity(
   return grouped;
 }
 
+// Похожие направления подбираем по РЕЛЕВАНТНОСТИ, а не по алфавиту:
+// 1) сильный приоритет — та же страна (после Тбилиси показываем Батуми/Кутаиси);
+// 2) близкая сложность переезда; 3) близкий уровень аренды.
+// Раньше брали первые N по алфавиту (Абу-Даби, Актау, Алания…) — нерелевантно.
 export async function getSimilarCities(
-  currentCityId: string,
-  isForeign: boolean,
+  current: Pick<City, "id" | "is_foreign" | "country_slug" | "difficulty_score">,
   limit = 4,
 ): Promise<CityWithMinRent[]> {
-  const { data: cities } = await supabase
+  const { data: pool } = await supabase
     .from("cities")
     .select("*")
-    .eq("is_foreign", isForeign)
-    .neq("id", currentCityId)
-    .order("name_ru")
-    .limit(limit);
-  if (!cities?.length) return [];
-  const ids = cities.map((c) => c.id);
+    .eq("is_foreign", current.is_foreign)
+    .neq("id", current.id);
+  if (!pool?.length) return [];
+
+  const ids = [current.id, ...pool.map((c) => c.id)];
   const { data: rents } = await supabase
     .from("prices")
     .select("city_id, price_min")
     .in("city_id", ids)
     .eq("category", "rent")
     .eq("item_name_ru", "1-комн. квартира на окраине");
-  const minByCity = new Map<string, number>();
-  for (const r of rents ?? []) minByCity.set(r.city_id, r.price_min);
-  return (cities as City[]).map((c) => ({
-    ...c,
-    min_rent: minByCity.get(c.id) ?? 0,
-  }));
+  const rentBy = new Map<string, number>();
+  for (const r of rents ?? []) rentBy.set(r.city_id, r.price_min);
+
+  const curRent = rentBy.get(current.id) ?? 0;
+  const curDiff = current.difficulty_score ?? 3;
+
+  const scored = (pool as City[]).map((c) => {
+    const rent = rentBy.get(c.id) ?? 0;
+    const sameCountry = c.country_slug === current.country_slug ? 1 : 0;
+    const diffDist = Math.abs((c.difficulty_score ?? 3) - curDiff);
+    const rentDist =
+      curRent > 0 && rent > 0
+        ? Math.abs(rent - curRent) / Math.max(curRent, rent)
+        : 1;
+    // Меньше score = релевантнее. Та же страна перевешивает всё остальное.
+    const score = -sameCountry * 10 + diffDist + rentDist * 2;
+    return { city: { ...c, min_rent: rent } as CityWithMinRent, score };
+  });
+
+  scored.sort((a, b) => a.score - b.score);
+  return scored.slice(0, limit).map((s) => s.city);
 }

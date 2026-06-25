@@ -1,14 +1,35 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import type { CityWithBudget } from "@/lib/types";
 import { CityCard } from "@/components/CityCard";
 import { formatRub } from "@/lib/cities";
+import { getVisa, type VisaStatus } from "@/lib/visa";
+import { cityName, countryName } from "@/lib/i18n-content";
+import type { Locale } from "@/i18n/routing";
 
-type Region = "all" | "ru" | "cis" | "europe" | "asia" | "middle_east" | "africa" | "americas";
+type Region =
+  | "all"
+  | "ru"
+  | "cis"
+  | "europe"
+  | "asia"
+  | "middle_east"
+  | "africa"
+  | "americas";
 type Climate = "all" | "tropical" | "temperate" | "cool";
 type Difficulty = "all" | "easy" | "medium" | "hard";
+type Destination = "all" | "foreign" | "russia";
+type VisaFilter = "all" | "free" | "required";
 type Sort = "budget" | "difficulty" | "name" | "popular";
+
+const PAGE_SIZE = 18;
+
+// Пороги бюджета «до X ₽/мес». Шкала расширена далеко за пределы текущих данных
+// (самый дорогой город ~170к), чтобы у тех, кто рассчитывает на высокий доход,
+// был запас и понятная градация. null = «любой».
+const BUDGET_STEPS: number[] = [50000, 75000, 100000, 150000, 200000, 300000, 500000];
 
 const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
   moscow: "ru",
@@ -176,106 +197,20 @@ const CLIMATE_BY_SLUG: Record<string, Exclude<Climate, "all">> = {
   gyumri: "cool",
 };
 
-// Города без визы для россиян (безвиз или visa-on-arrival ≥ 30 дней)
-const VISA_FREE_FOR_RU = new Set([
-  "tbilisi",
-  "yerevan",
-  "belgrade",
-  "bali",
-  "bangkok",
-  "almaty",
-  "krasnodar",
-  "sochi",
-  "kaliningrad",
-  "moscow",
-  "spb",
-  "dubai",
-  "istanbul",
-  "alanya",
-  "astana",
-  "samarkand",
-  "izmir",
-  "chiang-mai",
-  "ho-chi-minh",
-  "da-nang",
-  "nha-trang",
-  "kuala-lumpur",
-  "pattaya",
-  "penang",
-  "abu-dhabi",
-  "bukhara",
-  "baku",
-  "samui",
-  "bodrum",
-  "tirana",
-  "chisinau",
-  "dushanbe",
-  "colombo",
-  "hanoi",
-  "fethiye",
-  "tivat",
-  "budva",
-  "podgorica",
-  "doha",
-  "cebu",
-  "aktau",
-  "phnom-penh",
-  "sanya",
-  "seoul",
-  "sharjah",
-  "jakarta",
-  "phu-quoc",
-  "krabi",
-  "hurghada",
-  "sharm-el-sheikh",
-  "cairo",
-  "marrakesh",
-  "sousse",
-  "buenos-aires",
-  "rio-de-janeiro",
-  "amman",
-  "haifa",
-  "manila",
-  "kathmandu",
-  "siem-reap",
-  "ankara",
-  "skopje",
-  "kazan",
-  "yekaterinburg",
-  "gyumri",
+// Города «у моря» — расположены на морском/океанском побережье (пляжная жизнь —
+// частый запрос при выборе города). Поля «coastal» в БД нет, поэтому ведём
+// явный список по slug. Реки/озёра/эстуарии (Москва, Прага, Хошимин и т.п.) сюда
+// НЕ входят — только настоящее побережье.
+const SEASIDE = new Set<string>([
+  "abu-dhabi", "aktau", "alanya", "alicante", "antalya", "baku", "bali",
+  "barcelona", "batumi", "bodrum", "budva", "cebu", "colombo", "da-nang",
+  "doha", "dubai", "dubrovnik", "fethiye", "goa", "haifa", "heraklion",
+  "hurghada", "izmir", "krabi", "larnaca", "limassol", "lisbon", "malaga",
+  "manama", "manila", "muscat", "nha-trang", "paphos", "pattaya", "penang",
+  "phu-quoc", "phuket", "playa-del-carmen", "porto", "rio-de-janeiro", "samui",
+  "sanya", "sharjah", "sharm-el-sheikh", "sochi", "sousse", "split", "tel-aviv",
+  "thessaloniki", "tivat", "valencia", "varna",
 ]);
-
-const REGION_OPTIONS: [Region, string][] = [
-  ["all", "Любой"],
-  ["ru", "Россия"],
-  ["cis", "СНГ"],
-  ["europe", "Европа"],
-  ["asia", "Азия"],
-  ["middle_east", "Ближний Восток"],
-  ["africa", "Африка"],
-  ["americas", "Америка"],
-];
-
-const CLIMATE_OPTIONS: [Climate, string][] = [
-  ["all", "Любой"],
-  ["tropical", "Тропики"],
-  ["temperate", "Умеренный"],
-  ["cool", "Прохладный"],
-];
-
-const DIFFICULTY_OPTIONS: [Difficulty, string][] = [
-  ["all", "Любая"],
-  ["easy", "Легкий"],
-  ["medium", "Средний"],
-  ["hard", "Сложный"],
-];
-
-const SORT_OPTIONS: [Sort, string][] = [
-  ["budget", "Сначала дешевле"],
-  ["difficulty", "Проще переезд"],
-  ["popular", "Сначала популярные"],
-  ["name", "По алфавиту"],
-];
 
 function diffBucket(score: number | null): Exclude<Difficulty, "all"> | null {
   if (score == null) return null;
@@ -284,50 +219,111 @@ function diffBucket(score: number | null): Exclude<Difficulty, "all"> | null {
   return "hard";
 }
 
+// Прямой рейс из Москвы определяем по полю flight_from_moscow: считаем рейс
+// прямым, если в описании нет пометки «пересадк». Данные — свободный текст
+// в БД («3.5 часа», «5 часов с пересадкой»), поэтому фолбэк-эвристика.
+function isDirectFlight(flight: string | null): boolean {
+  if (!flight) return false;
+  return !/пересадк/i.test(flight);
+}
+
 export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
+  const locale = useLocale() as Locale;
+  const t = useTranslations("searchPage");
+
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState<Region>("all");
   const [climate, setClimate] = useState<Climate>("all");
   const [difficulty, setDifficulty] = useState<Difficulty>("all");
-  const [visaFree, setVisaFree] = useState(false);
-  const [sort, setSort] = useState<Sort>("budget");
-
-  // Границы бюджета считаем по данным, округляя до 5 000 ₽.
-  const { lo, hi } = useMemo(() => {
-    const vals = cities.map((c) => c.monthly_from).filter((v) => v > 0);
-    if (!vals.length) return { lo: 20000, hi: 200000 };
-    const min = Math.floor(Math.min(...vals) / 5000) * 5000;
-    const max = Math.ceil(Math.max(...vals) / 5000) * 5000;
-    return { lo: min, hi: max };
-  }, [cities]);
-
-  // null = «любой» (ползунок в крайнем правом положении)
+  const [destination, setDestination] = useState<Destination>("all");
+  const [visa, setVisa] = useState<VisaFilter>("all");
+  const [directOnly, setDirectOnly] = useState(false);
+  const [seasideOnly, setSeasideOnly] = useState(false);
+  // null = «любой» бюджет.
   const [budgetMax, setBudgetMax] = useState<number | null>(null);
-  const sliderValue = budgetMax ?? hi;
-  const pct = hi > lo ? ((sliderValue - lo) / (hi - lo)) * 100 : 100;
+  const [sort, setSort] = useState<Sort>("budget");
+  const [page, setPage] = useState(1);
+
+  const REGION_OPTIONS: [Region, string][] = [
+    ["all", t("regionAll")],
+    ["ru", t("regionRu")],
+    ["cis", t("regionCis")],
+    ["europe", t("regionEurope")],
+    ["asia", t("regionAsia")],
+    ["middle_east", t("regionMiddleEast")],
+    ["africa", t("regionAfrica")],
+    ["americas", t("regionAmericas")],
+  ];
+  const CLIMATE_OPTIONS: [Climate, string][] = [
+    ["all", t("climateAll")],
+    ["tropical", t("climateTropical")],
+    ["temperate", t("climateTemperate")],
+    ["cool", t("climateCool")],
+  ];
+  const DIFFICULTY_OPTIONS: [Difficulty, string][] = [
+    ["all", t("difficultyAll")],
+    ["easy", t("difficultyEasy")],
+    ["medium", t("difficultyMedium")],
+    ["hard", t("difficultyHard")],
+  ];
+  const DESTINATION_OPTIONS: [Destination, string][] = [
+    ["all", t("destinationAll")],
+    ["foreign", t("destinationForeign")],
+    ["russia", t("destinationRussia")],
+  ];
+  const VISA_OPTIONS: [VisaFilter, string][] = [
+    ["all", t("visaAll")],
+    ["free", t("visaFree")],
+    ["required", t("visaRequired")],
+  ];
+  const BUDGET_OPTIONS: [string, string][] = [
+    ...BUDGET_STEPS.map(
+      (v) => [String(v), t("budgetUpTo", { amount: formatRub(v) })] as [string, string],
+    ),
+    ["any", t("budgetAny")],
+  ];
+  const SORT_OPTIONS: [Sort, string][] = [
+    ["budget", t("sortBudget")],
+    ["difficulty", t("sortDifficulty")],
+    ["popular", t("sortPopular")],
+    ["name", t("sortName")],
+  ];
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     const max = budgetMax ?? Infinity;
     const list = cities.filter((c) => {
-      if (
-        q &&
-        !c.name_ru.toLowerCase().includes(q) &&
-        !c.country_ru.toLowerCase().includes(q)
-      ) {
-        return false;
+      if (q) {
+        const name = cityName(c, locale).toLowerCase();
+        const country = countryName(c, locale).toLowerCase();
+        if (
+          !name.includes(q) &&
+          !country.includes(q) &&
+          !c.name_ru.toLowerCase().includes(q) &&
+          !c.country_ru.toLowerCase().includes(q)
+        ) {
+          return false;
+        }
       }
       if (region !== "all" && REGION_BY_SLUG[c.slug] !== region) return false;
       if (climate !== "all" && CLIMATE_BY_SLUG[c.slug] !== climate) return false;
       if (difficulty !== "all" && diffBucket(c.difficulty_score) !== difficulty)
         return false;
+      if (destination === "foreign" && !c.is_foreign) return false;
+      if (destination === "russia" && c.is_foreign) return false;
+      if (visa !== "all") {
+        const status: VisaStatus = getVisa(c).status;
+        if (visa === "free" && status !== "visa_free") return false;
+        if (visa === "required" && status !== "visa_required") return false;
+      }
+      if (directOnly && !isDirectFlight(c.flight_from_moscow)) return false;
+      if (seasideOnly && !SEASIDE.has(c.slug)) return false;
       if (c.monthly_from > 0 && c.monthly_from > max) return false;
-      if (visaFree && !VISA_FREE_FOR_RU.has(c.slug)) return false;
       return true;
     });
 
     const byName = (a: CityWithBudget, b: CityWithBudget) =>
-      a.name_ru.localeCompare(b.name_ru, "ru");
+      cityName(a, locale).localeCompare(cityName(b, locale), locale);
 
     return list.sort((a, b) => {
       if (sort === "budget") {
@@ -336,123 +332,149 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
         return av - bv || byName(a, b);
       }
       if (sort === "difficulty") {
-        return (a.difficulty_score ?? 99) - (b.difficulty_score ?? 99) || byName(a, b);
+        return (
+          (a.difficulty_score ?? 99) - (b.difficulty_score ?? 99) || byName(a, b)
+        );
       }
       if (sort === "popular") {
         return Number(b.is_popular) - Number(a.is_popular) || byName(a, b);
       }
       return byName(a, b);
     });
-  }, [cities, query, region, climate, difficulty, budgetMax, visaFree, sort]);
+  }, [
+    cities,
+    locale,
+    query,
+    region,
+    climate,
+    difficulty,
+    destination,
+    visa,
+    directOnly,
+    seasideOnly,
+    budgetMax,
+    sort,
+  ]);
 
   const activeFilters =
     (region !== "all" ? 1 : 0) +
     (climate !== "all" ? 1 : 0) +
     (difficulty !== "all" ? 1 : 0) +
-    (budgetMax !== null ? 1 : 0) +
-    (visaFree ? 1 : 0);
+    (destination !== "all" ? 1 : 0) +
+    (visa !== "all" ? 1 : 0) +
+    (directOnly ? 1 : 0) +
+    (seasideOnly ? 1 : 0) +
+    (budgetMax !== null ? 1 : 0);
+
+  const hasAnyFilter = activeFilters > 0 || query.trim().length > 0;
+
+  // Пагинация по отфильтрованному набору. Сбрасываем на 1-ю страницу при любом
+  // изменении фильтров/поиска/сортировки.
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  useEffect(() => {
+    setPage(1);
+  }, [query, region, climate, difficulty, destination, visa, directOnly, seasideOnly, budgetMax, sort]);
+
+  const safePage = Math.min(page, totalPages);
+  const pageItems = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+
+  // Якорь начала списка городов — к нему скроллим при смене страницы (а не на
+  // самый верх к фильтру, как было).
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   function reset() {
     setQuery("");
     setRegion("all");
     setClimate("all");
     setDifficulty("all");
+    setDestination("all");
+    setVisa("all");
+    setDirectOnly(false);
+    setSeasideOnly(false);
     setBudgetMax(null);
-    setVisaFree(false);
+    setPage(1);
+  }
+
+  function goToPage(p: number) {
+    setPage(Math.min(Math.max(1, p), totalPages));
+    if (typeof window !== "undefined" && resultsRef.current) {
+      // Прокручиваем к началу списка с запасом под «липкую» шапку, чтобы первые
+      // города оказались сразу под ней, а не уехали под шапку.
+      const top =
+        resultsRef.current.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    }
   }
 
   return (
     <div className="max-w-6xl mx-auto px-6">
       <div className="rounded-3xl bg-surface/80 backdrop-blur border hairline shadow-card p-5 md:p-7 mb-8">
-        {/* Строка поиска */}
-        <div className="relative mb-7">
-          <span
-            className="absolute left-5 top-1/2 -translate-y-1/2 text-copper pointer-events-none"
-            aria-hidden
+        {/* Строка поиска + «Очистить» */}
+        <div className="flex items-center gap-3 mb-7">
+          <div className="relative flex-1">
+            <span
+              className="absolute left-5 top-1/2 -translate-y-1/2 text-copper pointer-events-none"
+              aria-hidden
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.5" y2="16.5" />
+              </svg>
+            </span>
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={t("inputPlaceholder")}
+              className="w-full pr-5 py-4 rounded-pill bg-pine-tree/60 text-cream placeholder-brandy/45 text-lg border hairline focus:border-copper focus:outline-none transition [color-scheme:dark]"
+              style={{ paddingLeft: "3.25rem" }}
+              aria-label={t("ariaInput")}
+            />
+          </div>
+          <button
+            type="button"
+            onClick={reset}
+            disabled={!hasAnyFilter}
+            className="shrink-0 inline-flex items-center gap-1.5 rounded-pill border hairline px-4 py-3 text-sm transition text-brandy/85 hover:border-copper/60 hover:text-cream disabled:opacity-40 disabled:pointer-events-none"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="7" />
-              <line x1="21" y1="21" x2="16.5" y2="16.5" />
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
-          </span>
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Город или страна"
-            className="w-full pr-5 py-4 rounded-pill bg-pine-tree/60 text-cream placeholder-brandy/45 text-lg border hairline focus:border-copper focus:outline-none transition [color-scheme:dark]"
-            style={{ paddingLeft: "3.25rem" }}
-            aria-label="Поиск города или страны"
-          />
+            {t("clear")}
+          </button>
         </div>
 
         {/* Чип-группы */}
         <div className="grid md:grid-cols-2 gap-x-10 gap-y-6">
-          <ChipGroup label="Регион" value={region} options={REGION_OPTIONS} onChange={setRegion} />
-          <ChipGroup label="Климат" value={climate} options={CLIMATE_OPTIONS} onChange={setClimate} />
-          <ChipGroup label="Сложность переезда" value={difficulty} options={DIFFICULTY_OPTIONS} onChange={setDifficulty} />
-
-          {/* Бюджет */}
-          <div>
-            <div className="flex items-baseline justify-between mb-3">
-              <span className="text-brandy/55 text-[11px] uppercase tracking-[0.15em]">
-                Бюджет в месяц
-              </span>
-              <span className="text-copper font-semibold text-sm tabular-nums">
-                {budgetMax === null ? "Любой" : `до ${formatRub(budgetMax)}`}
-              </span>
-            </div>
-            <input
-              type="range"
-              min={lo}
-              max={hi}
-              step={5000}
-              value={sliderValue}
-              onChange={(e) => {
-                const v = Number(e.target.value);
-                setBudgetMax(v >= hi ? null : v);
-              }}
-              className="range-copper w-full"
-              style={{
-                background: `linear-gradient(to right, var(--copper) 0%, var(--copper) ${pct}%, rgba(222,197,158,0.16) ${pct}%, rgba(222,197,158,0.16) 100%)`,
-              }}
-              aria-label="Максимальный месячный бюджет"
-            />
-            <div className="flex justify-between text-brandy/40 text-[11px] mt-2 tabular-nums">
-              <span>{formatRub(lo)}</span>
-              <span>{formatRub(hi)}+</span>
-            </div>
-          </div>
+          <ChipGroup label={t("filterRegion")} value={region} options={REGION_OPTIONS} onChange={setRegion} />
+          <ChipGroup label={t("filterClimate")} value={climate} options={CLIMATE_OPTIONS} onChange={setClimate} />
+          <ChipGroup label={t("filterDifficulty")} value={difficulty} options={DIFFICULTY_OPTIONS} onChange={setDifficulty} />
+          <ChipGroup label={t("filterDestination")} value={destination} options={DESTINATION_OPTIONS} onChange={setDestination} />
+          <ChipGroup label={t("filterVisa")} value={visa} options={VISA_OPTIONS} onChange={setVisa} />
+          <ChipGroup
+            label={t("filterBudget")}
+            value={budgetMax === null ? "any" : String(budgetMax)}
+            options={BUDGET_OPTIONS}
+            onChange={(v) => setBudgetMax(v === "any" ? null : Number(v))}
+          />
         </div>
 
-        {/* Нижняя панель: виза + сортировка + сброс */}
+        {/* Нижняя панель: тумблеры + сортировка */}
         <div className="flex flex-wrap items-center gap-4 mt-7 pt-6 border-t hairline">
-          <button
-            type="button"
-            onClick={() => setVisaFree((v) => !v)}
-            className={`inline-flex items-center gap-2.5 rounded-pill border px-4 py-2 text-sm transition ${
-              visaFree
-                ? "bg-copper/15 border-copper/50 text-cream"
-                : "hairline text-brandy/85 hover:border-copper/50"
-            }`}
-            aria-pressed={visaFree}
-          >
-            <span
-              className={`relative inline-flex h-5 w-9 items-center rounded-full transition ${
-                visaFree ? "bg-copper" : "bg-cream/15"
-              }`}
-            >
-              <span
-                className={`inline-block h-4 w-4 rounded-full bg-cream shadow transition-transform ${
-                  visaFree ? "translate-x-4" : "translate-x-0.5"
-                }`}
-              />
-            </span>
-            Без визы для россиян
-          </button>
+          <Toggle
+            on={seasideOnly}
+            onClick={() => setSeasideOnly((v) => !v)}
+            label={t("seaside")}
+          />
+          <Toggle
+            on={directOnly}
+            onClick={() => setDirectOnly((v) => !v)}
+            label={t("directFlight")}
+          />
 
           <label className="inline-flex items-center gap-2 ml-auto text-brandy/70 text-sm">
-            <span className="hidden sm:inline">Сортировка</span>
+            <span className="hidden sm:inline">{t("sort")}</span>
             <div className="relative">
               <select
                 value={sort}
@@ -476,15 +498,12 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
         </div>
       </div>
 
-      {/* Счетчик + сброс */}
-      <div className="flex items-center justify-between mb-6">
-        <span className="text-cream font-medium">
-          {filtered.length}{" "}
-          <span className="text-brandy/55 font-normal">
-            {plural(filtered.length, "город", "города", "городов")}
-          </span>
+      {/* Счетчик + сброс. resultsRef — якорь, к которому скроллим при пагинации. */}
+      <div ref={resultsRef} className="flex items-center justify-between mb-6 scroll-mt-24">
+        <span className="text-cream font-medium tabular-nums">
+          {t("found", { count: filtered.length })}
         </span>
-        {(activeFilters > 0 || query) && (
+        {hasAnyFilter && (
           <button
             type="button"
             onClick={reset}
@@ -494,65 +513,45 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
-            Сбросить{activeFilters > 0 ? ` (${activeFilters})` : ""}
+            {t("clearAll")}
+            {activeFilters > 0 ? ` (${activeFilters})` : ""}
           </button>
         )}
       </div>
 
       {filtered.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-brandy/80 text-lg mb-4">
-            Под такие условия ничего не нашли.
-          </p>
+          <p className="text-brandy/80 text-lg mb-4">{t("emptyTitle")}</p>
           <button
             type="button"
             onClick={reset}
             className="text-copper hover:underline"
           >
-            Ослабить фильтры
+            {t("emptyAction")}
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
-          {filtered.map((c, i) => (
-            <CityCard key={c.id} city={c} index={i} />
-          ))}
-        </div>
-      )}
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
+            {pageItems.map((c, i) => (
+              <CityCard key={c.id} city={c} index={(safePage - 1) * PAGE_SIZE + i} />
+            ))}
+          </div>
 
-      <style jsx>{`
-        .range-copper {
-          -webkit-appearance: none;
-          appearance: none;
-          height: 6px;
-          border-radius: 9999px;
-          outline: none;
-          cursor: pointer;
-        }
-        .range-copper::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 22px;
-          height: 22px;
-          border-radius: 9999px;
-          background: var(--cream);
-          border: 4px solid var(--copper);
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
-          cursor: pointer;
-        }
-        .range-copper::-moz-range-thumb {
-          width: 18px;
-          height: 18px;
-          border-radius: 9999px;
-          background: var(--cream);
-          border: 4px solid var(--copper);
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
-          cursor: pointer;
-        }
-        .range-copper::-moz-range-track {
-          background: transparent;
-        }
-      `}</style>
+          {totalPages > 1 && (
+            <Pagination
+              page={safePage}
+              totalPages={totalPages}
+              onChange={goToPage}
+              prevLabel={t("prev")}
+              nextLabel={t("next")}
+              prevAria={t("prevAria")}
+              nextAria={t("nextAria")}
+              pageAria={(p) => t("pageAria", { page: p })}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 }
@@ -597,10 +596,139 @@ function ChipGroup<T extends string>({
   );
 }
 
-function plural(n: number, one: string, two: string, many: string): string {
-  const n10 = n % 10;
-  const n100 = n % 100;
-  if (n10 === 1 && n100 !== 11) return one;
-  if (n10 >= 2 && n10 <= 4 && (n100 < 10 || n100 >= 20)) return two;
-  return many;
+// Тумблер-переключатель «вкл/выкл» (прямой рейс, у моря и т.п.).
+function Toggle({
+  on,
+  onClick,
+  label,
+}: {
+  on: boolean;
+  onClick: () => void;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={on}
+      className={`inline-flex items-center gap-2.5 rounded-pill border px-4 py-2 text-sm transition ${
+        on
+          ? "bg-copper/15 border-copper/50 text-cream"
+          : "hairline text-brandy/85 hover:border-copper/50"
+      }`}
+    >
+      <span
+        className={`relative inline-flex h-5 w-9 items-center rounded-full transition ${
+          on ? "bg-copper" : "bg-cream/15"
+        }`}
+      >
+        <span
+          className={`inline-block h-4 w-4 rounded-full bg-cream shadow transition-transform ${
+            on ? "translate-x-4" : "translate-x-0.5"
+          }`}
+        />
+      </span>
+      {label}
+    </button>
+  );
+}
+
+// Компактные номера страниц с многоточиями вокруг текущей.
+function pageList(current: number, total: number): (number | "…")[] {
+  const out: (number | "…")[] = [];
+  const push = (n: number) => out.push(n);
+  const range = (a: number, b: number) => {
+    for (let i = a; i <= b; i++) push(i);
+  };
+  if (total <= 7) {
+    range(1, total);
+    return out;
+  }
+  push(1);
+  const left = Math.max(2, current - 1);
+  const right = Math.min(total - 1, current + 1);
+  if (left > 2) out.push("…");
+  range(left, right);
+  if (right < total - 1) out.push("…");
+  push(total);
+  return out;
+}
+
+function Pagination({
+  page,
+  totalPages,
+  onChange,
+  prevLabel,
+  nextLabel,
+  prevAria,
+  nextAria,
+  pageAria,
+}: {
+  page: number;
+  totalPages: number;
+  onChange: (p: number) => void;
+  prevLabel: string;
+  nextLabel: string;
+  prevAria: string;
+  nextAria: string;
+  pageAria: (p: number) => string;
+}) {
+  const items = pageList(page, totalPages);
+  const base =
+    "inline-flex items-center justify-center rounded-pill border px-4 h-10 text-sm transition";
+  return (
+    <nav
+      className="flex flex-wrap items-center justify-center gap-2 mt-10"
+      aria-label="Pagination"
+    >
+      <button
+        type="button"
+        onClick={() => onChange(page - 1)}
+        disabled={page <= 1}
+        aria-label={prevAria}
+        className={`${base} hairline text-brandy/85 hover:border-copper/60 hover:text-cream disabled:opacity-35 disabled:pointer-events-none`}
+      >
+        <svg className="mr-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        <span className="hidden sm:inline">{prevLabel}</span>
+      </button>
+
+      {items.map((it, idx) =>
+        it === "…" ? (
+          <span key={`gap-${idx}`} className="px-2 text-brandy/40 select-none">
+            …
+          </span>
+        ) : (
+          <button
+            key={it}
+            type="button"
+            onClick={() => onChange(it)}
+            aria-current={it === page ? "page" : undefined}
+            aria-label={pageAria(it)}
+            className={`${base} min-w-[2.5rem] tabular-nums ${
+              it === page
+                ? "bg-copper text-pine-tree border-transparent font-semibold"
+                : "hairline text-brandy/85 hover:border-copper/60 hover:text-cream"
+            }`}
+          >
+            {it}
+          </button>
+        ),
+      )}
+
+      <button
+        type="button"
+        onClick={() => onChange(page + 1)}
+        disabled={page >= totalPages}
+        aria-label={nextAria}
+        className={`${base} hairline text-brandy/85 hover:border-copper/60 hover:text-cream disabled:opacity-35 disabled:pointer-events-none`}
+      >
+        <span className="hidden sm:inline">{nextLabel}</span>
+        <svg className="ml-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+    </nav>
+  );
 }

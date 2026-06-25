@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Tel Aviv 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Tel Aviv per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "Israel's business capital, with the most developed IT industry in the Middle East and a large Russian-speaking community. For Jews — a path through repatriation; for everyone else — through a work visa and startups.",
+  "climate": "+20°C avg.",
+  "language": "Hebrew, English, Russian",
+  "currency": "Shekel, ILS",
+  "population": "470 thsd",
+  "flight_from_moscow": "4 hours",
+  "pros": [
+    "The most developed IT industry in the Middle East with salaries in dollars",
+    "A large Russian-speaking community and accessibility of the language",
+    "A warm climate with a 7-month swimming season",
+    "A repatriation programme for Jews (the Law of Return)",
+    "Access to the Schengen Area for holders of an Israeli passport"
+  ],
+  "cons": [
+    "Some of the highest rental prices in the world",
+    "Geopolitical tension and the missile threat",
+    "Religious restrictions on the Sabbath and holidays",
+    "A hot, humid summer of +35°C and stuffiness"
+  ],
+  "best_places": [
+    { "name": "Florentin", "description": "A bohemian southern district of Tel Aviv with graffiti, bars, galleries and street food." },
+    { "name": "Neve Tzedek", "description": "The first Jewish neighbourhood beyond the walls of Jaffa: boutiques, cafés, the Suzanne Dellal concert hall." },
+    { "name": "Mindspace Rothschild", "description": "The IT industry's main coworking space on Rothschild Boulevard with an active community." },
+    { "name": "Carmel", "description": "The city's main market: spices, fruit, falafel, vintage and the atmosphere of the old Levant." }
+  ],
+  "visa_steps": [
+    { "title": "Repatriation (Aliyah)", "description": "For people with Jewish roots: filing documents through the Sokhnut, a review, an A-1 visa, then citizenship." },
+    { "title": "B-1 work visa", "description": "Through an employer's invitation for specialists. Processing takes 2–4 months." },
+    { "title": "Teudat Zehut", "description": "An internal identity document. Without it you can't open an account or sign a rental agreement." },
+    { "title": "Bank account", "description": "Bank Hapoalim, Bank Leumi, Discount Bank — open accounts with a teudat zehut and residence permit." },
+    { "title": "Bituach Leumi", "description": "Registration with the social insurance fund. Grants access to state healthcare after 6 months." }
+  ],
+  "faq": [
+    { "question": "Who qualifies for repatriation to Tel Aviv?", "answer": "Those with Jewish roots up to a great-grandparent. Documents are reviewed by the Sokhnut and the Ministry of Aliyah." },
+    { "question": "Can I work without Hebrew in Tel Aviv?", "answer": "Yes, in IT, startups and high-tech English is the main language. But for everyday life and healthcare Hebrew is essential." },
+    { "question": "How much does rent cost in Tel Aviv?", "answer": "From 1,500 dollars for a studio, from 2,500 for a one-bedroom in the centre. One of the most expensive rental markets in the world." },
+    { "question": "Which banks are in Tel Aviv?", "answer": "Bank Leumi, Hapoalim, Discount, Mizrahi-Tefahot. All accept citizens with a teudat zehut; it's harder for foreigners." },
+    { "question": "Is it safe in Tel Aviv?", "answer": "The city is safe in terms of everyday crime, but there are periods of escalation (rocket attacks). There are bomb shelters everywhere." },
+    { "question": "What about children in Tel Aviv?", "answer": "Russian schools and groups are available (Shuvu, Shevil), as well as private international ones with tuition from 12,000 dollars a year." }
+  ],
+  "reviews": [
+    { "profession": "developer at Wix", "text": "I went through Aliyah within a year: citizenship, a mortgage, a job at a startup. Salary in dollars, my daughter at the Shevil school. The downside — the cost of living is very high." },
+    { "profession": "product manager", "text": "I got a work visa through a startup and pay 3,500 dollars for an apartment by the sea. The language is hard, but the IT scene in Tel Aviv is unique." }
+  ]
+}

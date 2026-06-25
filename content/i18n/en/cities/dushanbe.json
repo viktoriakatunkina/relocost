@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Dushanbe 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Dushanbe per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Tajikistan in a mountain valley: visa-free entry for Russian citizens, Russian spoken in daily life and very low prices. A warm climate and friendly people, but provincial infrastructure and a limited choice of services.",
+  "climate": "+15°C avg.",
+  "language": "Tajik, Russian",
+  "currency": "Somoni, TJS",
+  "population": "1 mln",
+  "flight_from_moscow": "4.5 hours",
+  "pros": [
+    "Visa-free for Russian citizens, direct flights from Moscow",
+    "Russian spoken in daily life and a friendly attitude towards Russians",
+    "Very low prices for housing and food",
+    "A warm climate and mountains all around",
+    "Simple registration and a quiet life"
+  ],
+  "cons": [
+    "Provincial infrastructure and services",
+    "A modest job market and IT scene",
+    "Hot summers and interruptions to utility services",
+    "Few international banks and payment options"
+  ],
+  "best_places": [
+    { "name": "Rudaki Avenue", "description": "The capital's main green boulevard with parks, fountains and cafés." },
+    { "name": "Rudaki Park and the flagpole", "description": "A large park with one of the tallest flagpoles in the world." },
+    { "name": "National Museum of Tajikistan", "description": "The country's largest museum, covering history, art and a famous reclining Buddha." },
+    { "name": "Green Bazaar (Shohmansur)", "description": "A vibrant market full of spices, fruit and dried fruit." }
+  ],
+  "visa_steps": [
+    { "title": "Visa-free entry", "description": "Russian citizens don't need a visa — entry is by passport." },
+    { "title": "Registration", "description": "You must register within a few days of arrival (often handled by the landlord or hotel)." },
+    { "title": "Renting a home", "description": "Apartments and houses rent cheaply; the lease is the basis for registration." },
+    { "title": "Bank account and connectivity", "description": "A local SIM card is issued with a passport; accounts are opened at local banks (Amonatbonk, Spitamen)." },
+    { "title": "Residence permit (optional)", "description": "Through employment, business or family reunification at the migration authorities." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Dushanbe?", "answer": "No, entry is visa-free for Russian citizens. You do need to register with the migration authorities in the first few days." },
+    { "question": "How much does it cost to live in Dushanbe?", "answer": "Very cheap — one of the most budget-friendly options in the region. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Dushanbe?", "answer": "The official language is Tajik, but Russian is widely understood and used in daily life." },
+    { "question": "Can I pay with a Russian card in Dushanbe?", "answer": "Russian cards work in a limited way; you'll usually need cash somoni or a local card." },
+    { "question": "What is the climate like in Dushanbe?", "answer": "Subtropical continental: hot, dry summers and mild winters, with mountains all around." },
+    { "question": "How do I get to Dushanbe?", "answer": "There are direct flights from Moscow and other Russian cities, with a flight time of about 4.5 hours." }
+  ],
+  "reviews": [
+    { "profession": "engineer", "text": "Dushanbe surprised me with its greenery and calm. Russian is in common use, prices are minimal and people are welcoming. The downside is the lack of modern services and an IT scene." },
+    { "profession": "teacher", "text": "I moved for the warmth and the affordable life. Adapting was easy thanks to the language. What I miss are big banks and the usual online payments." }
+  ]
+}

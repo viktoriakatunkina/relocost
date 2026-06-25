@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Phnom Penh 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Phnom Penh per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "The capital of Cambodia at the confluence of rivers: cheap living, a simple visa on arrival and the wide use of US dollars. A growing expat community; the downsides are the heat, chaotic traffic and basic infrastructure.",
+  "climate": "+28°C avg.",
+  "language": "Khmer, English",
+  "currency": "Riel, KHR (and US dollars)",
+  "population": "2.1 mln",
+  "flight_from_moscow": "12 hours with a connection",
+  "pros": [
+    "Very cheap living",
+    "A simple visa on arrival or e-visa",
+    "The wide use of US dollars",
+    "A growing community of expats and coffee shops",
+    "A friendly attitude towards foreigners"
+  ],
+  "cons": [
+    "Heat and high humidity",
+    "Chaotic traffic and basic infrastructure",
+    "Mid-level healthcare — for complex cases people go to Bangkok",
+    "A language barrier outside tourist spots"
+  ],
+  "best_places": [
+    { "name": "Royal Palace", "description": "The king's working residence with the Silver Pagoda in the city centre." },
+    { "name": "Sisowath Quay", "description": "A promenade at the confluence of the Mekong and Tonle Sap rivers with cafés and sunsets." },
+    { "name": "Russian Market (Psar Toul Tom Poung)", "description": "A market popular with foreigners, with clothes, souvenirs and food." },
+    { "name": "BKK1", "description": "A green district with coffee shops, coworkings and rentals for expats." }
+  ],
+  "visa_steps": [
+    { "title": "Visa on arrival / e-visa", "description": "Russian citizens can get a tourist visa on arrival or online for 30 days." },
+    { "title": "Business visa (type E)", "description": "For a long stay people get a type E visa — it can be extended for a year without leaving." },
+    { "title": "Renting housing", "description": "Apartments are rented monthly; the BKK1 and Toul Kork areas are popular." },
+    { "title": "Money", "description": "US dollars are in use; local riels are given as change. A foreign bank card is needed." },
+    { "title": "Extension", "description": "A long-term visa is extended through agencies without leaving the country." }
+  ],
+  "faq": [
+    { "question": "Do Russian citizens need a visa for Phnom Penh?", "answer": "Yes, a simple visa on arrival or an e-visa for 30 days. For long-term living people get a type E business visa." },
+    { "question": "How much does it cost to live in Phnom Penh?", "answer": "Very cheap — one of the most budget-friendly options in Asia. The exact budget is in the calculator above." },
+    { "question": "What language is spoken in Phnom Penh?", "answer": "Khmer; English is common in tourism and business." },
+    { "question": "Can I pay with a Russian card in Phnom Penh?", "answer": "No, Russian cards don't work. US dollars in cash and a foreign bank card are in use." },
+    { "question": "What is the climate like in Phnom Penh?", "answer": "Tropical: hot year-round, with distinct dry and rainy seasons." },
+    { "question": "Why do people pay in dollars in Cambodia?", "answer": "The US dollar is de facto the second currency: prices are often in dollars, and riels are given as change." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Phnom Penh is cheap and relaxed, dollars everywhere, the visa is no problem. The downsides — heat, dust and traffic, and for serious healthcare I fly to Bangkok." },
+    { "profession": "copywriter", "text": "The city isn't perfect, but it's lively and affordable, and the community is growing. In the BKK1 area there are coffee shops and coworkings. You don't get used to the chaos right away." }
+  ]
+}

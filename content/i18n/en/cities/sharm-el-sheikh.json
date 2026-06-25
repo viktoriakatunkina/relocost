@@ -1,0 +1,48 @@
+{
+  "seo_title": "Cost of Living in Sharm El Sheikh 2026: Visa, Prices, Reviews | Relocost",
+  "seo_description": "How much does it cost to live in Sharm El Sheikh per month, do Russians need a visa, work, rent and reviews from those who relocated. A realistic moving budget in the Relocost calculator.",
+  "intro_text": "A Sinai resort with the best diving in Egypt: a visa on arrival (simplified entry within Sinai), a warm sea and well-developed tourist infrastructure. The downsides are its isolation from a big city and the summer heat.",
+  "climate": "+26°C avg.",
+  "language": "Arabic, English, Russian",
+  "currency": "Pound, EGP",
+  "population": "75 thousand",
+  "flight_from_moscow": "5 hours",
+  "pros": [
+    "Simplified Sinai entry and a visa on arrival",
+    "The best diving and coral reefs in Egypt",
+    "A warm sea and sunshine almost year-round",
+    "Well-developed tourist infrastructure",
+    "A Russian-speaking community and services"
+  ],
+  "cons": [
+    "Isolation from a big city",
+    "Very hot summers",
+    "Resort prices in tourist areas",
+    "Mid-level healthcare"
+  ],
+  "best_places": [
+    { "name": "Naama Bay", "description": "The central resort area with a promenade, cafés and nightlife." },
+    { "name": "Ras Mohammed", "description": "A national park with the best diving reefs at the southern tip of Sinai." },
+    { "name": "Old Market", "description": "Colourful stalls with spices, souvenirs and local food." },
+    { "name": "Sharks Bay", "description": "A quiet seaside district near the airport." }
+  ],
+  "visa_steps": [
+    { "title": "Entry", "description": "Simplified entry applies to Sinai; for travel around the country you get a visa on arrival." },
+    { "title": "Renting a home", "description": "Studios and apartments are rented monthly, cheaper out of season." },
+    { "title": "Connectivity and money", "description": "A local SIM card is inexpensive; you need cash pounds and a foreign bank card." },
+    { "title": "Extension", "description": "A tourist visa can be extended at the passport office." },
+    { "title": "Long-term stay", "description": "For settled life, consider a residence permit through property or employment." }
+  ],
+  "faq": [
+    { "question": "Do Russians need a visa for Sharm El Sheikh?", "answer": "Simplified entry applies to the Sinai coast; for travel further afield you need a visa on arrival." },
+    { "question": "How much does it cost to live in Sharm El Sheikh?", "answer": "Affordable out of season, more expensive in tourist areas. See the exact budget in the calculator above." },
+    { "question": "Which language is spoken in Sharm El Sheikh?", "answer": "Arabic; English and Russian are widely used in tourism." },
+    { "question": "Can I pay with a Russian card in Sharm El Sheikh?", "answer": "No, Russian cards don't work. You need cash pounds and a foreign bank card." },
+    { "question": "What is the climate like in Sharm El Sheikh?", "answer": "Coastal desert: hot summers and warm, mild winters." },
+    { "question": "How does Sharm differ from Hurghada?", "answer": "Sharm has better diving and reefs and is more isolated; Hurghada is larger and closer to a big city." }
+  ],
+  "reviews": [
+    { "profession": "remote developer", "text": "Sharm means world-class reefs and a warm sea in winter. The downside is the isolation: there's little infrastructure beyond the resort, and the summers are very hot." },
+    { "profession": "blogger", "text": "I wintered in Naama Bay: sun, diving, a Russian-speaking environment. Prices in tourist spots bite, but out of season living is quite affordable." }
+  ]
+}
