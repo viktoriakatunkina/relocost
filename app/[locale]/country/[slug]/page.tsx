@@ -34,6 +34,8 @@ import { localizeCountryContent } from "@/lib/content-i18n";
 import { countryName as localizedCountryName } from "@/lib/i18n-content";
 
 export const revalidate = 86400;
+// Страны рендерятся по первому запросу и кешируются ISR.
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return [];

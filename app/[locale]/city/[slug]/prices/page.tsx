@@ -15,6 +15,8 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 86400;
+// Страницы цен рендерятся по первому запросу и кешируются ISR.
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return [];

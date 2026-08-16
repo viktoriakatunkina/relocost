@@ -29,6 +29,8 @@ import { buildAlternates } from "@/lib/i18n-seo";
 import { localizeBlogPost } from "@/lib/content-i18n";
 
 export const revalidate = 3600;
+// Неизвестные slug рендерятся по первому запросу и кешируются ISR.
+export const dynamicParams = true;
 
 // Консолидация дублей: слабая статья отдаёт canonical на более полную версию,
 // чтобы они не каннибализировали друг друга в поиске. Ключ — slug-дубль,
@@ -38,11 +40,10 @@ const BLOG_CANONICAL: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-  // Пре-генерируем 500 новейших статей. Остальные отдаются ISR при первом
-  // запросе и кешируются (revalidate = 3600). Лимит 500 покрывает текущий контент
-  // и оставляет запас для роста без перехода на полный динамический рендер.
-  const slugs = await getAllPostSlugs(500);
-  // en/uz блог генерим динамически (ru-фолбэк, трафика нет, Supabase-таймауты на VPS)
+  // Пре-генерируем топ-30 новейших статей. Остальные рендерятся ISR при первом
+  // запросе и кешируются (revalidate = 3600). Было 500 — сократили для быстрого билда.
+  // en/uz блог генерим динамически (ru-фолбэк, трафика нет, Supabase-таймауты на VPS).
+  const slugs = await getAllPostSlugs(30);
   return slugs.map((slug) => ({ locale: "ru", slug }));
 }
 
