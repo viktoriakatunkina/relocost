@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   coverGradient,
-  getAllPostSlugs,
+
   getCitiesByCountry,
   getCityForPost,
   getPostBySlug,

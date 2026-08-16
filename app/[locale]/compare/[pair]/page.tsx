@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
-  topCompareParams,
   loadCompare,
   parsePair,
   compareSummary,
@@ -24,7 +23,7 @@ import { buildAlternates } from "@/lib/i18n-seo";
 import { cityName } from "@/lib/i18n-content";
 
 export const revalidate = 86400;
-// Прегенерим статикой только пары топ-городов (см. topCompareParams).
+// Все пары сравнения генерируются ISR при первом запросе (dynamicParams=true).
 // Остальные пары догенерятся при первом запросе и закешируются (ISR).
 // Параметры размножаем по локалям, чтобы ×3 не взрывало сборку — топ-пар немного.
 export const dynamicParams = true;

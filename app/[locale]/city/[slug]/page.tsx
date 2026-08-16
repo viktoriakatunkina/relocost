@@ -77,10 +77,19 @@ export const revalidate = 86400;
 // Неизвестные slug рендерятся по первому запросу и кешируются ISR.
 export const dynamicParams = true;
 
+// Топ-40 городов предгенерируются при сборке (без Supabase-вызова).
+// Остальные — ISR при первом запросе (dynamicParams=true).
+const PRERENDER_CITY_SLUGS = [
+  "tbilisi", "belgrade", "dubai", "bali", "yerevan", "limassol", "almaty",
+  "tashkent", "istanbul", "bangkok", "lisbon", "berlin", "prague", "budapest",
+  "warsaw", "amsterdam", "barcelona", "milan", "paris", "vienna",
+  "riga", "tallinn", "vilnius", "krakow", "athens", "sofia", "bucharest",
+  "zagreb", "bratislava", "kyiv", "astana", "bishkek", "dushanbe", "baku",
+  "ankara", "cairo", "nairobi", "cape-town", "delhi", "ho-chi-minh-city",
+];
+
 export function generateStaticParams() {
-  // Все города генерируются ISR при первом запросе (dynamicParams=true).
-  // Supabase-таймауты при сборке устранены полностью.
-  return [];
+  return PRERENDER_CITY_SLUGS.map((slug) => ({ locale: "ru", slug }));
 }
 
 export async function generateMetadata({
