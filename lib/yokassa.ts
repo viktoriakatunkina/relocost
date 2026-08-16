@@ -10,25 +10,38 @@ import { randomUUID } from "crypto";
 
 const API_BASE = "https://api.yookassa.ru/v3";
 
-export type PackageType = "places" | "guide" | "budget" | "bundle";
+export type PackageType =
+  | "places"
+  | "budget"
+  | "bundle"
+  | "country_cities"
+  | "country_overview";
 
 /** Авторитетные цены (₽). Берутся ТОЛЬКО с сервера — клиенту не доверяем. */
 export const PACKAGE_PRICES: Record<PackageType, number> = {
-  places: 79,
-  guide: 149,
-  budget: 199,
-  bundle: 299,
+  places: 19,
+  budget: 49,
+  bundle: 59,
+  country_cities: 49,
+  country_overview: 29,
 };
 
 export const PACKAGE_LABELS: Record<PackageType, string> = {
   places: "Лучшие места",
-  guide: "Гайд по жизни",
-  budget: "Точный бюджет",
-  bundle: "Все вместе",
+  budget: "Все расходы",
+  bundle: "Расходы + Места",
+  country_cities: "Рейтинг городов",
+  country_overview: "О стране",
 };
 
 export function isValidPackage(v: unknown): v is PackageType {
-  return v === "places" || v === "guide" || v === "budget" || v === "bundle";
+  return (
+    v === "places" ||
+    v === "budget" ||
+    v === "bundle" ||
+    v === "country_cities" ||
+    v === "country_overview"
+  );
 }
 
 /** Настроены ли ключи ЮKassa. Если нет — фронт работает в demo-режиме. */

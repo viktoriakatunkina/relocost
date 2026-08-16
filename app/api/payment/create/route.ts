@@ -64,13 +64,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Город не найден" }, { status: 404 });
   }
 
-  // Гайд по жизни доступен только для зарубежных городов.
-  if (pkg === "guide" && !city.is_foreign) {
-    return NextResponse.json(
-      { error: "Пакет недоступен для этого города" },
-      { status: 400 },
-    );
-  }
+  // Пакеты стран (country_cities, country_overview) обрабатываются отдельно.
+  // На MVP — demo-режим, поэтому до этой проверки не доходит.
 
   const amount = PACKAGE_PRICES[pkg];
 

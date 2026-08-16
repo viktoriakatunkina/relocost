@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PACKAGES, type PackageType } from "@/lib/unlocked";
+import { CITY_PACKAGES, type CityPackageType } from "@/lib/unlocked";
 import { PaymentModal } from "./PaymentModal";
 
 export function LockedSection({
@@ -11,12 +11,12 @@ export function LockedSection({
   children,
 }: {
   slug: string;
-  pkg: PackageType;
+  pkg: CityPackageType;
   hint?: string;
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
-  const meta = PACKAGES[pkg];
+  const meta = CITY_PACKAGES[pkg];
 
   return (
     <>

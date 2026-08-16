@@ -2,8 +2,8 @@ import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { CityWithMinRent } from "@/lib/types";
-import { formatRub } from "@/lib/cities";
-import { photoSrc } from "@/lib/photo";
+import { formatMinRent } from "@/lib/cities";
+import { cityPhotoSrc } from "@/lib/photo";
 import { getDifficulty } from "@/lib/difficulty";
 import { getVisa } from "@/lib/visa";
 import { currencyLabel } from "@/lib/currency";
@@ -35,14 +35,14 @@ export function CityCard({
   const tc = useTranslations("common");
 
   const gradient = GRADIENTS[index % GRADIENTS.length];
-  const photo = photoSrc(city.image_url, city.unsplash_url, { w: 720, q: 80 });
+  const photo = cityPhotoSrc(city.slug, city.image_url, city.unsplash_url, { w: 720, q: 80 });
   const difficulty = getDifficulty(city);
   const visa = getVisa(city);
   const name = cityName(city, locale);
   const country = countryName(city, locale);
 
   return (
-    <div className="group relative aspect-[4/5] overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1 hover:shadow-card">
+    <div className="group relative aspect-[3/4] md:aspect-[4/5] overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1 hover:shadow-card">
       <FavoriteButton slug={city.slug} cityName={name} variant="card" />
       <Link href={`/city/${city.slug}`} className="absolute inset-0 block">
         {photo ? (
@@ -61,7 +61,7 @@ export function CityCard({
         <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
         <div className="absolute inset-0 ring-1 ring-inset ring-cream/5 rounded-3xl" />
 
-        <div className="relative h-full flex flex-col justify-between p-5 md:p-6">
+        <div className="relative h-full flex flex-col justify-between p-4 md:p-6">
           <div className="flex items-start justify-between gap-3">
             <span
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill bg-black/45 backdrop-blur-md text-xs uppercase tracking-[0.15em] text-white font-semibold mr-12 max-w-[70%] border border-white/15 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"
@@ -73,13 +73,13 @@ export function CityCard({
 
           <div className="space-y-3">
             <div>
-              <h3 className="font-serif text-[2.2rem] md:text-[2.6rem] leading-[1] text-cream drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">
+              <h3 className="font-serif text-[1.8rem] md:text-[2.6rem] leading-[1.05] text-cream drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">
                 {name}
               </h3>
               {city.min_rent > 0 && (
                 <p className="mt-2 text-copper text-sm font-medium tracking-wide drop-shadow-[0_1px_8px_rgba(0,0,0,0.7)]">
                   {tc("rentFrom")}{" "}
-                  <span className="text-cream font-semibold">{formatRub(city.min_rent)}</span>
+                  <span className="text-cream font-semibold">{formatMinRent(city.min_rent, city.currency)}</span>
                   {tc("perMonth")}
                 </p>
               )}

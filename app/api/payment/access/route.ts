@@ -64,9 +64,7 @@ export async function POST(req: Request) {
         .filter((r) => (r.email ?? "").trim().toLowerCase() === norm)
         .map((r) => r.package_type),
     ),
-  ).filter((p): p is "places" | "guide" | "budget" | "bundle" =>
-    isValidPackage(p),
-  );
+  ).filter((p) => isValidPackage(p));
 
   return NextResponse.json({ packages });
 }

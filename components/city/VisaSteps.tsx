@@ -1,7 +1,3 @@
-"use client";
-
-import { useUnlocked, isUnlocked } from "@/lib/unlocked";
-import { LockedSection } from "@/components/freemium/LockedSection";
 import type { CityContent } from "@/lib/cities-content";
 import { typo } from "@/lib/typography";
 
@@ -30,22 +26,15 @@ function StepItem({
 }
 
 export function VisaSteps({
-  slug,
   isForeign,
   steps,
 }: {
-  slug: string;
+  slug?: string;
   isForeign: boolean;
   steps: CityContent["visa_steps"];
 }) {
-  const unlocked = useUnlocked(slug);
-  const opened = isUnlocked(unlocked, "guide");
-  const useLock = isForeign;
-  const free = useLock ? steps.slice(0, 2) : steps;
-  const locked = useLock ? steps.slice(2) : [];
-
   return (
-    <section className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
+    <section id="visa" className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
       <span className="eyebrow">Документы</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
         {isForeign ? "Виза и легализация" : "Регистрация и быт"}
@@ -59,34 +48,10 @@ export function VisaSteps({
       </p>
 
       <ol className="space-y-4">
-        {free.map((s, i) => (
+        {steps.map((s, i) => (
           <StepItem key={i} step={s} index={i} />
         ))}
       </ol>
-
-      {locked.length > 0 && (
-        <div className="mt-5">
-          {opened ? (
-            <ol className="space-y-4" start={free.length + 1}>
-              {locked.map((s, i) => (
-                <StepItem key={i} step={s} index={i + free.length} />
-              ))}
-            </ol>
-          ) : (
-            <LockedSection
-              slug={slug}
-              pkg="guide"
-              hint={`Еще ${locked.length} шага: открытие счета, аренда с регистрацией, путь к ВНЖ.`}
-            >
-              <ol className="space-y-4">
-                {locked.map((s, i) => (
-                  <StepItem key={i} step={s} index={i + free.length} />
-                ))}
-              </ol>
-            </LockedSection>
-          )}
-        </div>
-      )}
     </section>
   );
 }

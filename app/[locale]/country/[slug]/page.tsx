@@ -6,30 +6,37 @@ import {
   COUNTRY_NAMES_RU,
 } from "@/lib/countries-content";
 import {
-  getAllCountrySlugs,
   getCitiesInCountry,
   getCountryMeta,
 } from "@/lib/countries";
 import { CountryHero } from "@/components/country/CountryHero";
+import { CountryVerdict } from "@/components/country/CountryVerdict";
 import { CountryFAQ } from "@/components/country/CountryFAQ";
+import { CountryDynamicFAQ } from "@/components/country/CountryDynamicFAQ";
+import { DataSourceBadge } from "@/components/DataSourceBadge";
 import { ProsCons } from "@/components/city/ProsCons";
+import { buildCountryVerdictBlock } from "@/lib/city-verdict-block";
+import { getCityQuality } from "@/lib/city-quality";
 import { CountryArticles } from "@/components/country/CountryArticles";
 import { getPostsForCountry } from "@/lib/blog";
 import { CityCard } from "@/components/CityCard";
+import { LockedCities } from "@/components/country/LockedCities";
+import { LockedCountryFacts } from "@/components/country/LockedCountryFacts";
+import { CountryStickyBar } from "@/components/freemium/CountryStickyBar";
+import { CrossLinks } from "@/components/CrossLinks";
+import { CountryLegal } from "@/components/country/CountryLegal";
+import { TrueSizeMap } from "@/components/country/TrueSizeMap";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
-import { defaultLocale, routing, type Locale } from "@/i18n/routing";
+import { defaultLocale, type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { localizeCountryContent } from "@/lib/content-i18n";
 import { countryName as localizedCountryName } from "@/lib/i18n-content";
 
 export const revalidate = 86400;
 
-export async function generateStaticParams() {
-  const slugs = await getAllCountrySlugs();
-  return routing.locales.flatMap((locale) =>
-    slugs.map((slug) => ({ locale, slug })),
-  );
+export function generateStaticParams() {
+  return [];
 }
 
 export async function generateMetadata({
@@ -64,9 +71,10 @@ export default async function CountryPage({
   params: { locale: Locale; slug: string };
 }) {
   setRequestLocale(params.locale);
-  const [tc, t] = await Promise.all([
+  const [tc, t, tVerdict] = await Promise.all([
     getTranslations("common"),
     getTranslations("country"),
+    getTranslations("countryVerdict"),
   ]);
 
   const [meta, cities, rawContent] = await Promise.all([
@@ -102,8 +110,56 @@ export default async function CountryPage({
   const gradient =
     content?.hero_gradient ?? "from-kombu-green/60 via-pine-tree to-pine-tree";
 
+  // Агрегируем quality-данные городов страны для блока вердикта.
+  const qualityList = cities.map((c) => getCityQuality(c.slug)).filter(Boolean);
+  const avgQuality = (key: keyof NonNullable<ReturnType<typeof getCityQuality>>) => {
+    const vals = qualityList.map((q) => q![key]) as number[];
+    return vals.length > 0 ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+  };
+  const BUDGET_CHEAP = 60_000;
+  const hasCheapCities = cities.some((c) => (c.min_rent ?? 0) > 0 && (c.min_rent ?? 0) < BUDGET_CHEAP);
+
+  const countryVerdictBlock = buildCountryVerdictBlock(
+    {
+      countrySlug:        params.slug,
+      countryName,
+      isForeignCountry:   meta.is_foreign,
+      difficulty_overall: content?.difficulty_overall ?? 3,
+      hasCheapCities,
+      avgSafety:          avgQuality("safety"),
+      avgClimate:         avgQuality("climate_comfort"),
+      avgMedicine:        avgQuality("medicine"),
+      cityCount:          cities.length,
+    },
+    {
+      eyebrow:             tVerdict("eyebrow"),
+      title:               tVerdict("title"),
+      prosVisuFree:        tVerdict("prosVisuFree"),
+      prosPopular:         tVerdict("prosPopular"),
+      prosMildClimate:     tVerdict("prosMildClimate"),
+      prosHighSafety:      tVerdict("prosHighSafety"),
+      prosGoodMedicine:    tVerdict("prosGoodMedicine"),
+      prosCheapCities:     tVerdict("prosCheapCities"),
+      consVisaNeeded:      tVerdict("consVisaNeeded"),
+      consHighDifficulty:  tVerdict("consHighDifficulty"),
+      consLanguageBarrier: tVerdict("consLanguageBarrier"),
+      consHarshClimate:    tVerdict("consHarshClimate"),
+      consLittleData:      tVerdict("consLittleData"),
+      audienceFreelancers: tVerdict("audienceFreelancers"),
+      audienceFamilies:    tVerdict("audienceFamilies"),
+      audiencePensioners:  tVerdict("audiencePensioners"),
+      audienceBudget:      tVerdict("audienceBudget"),
+      audienceNomads:      tVerdict("audienceNomads"),
+      phraseTemplate:      tVerdict("phraseTemplate"),
+      advantageEasy:       tVerdict("advantageEasy"),
+      advantagePopular:    tVerdict("advantagePopular"),
+      advantageSafe:       tVerdict("advantageSafe"),
+      advantageClimate:    tVerdict("advantageClimate"),
+    },
+  );
+
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <Breadcrumbs
         items={[
           { name: tc("home"), href: "/" },
@@ -119,49 +175,76 @@ export default async function CountryPage({
         citiesCountLabel={t("citiesInCatalog", { count: cities.length })}
       />
 
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-3 pb-1">
+        <DataSourceBadge
+          updatedLabel={t("dataUpdated")}
+          sourceLabel={t("dataSource")}
+        />
+      </div>
+
       {content && (
-        <section className="max-w-4xl mx-auto px-6 pt-16">
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 md:pt-16">
           <p className="text-brandy/90 text-lg md:text-xl leading-relaxed">
             {content.intro}
           </p>
         </section>
       )}
 
-      <section className="max-w-6xl mx-auto px-6 pt-16">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 md:pt-16 overflow-hidden md:overflow-visible">
         <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
           {t("citiesIn", { country: countryNameInCities })}
         </h2>
         {cities.length === 0 ? (
           <p className="text-brandy/70">{t("citiesEmpty")}</p>
+        ) : cities.length <= 3 ? (
+          <>
+            {/* Если городов не больше 3 — показываем все бесплатно */}
+            <div className="flex overflow-x-auto gap-4 snap-x snap-mandatory scrollbar-none pb-2 -mx-4 sm:-mx-6 px-4 sm:px-6 md:hidden">
+              {cities.map((c, i) => (
+                <div key={c.id} className="shrink-0 w-[78vw] max-w-[320px] snap-start">
+                  <CityCard city={c} index={i} />
+                </div>
+              ))}
+            </div>
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {cities.map((c, i) => (
+                <CityCard key={c.id} city={c} index={i} />
+              ))}
+            </div>
+          </>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
-            {cities.map((c, i) => (
-              <CityCard key={c.id} city={c} index={i} />
-            ))}
-          </div>
+          <LockedCities slug={params.slug} cities={cities} />
         )}
       </section>
 
       {content && (
-        <section className="max-w-6xl mx-auto px-6 pt-20">
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 md:pt-20">
           <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
             {t("aboutTitle")}
           </h2>
-          <div className="grid md:grid-cols-2 gap-5">
-            <Fact title={t("factClimate")} text={content.climate} />
-            <Fact title={t("factMentality")} text={content.mentality} />
-            <Fact title={t("factLanguage")} text={content.language_note} />
-            <Fact title={t("factVisa")} text={content.visa_note} accent />
-            {content.residency_note && (
-              <Fact title={t("factResidency")} text={content.residency_note} />
-            )}
-            {content.taxes_note && (
-              <Fact title={t("factTaxes")} text={content.taxes_note} />
-            )}
-            {content.best_time && (
-              <Fact title={t("factBestTime")} text={content.best_time} />
-            )}
-          </div>
+          {/* Первые 2 факта — бесплатно, остальные — за paywall country_overview */}
+          {(() => {
+            const optionals = [
+              content.residency_note ? { key: "residency", title: t("factResidency"), text: content.residency_note } : null,
+              content.taxes_note     ? { key: "taxes",     title: t("factTaxes"),     text: content.taxes_note }     : null,
+              content.best_time      ? { key: "bestTime",  title: t("factBestTime"),  text: content.best_time }      : null,
+            ].filter(Boolean) as { key: string; title: string; text: string }[];
+            const lastIsOrphan = optionals.length % 2 !== 0;
+            const allFacts = [
+              { key: "climate",   title: t("factClimate"),   text: content.climate,       accent: false, wide: false },
+              { key: "mentality", title: t("factMentality"), text: content.mentality,     accent: false, wide: false },
+              { key: "language",  title: t("factLanguage"),  text: content.language_note, accent: false, wide: false },
+              { key: "visa",      title: t("factVisa"),      text: content.visa_note,     accent: true,  wide: false },
+              ...optionals.map((o, i) => ({
+                key: o.key,
+                title: o.title,
+                text: o.text,
+                accent: false,
+                wide: lastIsOrphan && i === optionals.length - 1,
+              })),
+            ];
+            return <LockedCountryFacts slug={params.slug} facts={allFacts} />;
+          })()}
         </section>
       )}
 
@@ -177,7 +260,7 @@ export default async function CountryPage({
       ) : null}
 
       {content && (
-        <section className="max-w-6xl mx-auto px-6 pt-20">
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 md:pt-20">
           <h2 className="font-serif text-3xl md:text-4xl text-cream mb-3">
             {t("difficultyTitle")}
           </h2>
@@ -204,6 +287,27 @@ export default async function CountryPage({
         </section>
       )}
 
+      {countryVerdictBlock.hasEnoughData && (
+        <CountryVerdict
+          block={countryVerdictBlock}
+          t={{
+            eyebrow:       tVerdict("eyebrow"),
+            title:         tVerdict("title"),
+            prosTitle:     tVerdict("prosTitle"),
+            consTitle:     tVerdict("consTitle"),
+            audienceTitle: tVerdict("audienceTitle"),
+          }}
+        />
+      )}
+
+      <TrueSizeMap
+        countrySlug={params.slug}
+        countryName={countryName}
+        locale={params.locale}
+        titleRu={t("trueSizeTitle")}
+        titleEn={t("trueSizeTitle")}
+      />
+
       {content && (
         <CountryFAQ
           content={content}
@@ -218,37 +322,62 @@ export default async function CountryPage({
         />
       )}
 
+      {content && (
+        <CountryLegal
+          countryName={countryName}
+          visa={content.visa_note}
+          residency={content.residency_note}
+          taxes={content.taxes_note}
+        />
+      )}
+
+      <CountryDynamicFAQ
+        countryName={countryName}
+        cities={cities}
+        eyebrow={t("dynFaqEyebrow")}
+        title={t("dynFaqTitle", { country: countryName })}
+        t={{
+          dynFaqQ1: t("dynFaqQ1"),
+          dynFaqA1: t("dynFaqA1"),
+          dynFaqQ2: t("dynFaqQ2"),
+          dynFaqA2: t("dynFaqA2"),
+          dynFaqQ3: t("dynFaqQ3"),
+          dynFaqA3: t("dynFaqA3"),
+          dynFaqQ4: t("dynFaqQ4"),
+          dynFaqA4: t("dynFaqA4"),
+          dynFaqQ5: t("dynFaqQ5"),
+          dynFaqA5: t("dynFaqA5"),
+        }}
+      />
+
       <CountryArticles
         posts={countryPosts}
         title={t("articlesTitle", { country: countryName })}
       />
 
-      <div className="pt-24">
+      <CrossLinks
+        links={[
+          { href: "/rating", label: "Рейтинг городов по стоимости" },
+          { href: "/countries", label: "Все страны" },
+          { href: "/search", label: "Подобрать город" },
+          ...(cities.length >= 2
+            ? [
+                {
+                  href: `/compare/${cities[0].slug}-vs-${cities[1].slug}`,
+                  label: `${cities[0].name_ru} или ${cities[1].name_ru}`,
+                },
+              ]
+            : []),
+        ]}
+      />
+
+      <div className="pt-12 md:pt-24">
         <Footer />
       </div>
+
+      {/* Paywall-панель: показывается, пока есть незакрытые продукты страны */}
+      {cities.length > 3 && <CountryStickyBar slug={params.slug} />}
     </main>
   );
 }
 
-function Fact({
-  title,
-  text,
-  accent,
-}: {
-  title: string;
-  text: string;
-  accent?: boolean;
-}) {
-  return (
-    <div
-      className={`p-6 md:p-7 rounded-2xl border ${
-        accent
-          ? "bg-copper/15 border-copper/40"
-          : "bg-surface hairline"
-      }`}
-    >
-      <h3 className="font-serif text-xl text-cream mb-3">{title}</h3>
-      <p className="text-brandy/90 leading-relaxed">{text}</p>
-    </div>
-  );
-}

@@ -2,21 +2,34 @@
 
 import { useEffect, useState } from "react";
 import {
-  PACKAGES,
-  PACKAGE_DESCRIPTIONS,
-  addUnlocked,
-  setPendingPayment,
+  COUNTRY_PACKAGES,
+  COUNTRY_PACKAGE_DESCRIPTIONS,
+  addCountryUnlocked,
   savePurchaseEmail,
-  type PackageType,
+  setPendingPayment,
+  type CountryPackageType,
 } from "@/lib/unlocked";
 
-export function PaymentModal({
+const PACKAGE_BULLETS: Record<CountryPackageType, string[]> = {
+  country_cities: [
+    "Список лучших городов страны по ключевым критериям",
+    "Сравнение бюджета, климата и сложности переезда",
+    "Основные факторы для выбора направления",
+  ],
+  country_overview: [
+    "Особенности жизни в стране для переехавших",
+    "Практические советы и лучшие места",
+    "Актуально на 2026 год",
+  ],
+};
+
+export function CountryPaymentModal({
   slug,
   pkg,
   onClose,
 }: {
   slug: string;
-  pkg: PackageType | null;
+  pkg: CountryPackageType | null;
   onClose: () => void;
 }) {
   const [email, setEmail] = useState("");
@@ -33,36 +46,8 @@ export function PaymentModal({
   }, [pkg, onClose]);
 
   if (!pkg) return null;
-  const meta = PACKAGES[pkg];
-
-  const PACKAGE_BULLETS: Record<string, string[]> = {
-    places: [
-      "5+ лучших мест для посещения с адресами и советами",
-      "Кафе, рестораны, районы, рынки и коворкинги",
-      "Актуально на 2026 год",
-    ],
-    budget: [
-      "Полный список статей расходов по всем категориям",
-      "Аренда, еда, транспорт, коммуналка, кафе, здоровье",
-      "Реальные цены от переехавших",
-    ],
-    bundle: [
-      "Полный список расходов + лучшие места — всё вместе",
-      "Экономия 9 ₽ по сравнению с отдельной покупкой",
-      "Один платеж, полный доступ",
-    ],
-    country_cities: [
-      "Список лучших городов страны по ключевым критериям",
-      "Сравнение бюджета, климата и сложности переезда",
-      "Основные факторы для выбора направления",
-    ],
-    country_overview: [
-      "Особенности жизни в стране для переехавших",
-      "Практические советы и лучшие места",
-      "Актуально на 2026 год",
-    ],
-  };
-  const bullets = PACKAGE_BULLETS[pkg] ?? [];
+  const meta = COUNTRY_PACKAGES[pkg];
+  const bullets = PACKAGE_BULLETS[pkg];
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -86,9 +71,8 @@ export function PaymentModal({
         return;
       }
 
-      // Demo-режим: ключи ЮKassa еще не подключены — открываем локально.
       if (data?.demo) {
-        addUnlocked(slug, pkg!);
+        addCountryUnlocked(slug, pkg!);
         setSubmitting(false);
         onClose();
         alert(
@@ -97,9 +81,6 @@ export function PaymentModal({
         return;
       }
 
-      // Боевой режим: запоминаем платеж для серверной проверки после возврата
-      // и уходим на страницу оплаты ЮKassa. Email кладём в localStorage —
-      // по нему восстановим доступ, даже если sessionStorage потеряется.
       if (data?.confirmation_url) {
         savePurchaseEmail(email);
         if (data?.payment_id) {
@@ -130,7 +111,7 @@ export function PaymentModal({
           <div>
             <div className="flex items-center gap-2 text-copper uppercase text-xs tracking-wider mb-2">
               <span>{meta.emoji}</span>
-              <span>Пакет</span>
+              <span>Материал о стране</span>
             </div>
             <h3 className="font-serif text-2xl text-cream">{meta.label}</h3>
           </div>
@@ -140,33 +121,35 @@ export function PaymentModal({
             className="text-brandy/60 hover:text-cream text-2xl leading-none"
             aria-label="Закрыть"
           >
-            ×
+            x
           </button>
         </div>
 
         <p className="text-brandy/80 mb-4 leading-relaxed">
-          {PACKAGE_DESCRIPTIONS[pkg]}
+          {COUNTRY_PACKAGE_DESCRIPTIONS[pkg]}
         </p>
 
-        {bullets.length > 0 && (
-          <div className="mb-6 rounded-xl bg-pine-tree/40 border border-cream/8 px-4 py-3.5 space-y-1.5">
-            <p className="text-brandy/60 text-xs uppercase tracking-wider mb-2">
-              Что Вы получите
+        <div className="mb-6 rounded-xl bg-pine-tree/40 border border-cream/8 px-4 py-3.5 space-y-1.5">
+          <p className="text-brandy/60 text-xs uppercase tracking-wider mb-2">
+            Что Вы получите
+          </p>
+          {bullets.map((b) => (
+            <p key={b} className="text-brandy/90 text-sm leading-snug flex gap-2">
+              <span className="text-copper shrink-0" aria-hidden>
+                •
+              </span>
+              {b}
             </p>
-            {bullets.map((b) => (
-              <p key={b} className="text-brandy/90 text-sm leading-snug flex gap-2">
-                <span className="text-copper shrink-0" aria-hidden>•</span>
-                {b}
-              </p>
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
 
         <form onSubmit={onSubmit} className="space-y-4">
           <label className="block">
             <span className="block text-brandy/70 text-sm mb-2">
               Email <span className="text-copper">*</span>
-              <span className="text-brandy/50 ml-1 text-xs">— пришлем чек и ссылку на восстановление доступа</span>
+              <span className="text-brandy/50 ml-1 text-xs">
+                — пришлем чек и ссылку на восстановление доступа
+              </span>
             </span>
             <input
               type="email"
@@ -193,8 +176,7 @@ export function PaymentModal({
         </form>
 
         <p className="text-brandy/50 text-xs mt-4 text-center">
-          Оплата картой или СБП через ЮKassa. Доступ откроется сразу после
-          оплаты. Если укажете email — отправим чек и ссылку для восстановления.
+          Оплата картой или СБП через ЮKassa. Доступ откроется сразу после оплаты.
         </p>
       </div>
     </div>

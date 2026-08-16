@@ -4,11 +4,11 @@ import { Link } from "@/i18n/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { typo } from "@/lib/typography";
-import { routing, type Locale } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return [{ locale: "ru" }];
 }
 
 export async function generateMetadata({
@@ -31,15 +31,11 @@ export async function generateMetadata({
 }
 
 const PACKAGES: { name: string; title: string; price: string; note?: string }[] = [
-  { name: "places", title: "Лучшие места", price: "79 ₽" },
-  {
-    name: "guide",
-    title: "Гайд по жизни",
-    price: "149 ₽",
-    note: "доступен для зарубежных городов",
-  },
-  { name: "budget", title: "Точный бюджет", price: "199 ₽" },
-  { name: "bundle", title: "Все вместе", price: "299 ₽" },
+  { name: "places", title: "Лучшие места для посещения", price: "19 ₽" },
+  { name: "budget", title: "Полный список статей расходов", price: "49 ₽" },
+  { name: "bundle", title: "Расходы + Лучшие места (комбо)", price: "59 ₽" },
+  { name: "country_cities", title: "Рейтинг городов страны", price: "49 ₽", note: "для страниц стран" },
+  { name: "country_overview", title: "Полный обзор страны", price: "29 ₽", note: "для страниц стран" },
 ];
 
 export default async function OfferPage({
@@ -51,7 +47,7 @@ export default async function OfferPage({
   const tc = await getTranslations("common");
   const tf = await getTranslations("footer");
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <Breadcrumbs
         items={[{ name: tc("home"), href: "/" }, { name: tf("offer") }]}
       />
@@ -191,7 +187,7 @@ export default async function OfferPage({
         </p>
       </section>
 
-      <div className="pt-24">
+      <div className="pt-12 md:pt-24">
         <Footer />
       </div>
     </main>

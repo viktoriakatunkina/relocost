@@ -5,19 +5,15 @@ const SITE_URL = (
 ).replace(/\/$/, "");
 
 const PACKAGES = [
-  { id: "places", name: "Лучшие места", price: 79 },
-  { id: "guide", name: "Гайд по жизни", price: 149 },
-  { id: "budget", name: "Точный бюджет", price: 199 },
-  { id: "bundle", name: "Все вместе", price: 299 },
+  { id: "places", name: "Лучшие места", price: 19 },
+  { id: "budget", name: "Все расходы", price: 49 },
+  { id: "bundle", name: "Расходы + Места", price: 59 },
 ] as const;
 
 // ItemList с Offers по каждому пакету для конкретного города.
-// Дает Google понимание, что страница продает 4 цифровых продукта.
+// Дает Google понимание, что страница продает 3 цифровых продукта.
 export function ProductSchema({ city }: { city: City }) {
-  const products = (city.is_foreign
-    ? PACKAGES
-    : PACKAGES.filter((p) => p.id !== "guide")
-  ).map((p, i) => ({
+  const products = PACKAGES.map((p, i) => ({
     "@type": "ListItem",
     position: i + 1,
     item: {

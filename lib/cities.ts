@@ -1,5 +1,6 @@
 import { supabase } from "./supabase";
 import type { City, CityWithMinRent } from "./types";
+import { currencySymbol } from "./currency";
 
 // Ручной список популярных направлений для блока «Популярные направления»
 // на главной. Отобран вручную (топ-интенты русскоязычных релокантов), порядок
@@ -50,7 +51,7 @@ export async function getPopularCities(
     .select("*")
     .in("slug", FEATURED_CITY_SLUGS as unknown as string[]);
 
-  if (error) throw error;
+  if (error) return [];
 
   if (featured?.length) {
     // Восстанавливаем порядок из FEATURED_CITY_SLUGS (PostgREST возвращает
@@ -70,7 +71,7 @@ export async function getPopularCities(
     .order("name_ru")
     .limit(limit);
 
-  if (fbError) throw fbError;
+  if (fbError) return [];
   return attachMinRent((fallback as City[]) ?? []);
 }
 
@@ -81,10 +82,26 @@ export async function getAllCitiesForSearch(): Promise<
     .from("cities")
     .select("slug, name_ru, country_ru, flag_emoji")
     .order("name_ru");
-  if (error) throw error;
+  if (error) return [];
   return data ?? [];
 }
 
 export function formatRub(value: number): string {
   return new Intl.NumberFormat("ru-RU").format(value) + " ₽";
+}
+
+/**
+ * Форматирует минимальную аренду в карточке города с учетом местной валюты.
+ * Российские города: «35 000 ₽», иностранные: «₾ 650», «฿ 13 000» и т.д.
+ * Цены иностранных городов в БД хранятся в местной валюте, поэтому нельзя
+ * добавлять «₽» без проверки.
+ */
+export function formatMinRent(
+  value: number,
+  currency: string | null | undefined,
+): string {
+  const sym = currency ? currencySymbol(currency) : null;
+  const n = new Intl.NumberFormat("ru-RU").format(value);
+  if (!sym || sym === "₽") return `${n} ₽`;
+  return `${sym} ${n}`;
 }

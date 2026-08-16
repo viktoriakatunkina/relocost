@@ -65,7 +65,7 @@ export default async function ContactsPage({
   const tc = await getTranslations("common");
   const tf = await getTranslations("footer");
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <Breadcrumbs
         items={[
           { name: tc("home"), href: "/" },
@@ -115,10 +115,10 @@ export default async function ContactsPage({
               <dt className="text-cream font-medium mb-1">Что вы покупаете</dt>
               <dd>
                 Доступ к платным информационным разделам отчета о стоимости
-                жизни в выбранном городе: «Лучшие места» (79 ₽), «Гайд по жизни»
-                (149 ₽, для зарубежных городов), «Точный бюджет» (199 ₽) и пакет
-                «Все вместе» (299 ₽). Цены окончательные, в рублях, НДС не
-                облагаются (режим НПД).
+                жизни в выбранном городе: «Лучшие места» (19 ₽), «Все расходы»
+                (49 ₽) и комбо «Расходы + Места» (59 ₽). Для страниц стран:
+                «Рейтинг городов» (49 ₽) и «О стране» (29 ₽). Цены
+                окончательные, в рублях, НДС не облагаются (режим НПД).
               </dd>
             </div>
             <div>
@@ -154,7 +154,7 @@ export default async function ContactsPage({
         </div>
       </section>
 
-      <div className="pt-24">
+      <div className="pt-12 md:pt-24">
         <Footer />
       </div>
     </main>
