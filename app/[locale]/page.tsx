@@ -164,10 +164,10 @@ export default async function HomePage({
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </Link>
             <Link
-              href="/quiz"
+              href="/match"
               className="inline-flex items-center gap-2 px-5 py-4 rounded-pill border border-cream/20 text-cream/80 text-sm hover:text-cream hover:border-copper/40 backdrop-blur-sm transition"
             >
-              Пройти тест «Куда переехать?»
+              Открыть калькулятор
             </Link>
           </div>
 
