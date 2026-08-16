@@ -28,6 +28,10 @@ echo "==> 2/4 Заливка сборки в staging ($APP/.next.incoming)"
 rsync -az --delete --exclude 'cache' -e "$SSH" .next/ "$HOST:$APP/.next.incoming/" \
   || rsync -az --delete --exclude 'cache' -e "$SSH" .next/ "$HOST:$APP/.next.incoming/"
 rsync -az -e "$SSH" next.config.mjs "$HOST:$APP/next.config.mjs"
+# Статика из /public — синхронизируем только если папка не пуста.
+if [ -d "public/images" ]; then
+  rsync -az -e "$SSH" public/images/ "$HOST:$APP/public/images/"
+fi
 
 echo "==> 3/4 Атомарная замена + рестарт"
 $SSH "$HOST" "cd $APP \

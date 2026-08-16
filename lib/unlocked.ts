@@ -12,9 +12,9 @@ export const CITY_PACKAGES: Record<
   CityPackageType,
   { label: string; price: number; emoji: string; short: string }
 > = {
-  places: { label: "Лучшие места", short: "Места", price: 19, emoji: "📍" },
-  budget: { label: "Все расходы", short: "Расходы", price: 49, emoji: "📊" },
-  bundle: { label: "Расходы + Места", short: "Комбо", price: 59, emoji: "🎁" },
+  places: { label: "Лучшие места для посещения", short: "Места", price: 19, emoji: "📍" },
+  budget: { label: "Полный список расходов с ценами", short: "Расходы", price: 49, emoji: "📊" },
+  bundle: { label: "Полный список + лучшие места", short: "Комбо", price: 59, emoji: "🎁" },
 };
 
 export const CITY_PACKAGE_DESCRIPTIONS: Record<CityPackageType, string> = {
@@ -33,8 +33,8 @@ export const COUNTRY_PACKAGES: Record<
   CountryPackageType,
   { label: string; price: number; emoji: string; short: string }
 > = {
-  country_cities: { label: "Рейтинг городов", short: "Города", price: 49, emoji: "🏙" },
-  country_overview: { label: "О стране", short: "Обзор", price: 29, emoji: "🌍" },
+  country_cities: { label: "Города страны по критериям", short: "Города", price: 49, emoji: "🏙" },
+  country_overview: { label: "Все о стране и особенности", short: "Обзор", price: 29, emoji: "🌍" },
 };
 
 export const COUNTRY_PACKAGE_DESCRIPTIONS: Record<CountryPackageType, string> = {

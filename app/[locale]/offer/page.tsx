@@ -32,17 +32,17 @@ export async function generateMetadata({
 
 const PACKAGES: { name: string; title: string; price: string; note?: string }[] = [
   { name: "places", title: "Лучшие места для посещения", price: "19 ₽" },
-  { name: "budget", title: "Полный список статей расходов", price: "49 ₽" },
-  { name: "bundle", title: "Расходы + Лучшие места (комбо)", price: "59 ₽" },
+  { name: "budget", title: "Полный список статей расходов с реальными ценами", price: "49 ₽" },
+  { name: "bundle", title: "Полный список + лучшие места", price: "59 ₽" },
   {
     name: "country_cities",
-    title: "Рейтинг городов страны",
+    title: "Список лучших городов страны по критериям + факторы переезда",
     price: "49 ₽",
     note: "для страниц стран",
   },
   {
     name: "country_overview",
-    title: "Полный обзор страны",
+    title: "Все самое важное о стране, особенности жизни и лучшие места",
     price: "29 ₽",
     note: "для страниц стран",
   },

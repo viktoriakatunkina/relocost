@@ -87,7 +87,7 @@ export default async function HomePage({
       <SiteSchemas />
       <section className="relative isolate min-h-[92vh] flex flex-col justify-center px-6 py-12 overflow-hidden">
         <Image
-          src="https://ftkyoneazoqlkrpisdef.supabase.co/storage/v1/object/public/photos/home/hero-v2.jpg"
+          src="/images/hero-v3.jpg"
           alt=""
           fill
           priority

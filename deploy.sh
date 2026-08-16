@@ -27,6 +27,10 @@ rsync -az --delete --exclude 'cache' -e "$SSH" .next/ "$HOST:$APP/.next.incoming
 # next.config.mjs читается `next start` с диска при запуске, поэтому держим его
 # на сервере в синхроне (иначе runtime-конфиг расходится со сборкой).
 rsync -az -e "$SSH" next.config.mjs "$HOST:$APP/next.config.mjs"
+# Статика из /public — синхронизируем только если папка не пуста.
+if [ -d "public/images" ]; then
+  rsync -az -e "$SSH" public/images/ "$HOST:$APP/public/images/"
+fi
 
 echo "==> 3/4 Атомарная замена + рестарт"
 $SSH "$HOST" "cd $APP \

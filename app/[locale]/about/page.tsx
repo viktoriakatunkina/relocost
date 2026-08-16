@@ -20,7 +20,7 @@ export async function generateMetadata({
   return {
     title: "О проекте Relocost — как мы считаем стоимость жизни",
     description:
-      "Кто делает Relocost, откуда берем цены по городам, как часто обновляем данные и почему цифрам можно доверять. Методология и источники.",
+      "О проекте Relocost: калькулятор стоимости жизни для планирующих переезд. Откуда берем цены, как часто обновляем данные и почему цифрам можно доверять.",
     alternates: buildAlternates("/about", params.locale),
   };
 }
@@ -104,6 +104,17 @@ const PRINCIPLES = [
     ),
   },
 ];
+
+const PRINCIPLE_ACCENTS = [
+  { color: "#3FB984", bg: "rgba(63,185,132,0.14)", ring: "rgba(63,185,132,0.35)" },
+  { color: "#E0A93E", bg: "rgba(224,169,62,0.14)", ring: "rgba(224,169,62,0.35)" },
+  { color: "#E0947A", bg: "rgba(224,148,122,0.14)", ring: "rgba(224,148,122,0.35)" },
+] as const;
+
+const PRINCIPLES_WITH_COLORS = PRINCIPLES.map((p, i) => ({
+  ...p,
+  ...PRINCIPLE_ACCENTS[i % PRINCIPLE_ACCENTS.length],
+}));
 
 const FEATURES = [
   {
@@ -236,30 +247,20 @@ export default async function AboutPage({
                 className="grid grid-cols-2 sm:grid-cols-4 gap-3 fade-up"
                 style={{ animationDelay: "300ms" }}
               >
-                <div className="rounded-2xl border hairline bg-surface/60 px-4 py-4 text-center">
-                  <span className="block font-serif text-3xl text-copper leading-none mb-1">
-                    {stats.cityCount}+
-                  </span>
-                  <span className="text-brandy/70 text-xs">городов</span>
-                </div>
-                <div className="rounded-2xl border hairline bg-surface/60 px-4 py-4 text-center">
-                  <span className="block font-serif text-3xl text-copper leading-none mb-1">
-                    {stats.countryCount}+
-                  </span>
-                  <span className="text-brandy/70 text-xs">стран</span>
-                </div>
-                <div className="rounded-2xl border hairline bg-surface/60 px-4 py-4 text-center">
-                  <span className="block font-serif text-3xl text-copper leading-none mb-1">
-                    {stats.blogCount}+
-                  </span>
-                  <span className="text-brandy/70 text-xs">статей</span>
-                </div>
-                <div className="rounded-2xl border hairline bg-surface/60 px-4 py-4 text-center">
-                  <span className="block font-serif text-3xl text-copper leading-none mb-1">
-                    7
-                  </span>
-                  <span className="text-brandy/70 text-xs">категорий цен</span>
-                </div>
+                {[
+                  { value: `${stats.cityCount}+`, label: "городов", emoji: "🏙" },
+                  { value: `${stats.countryCount}+`, label: "стран", emoji: "🌍" },
+                  { value: `${stats.blogCount}+`, label: "статей", emoji: "📖" },
+                  { value: "7", label: "категорий цен", emoji: "📊" },
+                ].map((s) => (
+                  <div key={s.label} className="rounded-2xl border hairline bg-surface/70 px-4 py-5 text-center hover:border-copper/30 transition-colors">
+                    <div className="text-xl mb-1" aria-hidden>{s.emoji}</div>
+                    <span className="block font-serif text-3xl text-copper leading-none mb-1">
+                      {s.value}
+                    </span>
+                    <span className="text-brandy/70 text-xs">{s.label}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -294,7 +295,7 @@ export default async function AboutPage({
       {/* Что такое Relocost */}
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-20">
         <Reveal>
-          <span className="eyebrow">Инструменты</span>
+          <span className="eyebrow">🔧 Инструменты</span>
           <h2 className="font-serif text-3xl md:text-5xl text-cream mt-5 mb-4 text-balance">
             Что такое Relocost
           </h2>
@@ -308,13 +309,17 @@ export default async function AboutPage({
             <Reveal key={f.title} delay={i * 80}>
               <Link
                 href={f.href as "/"}
-                className="group block rounded-2xl border hairline bg-surface p-6 hover:border-copper/35 transition-all duration-300 hover:-translate-y-1"
+                className="group block rounded-2xl border hairline bg-surface p-6 hover:border-copper/35 hover:bg-surface-elevated transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="w-12 h-12 rounded-xl bg-copper/12 flex items-center justify-center text-copper mb-5 group-hover:bg-copper/18 transition-colors">
+                <div className="w-14 h-14 rounded-2xl bg-copper/15 flex items-center justify-center text-copper mb-5 group-hover:bg-copper/22 group-hover:scale-105 transition-all duration-300">
                   {f.icon}
                 </div>
                 <h3 className="font-serif text-xl text-cream mb-2">{f.title}</h3>
                 <p className="text-brandy/75 text-sm leading-relaxed">{f.description}</p>
+                <div className="mt-4 text-copper/70 text-xs flex items-center gap-1 group-hover:text-copper transition-colors">
+                  Перейти
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </div>
               </Link>
             </Reveal>
           ))}
@@ -325,7 +330,7 @@ export default async function AboutPage({
       <section className="bg-surface/40 border-y hairline py-16 md:py-20">
         <div className="max-w-5xl mx-auto px-6">
           <Reveal>
-            <span className="eyebrow">Принципы</span>
+            <span className="eyebrow">✨ Принципы</span>
             <h2 className="font-serif text-3xl md:text-5xl text-cream mt-5 mb-4">
               Как мы работаем
             </h2>
@@ -335,14 +340,20 @@ export default async function AboutPage({
           </Reveal>
 
           <div className="grid md:grid-cols-3 gap-5">
-            {PRINCIPLES.map((p, i) => (
+            {PRINCIPLES_WITH_COLORS.map((p, i) => (
               <Reveal key={p.t} delay={i * 80}>
-                <div className="rounded-2xl border hairline bg-surface p-6 h-full">
-                  <div className="w-10 h-10 rounded-xl bg-dingley/20 flex items-center justify-center text-muted mb-5">
+                <div
+                  className="rounded-2xl border bg-surface p-6 h-full transition-all duration-300 hover:-translate-y-1"
+                  style={{ borderColor: p.ring }}
+                >
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
+                    style={{ color: p.color, backgroundColor: p.bg, boxShadow: `0 0 0 1px ${p.ring}` }}
+                  >
                     {p.icon}
                   </div>
                   <h3 className="font-serif text-xl text-cream mb-3 leading-snug">{p.t}</h3>
-                  <p className="text-brandy/75 text-sm leading-relaxed">{p.d}</p>
+                  <p className="text-brandy/80 text-sm leading-relaxed">{p.d}</p>
                 </div>
               </Reveal>
             ))}
@@ -353,12 +364,12 @@ export default async function AboutPage({
       {/* Методология */}
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-20">
         <Reveal>
-          <span className="eyebrow">Методология</span>
+          <span className="eyebrow">📊 Методология</span>
           <h2 className="font-serif text-3xl md:text-5xl text-cream mt-5 mb-4">
             Откуда мы берем цифры
           </h2>
           <p className="text-brandy/80 text-lg max-w-2xl mb-10 text-pretty">
-            Цены — это агрегированные оценки на основе нескольких открытых источников, приведенные
+            Цены — агрегированные оценки на основе нескольких открытых источников, приведенные
             к рублям. Мы не выдумываем числа и не берем их «с потолка».
           </p>
         </Reveal>
@@ -366,12 +377,15 @@ export default async function AboutPage({
         <div className="grid sm:grid-cols-2 gap-4 mb-8">
           {SOURCES.map((s, i) => (
             <Reveal key={s.name} delay={i * 60}>
-              <div className="flex gap-4 items-start rounded-2xl border hairline bg-surface p-5">
-                <div className="shrink-0 w-10 h-10 rounded-xl bg-copper/10 flex items-center justify-center text-copper mt-0.5">
+              <div className="group flex gap-4 items-start rounded-2xl border hairline bg-surface p-5 hover:border-copper/30 transition-all duration-300 hover:-translate-y-0.5">
+                <div className="shrink-0 w-12 h-12 rounded-2xl bg-copper/12 flex items-center justify-center text-copper mt-0.5 group-hover:bg-copper/18 transition-colors">
                   {s.icon}
                 </div>
                 <div>
-                  <p className="text-cream font-semibold mb-1">{s.name}</p>
+                  <p className="text-cream font-semibold mb-1 flex items-center gap-2">
+                    <span className="inline-block w-5 h-5 rounded-full bg-copper/20 text-copper text-xs font-bold flex items-center justify-center" style={{ display: 'inline-flex' }}>{i + 1}</span>
+                    {s.name}
+                  </p>
                   <p className="text-brandy/70 text-sm leading-relaxed">{s.what}</p>
                 </div>
               </div>
@@ -380,8 +394,9 @@ export default async function AboutPage({
         </div>
 
         <Reveal>
-          <div className="rounded-2xl border border-copper/20 bg-copper/5 px-6 py-4">
-            <p className="text-brandy/75 text-sm leading-relaxed">
+          <div className="rounded-2xl border border-copper/25 bg-copper/5 px-6 py-5 flex gap-4 items-start">
+            <span className="text-copper text-2xl shrink-0 mt-0.5" aria-hidden>⚠️</span>
+            <p className="text-brandy/80 text-sm leading-relaxed">
               <span className="text-copper font-semibold">Важно:</span>{" "}
               наши цифры — это ориентир для планирования, а не оферта. Реальные расходы зависят
               от района, образа жизни и момента въезда. Перед решениями по визам, налогам и банкам
@@ -427,19 +442,21 @@ export default async function AboutPage({
             Готовы спланировать переезд?
           </h2>
           <p className="text-brandy/80 text-lg max-w-xl mx-auto mb-10 text-pretty">
-            Пройдите короткий подбор города по Вашим приоритетам — бюджет, климат,
-            безопасность, море. Алгоритм найдет лучшие совпадения за пару минут.
+            Откройте калькулятор стоимости жизни — введите бюджет, климат и
+            приоритеты, получите персональную подборку городов за пару минут.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/match"
+              href="https://relocost.ru/match"
               className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy hover:text-pine-tree min-h-[44px]"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                <rect x="4" y="2" width="16" height="20" rx="2" />
+                <line x1="8" y1="6" x2="16" y2="6" />
+                <line x1="8" y1="10" x2="12" y2="10" />
+                <line x1="8" y1="14" x2="14" y2="14" />
               </svg>
-              Подобрать город
+              Открыть калькулятор
             </Link>
           </div>
         </Reveal>
