@@ -29,9 +29,8 @@ export const revalidate = 86400;
 // Параметры размножаем по локалям, чтобы ×3 не взрывало сборку — топ-пар немного.
 export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  const pairs = await topCompareParams();
-  return pairs.map(({ pair }) => ({ locale: "ru", pair }));
+export function generateStaticParams() {
+  return [];
 }
 
 export async function generateMetadata({

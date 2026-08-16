@@ -77,17 +77,10 @@ export const revalidate = 86400;
 // Неизвестные slug рендерятся по первому запросу и кешируются ISR.
 export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  // Пре-генерируем только топ-20 городов (популярные — первыми).
-  // Остальные города рендерятся при первом запросе и кешируются ISR (revalidate=86400).
-  // en/uz генерим динамически (ru-фолбэк, таймауты Supabase на VPS).
-  const { data } = await supabase
-    .from("cities")
-    .select("slug")
-    .order("is_popular", { ascending: false })
-    .limit(20);
-  const slugs = (data ?? []).map((c) => c.slug as string);
-  return slugs.map((slug) => ({ locale: "ru", slug }));
+export function generateStaticParams() {
+  // Все города генерируются ISR при первом запросе (dynamicParams=true).
+  // Supabase-таймауты при сборке устранены полностью.
+  return [];
 }
 
 export async function generateMetadata({

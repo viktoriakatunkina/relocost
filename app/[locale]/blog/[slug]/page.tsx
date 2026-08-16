@@ -39,12 +39,10 @@ const BLOG_CANONICAL: Record<string, string> = {
   "perevod-deneg-za-granitsu-2026": "kak-perevesti-dengi-iz-rossii-za-granitsu-2026",
 };
 
-export async function generateStaticParams() {
-  // Пре-генерируем топ-30 новейших статей. Остальные рендерятся ISR при первом
-  // запросе и кешируются (revalidate = 3600). Было 500 — сократили для быстрого билда.
-  // en/uz блог генерим динамически (ru-фолбэк, трафика нет, Supabase-таймауты на VPS).
-  const slugs = await getAllPostSlugs(30);
-  return slugs.map((slug) => ({ locale: "ru", slug }));
+export function generateStaticParams() {
+  // Все статьи генерируются ISR при первом запросе (dynamicParams=true).
+  // Supabase-таймауты при сборке устранены полностью.
+  return [];
 }
 
 export async function generateMetadata({
