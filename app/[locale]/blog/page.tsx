@@ -38,7 +38,7 @@ export default async function BlogPage({
   setRequestLocale(params.locale);
   const posts = await getPublishedPosts();
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <section className="max-w-6xl mx-auto px-6 pt-12 pb-12">
         <p className="text-copper uppercase text-sm tracking-wider mb-4">
           Блог
@@ -56,7 +56,7 @@ export default async function BlogPage({
         <BlogFilters posts={posts} />
       </section>
 
-      <div className="pt-24">
+      <div className="pt-12 md:pt-24">
         <Footer />
       </div>
     </main>

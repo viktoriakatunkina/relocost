@@ -29,10 +29,16 @@ export function getCitiesWithBudget(): Promise<CityWithBudget[]> {
 // тянем С ПАГИНАЦИЕЙ — иначе у ~70 городов бюджет посчитается как 0 и они
 // провалятся в сортировке по цене. (см. reference-supabase-select-1000-limit)
 async function fetchCitiesWithBudget(): Promise<CityWithBudget[]> {
-  const { data: cities } = await supabase
-    .from("cities")
-    .select("*")
-    .order("name_ru");
+  let cities: City[] | null = null;
+  try {
+    const { data } = await supabase
+      .from("cities")
+      .select("*")
+      .order("name_ru");
+    cities = data as City[] | null;
+  } catch {
+    return [];
+  }
   if (!cities?.length) return [];
   const ids = cities.map((c) => c.id);
 

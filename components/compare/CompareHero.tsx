@@ -21,7 +21,15 @@ const GRADIENTS: Record<string, string> = {
   lisbon: "from-amber-700/70 to-pine-tree",
 };
 
-export function CompareHero({ a, b }: { a: City; b: City }) {
+export function CompareHero({
+  a,
+  b,
+  headline,
+}: {
+  a: City;
+  b: City;
+  headline?: string;
+}) {
   return (
     <section className="max-w-6xl mx-auto px-6 pt-12 pb-12">
       <Link
@@ -33,9 +41,12 @@ export function CompareHero({ a, b }: { a: City; b: City }) {
       <p className="text-copper uppercase text-sm tracking-wider mb-4">
         Сравнение
       </p>
-      <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] mb-10">
+      <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl text-cream leading-[1.05] mb-5 text-balance">
         {a.name_ru} или {b.name_ru} — где жить?
       </h1>
+      <p className="text-brandy/85 text-lg md:text-xl mb-10 text-pretty">
+        {headline ?? "Сравниваем стоимость жизни, аренду и сложность переезда."}
+      </p>
       <div className="grid grid-cols-2 gap-4">
         <Side city={a} />
         <Side city={b} />

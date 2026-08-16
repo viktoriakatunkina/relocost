@@ -8,7 +8,8 @@
     "logoAlt": "Relocost — home",
     "quiz": "Move quiz",
     "checklist": "Checklist",
-    "rating": "Rating"
+    "rating": "Rating",
+    "match": "Match"
   },
   "lang": {
     "label": "Choose language",
@@ -36,7 +37,24 @@
     "allCitiesCountry": "All cities · {country}",
     "allCitiesRussia": "All cities in Russia",
     "shareVia": "Share via",
-    "copyLink": "Copy link"
+    "copyLink": "Copy link",
+    "dataUpdated": "Updated",
+    "dataSource": "Source",
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Frequently asked questions about living in {city}",
+    "faqQ1": "How much does it cost to live in {city}?",
+    "faqA1": "A budget-conscious monthly cost of living in {city} starts from {monthly} RUB: a one-bedroom apartment on the outskirts costs from {rent} RUB, groceries for one — from {food} RUB, public transport — from {transport} RUB. The exact budget depends on your lifestyle and choice of neighbourhood.",
+    "faqQ2": "How much is rent in {city}?",
+    "faqA2": "A one-bedroom apartment in {city} starts from {rent} RUB per month in outskirt areas. Central neighbourhoods are more expensive. A two-bedroom apartment typically costs 1.5–2 times more.",
+    "faqQ3": "Is {city} expensive to move to?",
+    "faqA3Cheap": "{city} is one of the more affordable cities: a minimum monthly budget starts from {monthly} RUB — noticeably less than Moscow or Saint Petersburg.",
+    "faqA3Avg": "In terms of cost of living {city} sits around the middle: a minimum monthly budget is around {monthly} RUB, comparable with other large Russian cities.",
+    "faqA3Exp": "{city} is on the pricier side: a minimum monthly budget starts from {monthly} RUB. We recommend calculating your personal budget in advance.",
+    "faqQ4": "What does the cost of living in {city} include?",
+    "faqA4": "The cost of living in {city} covers rent, groceries, transport, utilities, dining out, healthcare and entertainment. Relocost shows real prices for all these categories.",
+    "faqQ5": "How do I move to {city}?",
+    "faqA5Foreign": "Moving to {city} requires a visa or residence permit. The city page lists the key steps: paperwork, finding housing and opening a bank account. Check current requirements with the consulate.",
+    "faqA5Russia": "Russian citizens can move to {city} without special permits. You'll need to register at your new address. We recommend finding housing and calculating your budget for the first few months in advance."
   },
   "difficulty": {
     "easy": "Easy",
@@ -140,6 +158,20 @@
     "intro": "Our database now covers {cities} cities across {countries} countries — from Moscow and Sochi to Tbilisi, Dubai and Bangkok. For every destination we've gathered real rent, food and transport prices, visa rules for Russians and a relocation-difficulty score. Set your budget, climate, region or “by the sea” — and find your match in seconds."
   },
   "country": {
+    "dataUpdated": "Updated",
+    "dataSource": "Source",
+    "dynFaqEyebrow": "FAQ",
+    "dynFaqTitle": "Frequently asked questions about moving to {country}",
+    "dynFaqQ1": "How much does it cost to live in {country}?",
+    "dynFaqA1": "The cost of living in {country} varies by city. Our catalog covers {count} destinations with real prices for rent, groceries, transport and utilities.",
+    "dynFaqQ2": "Which is the cheapest city in {country}?",
+    "dynFaqA2": "According to Relocost data, the most affordable city in {country} is {cheapestCity} with a minimum monthly budget from {cheapestBudget} RUB. Compare all cities in our catalog.",
+    "dynFaqQ3": "Do I need a residency permit or visa to live in {country}?",
+    "dynFaqA3": "Residency requirements for {country} are explained on each city's page in the 'Visa & documents' section. Always verify current rules with official sources.",
+    "dynFaqQ4": "Which city in {country} is the safest?",
+    "dynFaqA4": "Each city page in {country} has a relocation-difficulty rating covering visa, language barrier, prices and infrastructure. Use it to compare options.",
+    "dynFaqQ5": "How do I choose the right city in {country} to move to?",
+    "dynFaqA5": "Use Relocost's budget calculator and search filters: set your budget, climate preferences and visa requirements — and get matching options from {count} cities in {country}.",
     "metaTitle": "Moving to {country} in 2026 — cities, prices, visa | Relocost",
     "metaDescription": "How much does it cost to move to {country}? Prices, cities, visas and the experience of those who moved. A budget calculator for each city.",
     "ogTitle": "Moving to {country} in 2026 — cities, prices, visa",
@@ -169,7 +201,8 @@
     "prosConsTitle": "Pros and cons",
     "prosColTitle": "Strengths",
     "consColTitle": "What to consider",
-    "articlesTitle": "Relocation articles · {country}"
+    "articlesTitle": "Relocation articles · {country}",
+    "trueSizeTitle": "How big is"
   },
   "howItWorks": {
     "eyebrow": "Process",
@@ -198,5 +231,104 @@
     "description": "Comparing {a} and {b}: rent, groceries, transport, utilities and relocation difficulty. Real numbers and a winner in each category.",
     "ogTitle": "{a} or {b} — where is it cheaper to live",
     "ogDescription": "Comparison across 5 categories: rent, groceries, transport, utilities and difficulty."
+  },
+  "cityVerdict": {
+    "eyebrow": "Our verdict",
+    "title": "Is it worth moving here?",
+    "prosTitle": "Strengths",
+    "consTitle": "What to consider",
+    "audienceTitle": "Who is it for",
+
+    "prosCheapHousing": "Affordable housing — rent below market average",
+    "prosCheapLife": "Low cost of living — budget-friendly lifestyle",
+    "prosVisuFree": "Visa-free or simplified entry for Russians",
+    "prosMildClimate": "Mild climate — comfortable for most of the year",
+    "prosHighSafety": "High level of safety",
+    "prosGoodMedicine": "Well-developed healthcare system",
+    "prosHighQualityLife": "High quality-of-life index score",
+    "prosGoodTransport": "Convenient and affordable public transport",
+    "prosCleanEcology": "Clean air and good ecology",
+
+    "consExpensiveHousing": "High rental costs",
+    "consExpensiveLife": "High overall cost of living",
+    "consVisaNeeded": "Visa required — needs to be arranged in advance",
+    "consLanguageBarrier": "Language barrier — local language needs learning",
+    "consHarshClimate": "Challenging climate — cold winters or extreme heat",
+    "consLowSafety": "Elevated crime level according to Numbeo data",
+    "consPoorEcology": "Air pollution — worth considering when choosing a district",
+    "consPoorMedicine": "Limited access to medical care",
+    "consLittleData": "Requires additional research before moving",
+
+    "audienceFreelancers": "For freelancers and remote workers",
+    "audienceFamilies": "For families with children",
+    "audiencePensioners": "For retirees",
+    "audienceStudents": "For students",
+    "audienceBudget": "For budget-conscious movers",
+    "audienceNomads": "For digital nomads",
+    "audienceSafety": "For those who value safety",
+
+    "phraseTemplate": "{city} is a great choice for those looking for {advantage}.",
+    "advantageCheap": "an affordable budget without sacrificing quality of life",
+    "advantageSafe": "a safe place with comfortable infrastructure",
+    "advantageClimate": "a warm climate and a cozy life near the sea or mountains",
+    "advantageQuality": "excellent healthcare and quality of life",
+    "advantageEasy": "an easy start without bureaucracy or a language barrier"
+  },
+  "countryVerdict": {
+    "eyebrow": "Our verdict",
+    "title": "Is it worth going?",
+    "prosTitle": "Strengths",
+    "consTitle": "What to consider",
+    "audienceTitle": "Who is it for",
+
+    "prosVisuFree": "Visa-free or simplified entry for Russians",
+    "prosPopular": "Wide choice of cities to relocate to",
+    "prosMildClimate": "Mild climate — comfortable for most of the year",
+    "prosHighSafety": "High level of safety",
+    "prosGoodMedicine": "Well-developed healthcare system",
+    "prosCheapCities": "Affordable cities with a low cost of living",
+
+    "consVisaNeeded": "Visa required — needs to be arranged in advance",
+    "consHighDifficulty": "Complex bureaucracy and legalisation process",
+    "consLanguageBarrier": "Language barrier — learning the local language required",
+    "consHarshClimate": "Challenging climate in some regions",
+    "consLittleData": "Requires additional research",
+
+    "audienceFreelancers": "For freelancers and remote workers",
+    "audienceFamilies": "For families with children",
+    "audiencePensioners": "For retirees",
+    "audienceBudget": "For budget-conscious movers",
+    "audienceNomads": "For digital nomads",
+
+    "phraseTemplate": "{country} is {advantage} for relocating from Russia.",
+    "advantageEasy": "one of the most accessible destinations",
+    "advantagePopular": "a popular and well-documented destination",
+    "advantageSafe": "a safe and comfortable destination",
+    "advantageClimate": "a destination with excellent climate"
+  },
+  "livingScore": {
+    "eyebrow": "Quality of Life Index",
+    "title": "How well does {city} suit for living",
+    "subtitle": "A composite score across 6 key parameters — from housing affordability to climate. The higher the score, the easier it is to relocate and settle in.",
+    "totalLabel": "Quality index",
+    "availableCategories": "Based on {count} parameters",
+    "noData": "no data",
+    "footer": "Calculated from Relocost real prices, Numbeo data and open sources. Use as a benchmark to compare cities.",
+    "ratingLink": "City ranking",
+    "categories": {
+      "housing": "Housing affordability",
+      "cost": "Cost of living",
+      "safety": "Safety",
+      "life": "Quality of life",
+      "transport": "Transport",
+      "climate": "Climate"
+    },
+    "grades": {
+      "gradeA": "Excellent place to live",
+      "gradeB": "A good choice",
+      "gradeC": "Decent option",
+      "gradeD": "Budget destination",
+      "gradeF": "Challenging conditions"
+    }
   }
 }

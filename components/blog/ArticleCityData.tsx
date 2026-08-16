@@ -61,12 +61,20 @@ export function ArticleCityData({
         <p className="text-brandy/80 text-sm">
           Бюджет от <span className="text-cream font-semibold">{formatRub(monthlyFrom)}</span> в месяц
         </p>
-        <Link
-          href={`/city/${city.slug}`}
-          className="shrink-0 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm transition hover:bg-brandy"
-        >
-          Полный расчет для {city.name_ru} →
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href={`/city/${city.slug}/budget`}
+            className="shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-pill bg-surface border hairline text-brandy/90 hover:text-copper hover:border-copper/40 text-sm transition"
+          >
+            Расчет бюджета →
+          </Link>
+          <Link
+            href={`/city/${city.slug}`}
+            className="shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-pill bg-copper text-pine-tree font-semibold text-sm transition hover:bg-brandy"
+          >
+            Все о {city.name_ru} →
+          </Link>
+        </div>
       </div>
     </aside>
   );

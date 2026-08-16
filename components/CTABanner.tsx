@@ -24,10 +24,10 @@ export async function CTABanner({
         />
         <div className="absolute inset-0 -z-10 bg-noise opacity-30" aria-hidden />
 
-        <div className="relative px-8 md:px-16 py-16 md:py-24 grid md:grid-cols-[1.4fr,1fr] gap-10 items-center">
+        <div className="relative px-6 md:px-16 py-12 md:py-24 grid md:grid-cols-[1.4fr,1fr] gap-10 items-center">
           <div>
             <span className="eyebrow">{t("eyebrow")}</span>
-            <h2 className="font-serif text-4xl md:text-6xl text-cream mt-6 mb-6 text-balance">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl text-cream mt-6 mb-6 text-balance">
               {t("titlePre")}
               <span className="text-copper">{t("titleAccent")}</span>
               {t("titlePost")}
@@ -38,7 +38,7 @@ export async function CTABanner({
 
             <div className="flex flex-wrap gap-3 mt-10">
               <Link
-                href="/#popular"
+                href="/search"
                 className="inline-flex items-center gap-2 px-7 py-4 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy hover:shadow-glow"
               >
                 {t("chooseCity")}
@@ -54,10 +54,28 @@ export async function CTABanner({
           </div>
 
           <div className="hidden md:grid grid-cols-2 gap-3">
-            <Stat label={th("statCities")} value={String(cityCount)} />
-            <Stat label={th("statCountries")} value={String(countryCount)} />
-            <Stat label={t("statRealPrices")} value="✓" />
-            <Stat label={t("statVisa")} value="✓" />
+            <Stat
+              label={th("statCities")}
+              value={String(cityCount)}
+              description="Азия, Европа, СНГ и Ближний Восток"
+              accent="#E89B6E"
+            />
+            <Stat
+              label={th("statCountries")}
+              value={String(countryCount)}
+              description="Все направления — безвиз и виза"
+              accent="#E0A93E"
+            />
+            <Stat
+              label={t("statRealPrices")}
+              value="✓"
+              description="Аренда, еда, транспорт — из открытых источников, не с потолка"
+            />
+            <Stat
+              label={t("statVisa")}
+              value="✓"
+              description="Как въехать россиянину, сколько можно жить без визы"
+            />
           </div>
         </div>
       </div>
@@ -65,11 +83,33 @@ export async function CTABanner({
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({
+  label,
+  value,
+  description,
+  accent,
+}: {
+  label: string;
+  value: string;
+  description?: string;
+  accent?: string;
+}) {
+  const isCheck = value === "✓";
   return (
-    <div className="rounded-2xl bg-pine-tree/40 backdrop-blur p-5 border hairline">
-      <div className="font-serif text-4xl text-cream leading-none tabular-nums lining-nums">{value}</div>
-      <div className="text-brandy/70 text-xs uppercase tracking-wider mt-2">{label}</div>
+    <div className="rounded-2xl bg-pine-tree/50 backdrop-blur border hairline p-5 flex flex-col gap-1.5">
+      <div
+        className="font-serif leading-none tabular-nums lining-nums"
+        style={{
+          fontSize: isCheck ? "2rem" : "2.5rem",
+          color: isCheck ? "#E89B6E" : (accent ?? "#F6F1E8"),
+        }}
+      >
+        {value}
+      </div>
+      <div className="text-cream/90 text-xs font-semibold uppercase tracking-wider">{label}</div>
+      {description && (
+        <div className="text-brandy/60 text-xs leading-snug mt-0.5">{description}</div>
+      )}
     </div>
   );
 }

@@ -23,7 +23,7 @@ const nextConfig = {
   // очередь — голова очереди упирается в 60 сек и сборка падает на случайной
   // блог-странице. 300 сек дают очереди время разгрестись. На быстрых машинах
   // страница строится за миллисекунды, так что лимит там не срабатывает.
-  staticPageGenerationTimeout: 300,
+  staticPageGenerationTimeout: 600,
 
   images: {
     remotePatterns: [
@@ -38,6 +38,13 @@ const nextConfig = {
         // Фолбэк/dev: используется, пока local-колонки не заполнены.
         protocol: "https",
         hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+      {
+        // Cloudflare R2 публичный bucket (pub-*.r2.dev).
+        // Подключается при NEXT_PUBLIC_R2_URL. Fallback при Supabase egress quota.
+        protocol: "https",
+        hostname: "*.r2.dev",
         pathname: "/**",
       },
     ],

@@ -6,8 +6,9 @@ import {
 export function DifficultyBars({
   breakdown,
 }: {
-  breakdown: CityContent["difficulty_breakdown"];
+  breakdown: CityContent["difficulty_breakdown"] | undefined | null;
 }) {
+  if (!breakdown) return null;
   const items = (
     Object.keys(breakdown) as Array<keyof typeof breakdown>
   ).map((k) => ({

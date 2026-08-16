@@ -82,7 +82,7 @@ export function LanguageSwitcher() {
       {open && (
         <div
           role="listbox"
-          className="absolute right-0 mt-2 w-48 rounded-2xl border hairline bg-pine-tree/95 backdrop-blur-xl shadow-xl overflow-hidden z-50"
+          className="absolute right-0 mt-2 w-48 rounded-2xl border hairline bg-[#1A2105] shadow-xl overflow-hidden z-50"
         >
           {routing.locales.map((code) => {
             const m = LANG_META[code];

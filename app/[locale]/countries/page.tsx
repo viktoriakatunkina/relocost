@@ -4,14 +4,14 @@ import { CountryCard } from "@/components/country/CountryCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
-import { routing, type Locale } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { getSiteStats } from "@/lib/site-stats";
 
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return [{ locale: "ru" }];
 }
 
 export async function generateMetadata({
@@ -46,7 +46,7 @@ export default async function CountriesPage({
   const totalCities = countries.reduce((acc, c) => acc + c.city_count, 0);
 
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <Breadcrumbs items={[{ name: tc("home"), href: "/" }, { name: tn("countries") }]} />
 
       <section className="relative px-6 pt-12 pb-10 overflow-hidden">
@@ -81,7 +81,16 @@ export default async function CountriesPage({
               За рубежом
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+          {/* Горизонтальный скролл на мобильном */}
+          <div className="flex overflow-x-auto gap-4 snap-x snap-mandatory scrollbar-none pb-2 -mx-6 px-6 md:hidden">
+            {foreign.map((c) => (
+              <div key={c.slug} className="shrink-0 w-[72vw] max-w-[280px] snap-start">
+                <CountryCard country={c} />
+              </div>
+            ))}
+          </div>
+          {/* Сетка на планшете и десктопе */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
             {foreign.map((c, i) => (
               <Reveal key={c.slug} delay={i * 40} className="h-full">
                 <CountryCard country={c} />
@@ -92,13 +101,22 @@ export default async function CountriesPage({
       )}
 
       {domestic.length > 0 && (
-        <section className="max-w-6xl mx-auto px-6 pt-20">
+        <section className="max-w-6xl mx-auto px-6 pt-12 md:pt-20">
           <div className="flex items-end justify-between gap-4 mb-8">
             <h2 className="font-serif text-3xl md:text-4xl text-cream">
               Внутри России
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+          {/* Горизонтальный скролл на мобильном */}
+          <div className="flex overflow-x-auto gap-4 snap-x snap-mandatory scrollbar-none pb-2 -mx-6 px-6 md:hidden">
+            {domestic.map((c) => (
+              <div key={c.slug} className="shrink-0 w-[72vw] max-w-[280px] snap-start">
+                <CountryCard country={c} />
+              </div>
+            ))}
+          </div>
+          {/* Сетка на планшете и десктопе */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
             {domestic.map((c, i) => (
               <Reveal key={c.slug} delay={i * 40} className="h-full">
                 <CountryCard country={c} />

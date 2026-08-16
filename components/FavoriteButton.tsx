@@ -68,10 +68,10 @@ export function FavoriteButton({
       onClick={onClick}
       aria-label={active ? `Убрать ${cityName} из избранного` : `Добавить ${cityName} в избранное`}
       aria-pressed={active}
-      className={`absolute top-3 right-3 w-9 h-9 rounded-full backdrop-blur flex items-center justify-center transition z-10 ${
+      className={`absolute top-3 right-3 w-9 h-9 rounded-full backdrop-blur-sm flex items-center justify-center transition z-10 ${
         mounted && active
-          ? "bg-black/40 text-red-500"
-          : "bg-pine-tree/50 text-brandy hover:bg-pine-tree/70 hover:text-copper"
+          ? "bg-black/50 text-red-500"
+          : "bg-black/35 text-white hover:bg-black/50 hover:text-copper"
       }`}
     >
       <Heart filled={mounted && active} small />
@@ -92,6 +92,7 @@ function Heart({ filled, small }: { filled: boolean; small?: boolean }) {
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
+      style={{ filter: "drop-shadow(0 0 1.5px rgba(0,0,0,1)) drop-shadow(0 1px 2px rgba(0,0,0,0.7))" }}
     >
       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
     </svg>

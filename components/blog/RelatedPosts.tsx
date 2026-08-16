@@ -27,7 +27,7 @@ export function RelatedPosts({
   if (scored.length === 0) return null;
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-20">
+    <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 md:pt-20">
       <h2 className="font-serif text-3xl md:text-4xl text-cream mb-8">
         Похожие материалы
       </h2>

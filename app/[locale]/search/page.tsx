@@ -2,14 +2,14 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SearchClient } from "@/components/search/SearchClient";
 import { getCitiesWithBudget } from "@/lib/city-budget";
 import { Footer } from "@/components/Footer";
-import { routing, type Locale } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
 import { localizedUrl } from "@/lib/i18n-seo";
 import { getSiteStats } from "@/lib/site-stats";
 
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return [];
 }
 
 export async function generateMetadata({
@@ -42,12 +42,12 @@ export default async function SearchPage({
   ]);
 
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <section className="max-w-6xl mx-auto px-6 pt-12 pb-12">
         <p className="text-copper uppercase text-sm tracking-wider mb-4">
           {t("eyebrow")}
         </p>
-        <h1 className="font-serif text-5xl md:text-6xl text-cream leading-[1.05] mb-6">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-cream leading-[1.05] mb-6">
           {t("title")}
         </h1>
         <p className="text-brandy/80 text-lg max-w-2xl">{t("subtitle")}</p>
@@ -58,7 +58,7 @@ export default async function SearchPage({
 
       <SearchClient cities={cities} />
 
-      <div className="pt-24">
+      <div className="pt-12 md:pt-24">
         <Footer />
       </div>
     </main>

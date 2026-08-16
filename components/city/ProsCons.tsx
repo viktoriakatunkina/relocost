@@ -16,7 +16,7 @@ export function ProsCons({
   consTitle?: string;
 }) {
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
+    <section id="pros-cons" className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
       <span className="eyebrow">{eyebrow}</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10">
         {title}

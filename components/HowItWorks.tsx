@@ -1,3 +1,4 @@
+import { type ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 
 type StepAccent = {
@@ -26,53 +27,62 @@ export async function HowItWorks({ cityCount }: { cityCount: number }) {
   ];
 
   return (
-    <section className="relative py-14 px-6">
+    <section className="relative py-10 md:py-14 px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-10">
+        <div className="text-center mb-7 md:mb-10">
           <span className="eyebrow">{t("eyebrow")}</span>
-          <h2 className="font-serif text-4xl md:text-6xl text-cream mt-6 text-balance">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl text-cream mt-5 text-balance">
             {t("title")}
           </h2>
-          <p className="text-brandy/80 text-lg max-w-xl mx-auto mt-4 text-pretty">
+          <p className="text-brandy/80 text-base md:text-lg max-w-xl mx-auto mt-3 text-pretty">
             {t("subtitle")}
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid md:grid-cols-3 gap-3 md:gap-5">
           {steps.map((s, i) => {
             const Icon = ICONS[i];
             const a = ACCENTS[i];
             return (
               <div
                 key={s.n}
-                className="group relative p-8 rounded-3xl bg-surface border hairline transition-all duration-300 hover:bg-surface-elevated hover:-translate-y-1"
+                className="group relative p-5 md:p-8 rounded-3xl bg-surface border hairline transition-all duration-300 hover:bg-surface-elevated hover:-translate-y-1"
               >
-                <div className="flex items-start justify-between mb-6">
+                <div className="flex items-start justify-between mb-4 md:mb-6">
                   <div
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
+                    className="w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
                     style={{
                       color: a.fg,
                       backgroundColor: a.bg,
                       boxShadow: `0 0 0 1px ${a.ring}, 0 8px 24px -12px ${a.fg}`,
                     }}
                   >
-                    <Icon />
+                    <IconSmall><Icon /></IconSmall>
                   </div>
                   <span
-                    className="font-serif text-6xl md:text-7xl leading-none select-none tabular-nums lining-nums"
+                    className="font-serif text-5xl md:text-7xl leading-none select-none tabular-nums lining-nums"
                     style={{ color: a.num }}
                     aria-hidden
                   >
                     {s.n}
                   </span>
                 </div>
-                <h3 className="font-serif text-2xl md:text-3xl text-cream mb-3">{s.title}</h3>
-                <p className="text-brandy/85 leading-relaxed text-pretty">{s.text}</p>
+                <h3 className="font-serif text-xl md:text-3xl text-cream mb-2 md:mb-3">{s.title}</h3>
+                <p className="text-brandy/85 leading-relaxed text-pretty text-sm md:text-base">{s.text}</p>
               </div>
             );
           })}
         </div>
       </div>
     </section>
+  );
+}
+
+// Уменьшает SVG-иконку на мобиле
+function IconSmall({ children }: { children: ReactNode }) {
+  return (
+    <span className="[&>svg]:w-6 [&>svg]:h-6 md:[&>svg]:w-[34px] md:[&>svg]:h-[34px]">
+      {children}
+    </span>
   );
 }
 

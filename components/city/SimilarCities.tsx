@@ -12,7 +12,7 @@ export function SimilarCities({
 }) {
   if (!cities.length) return null;
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
+    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20 overflow-hidden md:overflow-visible">
       <span className="eyebrow">Сравните</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
         Похожие направления

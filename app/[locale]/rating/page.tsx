@@ -3,15 +3,16 @@ import { getCitiesWithBudget } from "@/lib/city-budget";
 import { CITY_CONTENT } from "@/lib/cities-content";
 import { computeLivingScore } from "@/lib/rating";
 import { RatingClient, type RatedCity } from "@/components/rating/RatingClient";
+import { CrossLinks } from "@/components/CrossLinks";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
-import { routing, type Locale } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
 import { buildAlternates, localizedUrl } from "@/lib/i18n-seo";
 
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return [];
 }
 
 export async function generateMetadata({
@@ -74,7 +75,7 @@ export default async function RatingPage({
   };
 
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }}
@@ -108,6 +109,15 @@ export default async function RatingPage({
       </section>
 
       <RatingClient cities={rated} />
+
+      <CrossLinks
+        links={[
+          { href: "/countries", label: "Все страны" },
+          { href: "/search", label: "Подобрать город" },
+          { href: "/compare/tbilisi-vs-yerevan", label: "Тбилиси или Ереван" },
+          { href: "/compare/almaty-vs-tbilisi", label: "Алматы или Тбилиси" },
+        ]}
+      />
 
       <div className="pt-16">
         <Footer />

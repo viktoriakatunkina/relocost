@@ -1,13 +1,13 @@
 import { ImageResponse } from "next/og";
 import { supabase } from "@/lib/supabase";
+import { monthlyBudgetFrom } from "@/lib/city-budget";
 
 export const runtime = "nodejs";
 export const alt = "Relocost — стоимость жизни в городе";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// og-картинки генерируются по запросу (краулерами соцсетей), а не при сборке:
-// рендер 1200×630 со скачиванием фото слишком тяжёл, чтобы печь все при build.
+// OG-картинки рендерятся по запросу краулеров, не при сборке.
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return [];
@@ -16,19 +16,34 @@ export async function generateStaticParams() {
 export default async function OG({ params }: { params: { slug: string } }) {
   const { data: city } = await supabase
     .from("cities")
-    .select("name_ru, country_ru, flag_emoji, unsplash_url, image_url")
+    .select("id, name_ru, country_ru, flag_emoji, unsplash_url, image_url")
     .eq("slug", params.slug)
     .maybeSingle();
 
   const name = city?.name_ru ?? "Город";
   const country = city?.country_ru ?? "";
   const flag = city?.flag_emoji ?? "";
-  // Локальный storage-URL приоритетнее: images.unsplash.com недоступен с RU-VPS.
   const bg = city?.image_url
     ? city.image_url
     : city?.unsplash_url
       ? `${city.unsplash_url}&w=1200&h=630&fit=crop&auto=format&q=80`
       : null;
+
+  // Минимальный бюджет из цен города — ключевая цифра для шеринга.
+  let monthlyFrom = 0;
+  if (city?.id) {
+    const { data: priceRows } = await supabase
+      .from("prices")
+      .select("item_name_ru, price_min")
+      .eq("city_id", city.id)
+      .in("category", ["rent", "food", "transport", "utilities"]);
+    const { monthly_from } = monthlyBudgetFrom(priceRows ?? []);
+    monthlyFrom = monthly_from;
+  }
+
+  const budgetStr = monthlyFrom > 0
+    ? `от ${new Intl.NumberFormat("ru-RU").format(monthlyFrom)} ₽/мес`
+    : null;
 
   return new ImageResponse(
     (
@@ -52,22 +67,21 @@ export default async function OG({ params }: { params: { slug: string } }) {
             alt=""
             width={1200}
             height={630}
-            style={{
-              position: "absolute",
-              inset: 0,
-              objectFit: "cover",
-            }}
+            style={{ position: "absolute", inset: 0, objectFit: "cover" }}
           />
         ) : null}
+
+        {/* Тёмный градиент — читабельность текста поверх фото */}
         <div
           style={{
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(180deg, rgba(32,40,8,0.4) 0%, rgba(32,40,8,0.85) 100%)",
+              "linear-gradient(180deg, rgba(26,33,5,0.5) 0%, rgba(26,33,5,0.88) 60%, rgba(26,33,5,0.97) 100%)",
           }}
         />
 
+        {/* Верхняя строка: лого + страна */}
         <div
           style={{
             position: "relative",
@@ -78,43 +92,82 @@ export default async function OG({ params }: { params: { slug: string } }) {
         >
           <span
             style={{
-              color: "#C4866D",
-              fontSize: 24,
-              letterSpacing: 4,
+              color: "#E89B6E",
+              fontSize: 22,
+              letterSpacing: 5,
               textTransform: "uppercase",
+              fontFamily: "system-ui, sans-serif",
+              fontWeight: 600,
             }}
           >
             Relocost
           </span>
-          <span style={{ fontSize: 32, color: "#DEC59E" }}>{country}</span>
+          <span
+            style={{
+              fontSize: 28,
+              color: "#E6CFA8",
+              fontFamily: "system-ui, sans-serif",
+            }}
+          >
+            {country}
+          </span>
         </div>
 
+        {/* Центральный блок: флаг + название + бюджет */}
         <div
           style={{
             position: "relative",
             display: "flex",
             alignItems: "flex-end",
-            gap: 40,
+            gap: 36,
           }}
         >
-          <span style={{ fontSize: 180, lineHeight: 1 }}>{flag}</span>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ color: "#DEC59E", fontSize: 28, marginBottom: 6 }}>
+          {flag ? (
+            <span style={{ fontSize: 140, lineHeight: 1 }}>{flag}</span>
+          ) : null}
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            <span
+              style={{
+                color: "#E6CFA8",
+                fontSize: 26,
+                marginBottom: 8,
+                fontFamily: "system-ui, sans-serif",
+              }}
+            >
               Стоимость жизни в
             </span>
-            <span style={{ fontSize: 120, lineHeight: 1 }}>{name}</span>
+            <span style={{ fontSize: 96, lineHeight: 1 }}>{name}</span>
+            {budgetStr ? (
+              <span
+                style={{
+                  fontSize: 52,
+                  color: "#E89B6E",
+                  fontFamily: "system-ui, sans-serif",
+                  fontWeight: 700,
+                  marginTop: 16,
+                  letterSpacing: -1,
+                }}
+              >
+                {budgetStr}
+              </span>
+            ) : null}
           </div>
         </div>
 
+        {/* Нижняя строка: подпись */}
         <div
           style={{
             position: "relative",
-            color: "#DEC59E",
-            fontSize: 26,
+            color: "#E6CFA8",
+            fontSize: 22,
             fontFamily: "system-ui, sans-serif",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          Калькулятор · виза · лучшие места · отзывы переехавших
+          <span>Калькулятор · виза · лучшие места · отзывы переехавших</span>
+          <span style={{ color: "#E89B6E", fontSize: 20 }}>relocost.ru</span>
         </div>
       </div>
     ),

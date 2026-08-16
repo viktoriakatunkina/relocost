@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Manrope, Cormorant_Garamond } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import Script from "next/script";
 import "../globals.css";
 import { Header } from "@/components/Header";
 import { FavoritesLimitModal } from "@/components/FavoritesLimitModal";
@@ -78,6 +79,20 @@ export async function generateMetadata({
       title: "Relocost — калькулятор стоимости жизни для переезжающих",
       description: descShort,
     },
+    icons: {
+      icon: [
+        { url: "/logo/relocost-favicon.svg", type: "image/svg+xml" },
+        { url: "/logo/favicon-32.png", sizes: "32x32", type: "image/png" },
+        { url: "/logo/favicon-16.png", sizes: "16x16", type: "image/png" },
+      ],
+      apple: [
+        { url: "/logo/app-icon-180.png", sizes: "180x180", type: "image/png" },
+      ],
+      other: [
+        { rel: "icon", url: "/logo/icon-192.png", sizes: "192x192" },
+        { rel: "icon", url: "/logo/icon-512.png", sizes: "512x512" },
+      ],
+    },
     robots: {
       index: true,
       follow: true,
@@ -85,6 +100,7 @@ export async function generateMetadata({
     },
     verification: {
       yandex: "e9e4f69e85d03419",
+      google: "541d60920356a58a",
     },
   };
 }
@@ -119,6 +135,11 @@ export default async function LocaleLayout({
           <FavoritesLimitModal />
         </NextIntlClientProvider>
         <YandexMetrika />
+        <Script
+          id="tp-drive"
+          strategy="afterInteractive"
+          src="https://emrld.ltd/NTQ3MjQ1.js?t=747642"
+        />
       </body>
     </html>
   );

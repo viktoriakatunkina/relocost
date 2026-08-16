@@ -6,7 +6,7 @@ import type { CityWithBudget } from "@/lib/types";
 import { CityCard } from "@/components/CityCard";
 import { formatRub } from "@/lib/cities";
 import { getVisa, type VisaStatus } from "@/lib/visa";
-import { COASTAL } from "@/lib/city-signals";
+import { COASTAL, climateTemp } from "@/lib/city-signals";
 import { cityName, countryName } from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/routing";
 
@@ -27,10 +27,213 @@ type Sort = "budget" | "difficulty" | "name" | "popular";
 
 const PAGE_SIZE = 18;
 
+const FAST_INTERNET = new Set([
+  "tbilisi", "yerevan", "almaty", "istanbul", "belgrade", "budapest", "lisbon", "porto",
+  "riga", "tallinn", "vilnius", "warsaw", "prague", "bali", "chiang-mai", "kuala-lumpur",
+  "bangkok", "singapore", "seoul", "dubai", "abu-dhabi", "astana", "tashkent",
+  "ho-chi-minh", "hanoi", "cebu", "penang", "jakarta", "malaga", "alicante",
+]);
+
 // Пороги бюджета «до X ₽/мес». Шкала расширена далеко за пределы текущих данных
 // (самый дорогой город ~170к), чтобы у тех, кто рассчитывает на высокий доход,
 // был запас и понятная градация. null = «любой».
 const BUDGET_STEPS: number[] = [50000, 75000, 100000, 150000, 200000, 300000, 500000];
+
+// Фаллбек для городов, которых нет в REGION_BY_SLUG — по country_slug
+const REGION_BY_COUNTRY: Record<string, Exclude<Region, "all">> = {
+  russia: "ru",
+  georgia: "europe",
+  turkey: "europe",
+  germany: "europe",
+  france: "europe",
+  italy: "europe",
+  spain: "europe",
+  portugal: "europe",
+  netherlands: "europe",
+  belgium: "europe",
+  austria: "europe",
+  switzerland: "europe",
+  czech: "europe",
+  "czech-republic": "europe",
+  czechia: "europe",
+  hungary: "europe",
+  poland: "europe",
+  estonia: "europe",
+  latvia: "europe",
+  lithuania: "europe",
+  croatia: "europe",
+  serbia: "europe",
+  albania: "europe",
+  moldova: "europe",
+  "north-macedonia": "europe",
+  cyprus: "europe",
+  greece: "europe",
+  montenegro: "europe",
+  slovenia: "europe",
+  slovakia: "europe",
+  romania: "europe",
+  bulgaria: "europe",
+  liechtenstein: "europe",
+  luxembourg: "europe",
+  armenia: "cis",
+  kazakhstan: "cis",
+  uzbekistan: "cis",
+  tajikistan: "cis",
+  kyrgyzstan: "cis",
+  azerbaijan: "cis",
+  turkmenistan: "cis",
+  belarus: "cis",
+  ukraine: "cis",
+  thailand: "asia",
+  vietnam: "asia",
+  indonesia: "asia",
+  malaysia: "asia",
+  cambodia: "asia",
+  philippines: "asia",
+  "south-korea": "asia",
+  korea: "asia",
+  china: "asia",
+  india: "asia",
+  nepal: "asia",
+  "sri-lanka": "asia",
+  singapore: "asia",
+  myanmar: "asia",
+  laos: "asia",
+  mongolia: "asia",
+  japan: "asia",
+  taiwan: "asia",
+  bangladesh: "asia",
+  uae: "middle_east",
+  "united-arab-emirates": "middle_east",
+  bahrain: "middle_east",
+  oman: "middle_east",
+  qatar: "middle_east",
+  jordan: "middle_east",
+  israel: "middle_east",
+  "saudi-arabia": "middle_east",
+  kuwait: "middle_east",
+  iraq: "middle_east",
+  iran: "middle_east",
+  egypt: "africa",
+  morocco: "africa",
+  tunisia: "africa",
+  kenya: "africa",
+  "ivory-coast": "africa",
+  nigeria: "africa",
+  "south-africa": "africa",
+  ghana: "africa",
+  ethiopia: "africa",
+  tanzania: "africa",
+  senegal: "africa",
+  mexico: "americas",
+  argentina: "americas",
+  brazil: "americas",
+  colombia: "americas",
+  peru: "americas",
+  chile: "americas",
+  uruguay: "americas",
+  cuba: "americas",
+  "costa-rica": "americas",
+  panama: "americas",
+  ecuador: "americas",
+};
+
+// Фаллбек климата по стране
+const CLIMATE_BY_COUNTRY: Record<string, Exclude<Climate, "all">> = {
+  russia: "cool",
+  georgia: "temperate",
+  turkey: "temperate",
+  germany: "cool",
+  france: "temperate",
+  italy: "temperate",
+  spain: "temperate",
+  portugal: "temperate",
+  netherlands: "cool",
+  belgium: "cool",
+  austria: "cool",
+  switzerland: "cool",
+  czech: "cool",
+  "czech-republic": "cool",
+  czechia: "cool",
+  hungary: "temperate",
+  poland: "cool",
+  estonia: "cool",
+  latvia: "cool",
+  lithuania: "cool",
+  croatia: "temperate",
+  serbia: "temperate",
+  albania: "temperate",
+  moldova: "temperate",
+  "north-macedonia": "temperate",
+  cyprus: "tropical",
+  greece: "temperate",
+  montenegro: "temperate",
+  slovenia: "cool",
+  slovakia: "cool",
+  romania: "temperate",
+  bulgaria: "temperate",
+  liechtenstein: "cool",
+  luxembourg: "cool",
+  armenia: "temperate",
+  kazakhstan: "cool",
+  uzbekistan: "temperate",
+  tajikistan: "temperate",
+  kyrgyzstan: "cool",
+  azerbaijan: "temperate",
+  turkmenistan: "temperate",
+  belarus: "cool",
+  ukraine: "temperate",
+  thailand: "tropical",
+  vietnam: "tropical",
+  indonesia: "tropical",
+  malaysia: "tropical",
+  cambodia: "tropical",
+  philippines: "tropical",
+  "south-korea": "temperate",
+  korea: "temperate",
+  china: "temperate",
+  india: "tropical",
+  nepal: "temperate",
+  "sri-lanka": "tropical",
+  singapore: "tropical",
+  myanmar: "tropical",
+  laos: "tropical",
+  mongolia: "cool",
+  japan: "temperate",
+  taiwan: "temperate",
+  bangladesh: "tropical",
+  uae: "tropical",
+  "united-arab-emirates": "tropical",
+  bahrain: "tropical",
+  oman: "tropical",
+  qatar: "tropical",
+  jordan: "temperate",
+  israel: "temperate",
+  "saudi-arabia": "tropical",
+  kuwait: "tropical",
+  egypt: "tropical",
+  morocco: "temperate",
+  tunisia: "temperate",
+  kenya: "tropical",
+  "ivory-coast": "tropical",
+  nigeria: "tropical",
+  "south-africa": "temperate",
+  ghana: "tropical",
+  ethiopia: "tropical",
+  tanzania: "tropical",
+  senegal: "tropical",
+  mexico: "temperate",
+  argentina: "temperate",
+  brazil: "tropical",
+  colombia: "tropical",
+  peru: "temperate",
+  chile: "temperate",
+  uruguay: "temperate",
+  cuba: "tropical",
+  "costa-rica": "tropical",
+  panama: "tropical",
+  ecuador: "tropical",
+};
 
 const REGION_BY_SLUG: Record<string, Exclude<Region, "all">> = {
   moscow: "ru",
@@ -230,6 +433,27 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
   const [sort, setSort] = useState<Sort>("budget");
   const [page, setPage] = useState(1);
 
+  type TagKey = "cheap" | "warm" | "safe" | "visa_free" | "seaside" | "internet";
+
+  const [activeTags, setActiveTags] = useState<Set<TagKey>>(new Set());
+
+  const toggleTag = (tag: TagKey) =>
+    setActiveTags((prev) => {
+      const next = new Set(prev);
+      if (next.has(tag)) next.delete(tag);
+      else next.add(tag);
+      return next;
+    });
+
+  const EMOJI_TAGS: { key: TagKey; emoji: string; label: string }[] = [
+    { key: "cheap",     emoji: "💰", label: "Дёшево" },
+    { key: "warm",      emoji: "☀️", label: "Тепло зимой" },
+    { key: "safe",      emoji: "🛡️", label: "Безопасно" },
+    { key: "visa_free", emoji: "✈️", label: "Без визы" },
+    { key: "seaside",   emoji: "🌊", label: "У моря" },
+    { key: "internet",  emoji: "⚡", label: "Быстрый интернет" },
+  ];
+
   const REGION_OPTIONS: [Region, string][] = [
     ["all", t("regionAll")],
     ["ru", t("regionRu")],
@@ -291,8 +515,14 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
           return false;
         }
       }
-      if (region !== "all" && REGION_BY_SLUG[c.slug] !== region) return false;
-      if (climate !== "all" && CLIMATE_BY_SLUG[c.slug] !== climate) return false;
+      if (region !== "all") {
+        const r = REGION_BY_SLUG[c.slug] ?? REGION_BY_COUNTRY[c.country_slug ?? ""];
+        if (r !== region) return false;
+      }
+      if (climate !== "all") {
+        const cl = CLIMATE_BY_SLUG[c.slug] ?? CLIMATE_BY_COUNTRY[c.country_slug ?? ""];
+        if (cl !== climate) return false;
+      }
       if (difficulty !== "all" && diffBucket(c.difficulty_score) !== difficulty)
         return false;
       if (destination === "foreign" && !c.is_foreign) return false;
@@ -305,6 +535,16 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
       if (directOnly && !isDirectFlight(c.flight_from_moscow)) return false;
       if (seasideOnly && !COASTAL.has(c.slug)) return false;
       if (c.monthly_from > 0 && c.monthly_from > max) return false;
+      // Tag-фильтры (AND-логика: все активные теги должны совпасть)
+      if (activeTags.has("cheap") && c.monthly_from > 50000) return false;
+      if (activeTags.has("warm")) {
+        const temp = climateTemp(c);
+        if (!temp || temp < 18) return false;
+      }
+      if (activeTags.has("safe") && (c.difficulty_score === null || c.difficulty_score > 4)) return false;
+      if (activeTags.has("visa_free") && getVisa(c).status !== "visa_free") return false;
+      if (activeTags.has("seaside") && !COASTAL.has(c.slug)) return false;
+      if (activeTags.has("internet") && !FAST_INTERNET.has(c.slug)) return false;
       return true;
     });
 
@@ -340,9 +580,11 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
     seasideOnly,
     budgetMax,
     sort,
+    activeTags,
   ]);
 
   const activeFilters =
+    activeTags.size +
     (region !== "all" ? 1 : 0) +
     (climate !== "all" ? 1 : 0) +
     (difficulty !== "all" ? 1 : 0) +
@@ -359,7 +601,7 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   useEffect(() => {
     setPage(1);
-  }, [query, region, climate, difficulty, destination, visa, directOnly, seasideOnly, budgetMax, sort]);
+  }, [query, region, climate, difficulty, destination, visa, directOnly, seasideOnly, budgetMax, sort, activeTags]);
 
   const safePage = Math.min(page, totalPages);
   const pageItems = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
@@ -378,6 +620,7 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
     setDirectOnly(false);
     setSeasideOnly(false);
     setBudgetMax(null);
+    setActiveTags(new Set());
     setPage(1);
   }
 
@@ -429,6 +672,37 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
             </svg>
             {t("clear")}
           </button>
+        </div>
+
+        {/* Тег-фильтры — «поиск как конструктор» */}
+        <div className="flex gap-2 overflow-x-auto scrollbar-none pb-1 -mx-6 px-6 md:mx-0 md:px-0 mb-4">
+          {EMOJI_TAGS.map((tag) => {
+            const active = activeTags.has(tag.key);
+            return (
+              <button
+                key={tag.key}
+                type="button"
+                onClick={() => toggleTag(tag.key)}
+                className={`shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-pill text-sm font-medium transition-all border ${
+                  active
+                    ? "bg-copper/20 border-copper text-copper"
+                    : "bg-surface border-cream/10 text-brandy/75 hover:border-copper/40 hover:text-brandy"
+                }`}
+              >
+                <span role="img" aria-hidden>{tag.emoji}</span>
+                {tag.label}
+              </button>
+            );
+          })}
+          {activeTags.size > 0 && (
+            <button
+              type="button"
+              onClick={() => setActiveTags(new Set())}
+              className="shrink-0 px-3 py-2 text-sm text-brandy/50 hover:text-brandy transition"
+            >
+              Сбросить
+            </button>
+          )}
         </div>
 
         {/* Чип-группы */}
@@ -518,7 +792,7 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {pageItems.map((c, i) => (
               <CityCard key={c.id} city={c} index={(safePage - 1) * PAGE_SIZE + i} />
             ))}

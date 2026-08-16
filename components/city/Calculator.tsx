@@ -194,7 +194,7 @@ export function Calculator({
   const budget = PACKAGES.budget;
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
+    <section id="calculator" className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
       <span className="eyebrow">Бюджет</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
         Калькулятор переезда
@@ -242,8 +242,8 @@ export function Calculator({
                 key={l.category}
                 className="flex items-center justify-between gap-3 border-b hairline pb-3.5 last:border-0 last:pb-0"
               >
-                <span className="text-cream/90">{l.label}</span>
-                <span className="text-cream tabular-nums whitespace-nowrap">
+                <span className="text-cream/90 min-w-0 flex-1 text-pretty">{l.label}</span>
+                <span className="text-cream tabular-nums whitespace-nowrap shrink-0">
                   <span className="text-brandy/70">{formatRub(l.min)}</span>
                   <span className="text-brandy/40 mx-1.5">—</span>
                   <span className="font-semibold">{formatRub(l.max)}</span>
@@ -269,7 +269,7 @@ export function Calculator({
 
         {!opened && (
           <div className="absolute inset-0 flex items-center justify-center px-4">
-            <div className="max-w-md w-full bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-3xl p-7 md:p-8 text-center shadow-card">
+            <div className="max-w-md w-full bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-3xl p-5 md:p-8 text-center shadow-card">
               <div className="text-3xl mb-3" aria-hidden>
                 {budget.emoji}
               </div>

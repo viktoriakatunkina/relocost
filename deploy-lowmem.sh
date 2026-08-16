@@ -40,6 +40,8 @@ echo "==> 4/4 Жду готовности $SITE (до ~30с)"
 if curl -fsS --retry 30 --retry-delay 1 --retry-all-errors -o /dev/null "$SITE/"; then
   $SSH "$HOST" "cd $APP && rm -rf .next.old"
   echo "==> Готово ✓  Сайт отвечает 200, старый билд удалён."
+  echo "==> IndexNow: уведомляем Яндекс и Bing о страницах"
+  node scripts/indexnow.mjs || echo "!! IndexNow вернул ошибку (не критично)"
 else
   echo "!! Сайт не поднялся — откат на прошлый билд"
   $SSH "$HOST" "cd $APP \

@@ -160,6 +160,15 @@ a:focus:not(:focus-visible) {
   .animate-drift { animation: drift 30s ease-in-out infinite alternate; }
   .animate-floaty { animation: floaty 10s ease-in-out infinite; }
   .animate-glow { animation: glowPulse 12s ease-in-out infinite; }
+
+  /* Скрывает полосу прокрутки при горизонтальном скролле (snap-карусели) */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -170,5 +179,64 @@ a:focus:not(:focus-visible) {
   .animate-floaty,
   .animate-glow {
     animation: none;
+  }
+}
+
+/* ─── Печать (кнопка «Скачать PDF» / Ctrl+P) ─────────────────────────────── */
+@media print {
+  /* Скрываем навигацию, хедер, футер, интерактивные элементы */
+  header,
+  nav,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Белый фон, чёрный текст */
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    color-scheme: light !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  /* Убираем декоративные тени и градиенты */
+  * {
+    text-shadow: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: #000 !important;
+    border-color: #ccc !important;
+  }
+
+  /* Раскрываем все группы при печати */
+  .print-visible {
+    display: block !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+
+  /* Показываем print-only элементы */
+  .print-only {
+    display: flex !important;
+  }
+
+  /* Не разрывать карточки */
+  li {
+    break-inside: avoid;
+  }
+
+  /* Заголовок страницы */
+  h1 {
+    font-size: 20pt;
+    margin-bottom: 8pt;
+  }
+  h2 {
+    font-size: 14pt;
+    margin-top: 16pt;
+    margin-bottom: 6pt;
   }
 }

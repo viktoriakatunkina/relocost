@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { formatRub } from "@/lib/cities";
 import { typo } from "@/lib/typography";
+import { ShareButton } from "@/components/ShareButton";
 
 // «Сколько нужно зарабатывать» — фишка Numbeo/NerdWallet: эквивалент бюджета
 // между Москвой и этим городом. avgDiff (средняя относит. разница цен к Москве)
@@ -31,6 +32,11 @@ export function EarnEquivalent({
       : cheaper
         ? `на ${pct}% меньше`
         : `на ${pct}% больше`;
+
+  // Явная SmartAsset-формула результата — попадает в SSR-HTML с дефолтным
+  // бюджетом (важно для SEO long-tail «сколько нужно на жизнь в X»), затем
+  // обновляется при движении ползунка.
+  const hook = `Чтобы жить в ${cityName} как на ${formatRub(budget)} в Москве, нужно ~${formatRub(equivalent)}/мес`;
 
   return (
     <section className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
@@ -65,15 +71,31 @@ export function EarnEquivalent({
           />
         </label>
 
-        <div className="mt-8 pt-7 border-t hairline text-center">
-          <div className="text-brandy/65 text-sm mb-2">
-            В городе {cityName} на тот же уровень жизни нужно примерно
+        <div className="mt-8 pt-7 border-t hairline">
+          {/* Хук-фраза — главный тезис блока, как у SmartAsset */}
+          <p className="text-center text-brandy/70 text-sm mb-1">
+            Чтобы жить как в Москве,
+          </p>
+          <p className="text-center text-cream font-medium text-lg md:text-xl mb-6 text-balance">
+            в {cityName} нужно
+          </p>
+
+          <div className="text-center">
+            <div className="font-serif text-5xl md:text-7xl text-copper tabular-nums leading-none">
+              {formatRub(equivalent)}
+            </div>
+            <div className="text-copper/80 text-lg md:text-xl font-medium mt-1">
+              /мес
+            </div>
           </div>
-          <div className="font-serif text-4xl md:text-6xl text-copper tabular-nums leading-none">
-            {formatRub(equivalent)}
-          </div>
-          <div className="text-brandy/70 mt-3">
+
+          <div className="text-center text-brandy/65 text-sm mt-4">
             это {verdict}, чем в Москве
+          </div>
+
+          {/* Кнопка шеринга результата */}
+          <div className="mt-7 flex justify-center">
+            <ShareButton title={hook} text={hook} variant="ghost" />
           </div>
         </div>
 

@@ -231,49 +231,6 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* Freemium-объяснение: что бесплатно, что платно */}
-      <section className="py-10 md:py-14 px-6">
-        <div className="max-w-5xl mx-auto">
-          <Reveal>
-            <div className="text-center mb-8">
-              <span className="eyebrow">Доступ к данным</span>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-cream mt-5 text-balance">
-                Как работает Relocost
-              </h2>
-            </div>
-            <div className="grid sm:grid-cols-3 gap-4">
-              <div className="rounded-2xl bg-surface border hairline p-5 md:p-6 flex flex-col gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-lg font-bold">
-                  ✓
-                </div>
-                <h3 className="font-serif text-xl text-cream">Бесплатно</h3>
-                <p className="text-brandy/80 text-sm leading-relaxed">
-                  Цены на жилье, еду и транспорт в 100+ городах — без регистрации.
-                </p>
-              </div>
-              <div className="rounded-2xl bg-surface border hairline p-5 md:p-6 flex flex-col gap-3">
-                <div className="w-10 h-10 rounded-xl bg-copper/15 border border-copper/30 flex items-center justify-center text-copper text-lg">
-                  🔓
-                </div>
-                <h3 className="font-serif text-xl text-cream">От 19 ₽</h3>
-                <p className="text-brandy/80 text-sm leading-relaxed">
-                  Лучшие места, рейтинг городов, полный список расходов.
-                </p>
-              </div>
-              <div className="rounded-2xl bg-surface border hairline p-5 md:p-6 flex flex-col gap-3">
-                <div className="w-10 h-10 rounded-xl bg-copper/15 border border-copper/30 flex items-center justify-center text-copper text-lg">
-                  📊
-                </div>
-                <h3 className="font-serif text-xl text-cream">49 ₽</h3>
-                <p className="text-brandy/80 text-sm leading-relaxed">
-                  Полный список статей расходов с реальными ценами.
-                </p>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
       <section id="countries" className="relative isolate overflow-hidden py-12 px-6">
         <WarmOrbs className="-z-10" />
         <div className="max-w-6xl mx-auto">

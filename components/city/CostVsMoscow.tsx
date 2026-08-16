@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { MoscowComparison } from "@/lib/moscow-baseline";
+import { moscowCostIndex } from "@/lib/moscow-baseline";
 import { formatRub } from "@/lib/cities";
 import { typo } from "@/lib/typography";
 
@@ -55,6 +56,7 @@ export function CostVsMoscow({
   }, []);
 
   const avgPct = Math.round(Math.abs(avgDiff) * 100);
+  const index = moscowCostIndex(avgDiff);
   const cheaper = avgDiff < 0;
   const headline = cheaper
     ? `В среднем на ${avgPct}% дешевле Москвы`
@@ -78,6 +80,16 @@ export function CostVsMoscow({
         ref={ref}
         className="rounded-3xl bg-surface border hairline p-6 md:p-9"
       >
+        <div className="flex items-center gap-4 mb-8 pb-7 border-b hairline">
+          <span className="font-serif text-5xl md:text-6xl text-copper tabular-nums leading-none">
+            {index}
+          </span>
+          <span className="text-brandy/75 text-sm leading-snug text-pretty">
+            Индекс стоимости жизни
+            <br />
+            <span className="text-brandy/55">Москва = 100</span>
+          </span>
+        </div>
         <ul className="space-y-7">
           {rows.map((r, i) => {
             const cheaperRow = r.diff < 0;
@@ -113,11 +125,11 @@ export function CostVsMoscow({
                   />
                 </div>
 
-                <div className="flex justify-between mt-2 text-xs tabular-nums text-brandy/55">
-                  <span>
+                <div className="flex justify-between mt-2 text-xs tabular-nums text-brandy/55 gap-2">
+                  <span className="truncate min-w-0">
                     {cityName}: <span className="text-cream/80">{formatRub(r.city)}</span>
                   </span>
-                  <span>Москва: {formatRub(r.moscow)}</span>
+                  <span className="shrink-0">Москва: {formatRub(r.moscow)}</span>
                 </div>
               </li>
             );

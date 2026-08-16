@@ -42,7 +42,7 @@ export function CitySummary({
   ];
 
   return (
-    <section className="max-w-4xl mx-auto px-6 pt-16">
+    <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 md:pt-16">
       <span className="eyebrow">Коротко о переезде</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-5 text-balance">
         {typo(`Стоит ли переезжать ${phrase}?`)}
@@ -51,7 +51,7 @@ export function CitySummary({
         {typo(verdict)}
       </p>
 
-      <dl className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-8">
+      <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-8">
         {tiles.map((t) => (
           <div
             key={t.label}

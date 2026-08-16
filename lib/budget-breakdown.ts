@@ -1,4 +1,8 @@
 import type { Price, PriceCategory } from "./types";
+import {
+  householdMultipliers,
+  type Household,
+} from "./household";
 
 // Разбор экономичного месячного бюджета по 4 базовым категориям — из тех же
 // позиций prices, что считает getCitiesWithBudget (аренда на окраине, продукты,
@@ -56,5 +60,26 @@ export function budgetBreakdown(
     pct: total > 0 ? s.amount / total : 0,
   }));
 
+  return { total, slices };
+}
+
+// Пересчитывает уже посчитанный бюджет «на одного» под состав домохозяйства
+// через householdMultipliers — не дублирует выбор позиций из prices, работает
+// поверх готового BudgetBreakdown. Доли (pct) пересчитываются под новые суммы,
+// чтобы бары корректно перерисовались. Чистая функция, без запросов.
+export function applyHousehold(
+  base: BudgetBreakdown,
+  household: Household,
+): BudgetBreakdown {
+  const m = householdMultipliers(household);
+  const scaled = base.slices.map((s) => ({
+    ...s,
+    amount: Math.round(s.amount * m[s.key]),
+  }));
+  const total = scaled.reduce((a, s) => a + s.amount, 0);
+  const slices: BudgetSlice[] = scaled.map((s) => ({
+    ...s,
+    pct: total > 0 ? s.amount / total : 0,
+  }));
   return { total, slices };
 }

@@ -1,5 +1,10 @@
 import { supabase } from "./supabase";
 import type { Price, PriceCategory } from "./types";
+import {
+  vsMoscowPhrase,
+  type SecondPersonItem,
+  type SpendKey,
+} from "./second-person";
 
 // Сравнение цен города с Москвой — бьет в интент «насколько X дешевле Москвы».
 // Базовые цены Москвы тянем один раз и кэшируем на уровне модуля: при SSG
@@ -103,4 +108,43 @@ export function cityVsMoscow(
   if (rows.length < 3) return null;
   const avgDiff = rows.reduce((a, r) => a + r.diff, 0) / rows.length;
   return { rows, avgDiff };
+}
+
+// Маппинг повседневных позиций сравнения с Москвой на ключи фраз 2-го лица.
+const MOSCOW_TO_SPEND: Record<CompareItemKey, SpendKey> = {
+  rent: "rent",
+  food: "food",
+  lunch: "lunch",
+  transit: "transit",
+  coffee: "coffee",
+};
+
+// «Формулировки от 2-го лица» для страницы города: «По сравнению с Москвой
+// в Тбилиси Вы будете платить за аренду на 40% меньше, …». diff в rows — уже
+// доля относительно Москвы (< 0 дешевле), переводим в проценты со знаком.
+// cityIn — предложный падеж «в Тбилиси» / «на Бали». "" если нет сравнения.
+export function moscowSecondPerson(
+  comparison: MoscowComparison | null,
+  cityInPhrase: string,
+): string {
+  if (!comparison) return "";
+  const items: SecondPersonItem[] = comparison.rows.map((r) => ({
+    key: MOSCOW_TO_SPEND[r.key],
+    diffPct: r.diff * 100,
+  }));
+  if (items.length === 0) return "";
+  return vsMoscowPhrase({
+    cityIn: cityInPhrase,
+    items,
+    overallDiffPct: comparison.avgDiff * 100,
+  });
+}
+
+// Числовой индекс стоимости жизни: Москва = 100. Город дешевле → меньше 100,
+// дороже → больше 100. Узнаваемый якорь в духе Expatistan (Прага=100) и
+// Numbeo (Нью-Йорк=100), но локальный — Москва понятнее рублевой аудитории.
+// Считается из avgDiff (средняя относит. разница повседневных трат к Москве):
+// напр. avgDiff -0.42 → индекс 58. Для самой Москвы avgDiff=0 → ровно 100.
+export function moscowCostIndex(avgDiff: number): number {
+  return Math.round((1 + avgDiff) * 100);
 }

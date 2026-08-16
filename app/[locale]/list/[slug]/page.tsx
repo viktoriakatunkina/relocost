@@ -1,19 +1,17 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getListData, getListDef, getAllListSlugs } from "@/lib/lists";
+import { getListData, getListDef, getAllListSlugs, type Tip } from "@/lib/lists";
 import { CityCard } from "@/components/CityCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
-import { routing, type Locale } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
 import { buildAlternates, localizedUrl } from "@/lib/i18n-seo";
 
 export const revalidate = 86400;
 
 export function generateStaticParams() {
   const slugs = getAllListSlugs();
-  return routing.locales.flatMap((locale) =>
-    slugs.map((slug) => ({ locale, slug })),
-  );
+  return slugs.map((slug) => ({ locale: "ru", slug }));
 }
 
 export async function generateMetadata({
@@ -56,7 +54,7 @@ export default async function ListPage({
   };
 
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }}
@@ -75,6 +73,25 @@ export default async function ListPage({
         </p>
       </section>
 
+      {def.tips.length > 0 && (
+        <section className="max-w-6xl mx-auto px-6 pt-6 pb-2">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {def.tips.map((tip: Tip) => (
+              <div
+                key={tip.title}
+                className="rounded-xl border border-dingley/25 bg-kombu-green/40 p-4"
+              >
+                <span className="text-2xl leading-none block mb-2" aria-hidden="true">
+                  {tip.icon}
+                </span>
+                <p className="font-semibold text-cream text-sm mb-1">{tip.title}</p>
+                <p className="text-brandy/75 text-sm leading-relaxed">{tip.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section className="max-w-6xl mx-auto px-6 pt-8">
         {cities.length === 0 ? (
           <p className="text-brandy/70">Пока нет подходящих городов.</p>
@@ -87,7 +104,7 @@ export default async function ListPage({
         )}
       </section>
 
-      <div className="pt-24">
+      <div className="pt-12 md:pt-24">
         <Footer />
       </div>
     </main>

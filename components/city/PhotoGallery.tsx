@@ -33,7 +33,7 @@ export function PhotoGallery({
   const single = photos.length === 1;
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-16">
+    <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 md:pt-16">
       <div className="flex items-end justify-between mb-6 gap-4">
         <div>
           <span className="eyebrow">Город в кадрах</span>

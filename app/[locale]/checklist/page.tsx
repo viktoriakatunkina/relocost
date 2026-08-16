@@ -56,7 +56,7 @@ export default async function ChecklistPage({
   };
 
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }}
@@ -65,7 +65,7 @@ export default async function ChecklistPage({
         items={[{ name: tc("home"), href: "/" }, { name: "Чек-лист переезда" }]}
       />
 
-      <section className="max-w-3xl mx-auto px-6 pt-12 pb-8">
+      <section className="max-w-3xl mx-auto px-6 pt-12 pb-8 no-print">
         <span className="eyebrow">Планировщик</span>
         <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] mt-6 mb-6">
           Чек-лист переезда
@@ -76,6 +76,16 @@ export default async function ChecklistPage({
           этом браузере и будет ждать Вас при следующем заходе.
         </p>
       </section>
+
+      {/* Печатный заголовок — виден только при печати */}
+      <div className="print-only hidden max-w-3xl mx-auto px-6 pt-8 pb-4">
+        <h1 style={{ fontSize: "20pt", fontWeight: "bold", marginBottom: "4pt" }}>
+          Чек-лист переезда — Relocost.ru
+        </h1>
+        <p style={{ fontSize: "10pt", color: "#555", marginBottom: "12pt" }}>
+          Пошаговый план переезда. Распечатано с relocost.ru
+        </p>
+      </div>
 
       <ChecklistClient initialVariant="foreign" />
 

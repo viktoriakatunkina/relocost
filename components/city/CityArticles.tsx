@@ -19,7 +19,13 @@ export function CityArticles({
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10">
         Читайте также · {cityName}
       </h2>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className={`grid gap-6 ${
+        posts.length === 1
+          ? "md:grid-cols-1 max-w-xl"
+          : posts.length === 2
+          ? "md:grid-cols-2"
+          : "md:grid-cols-2 lg:grid-cols-3"
+      }`}>
         {posts.map((p) => (
           <BlogCard key={p.id} post={p} />
         ))}

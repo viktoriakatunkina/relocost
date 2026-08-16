@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { City } from "@/lib/types";
-import { photoSrc } from "@/lib/photo";
+import { cityPhotoSrc } from "@/lib/photo";
 import { getDifficulty } from "@/lib/difficulty";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { ShareButton } from "@/components/ShareButton";
@@ -30,7 +30,7 @@ const GRADIENTS: Record<string, string> = {
 export function CityHero({ city }: { city: City }) {
   const gradient =
     GRADIENTS[city.slug] ?? "from-kombu-green/60 via-pine-tree to-pine-tree";
-  const photo = photoSrc(city.image_url, city.unsplash_url, { w: 1600, q: 80 });
+  const photo = cityPhotoSrc(city.slug, city.image_url, city.unsplash_url, { w: 1600, q: 80 });
   const difficulty = getDifficulty(city);
 
   return (
@@ -77,7 +77,7 @@ export function CityHero({ city }: { city: City }) {
         </Link>
 
         <div className="flex items-start gap-4 mb-6 md:gap-6 md:mb-8">
-          <span className="text-6xl md:text-9xl leading-none drop-shadow-2xl" aria-hidden>
+          <span className="text-5xl md:text-9xl leading-none drop-shadow-2xl shrink-0" aria-hidden>
             {city.flag_emoji}
           </span>
           <div className="pt-2">
@@ -90,8 +90,8 @@ export function CityHero({ city }: { city: City }) {
               </span>
             </div>
             <h1 className="font-serif text-cream leading-[0.98] tracking-tight text-shadow-hero">
-              <span className="block text-4xl md:text-8xl">{city.name_ru}</span>
-              <span className="block mt-3 font-sans text-base md:text-lg text-brandy/90 uppercase tracking-[0.2em] font-medium">
+              <span className="block text-[2.2rem] sm:text-5xl md:text-8xl">{city.name_ru}</span>
+              <span className="block mt-3 font-sans text-sm md:text-base text-brandy/90 uppercase tracking-[0.12em] sm:tracking-[0.2em] font-medium">
                 Стоимость жизни в 2026 году
               </span>
             </h1>

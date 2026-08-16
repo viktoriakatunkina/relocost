@@ -16,7 +16,7 @@ export type QuizAnswers = {
   destination: Destination;
   budgetMax: number | null; // ₽/мес, null = не важно
   climate: ClimatePref;
-  priority: Priority;
+  priority: Priority[]; // мультивыбор: массив приоритетов
   needRussian: boolean;
   visaReady: boolean;
 };
@@ -88,41 +88,51 @@ export function scoreCity(
     }
   }
 
-  // Главный приоритет.
-  switch (answers.priority) {
-    case "easy":
-      score += ((5 - diff) / 4) * 26;
-      if (diff <= 2) reasons.push("Простой переезд");
-      break;
-    case "sea":
-      if (COASTAL.has(city.slug)) {
-        score += 26;
-        reasons.push("У моря");
+  // Приоритеты (мультивыбор). Вес каждого делим на кол-во выбранных,
+  // чтобы суммарный потолок оставался ~26 баллов независимо от выбора.
+  const priorities = answers.priority.length > 0 ? answers.priority : ["easy" as Priority];
+  const weight = 26 / priorities.length;
+
+  for (const p of priorities) {
+    switch (p) {
+      case "easy":
+        score += ((5 - diff) / 4) * weight;
+        if (diff <= 2) {
+          if (!reasons.includes("Простой переезд")) reasons.push("Простой переезд");
+        }
+        break;
+      case "sea":
+        if (COASTAL.has(city.slug)) {
+          score += weight;
+          if (!reasons.includes("У моря")) reasons.push("У моря");
+        }
+        break;
+      case "remote":
+        if (city.is_foreign && diff <= 3 && budget > 0) {
+          score += weight;
+          if (!reasons.includes("Удобно для удалёнки")) reasons.push("Удобно для удалёнки");
+        } else if (diff <= 3) {
+          score += weight * 0.38;
+        }
+        break;
+      case "bigcity": {
+        const pop = parsePopulation(city.population);
+        if (pop && pop >= BIG_CITY) {
+          score += weight;
+          if (!reasons.includes("Большой город")) reasons.push("Большой город");
+        } else if (pop && pop >= 500_000) {
+          score += weight * 0.31;
+        }
+        break;
       }
-      break;
-    case "remote":
-      if (city.is_foreign && diff <= 3 && budget > 0) {
-        score += 26;
-        reasons.push("Удобно для удалёнки");
-      } else if (diff <= 3) {
-        score += 10;
-      }
-      break;
-    case "bigcity": {
-      const pop = parsePopulation(city.population);
-      if (pop && pop >= BIG_CITY) {
-        score += 24;
-        reasons.push("Большой город");
-      } else if (pop && pop >= 500_000) {
-        score += 8;
-      }
-      break;
+      case "cheaper":
+        // Чем дешевле — тем выше (нормировка появится при ранжировании ниже).
+        if (budget > 0) score += weight * cheapFactor(budget);
+        if (budget > 0 && budget <= 45_000) {
+          if (!reasons.includes("Низкий бюджет")) reasons.push("Низкий бюджет");
+        }
+        break;
     }
-    case "cheaper":
-      // Чем дешевле — тем выше (нормировка появится при ранжировании ниже).
-      if (budget > 0) score += 26 * cheapFactor(budget);
-      if (budget > 0 && budget <= 45_000) reasons.push("Низкий бюджет");
-      break;
   }
 
   // Русскоязычная среда.
@@ -159,13 +169,23 @@ function cheapFactor(budget: number): number {
   return Math.max(0, Math.min(1, t));
 }
 
+export type RankedResult = {
+  cities: ScoredCity[];
+  // true — нет точных совпадений, показываем лучшее из базы
+  isFallback: boolean;
+};
+
 // Ранжирование: топ-N городов по ответам. Тай-брейк — дешевле выше.
+// Гарантирует минимум MIN_RESULTS результатов: если строгий фильтр даёт меньше,
+// добавляем лучшие города без учёта направления (destination).
 export function rankCities(
   cities: CityWithBudget[],
   answers: QuizAnswers,
   communityMap: Map<string, number>,
   limit = 8,
-): ScoredCity[] {
+): RankedResult {
+  const MIN_RESULTS = 3;
+
   const scored: ScoredCity[] = [];
   for (const c of cities) {
     const r = scoreCity(c, answers, communityMap);
@@ -176,5 +196,29 @@ export function rankCities(
       b.score - a.score ||
       (a.city.monthly_from || Infinity) - (b.city.monthly_from || Infinity),
   );
-  return scored.slice(0, limit);
+
+  if (scored.length >= MIN_RESULTS) {
+    return { cities: scored.slice(0, limit), isFallback: false };
+  }
+
+  // Fallback: скорим заново, игнорируя ограничение destination, чтобы
+  // набрать хотя бы MIN_RESULTS городов.
+  const answersRelaxed: QuizAnswers = { ...answers, destination: "any" };
+  const fallbackScored: ScoredCity[] = [];
+  for (const c of cities) {
+    const r = scoreCity(c, answersRelaxed, communityMap);
+    if (r) fallbackScored.push(r);
+  }
+  fallbackScored.sort(
+    (a, b) =>
+      b.score - a.score ||
+      (a.city.monthly_from || Infinity) - (b.city.monthly_from || Infinity),
+  );
+
+  // Объединяем: сначала строгие (если были), затем дополняем fallback-ом
+  const seen = new Set(scored.map((s) => s.city.slug));
+  const extra = fallbackScored.filter((s) => !seen.has(s.city.slug));
+  const combined = [...scored, ...extra].slice(0, Math.max(limit, MIN_RESULTS));
+
+  return { cities: combined, isFallback: true };
 }

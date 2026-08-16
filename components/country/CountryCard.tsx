@@ -2,8 +2,8 @@ import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { CountryAggregate } from "@/lib/countries";
-import { formatRub } from "@/lib/cities";
-import { photoSrc } from "@/lib/photo";
+import { formatMinRent } from "@/lib/cities";
+import { cityPhotoSrc } from "@/lib/photo";
 import { getDifficulty } from "@/lib/difficulty";
 import { countryName } from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/routing";
@@ -16,8 +16,14 @@ export function CountryCard({ country }: { country: CountryAggregate }) {
   const tc = useTranslations("common");
 
   const name = countryName(country, locale);
-  // Фон карточки — фото репрезентативного города страны (см. lib/countries).
-  const photo = photoSrc(null, country.photo_url, { w: 720, q: 80 });
+  // Фон карточки — фото репрезентативного города страны через R2 (если доступен)
+  // или Supabase Storage как fallback.
+  const photo = cityPhotoSrc(
+    country.photo_city_slug ?? country.slug,
+    null,
+    country.photo_url,
+    { w: 720, q: 80 },
+  );
   // Сложность страны сводим к тем же 3 уровням, что у городов.
   const difficulty = getDifficulty({
     difficulty_score: country.avg_difficulty > 0 ? country.avg_difficulty : null,
@@ -88,7 +94,7 @@ export function CountryCard({ country }: { country: CountryAggregate }) {
               </p>
               <p className="text-cream font-semibold drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
                 {country.min_rent > 0
-                  ? `${formatRub(country.min_rent)}${tc("perMonth")}`
+                  ? `${formatMinRent(country.min_rent, country.min_rent_currency)}${tc("perMonth")}`
                   : "—"}
               </p>
             </div>

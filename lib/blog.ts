@@ -23,32 +23,45 @@ export type BlogPost = {
 };
 
 export async function getPublishedPosts(limit?: number): Promise<BlogPost[]> {
-  let q = supabase
+  const q = supabase
     .from("blog_posts")
     .select("*")
     .eq("published", true)
-    .order("created_at", { ascending: false });
-  if (limit) q = q.limit(limit);
+    .order("created_at", { ascending: false })
+    // Явный лимит-потолок: без него Supabase молча обрезает до 1000 строк.
+    // Передача limit=undefined сохраняет поведение «взять все» (до 2000).
+    .limit(limit ?? 2000);
   const { data, error } = await q;
-  if (error) throw error;
+  if (error) return [];
   return (data ?? []) as BlogPost[];
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const { data } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .eq("slug", slug)
-    .eq("published", true)
-    .maybeSingle();
-  return (data as BlogPost | null) ?? null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const { data, error } = await supabase
+        .from("blog_posts")
+        .select("*")
+        .eq("slug", slug)
+        .eq("published", true)
+        .maybeSingle();
+      if (!error) return (data as BlogPost | null) ?? null;
+    } catch {
+      if (attempt < 2) await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+    }
+  }
+  return null;
 }
 
-export async function getAllPostSlugs(): Promise<string[]> {
+export async function getAllPostSlugs(limit = 2000): Promise<string[]> {
+  // Явный лимит: Supabase молча обрезает до 1000 без него. При >1000 статей
+  // generateStaticParams не получит все slug и часть страниц выпадет из SSG.
   const { data } = await supabase
     .from("blog_posts")
     .select("slug")
-    .eq("published", true);
+    .eq("published", true)
+    .order("created_at", { ascending: false })
+    .limit(limit);
   return (data ?? []).map((p) => p.slug as string);
 }
 
@@ -103,6 +116,23 @@ export async function getCityForPost(cityId: string | null) {
     .eq("id", cityId)
     .maybeSingle();
   return data ?? null;
+}
+
+// Топ-4 города страны для блока «Города этой страны» в блог-статьях без city_id.
+export async function getCitiesByCountry(countrySlug: string, limit = 4) {
+  const { data } = await supabase
+    .from("cities")
+    .select("id, slug, name_ru, flag_emoji, is_foreign")
+    .eq("country_slug", countrySlug)
+    .order("name_ru")
+    .limit(limit);
+  return (data ?? []) as Array<{
+    id: string;
+    slug: string;
+    name_ru: string;
+    flag_emoji: string | null;
+    is_foreign: boolean;
+  }>;
 }
 
 const COVER_GRADIENTS = [

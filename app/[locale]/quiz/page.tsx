@@ -4,13 +4,13 @@ import { CITY_CONTENT } from "@/lib/cities-content";
 import { QuizClient } from "@/components/quiz/QuizClient";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
-import { routing, type Locale } from "@/i18n/routing";
+import { type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return [];
 }
 
 export async function generateMetadata({
@@ -61,7 +61,7 @@ export default async function QuizPage({
   };
 
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}

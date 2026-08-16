@@ -58,7 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     supabase.from("cities").select("slug, country_slug, updated_at"),
     supabase
       .from("blog_posts")
-      .select("slug, created_at")
+      .select("slug, created_at, updated_at")
       .eq("published", true),
   ]);
 
@@ -92,6 +92,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly" as const,
       priority: 0.9,
     })),
+    // Подстраницы городов — самостоятельные SEO-URL с уникальными title/description.
+    // Индексируются отдельно: «бюджет семьи в X» и «цены в X» — высокочастотные
+    // информационные запросы, которые ведут на калькулятор и таблицу цен.
+    ...cityRows.map((c) => ({
+      path: `/city/${c.slug}/budget`,
+      lastModified: c.updated_at ? new Date(c.updated_at) : now,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
+    ...cityRows.map((c) => ({
+      path: `/city/${c.slug}/prices`,
+      lastModified: c.updated_at ? new Date(c.updated_at) : now,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
     ...countries.map((slug) => ({
       path: `/country/${slug}`,
       lastModified: now,
@@ -106,7 +121,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...(posts ?? []).map((p) => ({
       path: `/blog/${p.slug}`,
-      lastModified: p.created_at ? new Date(p.created_at) : now,
+      // updated_at появился в миграции 202507060001; фолбэк на created_at для
+      // старых строк, где updated_at ещё NULL (до применения триггера).
+      lastModified: p.updated_at
+        ? new Date(p.updated_at)
+        : p.created_at
+          ? new Date(p.created_at)
+          : now,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),

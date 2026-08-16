@@ -8,7 +8,8 @@
     "logoAlt": "Relocost — bosh sahifa",
     "quiz": "Test",
     "checklist": "Roʻyxat",
-    "rating": "Reyting"
+    "rating": "Reyting",
+    "match": "Tanlash"
   },
   "lang": {
     "label": "Tilni tanlash",
@@ -36,7 +37,24 @@
     "allCitiesCountry": "Barcha shaharlar · {country}",
     "allCitiesRussia": "Rossiyaning barcha shaharlari",
     "shareVia": "Ulashish",
-    "copyLink": "Havolani nusxalash"
+    "copyLink": "Havolani nusxalash",
+    "dataUpdated": "Yangilangan",
+    "dataSource": "Manba",
+    "faqEyebrow": "FAQ",
+    "faqTitle": "{city}da yashash haqida tez-tez soʻraladigan savollar",
+    "faqQ1": "{city}da yashash qancha turadi?",
+    "faqA1": "{city}da tejamli oylik byudjet {monthly} soʻmdan boshlanadi: chekka hududda bir xonali kvartira ijarasi {rent} soʻmdan, bir kishi uchun oziq-ovqat — {food} soʻmdan, transport — {transport} soʻmdan. Aniq byudjet turmush tarzingiz va tanlangan mahallaga bogʻliq.",
+    "faqQ2": "{city}da kvartira ijarasi qancha?",
+    "faqA2": "{city}da chekka hududda bir xonali kvartira {rent} soʻmdan boshlanadi. Markaziy hududlarda narx yuqoriroq. Ikki xonali kvartira odatda 1,5–2 baravar qimmatroq.",
+    "faqQ3": "{city}ga koʻchish qimmatmi?",
+    "faqA3Cheap": "{city} arzon shaharlardan biri: minimal oylik byudjet {monthly} soʻmdan boshlanadi — Moskva va Sankt-Peterburgdan ancha past.",
+    "faqA3Avg": "Yashash narxi boʻyicha {city} oʻrta darajada: minimal oylik byudjet — {monthly} soʻmdan, yirik rus shaharlari bilan taqqoslanadi.",
+    "faqA3Exp": "{city} qimmatroq yoʻnalishlar qatoriga kiradi: minimal oylik byudjet {monthly} soʻmdan. Byudjetingizni oldindan hisoblab koʻring.",
+    "faqQ4": "{city}da yashash narxiga nima kiradi?",
+    "faqA4": "{city}da yashash narxi ijara, oziq-ovqat, transport, kommunal xizmatlar, kafe, tibbiyot va koʻngil ochishdan iborat. Relocost saytida barcha toifalar haqiqiy narxlar bilan keltirilgan.",
+    "faqQ5": "{city}ga qanday koʻchish mumkin?",
+    "faqA5Foreign": "{city}ga koʻchish uchun viza yoki yashash ruxsati kerak. Shahar sahifasida asosiy bosqichlar jamlangan: hujjatlar, uy qidirish, hisob ochish. Joriy talablarni konsullikda tekshiring.",
+    "faqA5Russia": "Rossiya fuqarolari {city}ga koʻchish uchun maxsus hujjat rasmiylashtirishlari shart emas. Yangi manzilda roʻyxatdan oʻting. Dastlabki oylar uchun uy topib, byudjet rejalashtiring."
   },
   "difficulty": {
     "easy": "Oson",
@@ -140,6 +158,20 @@
     "intro": "Hozir bazada {countries} mamlakatdagi {cities} shahar bor — Moskva va Sochidan Tbilisi, Dubay va Bangkokkacha. Har bir yo‘nalish uchun ijara, oziq-ovqat va transportning haqiqiy narxlari, ruslar uchun viza qoidalari va ko‘chish murakkabligi to‘plangan. Byudjet, iqlim, mintaqa yoki «dengiz bo‘yida»ni tanlang — va o‘z variantingizni bir necha soniyada toping."
   },
   "country": {
+    "dataUpdated": "Yangilangan",
+    "dataSource": "Manba",
+    "dynFaqEyebrow": "FAQ",
+    "dynFaqTitle": "{country}ga koʻchish haqida tez-tez soʻraladigan savollar",
+    "dynFaqQ1": "{country}da yashash qancha turadi?",
+    "dynFaqA1": "{country}da yashash narxi shaharga qarab farq qiladi. Bizning katalogimizda ijara, oziq-ovqat, transport va kommunal xizmatlarning haqiqiy narxlari bilan {count} ta yoʻnalish mavjud.",
+    "dynFaqQ2": "{country}dagi eng arzon shahar qaysi?",
+    "dynFaqA2": "Relocost maʼlumotlariga koʻra {country}dagi eng arzon shahar — {cheapestCity}: minimal oylik byudjet {cheapestBudget} soʻmdan. Barcha shaharlarni katalogda taqqoslang.",
+    "dynFaqQ3": "{country}da yashash uchun viza yoki ruxsat kerakmi?",
+    "dynFaqA3": "{country}da yashash shartlari har bir shahar sahifasining «Viza va hujjatlar» boʻlimida koʻrsatilgan. Joriy talablarni rasmiy manbalardan tekshiring.",
+    "dynFaqQ4": "{country}da qaysi shahar xavfsizroq?",
+    "dynFaqA4": "{country} shaharlari boʻyicha koʻchish murakkabligi reytingi har bir yoʻnalish sahifasida mavjud: viza, til toʻsigʻi, narxlar va infratuzilma hisobga olinadi.",
+    "dynFaqQ5": "{country}da koʻchish uchun shaharni qanday tanlash kerak?",
+    "dynFaqA5": "Relocost kalkulyatori va qidiruv filtrlaridan foydalaning: byudjet, iqlim va viza talablarini belgilang — {country}dagi {count} ta shahar ichidan mos variantlarni toping.",
     "metaTitle": "2026-yilda {country}ga koʻchish — shaharlar, narxlar, viza | Relocost",
     "metaDescription": "{country}ga koʻchish qancha turadi? Narxlar, shaharlar, vizalar va koʻchganlarning tajribasi. Har bir shahar boʻyicha byudjet kalkulyatori.",
     "ogTitle": "2026-yilda {country}ga koʻchish — shaharlar, narxlar, viza",
@@ -169,7 +201,8 @@
     "prosConsTitle": "Afzallik va kamchiliklar",
     "prosColTitle": "Kuchli tomonlari",
     "consColTitle": "Eʼtiborga olish kerak",
-    "articlesTitle": "Koʻchish haqida maqolalar · {country}"
+    "articlesTitle": "Koʻchish haqida maqolalar · {country}",
+    "trueSizeTitle": "Qanchalik katta"
   },
   "howItWorks": {
     "eyebrow": "Jarayon",
@@ -198,5 +231,104 @@
     "description": "{a} va {b}ni taqqoslaymiz: ijara, oziq-ovqat, transport, kommunal va koʻchish murakkabligi. Aniq raqamlar va har bir toifada gʻolib.",
     "ogTitle": "{a} yoki {b} — qayerda yashash arzonroq",
     "ogDescription": "5 toifa boʻyicha taqqoslash: ijara, oziq-ovqat, transport, kommunal va murakkablik."
+  },
+  "cityVerdict": {
+    "eyebrow": "Bizning xulosамиз",
+    "title": "Koʻchish kerakmi?",
+    "prosTitle": "Kuchli tomonlar",
+    "consTitle": "Eʼtiborga olish",
+    "audienceTitle": "Kim uchun mos",
+
+    "prosCheapHousing": "Arzon uy-joy — ijara bozor oʻrtachasidan past",
+    "prosCheapLife": "Past yashash narxi — tejamli byudjet",
+    "prosVisuFree": "Ruslar uchun vizasiz yoki soddалashtirilgan kirish",
+    "prosMildClimate": "Yumshoq iqlim — yil davomida qulay",
+    "prosHighSafety": "Yuqori xavfsizlik darajasi",
+    "prosGoodMedicine": "Rivojlangan tibbiyot tizimi",
+    "prosHighQualityLife": "Hayot sifati indeksi yuqori",
+    "prosGoodTransport": "Qulay va arzon jamoat transporti",
+    "prosCleanEcology": "Toza havo va yaxshi ekologiya",
+
+    "consExpensiveHousing": "Yuqori ijara narxi",
+    "consExpensiveLife": "Umumiy yashash xarajatlari yuqori",
+    "consVisaNeeded": "Viza kerak — oldindan rasmiylashtirish talab etiladi",
+    "consLanguageBarrier": "Til toʻsigʻi — mahalliy tilni oʻrganish kerak",
+    "consHarshClimate": "Qiyin iqlim — sovuq qishlar yoki qattiq issiq",
+    "consLowSafety": "Numbeo maʼlumotlariga koʻra jinoyatchilik darajasi yuqori",
+    "consPoorEcology": "Havo ifloslanishi — tuman tanlashda hisobga oling",
+    "consPoorMedicine": "Tibbiy yordamga cheklangan kirish",
+    "consLittleData": "Koʻchishdan oldin qoʻshimcha oʻrganish talab etiladi",
+
+    "audienceFreelancers": "Frilanser va masofaviy ishchilar uchun",
+    "audienceFamilies": "Bolali oilalar uchun",
+    "audiencePensioners": "Pensionerlar uchun",
+    "audienceStudents": "Talabalar uchun",
+    "audienceBudget": "Tejamkor kishilar uchun",
+    "audienceNomads": "Raqamli koʻchmanchilar uchun",
+    "audienceSafety": "Xavfsizlikni qadrlaydigan kishilar uchun",
+
+    "phraseTemplate": "{city} — {advantage} izlaganlar uchun yaxshi tanlov.",
+    "advantageCheap": "hayot sifatini yoʻqotmay arzon byudjet",
+    "advantageSafe": "qulay infratuzilmali xavfsiz joy",
+    "advantageClimate": "dengiz yoki togʻ yonida iliq iqlim va qulay hayot",
+    "advantageQuality": "yuqori darajadagi tibbiyot va hayot sifati",
+    "advantageEasy": "byurokratiyasiz va til toʻsigʻisiz oson start"
+  },
+  "countryVerdict": {
+    "eyebrow": "Bizning xulosamiz",
+    "title": "Borishga arziydi?",
+    "prosTitle": "Kuchli tomonlar",
+    "consTitle": "Eʼtiborga olish",
+    "audienceTitle": "Kim uchun mos",
+
+    "prosVisuFree": "Ruslar uchun vizasiz yoki soddalashtirilgan kirish",
+    "prosPopular": "Koʻchish uchun keng shaharlar tanlovi",
+    "prosMildClimate": "Yumshoq iqlim — yil davomida qulay",
+    "prosHighSafety": "Yuqori xavfsizlik darajasi",
+    "prosGoodMedicine": "Rivojlangan sogliqni saqlash tizimi",
+    "prosCheapCities": "Past yashash narxi bilan arzon shaharlar mavjud",
+
+    "consVisaNeeded": "Viza kerak — oldindan rasmiylashtirish talab etiladi",
+    "consHighDifficulty": "Murakkab byurokratiya va legalizatsiya jarayoni",
+    "consLanguageBarrier": "Til toʻsigʻi — mahalliy tilni oʻrganish kerak",
+    "consHarshClimate": "Ayrim hududlarda qiyin iqlim",
+    "consLittleData": "Qoʻshimcha tadqiqot talab etiladi",
+
+    "audienceFreelancers": "Frilanser va masofaviy ishchilar uchun",
+    "audienceFamilies": "Bolali oilalar uchun",
+    "audiencePensioners": "Pensionerlar uchun",
+    "audienceBudget": "Tejamkor kishilar uchun",
+    "audienceNomads": "Raqamli koʻchmanchilar uchun",
+
+    "phraseTemplate": "{country} — Rossiyadan koʻchish uchun {advantage}.",
+    "advantageEasy": "eng qulay yoʻnalishlardan biri",
+    "advantagePopular": "ommabop va yaxshi oʻrganilgan yoʻnalish",
+    "advantageSafe": "xavfsiz va qulay yoʻnalish",
+    "advantageClimate": "ajoyib iqlimli yoʻnalish"
+  },
+  "livingScore": {
+    "eyebrow": "Yashash sifati indeksi",
+    "title": "{city} yashash uchun qanchalik mos",
+    "subtitle": "6 asosiy parametr boʻyicha yigʻma ball — uy ijarasidan tortib iqlimgacha. Qanchalik yuqori boʻlsa, koʻchish va yashash shunchalik qulay.",
+    "totalLabel": "Sifat indeksi",
+    "availableCategories": "{count} parametr asosida",
+    "noData": "maʼlumot yoʻq",
+    "footer": "Relocost haqiqiy narxlari, Numbeo maʼlumotlari va ochiq manbalar asosida hisoblanadi. Shaharlarni taqqoslash uchun yoʻllanma sifatida foydalaning.",
+    "ratingLink": "Barcha shaharlar reytingi",
+    "categories": {
+      "housing": "Uy-joʻy qulayligi",
+      "cost": "Yashash qiymati",
+      "safety": "Xavfsizlik",
+      "life": "Yashash sifati",
+      "transport": "Transport",
+      "climate": "Iqlim"
+    },
+    "grades": {
+      "gradeA": "Yashash uchun ajoyib joy",
+      "gradeB": "Yaxshi tanlov",
+      "gradeC": "Yomon emas",
+      "gradeD": "Byudjet yoʻnalish",
+      "gradeF": "Qiyin sharoitlar"
+    }
   }
 }

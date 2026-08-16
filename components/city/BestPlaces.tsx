@@ -40,6 +40,7 @@ export function BestPlaces({
 }) {
   const unlocked = useUnlocked(slug);
   const opened = isUnlocked(unlocked, "places");
+  if (!places || places.length === 0) return null;
   const free = places.slice(0, 2);
   const locked = places.slice(2);
 

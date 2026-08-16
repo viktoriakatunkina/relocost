@@ -18,7 +18,7 @@ export function PricesTable({
   );
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
+    <section id="prices" className="max-w-6xl mx-auto px-6 pt-14 md:pt-20 overflow-hidden md:overflow-visible">
       <span className="eyebrow">База цен</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
         Цены по категориям
@@ -53,11 +53,11 @@ export function PricesTable({
                 i < arr.length - 1 ? "border-b hairline" : ""
               }`}
             >
-              <span className="text-cream/95 flex items-center gap-3">
-                <span className="w-1 h-1 rounded-full bg-copper/50 group-hover:bg-copper transition" aria-hidden />
-                {p.item_name_ru}
+              <span className="text-cream/95 flex items-center gap-3 min-w-0 flex-1">
+                <span className="w-1 h-1 rounded-full bg-copper/50 group-hover:bg-copper transition shrink-0" aria-hidden />
+                <span className="truncate">{p.item_name_ru}</span>
               </span>
-              <span className="tabular-nums flex items-baseline gap-1">
+              <span className="tabular-nums flex items-baseline gap-1 shrink-0 ml-3 whitespace-nowrap">
                 <span className="text-brandy/70 text-sm">{formatRub(p.price_min)}</span>
                 <span className="text-brandy/40">—</span>
                 <span className="text-cream font-semibold">{formatRub(p.price_max)}</span>

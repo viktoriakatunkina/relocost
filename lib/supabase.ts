@@ -15,11 +15,22 @@ function delay(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+// HTTP/2 keepalive на VPS иногда застывает на неопределённое время (Supabase
+// не присылает FIN); без таймаута воркер Next.js ждёт 300 сек и падает.
+// AbortController с 20 сек убивает подвисший запрос до истечения page-timeout.
+const FETCH_TIMEOUT_MS = 20_000;
+
 const fetchWithRetry: typeof fetch = async (input, init) => {
   let lastErr: unknown;
   for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
+    // Пробрасываем сигнал Next.js, если есть — любой из двух прерывает запрос.
+    const prevSignal = (init as RequestInit | undefined)?.signal;
+    if (prevSignal) prevSignal.addEventListener("abort", () => ctrl.abort(), { once: true });
     try {
-      const res = await fetch(input, init);
+      const res = await fetch(input, { ...init, signal: ctrl.signal });
+      clearTimeout(tid);
       if (res.ok || attempt === RETRY_DELAYS_MS.length) return res;
       // Не-ок: повторяем на транзиентных сбоях под нагрузкой сборки. Кроме
       // statement_timeout (57014) сюда попадают любые 5xx и 429 — под нагрузкой
@@ -36,7 +47,8 @@ const fetchWithRetry: typeof fetch = async (input, init) => {
       if (!isRetryable) return res;
       await delay(RETRY_DELAYS_MS[attempt] + Math.floor(Math.random() * 250));
     } catch (e) {
-      // Сетевой сбой — тоже повторяем (до исчерпания попыток).
+      clearTimeout(tid);
+      // AbortError от нашего таймаута → повторяем как сетевой сбой.
       lastErr = e;
       if (attempt === RETRY_DELAYS_MS.length) throw e;
       await delay(RETRY_DELAYS_MS[attempt] + Math.floor(Math.random() * 250));

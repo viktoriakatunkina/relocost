@@ -116,7 +116,7 @@ export function SearchBar({ items }: { items: SearchItem[] }) {
       </div>
 
       {open && suggestions.length > 0 && (
-        <ul className="absolute top-full left-0 right-0 -ml-6 mt-3 bg-surface-elevated border hairline rounded-3xl overflow-hidden shadow-card z-50">
+        <ul className="absolute top-full left-0 right-0 -ml-6 mt-3 bg-surface-elevated border hairline rounded-3xl overflow-y-auto overscroll-contain shadow-card z-50 max-h-72">
           {suggestions.map((s, i) => (
             <li key={`${s.type}-${s.href}`}>
               <button

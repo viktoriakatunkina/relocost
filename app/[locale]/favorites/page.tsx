@@ -17,12 +17,13 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-async function getAllCities(): Promise<CityWithMinRent[]> {
-  const { data: cities } = await supabase
+async function getAllCities(): Promise<{ cities: CityWithMinRent[]; dbError: boolean }> {
+  const { data: cities, error: citiesError } = await supabase
     .from("cities")
     .select("*")
     .order("name_ru");
-  if (!cities?.length) return [];
+  if (citiesError) return { cities: [], dbError: true };
+  if (!cities?.length) return { cities: [], dbError: false };
   const ids = cities.map((c) => c.id);
   const { data: rents } = await supabase
     .from("prices")
@@ -32,10 +33,13 @@ async function getAllCities(): Promise<CityWithMinRent[]> {
     .eq("item_name_ru", "1-комн. квартира на окраине");
   const minByCity = new Map<string, number>();
   for (const r of rents ?? []) minByCity.set(r.city_id, r.price_min);
-  return (cities as City[]).map((c) => ({
-    ...c,
-    min_rent: minByCity.get(c.id) ?? 0,
-  }));
+  return {
+    cities: (cities as City[]).map((c) => ({
+      ...c,
+      min_rent: minByCity.get(c.id) ?? 0,
+    })),
+    dbError: false,
+  };
 }
 
 export default async function FavoritesPage({
@@ -44,9 +48,9 @@ export default async function FavoritesPage({
   params: { locale: Locale };
 }) {
   setRequestLocale(params.locale);
-  const all = await getAllCities();
+  const { cities: all, dbError } = await getAllCities();
   return (
-    <main className="pb-24">
+    <main className="pb-12 md:pb-24">
       <section className="max-w-6xl mx-auto px-6 pt-12 pb-12">
         <p className="text-copper uppercase text-sm tracking-wider mb-4">
           Избранное
@@ -68,8 +72,8 @@ export default async function FavoritesPage({
           сохраните ссылки на города или вернитесь сюда с того же устройства.
         </p>
       </section>
-      <FavoritesClient cities={all} />
-      <div className="pt-24">
+      <FavoritesClient cities={all} dbError={dbError} />
+      <div className="pt-12 md:pt-24">
         <Footer />
       </div>
     </main>

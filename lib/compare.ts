@@ -2,6 +2,11 @@ import { supabase } from "./supabase";
 import { getPricesByCity } from "./prices";
 import { formatRub } from "./cities";
 import type { City, Price, PriceCategory } from "./types";
+import {
+  comparePhrase,
+  type SecondPersonItem,
+  type SpendKey,
+} from "./second-person";
 
 export type CompareCategory =
   | "rent"
@@ -220,6 +225,61 @@ export function compareSummary(data: CompareResult): string[] {
   return out;
 }
 
+// Какой город дешевле по сумме базовых расходов и на сколько процентов —
+// для SEO-хука в title/h1 (Livingcost/Expatistan-стиль «X на 40% дешевле Y»).
+// Возвращает null, если разница незначима (<1%). Имена городов подставляет
+// вызывающий код (локализованно), здесь только сторона-победитель и процент.
+export function compareDelta(
+  data: CompareResult,
+): { cheaper: "a" | "b"; pct: number } | null {
+  const sumA = moneySum(data, "a");
+  const sumB = moneySum(data, "b");
+  if (sumA <= 0 || sumB <= 0 || sumA === sumB) return null;
+  const hi = Math.max(sumA, sumB);
+  const lo = Math.min(sumA, sumB);
+  const pct = Math.round((1 - lo / hi) * 100);
+  if (pct < 1) return null;
+  return { cheaper: sumA < sumB ? "a" : "b", pct };
+}
+
+// Маппинг категорий сравнения на ключи фраз 2-го лица. transport здесь — это
+// «проездной», поэтому ведём на key "transit" (предлог «за проездной»).
+const COMPARE_TO_SPEND: Partial<Record<CompareCategory, SpendKey>> = {
+  rent: "rent",
+  food: "food",
+  transport: "transit",
+  utilities: "utilities",
+};
+
+// «Формулировки от 2-го лица» для compare-страницы: «Переехав из города A
+// в город B, Вы будете платить за аренду на 25% меньше, …». Дельта по каждой
+// денежной категории — насколько B относительно A (со стороны переезжающего).
+// Overall — по сумме денежных категорий. Возвращает "" если нет данных.
+export function compareSecondPerson(data: CompareResult): string {
+  const items: SecondPersonItem[] = [];
+  for (const line of data.lines) {
+    if (line.unit !== "rub") continue;
+    const key = COMPARE_TO_SPEND[line.key];
+    if (!key) continue;
+    if (line.a <= 0 || line.b <= 0) continue;
+    // (b - a) / a * 100: > 0 — в B дороже, < 0 — дешевле.
+    const diffPct = ((line.b - line.a) / line.a) * 100;
+    items.push({ key, diffPct });
+  }
+
+  const sumA = moneySum(data, "a");
+  const sumB = moneySum(data, "b");
+  if (sumA <= 0 || items.length === 0) return "";
+  const overallDiffPct = ((sumB - sumA) / sumA) * 100;
+
+  return comparePhrase({
+    fromName: data.a.name_ru,
+    toName: data.b.name_ru,
+    items,
+    overallDiffPct,
+  });
+}
+
 // 4 вопроса FAQ — ответы из чисел (для FAQPage rich snippet).
 export function compareFaq(data: CompareResult): CompareFaqItem[] {
   const { a, b } = data;
@@ -263,6 +323,34 @@ export function compareFaq(data: CompareResult): CompareFaqItem[] {
   });
 
   return items;
+}
+
+// Денежные категории сравнения по сторонам (rent/food/transport/utilities) —
+// для калькулятора переезда A→B с составом семьи (CompareRelocation). Берем уже
+// посчитанные числа из lines, не пересчитываем. difficulty не входит (это score).
+export type RelocationSideBudget = {
+  rent: number;
+  food: number;
+  transport: number;
+  utilities: number;
+};
+
+export function relocationBudgets(data: CompareResult): {
+  a: RelocationSideBudget;
+  b: RelocationSideBudget;
+} {
+  const pick = (key: CompareCategory, side: "a" | "b") => {
+    const line = data.lines.find((l) => l.key === key);
+    if (!line) return 0;
+    return side === "a" ? line.a : line.b;
+  };
+  const build = (side: "a" | "b"): RelocationSideBudget => ({
+    rent: pick("rent", side),
+    food: pick("food", side),
+    transport: pick("transport", side),
+    utilities: pick("utilities", side),
+  });
+  return { a: build("a"), b: build("b") };
 }
 
 // Топовые города для прегенерации страниц сравнения. Полная декартова пара
