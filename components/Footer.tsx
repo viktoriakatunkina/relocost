@@ -19,6 +19,7 @@ export async function Footer() {
   const projectLinks = [
     { href: "/about", label: t("about") },
     { href: "/offer", label: t("offer") },
+    { href: "/privacy", label: t("privacy") },
     { href: "/contacts", label: t("contacts") },
   ];
   const listLinks = [
