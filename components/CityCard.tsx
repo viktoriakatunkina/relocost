@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { CityWithMinRent } from "@/lib/types";
@@ -10,6 +9,7 @@ import { currencyLabel } from "@/lib/currency";
 import { cityName, countryName } from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/routing";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { CityCardImage } from "@/components/CityCardImage";
 
 const GRADIENTS = [
   "from-emerald-900 via-kombu-green to-pine-tree",
@@ -46,13 +46,7 @@ export function CityCard({
       <FavoriteButton slug={city.slug} cityName={name} variant="card" />
       <Link href={`/city/${city.slug}`} className="absolute inset-0 block">
         {photo ? (
-          <Image
-            src={photo}
-            alt={name}
-            fill
-            sizes="(max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition duration-700 group-hover:scale-110"
-          />
+          <CityCardImage src={photo} alt={name} gradient={gradient} />
         ) : (
           <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} aria-hidden />
         )}

@@ -8,8 +8,10 @@
 //   • если есть local/unsplashBase — Storage-URL → toR2Url или Unsplash фолбэк
 //
 // cityPhotoSrc(slug, local, unsplashBase, opts):
-//   • при наличии R2_BASE всегда отдаёт ${R2_BASE}/city/${slug}.jpg
-//   • иначе фолбэк на photoSrc
+//   • при наличии R2_BASE И хотя бы одном из (local, unsplashBase) — отдаёт
+//     ${R2_BASE}/city/${slug}.jpg (файл точно мигрирован в R2)
+//   • если оба null — фолбэк на photoSrc (городу не загружено фото → null)
+//   • иначе (нет R2_BASE) — фолбэк на photoSrc
 
 import { unsplashSrc } from "./unsplash";
 
@@ -61,12 +63,19 @@ export function photoSrc(
 
 // Для карточек и страниц городов: приоритет — R2 slug-URL.
 // Скрипт migrate-to-r2.mjs загружает фото как city/{slug}.jpg
+//
+// Важно: R2-URL возвращаем только когда у города есть хотя бы один
+// источник фото (image_url или unsplash_url). Иначе R2-файл, скорее всего,
+// не существует → next/image покажет битую картинку вместо градиента.
+// Даже с R2_BASE для городов без фото возвращаем null → CityCard покажет
+// градиентный фоллбэк. Дополнительно CityCardImage обрабатывает onError
+// на случай если R2-файл существует в базе, но не загружен в хранилище.
 export function cityPhotoSrc(
   slug: string,
   local: string | null | undefined,
   unsplashBase: string | null | undefined,
   opts: { w?: number; h?: number; q?: number } = {},
 ): string | null {
-  if (R2_BASE) return `${R2_BASE}/city/${slug}.jpg`;
+  if (R2_BASE && (local || unsplashBase)) return `${R2_BASE}/city/${slug}.jpg`;
   return photoSrc(local, unsplashBase, opts);
 }
