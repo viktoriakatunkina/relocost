@@ -70,15 +70,70 @@ export default async function QuizPage({
         items={[{ name: tc("home"), href: "/" }, { name: "Куда переехать — тест" }]}
       />
 
-      <section className="max-w-2xl mx-auto px-6 pt-12 pb-8 text-center">
-        <span className="eyebrow justify-center">Подбор за минуту</span>
+      <section className="max-w-2xl mx-auto px-6 pt-12 pb-10 text-center">
+        <span className="eyebrow justify-center">Бесплатный подбор</span>
         <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] mt-6 mb-5">
           Куда Вам переехать?
         </h1>
         <p className="text-brandy/80 text-lg max-w-xl mx-auto text-pretty">
-          Ответьте на 6 коротких вопросов о бюджете, климате и том, что для Вас
-          важно — и мы подберём города из нашей базы, которые подойдут именно Вам.
+          Ответьте на 6 коротких вопросов о бюджете, климате и приоритетах — и получите персональную подборку городов с ценами, деталями переезда и сравнением.
         </p>
+
+        {/* Benefit pills */}
+        <div className="flex flex-wrap justify-center gap-3 mt-8">
+          {[
+            "99+ городов в базе",
+            "Бесплатно",
+            "Результат за 1 минуту",
+          ].map((text) => (
+            <span
+              key={text}
+              className="inline-flex items-center gap-2 rounded-pill bg-surface border hairline px-4 py-2 text-sm text-brandy/75"
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-copper shrink-0"
+                aria-hidden
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              {text}
+            </span>
+          ))}
+        </div>
+
+        {/* What you get */}
+        <div className="mt-10 grid sm:grid-cols-3 gap-4 text-left">
+          {[
+            {
+              title: "Персональная подборка",
+              desc: "Города, отобранные под Ваши критерии из нашей базы",
+            },
+            {
+              title: "Реальные цены",
+              desc: "Аренда, еда, транспорт — по каждому городу отдельно",
+            },
+            {
+              title: "Детали переезда",
+              desc: "Визовый режим, сложность и что нужно знать заранее",
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className="rounded-2xl bg-surface border hairline px-4 py-4"
+            >
+              <p className="text-cream font-medium text-sm mb-1">{item.title}</p>
+              <p className="text-brandy/60 text-xs leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <QuizClient cities={cities} community={community} />

@@ -86,25 +86,33 @@ export default async function RatingPage({
 
       <section className="max-w-4xl mx-auto px-6 pt-12 pb-8">
         <span className="eyebrow">Рейтинг</span>
-        <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] mt-6 mb-6 max-w-3xl">
+        <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] mt-6 mb-5 max-w-3xl">
           Рейтинг городов для переезда
         </h1>
         <p className="text-brandy/80 text-lg max-w-2xl text-pretty">
-          Сводная оценка направлений по тем параметрам, которые мы можем измерить
-          по нашим данным: доступность жизни, климат, простота переезда и — где
-          есть данные — инфраструктура и русскоязычная среда. Сортируйте по
-          любому параметру и сравнивайте.
+          Сравнение {rated.length}+ направлений по доступности, климату, простоте переезда и инфраструктуре. Сортируйте по любому параметру и переходите на страницу города.
         </p>
-        <p className="mt-5 inline-flex items-start gap-2 rounded-2xl border hairline bg-surface/60 px-4 py-3 text-sm text-brandy/65 max-w-2xl text-pretty">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="mt-0.5 shrink-0">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="16" x2="12" y2="12" />
-            <line x1="12" y1="8" x2="12.01" y2="8" />
-          </svg>
-          Это оценка для переезда, а не «уровень жизни вообще». Безопасность,
-          медицину и скорость интернета мы пока не оцениваем числом — не выдумываем
-          того, чего не измеряли. У части городов заполнены не все параметры — они
-          помечены «оценка по 3 параметрам».
+
+        {/* Axis pills */}
+        <div className="flex flex-wrap gap-2 mt-6">
+          {[
+            { label: "Доступность", desc: "цены и бюджет" },
+            { label: "Климат", desc: "температура и сезоны" },
+            { label: "Переезд", desc: "виза и сложность" },
+            { label: "Инфраструктура", desc: "где есть данные" },
+          ].map((ax) => (
+            <span
+              key={ax.label}
+              className="inline-flex items-center gap-1.5 rounded-pill bg-surface border hairline px-3 py-1.5 text-xs text-brandy/70"
+            >
+              <span className="text-cream font-medium">{ax.label}</span>
+              <span className="text-brandy/45">{ax.desc}</span>
+            </span>
+          ))}
+        </div>
+
+        <p className="mt-5 text-xs text-brandy/45 max-w-xl">
+          Оценка для переезда, а не «уровень жизни вообще». Безопасность и медицину числом не оцениваем — только то, что реально измерили. Города с неполными данными помечены.
         </p>
       </section>
 
