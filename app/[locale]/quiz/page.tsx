@@ -70,9 +70,9 @@ export default async function QuizPage({
         items={[{ name: tc("home"), href: "/" }, { name: "Куда переехать — тест" }]}
       />
 
-      <section className="max-w-2xl mx-auto px-6 pt-12 pb-10 text-center">
+      <section className="max-w-2xl mx-auto px-6 pt-8 pb-5 text-center">
         <span className="eyebrow justify-center">Бесплатный подбор</span>
-        <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] mt-6 mb-5">
+        <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] mt-4 mb-4">
           Куда Вам переехать?
         </h1>
         <p className="text-brandy/80 text-lg max-w-xl mx-auto text-pretty">
@@ -80,7 +80,7 @@ export default async function QuizPage({
         </p>
 
         {/* Benefit pills */}
-        <div className="flex flex-wrap justify-center gap-3 mt-8">
+        <div className="flex flex-wrap justify-center gap-3 mt-5">
           {[
             "99+ городов в базе",
             "Бесплатно",
@@ -108,37 +108,11 @@ export default async function QuizPage({
             </span>
           ))}
         </div>
-
-        {/* What you get */}
-        <div className="mt-10 grid sm:grid-cols-3 gap-4 text-left">
-          {[
-            {
-              title: "Персональная подборка",
-              desc: "Города, отобранные под Ваши критерии из нашей базы",
-            },
-            {
-              title: "Реальные цены",
-              desc: "Аренда, еда, транспорт — по каждому городу отдельно",
-            },
-            {
-              title: "Детали переезда",
-              desc: "Визовый режим, сложность и что нужно знать заранее",
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl bg-surface border hairline px-4 py-4"
-            >
-              <p className="text-cream font-medium text-sm mb-1">{item.title}</p>
-              <p className="text-brandy/60 text-xs leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
       <QuizClient cities={cities} community={community} />
 
-      <div className="pt-16">
+      <div className="pt-8">
         <Footer />
       </div>
     </main>

@@ -46,9 +46,24 @@ export function CityCard({
       <FavoriteButton slug={city.slug} cityName={name} variant="card" />
       <Link href={`/city/${city.slug}`} className="absolute inset-0 block">
         {photo ? (
-          <CityCardImage src={photo} alt={name} gradient={gradient} />
+          <CityCardImage
+            src={photo}
+            alt={name}
+            gradient={gradient}
+            emoji={city.flag_emoji ?? undefined}
+            letter={name[0]}
+          />
         ) : (
-          <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} aria-hidden />
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${gradient} flex flex-col items-center justify-center gap-1`}
+            aria-hidden
+          >
+            {city.flag_emoji && (
+              <span className="text-4xl leading-none opacity-70 select-none">
+                {city.flag_emoji}
+              </span>
+            )}
+          </div>
         )}
 
         <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/65 to-pine-tree/25" />

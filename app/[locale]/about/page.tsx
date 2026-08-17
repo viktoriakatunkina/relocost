@@ -1,6 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import Image from "next/image";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
@@ -164,23 +163,54 @@ const FEATURES = [
   },
 ];
 
-// Фото городов для коллажа в hero-секции (статичные Unsplash CDN)
-const HERO_PHOTOS = [
+// Иконки городов для коллажа в hero-секции (SVG-заглушки без внешних URL)
+const HERO_TILES = [
   {
-    src: "https://images.unsplash.com/photo-1571401835393-8c5f35328320?w=480&q=75",
-    alt: "Тбилиси — вид на старый город",
+    label: "Тбилиси",
+    flag: "🇬🇪",
+    gradient: "from-emerald-900 to-kombu-green",
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+    ),
   },
   {
-    src: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=480&q=75",
-    alt: "Дубай — городской горизонт",
+    label: "Дубай",
+    flag: "🇦🇪",
+    gradient: "from-amber-900 to-kombu-green",
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <rect x="2" y="7" width="20" height="14" rx="1" />
+        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+        <line x1="12" y1="12" x2="12" y2="16" />
+        <line x1="10" y1="14" x2="14" y2="14" />
+      </svg>
+    ),
   },
   {
-    src: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=480&q=75",
-    alt: "Бангкок — ночные огни",
+    label: "Бангкок",
+    flag: "🇹🇭",
+    gradient: "from-sky-900 to-kombu-green",
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <circle cx="12" cy="12" r="10" />
+        <line x1="2" y1="12" x2="22" y2="12" />
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      </svg>
+    ),
   },
   {
-    src: "https://images.unsplash.com/photo-1555990793-da11153b6dea?w=480&q=75",
-    alt: "Белград — крепость",
+    label: "Белград",
+    flag: "🇷🇸",
+    gradient: "from-rose-900 to-kombu-green",
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+        <circle cx="12" cy="10" r="3" />
+      </svg>
+    ),
   },
 ];
 
@@ -264,26 +294,21 @@ export default async function AboutPage({
               </div>
             </div>
 
-            {/* Коллаж фото городов */}
+            {/* Коллаж городов (SVG-заглушки — без внешних URL) */}
             <div
               className="hidden md:grid grid-cols-2 gap-3 fade-up"
               style={{ animationDelay: "200ms" }}
               aria-hidden
             >
-              {HERO_PHOTOS.map((photo, i) => (
+              {HERO_TILES.map((tile, i) => (
                 <div
                   key={i}
-                  className="relative overflow-hidden rounded-2xl aspect-[4/3]"
+                  className={`relative overflow-hidden rounded-2xl aspect-[4/3] bg-gradient-to-br ${tile.gradient} flex flex-col items-center justify-center gap-2`}
                   style={{ animationDelay: `${300 + i * 60}ms` }}
                 >
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    sizes="(max-width: 1280px) 200px, 240px"
-                    className="object-cover transition-transform duration-700 hover:scale-105"
-                    unoptimized
-                  />
+                  <div className="text-3xl leading-none">{tile.flag}</div>
+                  <div className="text-cream/60">{tile.icon}</div>
+                  <span className="text-xs text-cream/50 font-medium tracking-wide">{tile.label}</span>
                   <div className="absolute inset-0 bg-gradient-to-t from-pine-tree/40 to-transparent" />
                 </div>
               ))}
@@ -406,31 +431,33 @@ export default async function AboutPage({
         </Reveal>
       </section>
 
-      {/* Полоса фото перед CTA */}
-      <div className="max-w-5xl mx-auto px-6 mb-0" aria-hidden>
+      {/* Полоса-баннер перед CTA (CSS-градиент, без внешних URL) */}
+      <div className="max-w-5xl mx-auto px-6 mb-0">
         <Reveal>
-          <div className="relative h-52 md:h-72 rounded-3xl overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=75"
-              alt="Путешествие и переезд"
-              fill
-              sizes="(max-width: 1024px) 100vw, 960px"
-              className="object-cover"
-              unoptimized
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to right, rgba(32,40,8,0.75) 0%, rgba(32,40,8,0.2) 50%, rgba(32,40,8,0.55) 100%)",
-              }}
-            />
-            <div className="absolute inset-0 flex items-center px-8 md:px-12">
-              <p className="font-serif text-2xl md:text-4xl text-cream max-w-lg leading-snug text-balance">
-                Переезд — это не страшно,{" "}
-                <span className="text-copper italic">если знать цифры заранее</span>
-              </p>
-            </div>
+          <div
+            className="relative h-52 md:h-72 rounded-3xl overflow-hidden flex items-center px-8 md:px-12"
+            style={{
+              background:
+                "linear-gradient(135deg, #202808 0%, #33432B 40%, #4a5e36 70%, #202808 100%)",
+            }}
+          >
+            {/* Декоративный узор */}
+            <svg
+              className="absolute right-0 top-0 h-full opacity-10"
+              viewBox="0 0 400 288"
+              fill="none"
+              aria-hidden
+            >
+              <circle cx="350" cy="50" r="120" stroke="#DEC59E" strokeWidth="1" />
+              <circle cx="350" cy="50" r="80" stroke="#DEC59E" strokeWidth="0.7" />
+              <circle cx="350" cy="50" r="40" stroke="#DEC59E" strokeWidth="0.5" />
+              <circle cx="60" cy="240" r="100" stroke="#C4866D" strokeWidth="0.8" />
+              <circle cx="200" cy="150" r="60" stroke="#6A784D" strokeWidth="0.6" />
+            </svg>
+            <p className="relative font-serif text-2xl md:text-4xl text-cream max-w-lg leading-snug text-balance">
+              Переезд — это не страшно,{" "}
+              <span className="text-copper italic">если знать цифры заранее</span>
+            </p>
           </div>
         </Reveal>
       </div>
