@@ -7,9 +7,11 @@ import { BlogCard } from "@/components/blog/BlogCard";
 export function CityArticles({
   posts,
   cityName,
+  fallbackPhoto,
 }: {
   posts: BlogPost[];
   cityName: string;
+  fallbackPhoto?: string | null;
 }) {
   if (!posts.length) return null;
 
@@ -27,7 +29,7 @@ export function CityArticles({
           : "md:grid-cols-2 lg:grid-cols-3"
       }`}>
         {posts.map((p) => (
-          <BlogCard key={p.id} post={p} />
+          <BlogCard key={p.id} post={p} fallbackCover={fallbackPhoto} />
         ))}
       </div>
     </section>

@@ -10,7 +10,7 @@ import { buildAlternates } from "@/lib/i18n-seo";
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return [];
+  return [{ locale: "ru" }, { locale: "en" }, { locale: "uz" }];
 }
 
 export async function generateMetadata({ params }: { params: { locale: Locale } }) {

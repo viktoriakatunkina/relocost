@@ -187,7 +187,7 @@ function cityWord(n: number): string {
 
 // ── Types and questions ───────────────────────────────────────────────────────
 
-type Opt<T> = { value: T; label: string; hint?: string };
+type Opt<T> = { value: T; label: string; hint?: string; emoji?: string };
 type Question =
   | { key: "destination"; title: string; multi?: false; options: Opt<Destination>[] }
   | { key: "budgetMax"; title: string; multi?: false; options: Opt<number | null>[] }
@@ -201,28 +201,28 @@ const QUESTIONS: Question[] = [
     key: "destination",
     title: "Куда хотите переехать?",
     options: [
-      { value: "foreign", label: "За границу" },
-      { value: "russia", label: "По России" },
-      { value: "any", label: "Пока не решил(а)" },
+      { value: "foreign", label: "За границу", hint: "Европа, Азия, СНГ и другие направления", emoji: "✈️" },
+      { value: "russia", label: "По России", hint: "Москва, Питер, Краснодар, Сочи и другие города", emoji: "🗺️" },
+      { value: "any", label: "Ещё не решил(а)", hint: "Покажем все варианты — выберете потом", emoji: "🔍" },
     ],
   },
   {
     key: "budgetMax",
-    title: "Какой бюджет на месяц на одного человека?",
+    title: "Какой бюджет на месяц?",
     options: [
-      { value: 40000, label: "До 40 000 ₽" },
-      { value: 80000, label: "До 80 000 ₽" },
-      { value: 150000, label: "До 150 000 ₽" },
-      { value: null, label: "Не важно" },
+      { value: 40000, label: "До 40 000 ₽", hint: "Страны СНГ, Юго-Восточная Азия", emoji: "💚" },
+      { value: 80000, label: "До 80 000 ₽", hint: "Большинство европейских и азиатских городов", emoji: "💛" },
+      { value: 150000, label: "До 150 000 ₽", hint: "Любые направления, хорошее жильё", emoji: "🧡" },
+      { value: null, label: "Бюджет не ограничен", hint: "Показать все города без фильтра", emoji: "💎" },
     ],
   },
   {
     key: "climate",
     title: "Какой климат Вам ближе?",
     options: [
-      { value: "warm", label: "Тепло круглый год" },
-      { value: "temperate", label: "Умеренный, со сменой сезонов" },
-      { value: "any", label: "Не важно" },
+      { value: "warm", label: "Тепло круглый год", hint: "Средиземноморье, Азия, Латинская Америка", emoji: "☀️" },
+      { value: "temperate", label: "Умеренный климат", hint: "Четыре сезона, как в России, но мягче", emoji: "🍂" },
+      { value: "any", label: "Климат не важен", hint: "Другие факторы важнее", emoji: "🌈" },
     ],
   },
   {
@@ -230,27 +230,27 @@ const QUESTIONS: Question[] = [
     title: "Что для Вас важнее всего?",
     multi: true,
     options: [
-      { value: "easy", label: "Простой переезд" },
-      { value: "sea", label: "Жизнь у моря" },
-      { value: "remote", label: "Удобство для удалённой работы" },
-      { value: "bigcity", label: "Большой город" },
-      { value: "cheaper", label: "Чтобы было дешевле" },
+      { value: "easy", label: "Простой переезд", hint: "Минимум документов и бюрократии", emoji: "🚀" },
+      { value: "sea", label: "Жизнь у моря", hint: "Пляжи, набережные, морской воздух", emoji: "🌊" },
+      { value: "remote", label: "Удалённая работа", hint: "Быстрый интернет, коворкинги, часовой пояс", emoji: "💻" },
+      { value: "bigcity", label: "Большой город", hint: "Инфраструктура, культура, карьера", emoji: "🏙️" },
+      { value: "cheaper", label: "Дешевле, чем сейчас", hint: "Снизить расходы без потери качества жизни", emoji: "💰" },
     ],
   },
   {
     key: "needRussian",
     title: "Важна русскоязычная среда?",
     options: [
-      { value: true, label: "Да, важна" },
-      { value: false, label: "Не обязательно" },
+      { value: true, label: "Да, важна", hint: "Буду искать русскоязычное сообщество", emoji: "🤝" },
+      { value: false, label: "Не обязательно", hint: "Готов(а) интегрироваться в местную среду", emoji: "🌍" },
     ],
   },
   {
     key: "visaReady",
     title: "Готовы оформлять визу или ВНЖ?",
     options: [
-      { value: true, label: "Да, готов(а)" },
-      { value: false, label: "Хочу попроще, без виз" },
+      { value: true, label: "Да, готов(а)", hint: "Открываю любые направления", emoji: "✅" },
+      { value: false, label: "Хочу попроще", hint: "Только безвизовые страны — без лишних бумаг", emoji: "🏃" },
     ],
   },
 ];
@@ -396,7 +396,39 @@ export function QuizClient({
           ))}
         </div>
 
-        <div className="mt-12 text-center">
+        {/* Freemium CTA — самый горячий момент: пользователь только что узнал свои города */}
+        {results.length > 0 && (
+          <div className="mt-12 rounded-3xl bg-surface border border-copper/20 p-6 md:p-8 text-center">
+            <div className="inline-flex items-center gap-2 rounded-pill bg-copper/10 border border-copper/25 px-3 py-1 text-xs text-copper font-medium mb-4">
+              🔓 Откройте полные данные
+            </div>
+            <h3 className="font-serif text-2xl md:text-3xl text-cream mb-3">
+              Сколько стоит жить в {results[0]?.city.name_ru ?? "вашем городе"}?
+            </h3>
+            <p className="text-brandy/75 mb-6 max-w-lg mx-auto text-pretty">
+              40+ статей расходов — аренда, еда, транспорт, коммуналка, медицина. Реальные диапазоны от переехавших, не усреднённые данные.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <Link
+                href={`/city/${results[0]?.city.slug}/prices`}
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
+              >
+                📊 Смотреть цены в {results[0]?.city.name_ru}
+              </Link>
+              {results.length > 1 && (
+                <Link
+                  href={`/city/${results[1]?.city.slug}/prices`}
+                  className="inline-flex items-center gap-2 px-5 py-3.5 rounded-pill border hairline text-brandy/85 hover:text-cream hover:border-copper/30 transition text-sm"
+                >
+                  Или {results[1]?.city.name_ru}
+                </Link>
+              )}
+            </div>
+            <p className="text-brandy/40 text-xs mt-4">Оплата картой или СБП · Доступ навсегда · Без подписки</p>
+          </div>
+        )}
+
+        <div className="mt-8 text-center">
           <Link
             href="/search"
             className="text-brandy/80 hover:text-copper transition"
@@ -415,16 +447,16 @@ export function QuizClient({
   const meta = QUESTION_META[q.key];
 
   return (
-    <section className="max-w-2xl mx-auto px-6 pb-12">
+    <section className="max-w-2xl mx-auto px-6 pb-8">
       {/* Progress bar + step dots */}
-      <div className="mb-9">
-        <div className="flex items-center justify-between text-sm text-brandy/60 mb-3">
+      <div className="mb-4">
+        <div className="flex items-center justify-between text-sm text-brandy/60 mb-2">
           <span>
             Вопрос {step + 1} из {total}
           </span>
           <span className="tabular-nums text-copper font-medium">{progress}%</span>
         </div>
-        <div className="h-2 rounded-full bg-cream/8 overflow-hidden">
+        <div className="h-1.5 rounded-full bg-cream/8 overflow-hidden">
           <div
             className="h-full bg-copper rounded-full transition-[width] duration-500 ease-out"
             style={{ width: `${progress}%` }}
@@ -432,7 +464,7 @@ export function QuizClient({
           />
         </div>
         {/* Step dots */}
-        <div className="flex justify-center items-center gap-1.5 mt-3" aria-hidden>
+        <div className="flex justify-center items-center gap-1.5 mt-2" aria-hidden>
           {Array.from({ length: total }).map((_, i) => (
             <div
               key={i}
@@ -450,18 +482,18 @@ export function QuizClient({
       </div>
 
       {/* Question header: icon + title + hint */}
-      <div className="mb-7">
+      <div className="mb-6">
         {meta && (
-          <div className="w-14 h-14 rounded-2xl bg-copper/10 border border-copper/20 flex items-center justify-center text-copper mb-5">
+          <div className="w-12 h-12 rounded-xl bg-copper/10 border border-copper/20 flex items-center justify-center text-copper mb-3">
             <meta.Icon />
           </div>
         )}
-        <h2 className="font-serif text-3xl md:text-4xl text-cream mb-2 text-balance">
+        <h2 className="font-serif text-2xl md:text-3xl text-cream mb-1.5 text-balance">
           {q.title}
         </h2>
         <p className="text-brandy/50 text-sm">
           {q.multi
-            ? meta?.hint ?? "Можно выбрать несколько вариантов"
+            ? "Можно выбрать несколько вариантов — нажмите «Далее» когда готовы"
             : meta?.hint}
         </p>
       </div>
@@ -470,7 +502,7 @@ export function QuizClient({
       {q.multi ? (
         // Multi-select
         <>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {q.options.map((opt) => {
               const isSelected = answers.priority.includes(opt.value as Priority);
               return (
@@ -479,33 +511,29 @@ export function QuizClient({
                   type="button"
                   onClick={() => togglePriority(opt.value as Priority)}
                   className={[
-                    "w-full text-left flex items-center justify-between gap-4 rounded-2xl px-5 py-4 md:py-5 transition",
+                    "w-full text-left flex items-center gap-4 rounded-2xl px-5 py-4 transition",
                     isSelected
-                      ? "bg-surface-elevated border-2 border-copper text-cream"
-                      : "bg-surface border hairline text-cream hover:border-copper/40 hover:bg-surface-elevated",
+                      ? "bg-copper/10 border-2 border-copper text-cream"
+                      : "bg-surface border hairline text-cream hover:border-copper/30 hover:bg-surface-elevated",
                   ].join(" ")}
                   aria-pressed={isSelected}
                 >
-                  <span className="font-medium">{opt.label}</span>
+                  {opt.emoji && (
+                    <span className="text-2xl w-8 shrink-0 text-center" aria-hidden>{opt.emoji}</span>
+                  )}
+                  <span className="flex-1 min-w-0">
+                    <span className="block font-medium text-sm md:text-base">{opt.label}</span>
+                    {opt.hint && <span className="block text-xs text-brandy/50 mt-0.5">{opt.hint}</span>}
+                  </span>
                   <span
                     className={[
-                      "w-7 h-7 rounded-md border-2 flex items-center justify-center shrink-0 transition",
+                      "w-6 h-6 rounded-md border-2 flex items-center justify-center shrink-0 transition",
                       isSelected
                         ? "bg-copper border-copper text-[#202808]"
                         : "border-brandy/30 text-transparent",
                     ].join(" ")}
                   >
-                    <svg
-                      width="13"
-                      height="13"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden
-                    >
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </span>
@@ -514,39 +542,34 @@ export function QuizClient({
             })}
           </div>
 
-          {answers.priority.length > 0 && (
-            <button
-              type="button"
-              onClick={confirmMulti}
-              className="mt-6 w-full rounded-2xl bg-copper px-5 py-4 font-medium text-[#202808] hover:opacity-90 transition text-center"
-            >
-              Далее &rarr;
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={confirmMulti}
+            disabled={answers.priority.length === 0}
+            className="mt-5 w-full rounded-2xl bg-copper px-5 py-4 font-medium text-[#202808] hover:opacity-90 transition text-center disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {answers.priority.length > 0 ? `Далее (выбрано ${answers.priority.length}) →` : "Выберите хотя бы один вариант"}
+          </button>
         </>
       ) : (
         // Single select with auto-advance
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {q.options.map((opt) => (
             <button
               key={String(opt.value)}
               type="button"
               onClick={() => choose(opt.value)}
-              className="w-full text-left flex items-center justify-between gap-4 rounded-2xl bg-surface border hairline px-5 py-4 md:py-5 text-cream hover:border-copper/40 hover:bg-surface-elevated transition group"
+              className="w-full text-left flex items-center gap-4 rounded-2xl bg-surface border hairline px-5 py-4 text-cream hover:border-copper/40 hover:bg-surface-elevated transition group"
             >
-              <span className="font-medium">{opt.label}</span>
-              <span className="w-7 h-7 rounded-full border border-brandy/30 flex items-center justify-center text-brandy/50 group-hover:border-copper group-hover:text-copper transition shrink-0">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden
-                >
+              {opt.emoji && (
+                <span className="text-2xl w-8 shrink-0 text-center" aria-hidden>{opt.emoji}</span>
+              )}
+              <span className="flex-1 min-w-0">
+                <span className="block font-medium text-sm md:text-base">{opt.label}</span>
+                {opt.hint && <span className="block text-xs text-brandy/50 mt-0.5">{opt.hint}</span>}
+              </span>
+              <span className="w-7 h-7 rounded-full border border-brandy/25 flex items-center justify-center text-brandy/40 group-hover:border-copper group-hover:text-copper transition shrink-0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <line x1="5" y1="12" x2="19" y2="12" />
                   <polyline points="12 5 19 12 12 19" />
                 </svg>

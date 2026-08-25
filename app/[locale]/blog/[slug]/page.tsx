@@ -39,10 +39,33 @@ const BLOG_CANONICAL: Record<string, string> = {
   "perevod-deneg-za-granitsu-2026": "kak-perevesti-dengi-iz-rossii-za-granitsu-2026",
 };
 
-export function generateStaticParams() {
-  // Все статьи генерируются ISR при первом запросе (dynamicParams=true).
-  // Supabase-таймауты при сборке устранены полностью.
-  return [];
+export async function generateStaticParams() {
+  try {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !key) return [];
+    const tag = encodeURIComponent("города");
+    // Предгенерируем только 200 новейших статей (порядок как в app/sitemap.ts,
+    // который промотирует 1000 новейших — сайтмап и билд НЕ обязаны совпадать
+    // 1:1, т.к. 2026-08-24 подтверждено, что рантайм ISR-фолбэк на VPS
+    // реально работает: непопавшие в билд статьи из сайтмапа рендерятся
+    // по первому запросу через Supabase, а не 404-ят). Раньше здесь стоял
+    // limit=3000 (все статьи из сайтмапа) — это было ~40% всех страниц
+    // билда и основная причина многочасовых/падающих локальных сборок.
+    const res = await fetch(
+      `${url}/rest/v1/blog_posts?select=slug&published=eq.true&tag=neq.${tag}&order=created_at.desc&limit=200`,
+      { headers: { apikey: key, Authorization: `Bearer ${key}` } }
+    );
+    if (!res.ok) return [];
+    const rows: { slug: string }[] = await res.json();
+    return rows.flatMap((r) => [
+      { locale: "ru", slug: r.slug },
+      { locale: "en", slug: r.slug },
+      { locale: "uz", slug: r.slug },
+    ]);
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({

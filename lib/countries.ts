@@ -161,7 +161,7 @@ export async function getAllCountriesAggregated(): Promise<CountryAggregate[]> {
         city_count: 1,
         cities_preview: [c.name_ru],
         min_rent: rent || Number.POSITIVE_INFINITY,
-        min_rent_currency: rent ? (c.currency ?? null) : null,
+        min_rent_currency: null, // prices в таблице prices хранятся в рублях
         avg_difficulty: 0,
         photo_url: c.unsplash_url ?? null,
         photo_city_slug: c.slug ?? null,
@@ -175,7 +175,7 @@ export async function getAllCountriesAggregated(): Promise<CountryAggregate[]> {
       if (ex.cities_preview.length < 3) ex.cities_preview.push(c.name_ru);
       if (rent && rent < ex.min_rent) {
         ex.min_rent = rent;
-        ex.min_rent_currency = c.currency ?? null;
+        ex.min_rent_currency = null; // prices в рублях
       }
       ex._diff_sum += c.difficulty_score ?? 0;
       // Репрезентативное фото: предпочитаем популярный город (is_popular).

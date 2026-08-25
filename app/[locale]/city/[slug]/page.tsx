@@ -62,6 +62,7 @@ import { BadgeEmbed } from "@/components/city/BadgeEmbed";
 import { CrossLinks } from "@/components/CrossLinks";
 import { AnchorPrices } from "@/components/city/AnchorPrices";
 import { getAnchorPrices } from "@/lib/anchor-prices";
+import { cityPhotoSrc } from "@/lib/photo";
 import { CrowdPriceFeed } from "@/components/CrowdPriceFeed";
 import { CrowdPriceForm } from "@/components/CrowdPriceForm";
 import { getCityCrowdPrices, getCityCrowdCount } from "@/lib/crowd-prices";
@@ -77,19 +78,43 @@ export const revalidate = 86400;
 // Неизвестные slug рендерятся по первому запросу и кешируются ISR.
 export const dynamicParams = true;
 
-// Топ-40 городов предгенерируются при сборке (без Supabase-вызова).
-// Остальные — ISR при первом запросе (dynamicParams=true).
-const PRERENDER_CITY_SLUGS = [
-  "tbilisi", "belgrade", "dubai", "bali", "yerevan", "limassol", "almaty",
-  "tashkent", "istanbul", "bangkok", "lisbon", "berlin", "prague", "budapest",
-  "warsaw", "amsterdam", "barcelona", "milan", "paris", "vienna",
-  "riga", "tallinn", "vilnius", "krakow", "athens", "sofia", "bucharest",
-  "zagreb", "bratislava", "kyiv", "astana", "bishkek", "dushanbe", "baku",
-  "ankara", "cairo", "nairobi", "cape-town", "delhi", "ho-chi-minh-city",
-];
-
-export function generateStaticParams() {
-  return PRERENDER_CITY_SLUGS.map((slug) => ({ locale: "ru", slug }));
+// ВСЕ города предгенерируются на билде. 2026-08-24: пробовали сузить до
+// is_popular=true (~87 городов), понадеявшись на рантайм ISR-фолбэк — но
+// прямая проверка боем показала, что рантайм-доступ VPS к Supabase
+// НЕНАДЁЖНЫЙ под реальной нагрузкой: journalctl поймал повторяющиеся
+// `AbortError: Request was aborted (timeout or manual cancellation)` на
+// city/[slug]/budget при живых ISR-рендерах, а /city/thessaloniki (не в
+// топе) закешировался как... главная страница сайта (!) вместо 404 или
+// контента города — по всей видимости, гонка/сбой при параллельной
+// ISR-генерации в момент нестабильного фетча. Это ХУЖЕ старого 404-бага:
+// невидимо на мониторинге, дублирует контент под чужим URL. Поэтому —
+// назад к полной предсборке для city/budget/prices (главный SEO-трафик),
+// но blog (200 новейших) и compare (топ-пары) остаются урезанными —
+// это менее приоритетный контент, и полная пересборка 5376 страниц
+// не влезает в разумное время на этой машине. Комментарий про блок
+// Akamai 8.6.x.x был неверным (Supabase — Cloudflare 104.18.x.x/172.64.x.x),
+// но переменная нестабильность сети — реальна, просто по другой причине.
+export async function generateStaticParams() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/cities?select=slug&limit=500`,
+      {
+        headers: {
+          apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`,
+        },
+      }
+    );
+    if (!res.ok) return [];
+    const rows: { slug: string }[] = await res.json();
+    return rows.flatMap((r) => [
+      { locale: "ru", slug: r.slug },
+      { locale: "en", slug: r.slug },
+      { locale: "uz", slug: r.slug },
+    ]);
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({
@@ -369,7 +394,7 @@ export default async function CityPage({
       </Reveal>
 
       <Reveal>
-        <PricesTable prices={prices} />
+        <PricesTable prices={prices} slug={c.slug} />
       </Reveal>
 
       <Reveal>
@@ -500,7 +525,11 @@ export default async function CityPage({
       </Reveal>
 
       <Reveal>
-        <CityArticles posts={articles} cityName={name} />
+        <CityArticles
+          posts={articles}
+          cityName={name}
+          fallbackPhoto={cityPhotoSrc(c.slug, c.image_url, c.unsplash_url, { w: 720, q: 80 })}
+        />
       </Reveal>
 
       <CrossLinks

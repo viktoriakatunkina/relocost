@@ -10,7 +10,7 @@ import { buildAlternates } from "@/lib/i18n-seo";
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return [];
+  return [{ locale: "ru" }, { locale: "en" }, { locale: "uz" }];
 }
 
 export async function generateMetadata({
@@ -70,9 +70,9 @@ export default async function QuizPage({
         items={[{ name: tc("home"), href: "/" }, { name: "Куда переехать — тест" }]}
       />
 
-      <section className="max-w-2xl mx-auto px-6 pt-8 pb-5 text-center">
+      <section className="max-w-2xl mx-auto px-6 pt-6 pb-2 text-center">
         <span className="eyebrow justify-center">Бесплатный подбор</span>
-        <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] mt-4 mb-4">
+        <h1 className="font-serif text-4xl md:text-6xl text-cream leading-[1.05] mt-3 mb-3">
           Куда Вам переехать?
         </h1>
         <p className="text-brandy/80 text-lg max-w-xl mx-auto text-pretty">
@@ -80,7 +80,7 @@ export default async function QuizPage({
         </p>
 
         {/* Benefit pills */}
-        <div className="flex flex-wrap justify-center gap-3 mt-5">
+        <div className="flex flex-wrap justify-center gap-3 mt-3">
           {[
             "99+ городов в базе",
             "Бесплатно",

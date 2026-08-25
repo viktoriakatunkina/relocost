@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Link } from "@/i18n/navigation";
 import {
   COUNTRY_PACKAGES,
   COUNTRY_PACKAGE_DESCRIPTIONS,
@@ -166,6 +167,17 @@ export function CountryPaymentModal({
               {error}
             </p>
           )}
+          <p className="text-xs text-cream/50 mt-2 text-center">
+            Нажимая «Оплатить», Вы соглашаетесь с{" "}
+            <Link href="/privacy" className="underline underline-offset-2 hover:text-cream/80 transition-colors">
+              обработкой персональных данных
+            </Link>{" "}
+            и{" "}
+            <Link href="/offer" className="underline underline-offset-2 hover:text-cream/80 transition-colors">
+              публичной офертой
+            </Link>
+            .
+          </p>
           <button
             type="submit"
             disabled={submitting}

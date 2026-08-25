@@ -88,7 +88,7 @@ export function CityCard({
               {city.min_rent > 0 && (
                 <p className="mt-2 text-copper text-sm font-medium tracking-wide drop-shadow-[0_1px_8px_rgba(0,0,0,0.7)]">
                   {tc("rentFrom")}{" "}
-                  <span className="text-cream font-semibold">{formatMinRent(city.min_rent, city.currency)}</span>
+                  <span className="text-cream font-semibold">{formatMinRent(city.min_rent, null)}</span>
                   {tc("perMonth")}
                 </p>
               )}

@@ -9,7 +9,7 @@ import { getSiteStats } from "@/lib/site-stats";
 export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return [];
+  return [{ locale: "ru" }, { locale: "en" }, { locale: "uz" }];
 }
 
 export async function generateMetadata({

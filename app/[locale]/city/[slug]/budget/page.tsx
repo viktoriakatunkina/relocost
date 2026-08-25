@@ -25,11 +25,29 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 86400;
-// Страницы бюджета рендерятся по первому запросу и кешируются ISR.
 export const dynamicParams = true;
 
-export function generateStaticParams() {
-  return [];
+export async function generateStaticParams() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/cities?select=slug&limit=500`,
+      {
+        headers: {
+          apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`,
+        },
+      }
+    );
+    if (!res.ok) return [];
+    const rows: { slug: string }[] = await res.json();
+    return rows.flatMap((r) => [
+      { locale: "ru", slug: r.slug },
+      { locale: "en", slug: r.slug },
+      { locale: "uz", slug: r.slug },
+    ]);
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({

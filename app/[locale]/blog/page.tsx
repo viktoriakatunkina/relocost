@@ -2,6 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import { getPublishedPosts } from "@/lib/blog";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { Footer } from "@/components/Footer";
+import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 
@@ -50,6 +51,24 @@ export default async function BlogPage({
           Практические материалы для тех, кто планирует переезд. Бюджеты,
           визы, банки, школы — на конкретных цифрах.
         </p>
+      </section>
+
+      {/* Мини-CTA перед лентой статей */}
+      <section className="max-w-6xl mx-auto px-6 mb-8">
+        <div className="rounded-2xl bg-surface border border-copper/20 p-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
+          <div className="flex-1 min-w-0">
+            <p className="text-cream font-medium text-sm leading-snug">
+              Знаете, куда переезжаете? Откройте полный отчёт по городу — цены, виза, лучшие места.
+            </p>
+            <p className="text-brandy/55 text-xs mt-0.5">40+ статей расходов · единоразово · от 49 ₽</p>
+          </div>
+          <Link
+            href="/search"
+            className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition whitespace-nowrap"
+          >
+            Выбрать город →
+          </Link>
+        </div>
       </section>
 
       <section className="max-w-6xl mx-auto px-6">

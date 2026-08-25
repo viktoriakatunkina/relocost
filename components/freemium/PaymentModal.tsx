@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Link } from "@/i18n/navigation";
 import {
   PACKAGES,
   PACKAGE_DESCRIPTIONS,
@@ -37,19 +38,19 @@ export function PaymentModal({
 
   const PACKAGE_BULLETS: Record<string, string[]> = {
     places: [
-      "5+ лучших мест для посещения с адресами и советами",
-      "Кафе, рестораны, районы, рынки и коворкинги",
-      "Актуально на 2026 год",
+      "Конкретные названия, адреса и советы по каждому месту",
+      "Кафе, рестораны, рынки, коворкинги и лучшие районы",
+      "Проверено переехавшими — не туристические ловушки",
     ],
     budget: [
-      "Полный список статей расходов по всем категориям",
-      "Аренда, еда, транспорт, коммуналка, кафе, здоровье",
-      "Реальные цены от переехавших",
+      "Полный прайс по всем статьям расходов — 40+ позиций",
+      "Аренда, еда, транспорт, коммуналка, связь, медицина",
+      "Реальные диапазоны цен, не усреднённые данные",
     ],
     bundle: [
-      "Полный список расходов + лучшие места — всё вместе",
-      "Экономия 9 ₽ по сравнению с отдельной покупкой",
-      "Один платеж, полный доступ",
+      "Все цены по 40+ статьям расходов — полная картина",
+      "Лучшие места с адресами — кафе, рынки, коворкинги",
+      "Всё в одном платеже — не нужно выбирать по отдельности",
     ],
     country_cities: [
       "Список лучших городов страны по ключевым критериям",
@@ -66,8 +67,8 @@ export function PaymentModal({
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email || !email.includes("@")) {
-      setError("Укажите email — отправим чек и ссылку для восстановления доступа.");
+    if (email && !email.includes("@")) {
+      setError("Проверьте формат email — похоже, опечатка.");
       return;
     }
     setSubmitting(true);
@@ -165,15 +166,14 @@ export function PaymentModal({
         <form onSubmit={onSubmit} className="space-y-4">
           <label className="block">
             <span className="block text-brandy/70 text-sm mb-2">
-              Email <span className="text-copper">*</span>
-              <span className="text-brandy/50 ml-1 text-xs">— пришлем чек и ссылку на восстановление доступа</span>
+              Email
+              <span className="text-brandy/50 ml-1 text-xs">— необязательно, пришлём чек и ссылку восстановления</span>
             </span>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
+              placeholder="you@example.com (необязательно)"
               className="w-full px-4 py-3 rounded-pill bg-pine-tree/60 border border-cream/10 text-cream placeholder-brandy/40 focus:border-copper focus:outline-none"
               autoFocus
             />
@@ -183,6 +183,17 @@ export function PaymentModal({
               {error}
             </p>
           )}
+          <p className="text-xs text-cream/50 mt-2 text-center">
+            Нажимая «Оплатить», Вы соглашаетесь с{" "}
+            <Link href="/privacy" className="underline underline-offset-2 hover:text-cream/80 transition-colors">
+              обработкой персональных данных
+            </Link>{" "}
+            и{" "}
+            <Link href="/offer" className="underline underline-offset-2 hover:text-cream/80 transition-colors">
+              публичной офертой
+            </Link>
+            .
+          </p>
           <button
             type="submit"
             disabled={submitting}

@@ -8,6 +8,7 @@ import "../globals.css";
 import { Header } from "@/components/Header";
 import { FavoritesLimitModal } from "@/components/FavoritesLimitModal";
 import { YandexMetrika } from "@/components/YandexMetrika";
+import { CookieBanner } from "@/components/CookieBanner";
 import { routing, type Locale } from "@/i18n/routing";
 import { getSiteStats } from "@/lib/site-stats";
 
@@ -79,20 +80,16 @@ export async function generateMetadata({
       title: "Relocost — калькулятор стоимости жизни для переезжающих",
       description: descShort,
     },
-    icons: {
-      icon: [
-        { url: "/logo/relocost-favicon.svg", type: "image/svg+xml" },
-        { url: "/logo/favicon-32.png", sizes: "32x32", type: "image/png" },
-        { url: "/logo/favicon-16.png", sizes: "16x16", type: "image/png" },
-      ],
-      apple: [
-        { url: "/logo/app-icon-180.png", sizes: "180x180", type: "image/png" },
-      ],
-      other: [
-        { rel: "icon", url: "/logo/icon-192.png", sizes: "192x192" },
-        { rel: "icon", url: "/logo/icon-512.png", sizes: "512x512" },
-      ],
-    },
+    // Явный icons-блок убран 2026-08-24: он дублировал и конфликтовал с
+    // автоматическими App Router иконками (app/favicon.ico, app/icon.svg,
+    // app/apple-icon.tsx). Из-за этого в <head> одновременно оказывалось
+    // 7 разных <link rel="icon"> — часть от СТАРОГО дизайна (тёмно-зелёный
+    // фон, public/logo/favicon-*.png образца 3 июля), часть от НОВОГО
+    // (медный фон, редизайн 16 августа) — браузер непредсказуемо выбирал
+    // между ними, из-за чего вкладка "то новая, то старая" иконка.
+    // Теперь единственный источник — файлы app/favicon.ico + app/icon.svg +
+    // app/apple-icon.tsx (все актуализированы на новый дизайн), Next.js сам
+    // генерирует консистентные <link> без дублей.
     robots: {
       index: true,
       follow: true,
@@ -133,6 +130,7 @@ export default async function LocaleLayout({
           <Header />
           {children}
           <FavoritesLimitModal />
+          <CookieBanner />
         </NextIntlClientProvider>
         <YandexMetrika />
         <Script

@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
@@ -163,55 +164,11 @@ const FEATURES = [
   },
 ];
 
-// Иконки городов для коллажа в hero-секции (SVG-заглушки без внешних URL)
 const HERO_TILES = [
-  {
-    label: "Тбилиси",
-    flag: "🇬🇪",
-    gradient: "from-emerald-900 to-kombu-green",
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-        <polyline points="9 22 9 12 15 12 15 22" />
-      </svg>
-    ),
-  },
-  {
-    label: "Дубай",
-    flag: "🇦🇪",
-    gradient: "from-amber-900 to-kombu-green",
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <rect x="2" y="7" width="20" height="14" rx="1" />
-        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-        <line x1="12" y1="12" x2="12" y2="16" />
-        <line x1="10" y1="14" x2="14" y2="14" />
-      </svg>
-    ),
-  },
-  {
-    label: "Бангкок",
-    flag: "🇹🇭",
-    gradient: "from-sky-900 to-kombu-green",
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <circle cx="12" cy="12" r="10" />
-        <line x1="2" y1="12" x2="22" y2="12" />
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-      </svg>
-    ),
-  },
-  {
-    label: "Белград",
-    flag: "🇷🇸",
-    gradient: "from-rose-900 to-kombu-green",
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-        <circle cx="12" cy="10" r="3" />
-      </svg>
-    ),
-  },
+  { label: "Тбилиси", flag: "🇬🇪", src: "https://ftkyoneazoqlkrpisdef.supabase.co/storage/v1/object/public/photos/u/55603740f51ecf8f.jpg" },
+  { label: "Дубай",   flag: "🇦🇪", src: "https://ftkyoneazoqlkrpisdef.supabase.co/storage/v1/object/public/photos/u/f53846dec8bda1f4.jpg" },
+  { label: "Бангкок", flag: "🇹🇭", src: "https://ftkyoneazoqlkrpisdef.supabase.co/storage/v1/object/public/photos/u/6ba4f871dafb2c0d.jpg" },
+  { label: "Белград", flag: "🇷🇸", src: "https://ftkyoneazoqlkrpisdef.supabase.co/storage/v1/object/public/photos/u/ac7f9607be707f5b.jpg" },
 ];
 
 export default async function AboutPage({
@@ -240,7 +197,7 @@ export default async function AboutPage({
       />
 
       {/* Hero */}
-      <section className="relative isolate overflow-hidden px-6 pt-16 pb-20 md:pt-24 md:pb-28">
+      <section className="relative isolate overflow-hidden px-6 pt-10 pb-12 md:pt-14 md:pb-16">
         <div
           className="absolute inset-0 -z-10"
           style={{
@@ -260,7 +217,8 @@ export default async function AboutPage({
                 className="font-serif text-[clamp(2.5rem,5vw,4.5rem)] text-cream leading-[1.05] mt-6 mb-6 fade-up text-balance"
                 style={{ animationDelay: "100ms", letterSpacing: "-0.02em" }}
               >
-                Помогаем переехать{" "}
+                Помогаем переехать
+                <br />
                 <span className="text-copper italic">с открытыми глазами</span>
               </h1>
               <p
@@ -272,29 +230,26 @@ export default async function AboutPage({
                 считаем честный месячный бюджет и объясняем визы, банки и быт.
               </p>
 
-              {/* Статистика — 4 карточки */}
+              {/* Статистика */}
               <div
-                className="grid grid-cols-2 sm:grid-cols-4 gap-3 fade-up"
+                className="flex flex-wrap gap-x-10 gap-y-5 fade-up border-t border-cream/10 pt-6"
                 style={{ animationDelay: "300ms" }}
               >
                 {[
-                  { value: `${stats.cityCount}+`, label: "городов", emoji: "🏙" },
-                  { value: `${stats.countryCount}+`, label: "стран", emoji: "🌍" },
-                  { value: `${stats.blogCount}+`, label: "статей", emoji: "📖" },
-                  { value: "7", label: "категорий цен", emoji: "📊" },
+                  { value: `${stats.cityCount}+`, label: "городов" },
+                  { value: `${stats.countryCount}+`, label: "стран" },
+                  { value: `${stats.blogCount}+`, label: "статей" },
+                  { value: "7", label: "категорий цен" },
                 ].map((s) => (
-                  <div key={s.label} className="rounded-2xl border hairline bg-surface/70 px-4 py-5 text-center hover:border-copper/30 transition-colors">
-                    <div className="text-xl mb-1" aria-hidden>{s.emoji}</div>
-                    <span className="block font-serif text-3xl text-copper leading-none mb-1">
-                      {s.value}
-                    </span>
-                    <span className="text-brandy/70 text-xs">{s.label}</span>
+                  <div key={s.label}>
+                    <span className="block font-serif text-4xl text-copper leading-none">{s.value}</span>
+                    <span className="block text-brandy/60 text-xs mt-1.5 uppercase tracking-wider">{s.label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Коллаж городов (SVG-заглушки — без внешних URL) */}
+            {/* Коллаж городов */}
             <div
               className="hidden md:grid grid-cols-2 gap-3 fade-up"
               style={{ animationDelay: "200ms" }}
@@ -303,13 +258,20 @@ export default async function AboutPage({
               {HERO_TILES.map((tile, i) => (
                 <div
                   key={i}
-                  className={`relative overflow-hidden rounded-2xl aspect-[4/3] bg-gradient-to-br ${tile.gradient} flex flex-col items-center justify-center gap-2`}
+                  className="relative overflow-hidden rounded-2xl aspect-[4/3] bg-kombu-green"
                   style={{ animationDelay: `${300 + i * 60}ms` }}
                 >
-                  <div className="text-3xl leading-none">{tile.flag}</div>
-                  <div className="text-cream/60">{tile.icon}</div>
-                  <span className="text-xs text-cream/50 font-medium tracking-wide">{tile.label}</span>
-                  <div className="absolute inset-0 bg-gradient-to-t from-pine-tree/40 to-transparent" />
+                  <Image
+                    src={tile.src}
+                    alt={tile.label}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1200px) 25vw, 300px"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-pine-tree/60 to-transparent" />
+                  <span className="absolute bottom-2 left-3 text-xs text-cream/80 font-medium">
+                    {tile.flag} {tile.label}
+                  </span>
                 </div>
               ))}
             </div>
@@ -355,7 +317,7 @@ export default async function AboutPage({
       <section className="bg-surface/40 border-y hairline py-16 md:py-20">
         <div className="max-w-5xl mx-auto px-6">
           <Reveal>
-            <span className="eyebrow">✨ Принципы</span>
+            <span className="eyebrow">Принципы</span>
             <h2 className="font-serif text-3xl md:text-5xl text-cream mt-5 mb-4">
               Как мы работаем
             </h2>
@@ -389,7 +351,7 @@ export default async function AboutPage({
       {/* Методология */}
       <section className="max-w-5xl mx-auto px-6 py-16 md:py-20">
         <Reveal>
-          <span className="eyebrow">📊 Методология</span>
+          <span className="eyebrow">Методология</span>
           <h2 className="font-serif text-3xl md:text-5xl text-cream mt-5 mb-4">
             Откуда мы берем цифры
           </h2>
@@ -431,29 +393,18 @@ export default async function AboutPage({
         </Reveal>
       </section>
 
-      {/* Полоса-баннер перед CTA (CSS-градиент, без внешних URL) */}
+      {/* Полоса-баннер перед CTA */}
       <div className="max-w-5xl mx-auto px-6 mb-0">
         <Reveal>
-          <div
-            className="relative h-52 md:h-72 rounded-3xl overflow-hidden flex items-center px-8 md:px-12"
-            style={{
-              background:
-                "linear-gradient(135deg, #202808 0%, #33432B 40%, #4a5e36 70%, #202808 100%)",
-            }}
-          >
-            {/* Декоративный узор */}
-            <svg
-              className="absolute right-0 top-0 h-full opacity-10"
-              viewBox="0 0 400 288"
-              fill="none"
-              aria-hidden
-            >
-              <circle cx="350" cy="50" r="120" stroke="#DEC59E" strokeWidth="1" />
-              <circle cx="350" cy="50" r="80" stroke="#DEC59E" strokeWidth="0.7" />
-              <circle cx="350" cy="50" r="40" stroke="#DEC59E" strokeWidth="0.5" />
-              <circle cx="60" cy="240" r="100" stroke="#C4866D" strokeWidth="0.8" />
-              <circle cx="200" cy="150" r="60" stroke="#6A784D" strokeWidth="0.6" />
-            </svg>
+          <div className="relative h-52 md:h-72 rounded-3xl overflow-hidden flex items-center px-8 md:px-12">
+            <Image
+              src="https://ftkyoneazoqlkrpisdef.supabase.co/storage/v1/object/public/photos/u/55603740f51ecf8f.jpg"
+              alt="Вид на Тбилиси"
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1200px) 90vw, 1024px"
+            />
+            <div className="absolute inset-0 bg-pine-tree/78" />
             <p className="relative font-serif text-2xl md:text-4xl text-cream max-w-lg leading-snug text-balance">
               Переезд — это не страшно,{" "}
               <span className="text-copper italic">если знать цифры заранее</span>

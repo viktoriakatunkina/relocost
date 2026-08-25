@@ -188,7 +188,7 @@ export function LivingScoreCard({ result, cityName, t }: LivingScoreCardProps) {
   return (
     <section
       id="living-score"
-      className="max-w-4xl mx-auto px-6 pt-14 md:pt-20"
+      className="max-w-4xl mx-auto px-6 pt-14 md:pt-20 overflow-hidden"
     >
       <span className="eyebrow">{t.eyebrow}</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
@@ -199,7 +199,7 @@ export function LivingScoreCard({ result, cityName, t }: LivingScoreCardProps) {
       </p>
 
       <div
-        className={`rounded-3xl border p-6 md:p-9 ${overall.bg} ${overall.border}`}
+        className={`rounded-3xl border p-6 md:p-9 overflow-hidden ${overall.bg} ${overall.border}`}
       >
         {/* Шапка: круговой балл + общая подпись */}
         <div className="flex items-center gap-6 mb-8 pb-7 border-b hairline">

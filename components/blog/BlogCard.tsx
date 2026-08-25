@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { BlogPost } from "@/lib/blog";
-import { coverGradient } from "@/lib/blog";
+import { coverGradient, defaultCoverUrl } from "@/lib/blog";
 import { photoSrc } from "@/lib/photo";
 import { typo } from "@/lib/typography";
 
@@ -13,8 +13,15 @@ function shortTitle(title: string): string {
   return t;
 }
 
-export function BlogCard({ post }: { post: BlogPost }) {
-  const cover = photoSrc(post.cover_image_url, post.cover_url, { w: 720, q: 80 });
+export function BlogCard({
+  post,
+  fallbackCover,
+}: {
+  post: BlogPost;
+  fallbackCover?: string | null;
+}) {
+  const ownCover = photoSrc(post.cover_image_url, post.cover_url, { w: 720, q: 80 });
+  const cover = ownCover ?? fallbackCover ?? defaultCoverUrl(post.slug);
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -37,28 +44,6 @@ export function BlogCard({ post }: { post: BlogPost }) {
           <span className="absolute top-4 left-4 chip chip-accent">
             {post.tag}
           </span>
-        )}
-        {!cover && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-5">
-            <svg
-              width="36"
-              height="36"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-copper/60"
-              aria-hidden
-            >
-              <circle cx="12" cy="10" r="3" />
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-            </svg>
-            <p className="text-cream/80 text-sm font-medium leading-snug line-clamp-2 text-center max-w-[80%]">
-              {shortTitle(post.title)}
-            </p>
-          </div>
         )}
       </div>
       <div className="p-6">

@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { MoscowComparison } from "@/lib/moscow-baseline";
 import { moscowCostIndex } from "@/lib/moscow-baseline";
-import { formatRub } from "@/lib/cities";
 import { typo } from "@/lib/typography";
 
 // Насколько шкала бара заполняется при |разнице| = 100%. Дальше — обрезаем,
@@ -109,7 +108,7 @@ export function CostVsMoscow({
                 </div>
 
                 {/* ось по центру: дешевле — влево (emerald), дороже — вправо (copper) */}
-                <div className="relative h-3 rounded-full bg-cream/8">
+                <div className="relative h-3 rounded-full bg-cream/8 overflow-hidden">
                   <div
                     className="absolute top-[-3px] bottom-[-3px] left-1/2 w-px bg-cream/25"
                     aria-hidden
@@ -125,12 +124,6 @@ export function CostVsMoscow({
                   />
                 </div>
 
-                <div className="flex justify-between mt-2 text-xs tabular-nums text-brandy/55 gap-2">
-                  <span className="truncate min-w-0">
-                    {cityName}: <span className="text-cream/80">{formatRub(r.city)}</span>
-                  </span>
-                  <span className="shrink-0">Москва: {formatRub(r.moscow)}</span>
-                </div>
               </li>
             );
           })}

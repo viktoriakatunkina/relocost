@@ -34,9 +34,11 @@ export function CityFavoritesCount() {
   if (displayed < VISIBILITY_THRESHOLD) return null;
 
   return (
-    <p className="flex items-center gap-1.5 text-brandy/70 text-sm mt-3">
-      <span aria-hidden="true">❤️</span>
-      <span>{displayed} человек добавили в избранное</span>
-    </p>
+    <div className="max-w-6xl mx-auto px-6">
+      <p className="flex items-center gap-1.5 text-brandy/70 text-sm mt-3">
+        <span aria-hidden="true">❤️</span>
+        <span>{displayed} человек добавили в избранное</span>
+      </p>
+    </div>
   );
 }

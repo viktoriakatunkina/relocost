@@ -13,7 +13,7 @@ export async function CTABanner({
 
   return (
     <section className="py-12 px-6">
-      <div className="relative max-w-6xl mx-auto rounded-[2rem] overflow-hidden border hairline">
+      <div className="relative max-w-4xl mx-auto rounded-[2rem] overflow-hidden border hairline">
         <div
           aria-hidden
           className="absolute inset-0 -z-10"
@@ -24,19 +24,19 @@ export async function CTABanner({
         />
         <div className="absolute inset-0 -z-10 bg-noise opacity-30" aria-hidden />
 
-        <div className="relative px-6 md:px-16 py-12 md:py-24 grid md:grid-cols-[1.4fr,1fr] gap-10 items-center">
+        <div className="relative px-6 md:px-12 py-10 md:py-14 grid md:grid-cols-[1.4fr,1fr] gap-8 items-center">
           <div>
             <span className="eyebrow">{t("eyebrow")}</span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl text-cream mt-6 mb-6 text-balance">
+            <h2 className="font-serif text-3xl md:text-4xl text-cream mt-4 mb-4 text-balance">
               {t("titlePre")}
               <span className="text-copper">{t("titleAccent")}</span>
               {t("titlePost")}
             </h2>
-            <p className="text-brandy/85 text-lg md:text-xl max-w-xl text-pretty">
+            <p className="text-brandy/85 text-base md:text-lg max-w-lg text-pretty">
               {t("text")}
             </p>
 
-            <div className="flex flex-wrap gap-3 mt-10">
+            <div className="flex flex-wrap gap-3 mt-7">
               <Link
                 href="/search"
                 className="inline-flex items-center gap-2 px-7 py-4 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy hover:shadow-glow"

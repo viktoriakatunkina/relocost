@@ -8,6 +8,7 @@ import {
   compareSecondPerson,
   compareFaq,
   relocationBudgets,
+  TOP_COMPARE_SLUGS,
 } from "@/lib/compare";
 import { CompareHero } from "@/components/compare/CompareHero";
 import { CrossLinks } from "@/components/CrossLinks";
@@ -18,6 +19,7 @@ import { CompareRelocation } from "@/components/compare/CompareRelocation";
 import { SecondPersonSummary } from "@/components/city/SecondPersonSummary";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
+import { Link } from "@/i18n/navigation";
 import { type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { cityName } from "@/lib/i18n-content";
@@ -29,7 +31,30 @@ export const revalidate = 86400;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
-  return [];
+  // Объединяем ручной список популярных городов с TOP_COMPARE_SLUGS
+  // (lib/compare.ts) — тем же списком, из которого sitemap.ts строит
+  // /compare/... ссылки. Без объединения часть пар из sitemap (например,
+  // krasnodar-vs-sochi) не попадала в generateStaticParams и рендерилась
+  // через ISR-фолбэк на VPS, где notFound() мог закешироваться на 404.
+  const TOP = Array.from(
+    new Set([
+      "tbilisi", "yerevan", "istanbul", "belgrade", "almaty",
+      "dubai", "bali", "lisbon", "barcelona", "tashkent",
+      "limassol", "berlin", "prague", "budapest", "warsaw",
+      "moscow", "spb", "bishkek", "baku",
+      ...TOP_COMPARE_SLUGS,
+    ]),
+  );
+  const pairs: string[] = [];
+  for (let i = 0; i < TOP.length; i++) {
+    for (let j = i + 1; j < TOP.length; j++) {
+      pairs.push(`${TOP[i]}-vs-${TOP[j]}`);
+    }
+  }
+  return pairs.flatMap((pair) => [
+    { locale: "ru", pair },
+    { locale: "en", pair },
+  ]);
 }
 
 export async function generateMetadata({
@@ -120,6 +145,37 @@ export default async function ComparePage({
         budgetB={relocation.b}
       />
       <CompareDetails summary={compareSummary(data)} faq={compareFaq(data)} />
+      {/* CTA: горячий пользователь выбирает между двумя городами — подтолкнуть к покупке */}
+      <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
+        <div
+          className="rounded-3xl border-2 border-copper/45 p-6 md:p-8 text-center"
+          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(232,155,110,0.18) 0%, transparent 60%), linear-gradient(135deg, #2A3618 0%, #1A2105 100%)" }}
+        >
+          <p className="text-copper text-xs uppercase tracking-wider font-semibold mb-3">Полные данные по обоим городам</p>
+          <h3 className="font-serif text-2xl md:text-3xl text-cream mb-3 leading-tight">
+            40+ статей расходов — аренда, еда, транспорт, медицина
+          </h3>
+          <p className="text-brandy/80 mb-7 max-w-lg mx-auto text-sm leading-relaxed">
+            Таблица сравнения показывает только базовые данные. Полный прайс откроется сразу после оплаты — реальные диапазоны, не усреднённые.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href={`/city/${data.a.slug}/prices`}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
+            >
+              📊 Цены в {data.a.name_ru} — 49 ₽
+            </Link>
+            <Link
+              href={`/city/${data.b.slug}/prices`}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill border border-copper/50 text-copper font-semibold text-sm hover:bg-copper/10 transition"
+            >
+              📊 Цены в {data.b.name_ru} — 49 ₽
+            </Link>
+          </div>
+          <p className="text-brandy/40 text-xs mt-4">Единоразовая оплата · Доступ навсегда · ЮKassa</p>
+        </div>
+      </section>
+
       <CrossLinks
         links={[
           { href: `/city/${data.a.slug}`, label: `Стоимость жизни в ${data.a.name_ru}` },

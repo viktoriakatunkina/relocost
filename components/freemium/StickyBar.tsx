@@ -44,14 +44,14 @@ export function StickyBar({
               onClick={() => setOpenPkg(cheapestPkg)}
               className="flex-1 rounded-xl bg-copper text-pine-tree font-semibold text-sm py-2.5 px-3 hover:bg-brandy transition active:scale-95"
             >
-              от {CITY_PACKAGES[cheapestPkg].price} ₽
+              {CITY_PACKAGES[cheapestPkg].short} — {CITY_PACKAGES[cheapestPkg].price} ₽
             </button>
             <button
               type="button"
               onClick={() => setOpenPkg("bundle")}
               className="shrink-0 rounded-xl border border-copper/50 text-copper font-medium text-sm py-2.5 px-3 hover:bg-copper/10 transition active:scale-95"
             >
-              Все — {CITY_PACKAGES.bundle.price} ₽
+              Комбо — {CITY_PACKAGES.bundle.price} ₽
             </button>
           </div>
 
@@ -98,7 +98,7 @@ export function StickyBar({
             </button>
           </div>
           <p className="text-brandy/50 text-[11px] text-center pt-1.5">
-            Открывается сразу после оплаты
+            Открывается сразу после оплаты · единоразовый платёж · доступ навсегда
           </p>
           <div className="flex justify-end pt-1">
             <RestoreAccess slug={slug} />

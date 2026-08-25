@@ -34,11 +34,36 @@ import { localizeCountryContent } from "@/lib/content-i18n";
 import { countryName as localizedCountryName } from "@/lib/i18n-content";
 
 export const revalidate = 86400;
-// Страны рендерятся по первому запросу и кешируются ISR.
 export const dynamicParams = true;
 
-export function generateStaticParams() {
-  return [];
+// Список стран берём из реальных данных (cities.country_slug), а не из
+// статического словаря COUNTRY_NAMES_RU — тот содержит только 46 записей
+// (нужен для локализованных названий/fallback), а стран с городами в БД
+// фактически ~80 (то же самое множество, что app/sitemap.ts строит из
+// cities). Раньше расхождение (46 vs 80) означало, что 34 страны не
+// предгенерировались и рендерились через ISR-фолбэк на VPS.
+export async function generateStaticParams() {
+  try {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !key) return [];
+    const res = await fetch(
+      `${url}/rest/v1/cities?select=country_slug&limit=1000`,
+      { headers: { apikey: key, Authorization: `Bearer ${key}` } }
+    );
+    if (!res.ok) return [];
+    const rows: { country_slug: string | null }[] = await res.json();
+    const slugs = Array.from(
+      new Set(rows.map((r) => r.country_slug).filter((s): s is string => !!s)),
+    );
+    return slugs.flatMap((slug) => [
+      { locale: "ru", slug },
+      { locale: "en", slug },
+      { locale: "uz", slug },
+    ]);
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({

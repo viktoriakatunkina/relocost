@@ -81,7 +81,7 @@ export function MonthlyBudget({
 
   return (
   <>
-    <section className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
+    <section className="max-w-4xl mx-auto px-6 pt-14 md:pt-20 overflow-x-hidden">
       <span className="eyebrow">Бюджет от</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
         Сколько нужно на месяц
@@ -134,13 +134,30 @@ export function MonthlyBudget({
           <p className="text-copper text-xs uppercase tracking-[0.18em] mb-2 font-medium">
             Бюджет «от» в месяц · {activePreset.label}
           </p>
-          <p className="font-serif text-4xl md:text-6xl text-cream tabular-nums leading-none">
-            <CountUp
-              key={preset}
-              value={total}
-              format={(n) => formatRub(Math.round(n))}
-            />
-          </p>
+          <div className="relative inline-block">
+            <p
+              className="font-serif text-4xl md:text-6xl text-cream tabular-nums leading-none"
+              style={!budgetUnlocked ? { filter: "blur(8px)", userSelect: "none" } : undefined}
+              aria-hidden={!budgetUnlocked}
+            >
+              <CountUp
+                key={preset}
+                value={total}
+                format={(n) => formatRub(Math.round(n))}
+              />
+            </p>
+            {!budgetUnlocked && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <button
+                  type="button"
+                  onClick={() => setOpenModal(true)}
+                  className="px-4 py-2 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition whitespace-nowrap shadow-card"
+                >
+                  Открыть за 49 ₽
+                </button>
+              </div>
+            )}
+          </div>
 
           {/* единый долевой бар — сегменты «вырастают» по ширине при появлении */}
           <div className="mt-7 flex h-3.5 w-full overflow-hidden rounded-pill bg-cream/5">
