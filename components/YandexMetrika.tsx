@@ -3,14 +3,9 @@
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef } from "react";
+import { METRIKA_COUNTER_ID } from "@/lib/metrika";
 
-const COUNTER_ID = 109622218;
-
-declare global {
-  interface Window {
-    ym?: (...args: unknown[]) => void;
-  }
-}
+const COUNTER_ID = METRIKA_COUNTER_ID;
 
 // Трекинг переходов SPA: первый хит засчитывает init, дальше — на смену URL.
 function MetrikaHits() {

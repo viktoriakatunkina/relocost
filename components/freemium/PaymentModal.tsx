@@ -10,6 +10,7 @@ import {
   savePurchaseEmail,
   type PackageType,
 } from "@/lib/unlocked";
+import { reachGoal } from "@/lib/metrika";
 
 export function PaymentModal({
   slug,
@@ -32,6 +33,15 @@ export function PaymentModal({
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [pkg, onClose]);
+
+  // Цель Метрики "Клик по кнопке покупки пакета" — модалка открывается
+  // ТОЛЬКО как прямой результат клика по одной из кнопок "Купить"/"Открыть
+  // за N ₽" (StickyBar, LockedSection, Calculator, MonthlyBudget,
+  // PricesTable и т.д.) — единая точка, чтобы не дублировать вызов в
+  // каждом месте вызова модалки.
+  useEffect(() => {
+    if (pkg) reachGoal("package_click");
+  }, [pkg]);
 
   if (!pkg) return null;
   const meta = PACKAGES[pkg];

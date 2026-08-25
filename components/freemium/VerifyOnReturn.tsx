@@ -9,6 +9,7 @@ import {
   readPurchaseEmail,
   type PackageType,
 } from "@/lib/unlocked";
+import { reachGoal } from "@/lib/metrika";
 
 /**
  * После возврата с оплаты ЮKassa разблокирует контент ДВУМЯ путями:
@@ -43,6 +44,10 @@ export function VerifyOnReturn({ slug }: { slug: string }) {
         if (data?.ok && data.slug === slug) {
           addUnlocked(slug, pending.pkg);
           clearPendingPayment();
+          // Цель Метрики "Успешная оплата" — именно здесь, а не на редиректе
+          // с ЮKassa: /api/payment/verify уже спросил реальный статус
+          // платежа (succeeded && paid) и контент реально разблокирован.
+          reachGoal("payment_success");
           return;
         }
         const transient =

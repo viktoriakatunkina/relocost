@@ -10,6 +10,7 @@ import {
   setPendingPayment,
   type CountryPackageType,
 } from "@/lib/unlocked";
+import { reachGoal } from "@/lib/metrika";
 
 const PACKAGE_BULLETS: Record<CountryPackageType, string[]> = {
   country_cities: [
@@ -45,6 +46,12 @@ export function CountryPaymentModal({
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [pkg, onClose]);
+
+  // Цель Метрики "Клик по кнопке покупки пакета" — единая точка на все
+  // кнопки покупки пакетов страны (см. тот же паттерн в PaymentModal.tsx).
+  useEffect(() => {
+    if (pkg) reachGoal("package_click");
+  }, [pkg]);
 
   if (!pkg) return null;
   const meta = COUNTRY_PACKAGES[pkg];
