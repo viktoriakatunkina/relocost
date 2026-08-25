@@ -230,13 +230,17 @@ export function Calculator({
         })}
       </div>
 
-      <div className="relative rounded-3xl bg-surface border hairline p-6 md:p-8 overflow-hidden">
-        <div
-          style={!opened ? { filter: "blur(6px)" } : undefined}
-          className={!opened ? "pointer-events-none select-none" : ""}
-          aria-hidden={!opened}
-        >
-          <ul className="space-y-3 mb-6">
+      <div className="rounded-3xl bg-surface border hairline p-6 md:p-8 overflow-hidden">
+        {/* Построчная разбивка — блюрится, если пакет не куплен. "Итого"
+            ниже всегда открыт текстом (продуктовый аудит 2026-08-25: раньше
+            блюрилось всё целиком, включая сумму — крутишь переключатель
+            Эконом/Стандарт/Комфорт и не видишь вообще никакой цифры). */}
+        <div className="relative">
+          <ul
+            className={`space-y-3 mb-6 ${!opened ? "pointer-events-none select-none" : ""}`}
+            style={!opened ? { filter: "blur(6px)" } : undefined}
+            aria-hidden={!opened}
+          >
             {result.lines.map((l) => (
               <li
                 key={l.category}
@@ -252,43 +256,43 @@ export function Calculator({
             ))}
           </ul>
 
-          <div className="pt-6 border-t hairline flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <div>
-              <p className="text-copper text-xs uppercase tracking-[0.18em] mb-2 font-medium">
-                Итого за месяц
-              </p>
-              <p className="font-serif text-3xl md:text-5xl text-cream tabular-nums">
-                {formatRub(result.totalMin)} – {formatRub(result.totalMax)}
-              </p>
+          {!opened && (
+            <div className="absolute inset-0 flex items-center justify-center px-4">
+              <div className="max-w-md w-full bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-3xl p-5 md:p-8 text-center shadow-card">
+                <div className="text-3xl mb-3" aria-hidden>
+                  {budget.emoji}
+                </div>
+                <h3 className="font-serif text-2xl text-cream mb-3 text-pretty">
+                  {typo(`Разбивка по категориям — в пакете ${budget.label}`)}
+                </h3>
+                <p className="text-brandy/85 text-sm mb-6 leading-relaxed text-pretty">
+                  {typo("Сколько уходит на аренду, еду, транспорт и ЖКХ по отдельности — плюс сравнение с другим городом.")}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setPayOpen(true)}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy hover:shadow-glow"
+                >
+                  Открыть за {budget.price} ₽
+                </button>
+              </div>
             </div>
-            <p className="text-brandy/70 text-sm md:text-right md:max-w-xs text-pretty">
-              {typo("Точный бюджет с медициной, развлечениями и сравнением — в пакете «Точный бюджет».")}
-            </p>
-          </div>
+          )}
         </div>
 
-        {!opened && (
-          <div className="absolute inset-0 flex items-center justify-center px-4">
-            <div className="max-w-md w-full bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-3xl p-5 md:p-8 text-center shadow-card">
-              <div className="text-3xl mb-3" aria-hidden>
-                {budget.emoji}
-              </div>
-              <h3 className="font-serif text-2xl text-cream mb-3 text-pretty">
-                {typo(`Точные цифры — в пакете ${budget.label}`)}
-              </h3>
-              <p className="text-brandy/85 text-sm mb-6 leading-relaxed text-pretty">
-                {typo("Разблюренный итог, разбивка по 7 категориям и сравнение с другим городом.")}
-              </p>
-              <button
-                type="button"
-                onClick={() => setPayOpen(true)}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy hover:shadow-glow"
-              >
-                Открыть за {budget.price} ₽
-              </button>
-            </div>
+        <div className="pt-6 border-t hairline flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <p className="text-copper text-xs uppercase tracking-[0.18em] mb-2 font-medium">
+              Итого за месяц
+            </p>
+            <p className="font-serif text-3xl md:text-5xl text-cream tabular-nums">
+              {formatRub(result.totalMin)} – {formatRub(result.totalMax)}
+            </p>
           </div>
-        )}
+          <p className="text-brandy/70 text-sm md:text-right md:max-w-xs text-pretty">
+            {typo("Точный бюджет с медициной, развлечениями и сравнением — в пакете «Точный бюджет».")}
+          </p>
+        </div>
       </div>
 
       <PaymentModal

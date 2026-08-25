@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { supabase } from "@/lib/supabase";
+import { supabase, fetchWithHardTimeout } from "@/lib/supabase";
 import { getPricesByCity, getSimilarCities } from "@/lib/prices";
 import {
   getMoscowBaseline,
@@ -96,13 +96,11 @@ export const dynamicParams = true;
 // но переменная нестабильность сети — реальна, просто по другой причине.
 export async function generateStaticParams() {
   try {
-    const res = await fetch(
+    const res = await fetchWithHardTimeout(
       `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/cities?select=slug&limit=500`,
       {
-        headers: {
-          apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`,
-        },
+        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`,
       }
     );
     if (!res.ok) return [];

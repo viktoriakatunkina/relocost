@@ -38,6 +38,30 @@ export async function getPublishedPosts(limit?: number): Promise<BlogPost[]> {
   return (data ?? []) as BlogPost[];
 }
 
+// Для /blog (листинг). В отличие от getPublishedPosts() — НЕ проглатывает
+// ошибку Supabase молча в []. 2026-08-25: на проде /blog при сбое БД
+// показывал «В этой категории пока нет статей» вместо тысяч реальных
+// статей — на нестабильном Supabase-коннекте это вводит в заблуждение
+// (выглядит как будто контента вообще нет). Бросаем ошибку — ISR-страница
+// (revalidate=3600) при неудачной фоновой ревалидации оставит СТАРУЮ
+// хорошую версию в кеше вместо перезаписи её пустым результатом (штатное
+// поведение Next.js: исключение при revalidate не публикуется, стейл-кеш
+// продолжает отдаваться). НЕ используем в generateStaticParams/на
+// homepage — там частичный сбой (просто нет тизера блога) лучше, чем
+// уронить всю страницу целиком через Promise.all.
+export async function getPublishedPostsOrThrow(limit?: number): Promise<BlogPost[]> {
+  const q = supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("published", true)
+    .neq("tag", "города")
+    .order("created_at", { ascending: false })
+    .limit(limit ?? 2000);
+  const { data, error } = await q;
+  if (error) throw new Error(`getPublishedPostsOrThrow: ${error.message}`);
+  return (data ?? []) as BlogPost[];
+}
+
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   for (let attempt = 0; attempt < 3; attempt++) {
     try {

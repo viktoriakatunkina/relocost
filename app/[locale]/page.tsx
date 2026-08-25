@@ -81,7 +81,11 @@ export default async function HomePage({
   return (
     <>
       <SiteSchemas />
-      <section className="relative isolate min-h-[92vh] flex flex-col justify-center px-6 py-12 overflow-hidden">
+      {/* На мобильном высота ужата (min-h убран, py уменьшен) — раньше
+          92vh + все отступы вместе выталкивали CTA "Подобрать город" и
+          статистику за пределы первого экрана на реальном iPhone (Виктория
+          прислала скриншот 2026-08-25: кнопка обрезана снизу). */}
+      <section className="relative isolate md:min-h-[92vh] flex flex-col justify-center px-6 py-8 md:py-12 overflow-hidden">
         <Image
           src="/images/hero-v3.jpg"
           alt=""
@@ -102,14 +106,14 @@ export default async function HomePage({
         <HeroMist />
 
         <div className="max-w-5xl mx-auto w-full">
-          <div className="flex items-center gap-3 mb-8 fade-up" style={{ animationDelay: "0ms" }}>
+          <div className="flex items-center gap-3 mb-4 md:mb-8 fade-up" style={{ animationDelay: "0ms" }}>
             <span className="h-px w-12 bg-copper" />
             <p className="text-copper font-medium tracking-[0.18em] uppercase text-xs">
               {t("eyebrow")}
             </p>
           </div>
           <h1
-            className="font-serif text-[clamp(2.75rem,7vw,6.5rem)] text-cream leading-[1.02] mb-8 fade-up text-balance text-shadow-hero"
+            className="font-serif text-[clamp(2.25rem,7vw,6.5rem)] text-cream leading-[1.05] md:leading-[1.02] mb-4 md:mb-8 fade-up text-balance text-shadow-hero"
             style={{ animationDelay: "120ms", letterSpacing: "-0.02em" }}
           >
             {t("heroTitlePre")}
@@ -117,7 +121,7 @@ export default async function HomePage({
             {t("heroTitlePost")}
           </h1>
           <p
-            className="text-cream/95 text-lg md:text-2xl max-w-2xl mb-12 fade-up text-pretty leading-relaxed text-shadow-body font-medium"
+            className="text-cream/95 text-base md:text-2xl max-w-2xl mb-6 md:mb-12 fade-up text-pretty leading-relaxed text-shadow-body font-medium"
             style={{ animationDelay: "240ms" }}
           >
             {t("heroSubtitle", { count: cityCount })}
@@ -127,23 +131,25 @@ export default async function HomePage({
             <SearchBar items={searchItems} />
           </div>
 
-          {/* Быстрый доступ к популярным городам прямо под поиском */}
-          <div className="fade-up mt-4 flex flex-wrap gap-2 max-w-2xl relative z-20" style={{ animationDelay: "420ms" }}>
+          {/* Быстрый доступ к популярным городам прямо под поиском —
+              на мобильном меньше чипов (4 вместо 8): каждый ряд экономит
+              высоту, а на первом экране важнее CTA ниже. */}
+          <div className="fade-up mt-3 md:mt-4 flex flex-wrap gap-2 max-w-2xl relative z-20" style={{ animationDelay: "420ms" }}>
             <span className="text-brandy/50 text-xs self-center pr-1">Популярно:</span>
             {[
-              { slug: "tbilisi", name: "Тбилиси 🇬🇪" },
-              { slug: "belgrade", name: "Белград 🇷🇸" },
-              { slug: "dubai", name: "Дубай 🇦🇪" },
-              { slug: "bali", name: "Бали 🇮🇩" },
-              { slug: "yerevan", name: "Ереван 🇦🇲" },
-              { slug: "limassol", name: "Лимасол 🇨🇾" },
-              { slug: "almaty", name: "Алматы 🇰🇿" },
-              { slug: "tashkent", name: "Ташкент 🇺🇿" },
+              { slug: "tbilisi", name: "Тбилиси 🇬🇪", mobile: true },
+              { slug: "belgrade", name: "Белград 🇷🇸", mobile: true },
+              { slug: "dubai", name: "Дубай 🇦🇪", mobile: true },
+              { slug: "bali", name: "Бали 🇮🇩", mobile: true },
+              { slug: "yerevan", name: "Ереван 🇦🇲", mobile: false },
+              { slug: "limassol", name: "Лимасол 🇨🇾", mobile: false },
+              { slug: "almaty", name: "Алматы 🇰🇿", mobile: false },
+              { slug: "tashkent", name: "Ташкент 🇺🇿", mobile: false },
             ].map((c) => (
               <Link
                 key={c.slug}
                 href={`/city/${c.slug}`}
-                className="px-3 py-1.5 rounded-pill bg-surface/70 border border-cream/15 text-cream/85 text-sm hover:bg-copper/15 hover:border-copper/40 hover:text-cream backdrop-blur-sm transition"
+                className={`px-3 py-1.5 rounded-pill bg-surface/70 border border-cream/15 text-cream/85 text-sm hover:bg-copper/15 hover:border-copper/40 hover:text-cream backdrop-blur-sm transition ${c.mobile ? "" : "hidden md:inline-block"}`}
               >
                 {c.name}
               </Link>
@@ -151,7 +157,7 @@ export default async function HomePage({
           </div>
 
           {/* Явная CTA-кнопка для тех, кто не хочет набирать в поиске */}
-          <div className="fade-up mt-7 flex items-center gap-4 flex-wrap relative z-10" style={{ animationDelay: "460ms" }}>
+          <div className="fade-up mt-4 md:mt-7 flex items-center gap-4 flex-wrap relative z-10" style={{ animationDelay: "460ms" }}>
             <Link
               href="/match"
               className="inline-flex items-center gap-2 px-7 py-4 rounded-pill bg-copper text-pine-tree font-semibold text-base hover:bg-pale-copper transition shadow-glow"
@@ -161,7 +167,10 @@ export default async function HomePage({
             </Link>
           </div>
 
-          <div className="mt-10 grid grid-cols-3 max-w-2xl gap-3 sm:gap-5 fade-up relative z-10" style={{ animationDelay: "480ms" }}>
+          {/* Статистика (городов/стран/категорий) — скрыта на мобильном:
+              наименее критичный блок, съедала ~110px и уводила CTA выше
+              за пределы первого экрана на телефоне. */}
+          <div className="hidden md:grid mt-10 grid-cols-3 max-w-2xl gap-3 sm:gap-5 fade-up relative z-10" style={{ animationDelay: "480ms" }}>
             <HeroStat value={String(cityCount)} label={t("statCities")} />
             <HeroStat value={String(allCountries.length)} label={t("statCountries")} />
             <HeroStat value="7" label={t("statCategories")} />

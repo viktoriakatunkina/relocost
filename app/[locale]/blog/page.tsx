@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-import { getPublishedPosts } from "@/lib/blog";
+import { getPublishedPostsOrThrow } from "@/lib/blog";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { Footer } from "@/components/Footer";
 import { Link } from "@/i18n/navigation";
@@ -37,7 +37,11 @@ export default async function BlogPage({
   params: { locale: Locale };
 }) {
   setRequestLocale(params.locale);
-  const posts = await getPublishedPosts();
+  // getPublishedPostsOrThrow (не getPublishedPosts): при сбое Supabase на
+  // фоновой ISR-ревалидации бросает исключение — Next.js оставляет старую
+  // хорошую версию страницы в кеше вместо показа «статей нет» живым
+  // посетителям (было 2026-08-25, см. комментарий в lib/blog.ts).
+  const posts = await getPublishedPostsOrThrow();
   return (
     <main className="pb-12 md:pb-24">
       <section className="max-w-6xl mx-auto px-6 pt-12 pb-12">

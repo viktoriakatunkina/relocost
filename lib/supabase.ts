@@ -17,8 +17,28 @@ function delay(ms: number): Promise<void> {
 
 // HTTP/2 keepalive на VPS иногда застывает на неопределённое время (Supabase
 // не присылает FIN); без таймаута воркер Next.js ждёт 300 сек и падает.
-// AbortController с 20 сек убивает подвисший запрос до истечения page-timeout.
-const FETCH_TIMEOUT_MS = 20_000;
+// AbortController с 10 сек убивает подвисший запрос до истечения page-timeout.
+const FETCH_TIMEOUT_MS = 10_000;
+
+// 2026-08-25: под сегодняшним инцидентом Supabase (status.supabase.com,
+// "Partially Degraded Service") поймали воркер сборки, зависший на ОДНОМ
+// fetch на 45+ минут — AbortController.abort() не всегда реально обрывает
+// подвисший HTTP/2-сокет undici (известный квирк, воспроизводился уже не
+// раз). Поэтому гоним fetch ЕЩЁ и через внешний Promise.race с жёстким
+// дедлайном (независимым от AbortController) — если сам fetch не вернул
+// управление вовремя, retry-цикл всё равно продолжится на следующую
+// попытку, а не будет ждать неопределённо долго.
+const HARD_DEADLINE_MS = FETCH_TIMEOUT_MS + 3_000;
+
+function raceWithHardDeadline<T>(p: Promise<T>, ms: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error(`hard-deadline ${ms}ms exceeded`)), ms);
+    p.then(
+      (v) => { clearTimeout(t); resolve(v); },
+      (e) => { clearTimeout(t); reject(e); },
+    );
+  });
+}
 
 const fetchWithRetry: typeof fetch = async (input, init) => {
   let lastErr: unknown;
@@ -29,7 +49,10 @@ const fetchWithRetry: typeof fetch = async (input, init) => {
     const prevSignal = (init as RequestInit | undefined)?.signal;
     if (prevSignal) prevSignal.addEventListener("abort", () => ctrl.abort(), { once: true });
     try {
-      const res = await fetch(input, { ...init, signal: ctrl.signal });
+      const res = await raceWithHardDeadline(
+        fetch(input, { ...init, signal: ctrl.signal }),
+        HARD_DEADLINE_MS,
+      );
       clearTimeout(tid);
       if (res.ok || attempt === RETRY_DELAYS_MS.length) return res;
       // Не-ок: повторяем на транзиентных сбоях под нагрузкой сборки. Кроме
@@ -61,6 +84,26 @@ const fetchWithRetry: typeof fetch = async (input, init) => {
 export const supabase = createClient(url, anonKey, {
   global: { fetch: fetchWithRetry },
 });
+
+// Для generateStaticParams в app/[locale]/{city,country,blog}/[slug] и
+// city/[slug]/{budget,prices} — они делают raw fetch к REST API напрямую
+// (в обход supabase-js/fetchWithRetry, чтобы не тянуть клиент в билд-фазу
+// с сотнями воркеров), но раньше вообще БЕЗ таймаута: подвисший запрос мог
+// висеть до 300 сек (дефолт staticPageGenerationTimeout), вместо мгновенного
+// фолбэка на [] и следующей попытки. 2026-08-25.
+export async function fetchWithHardTimeout(
+  url: string,
+  headers: Record<string, string>,
+  ms = 10_000,
+): Promise<Response> {
+  const ctrl = new AbortController();
+  const tid = setTimeout(() => ctrl.abort(), ms);
+  try {
+    return await raceWithHardDeadline(fetch(url, { headers, signal: ctrl.signal }), ms + 3_000);
+  } finally {
+    clearTimeout(tid);
+  }
+}
 
 export function supabaseAdmin() {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;

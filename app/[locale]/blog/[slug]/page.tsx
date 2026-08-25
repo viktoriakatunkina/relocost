@@ -19,6 +19,7 @@ import { ArticleCityData } from "@/components/blog/ArticleCityData";
 import { BlogReportCTA } from "@/components/blog/BlogReportCTA";
 import { ArticleInlineCTA } from "@/components/blog/ArticleInlineCTA";
 import { getPricesByCity } from "@/lib/prices";
+import { fetchWithHardTimeout } from "@/lib/supabase";
 import type { City, Price, PriceCategory } from "@/lib/types";
 import { ShareButton } from "@/components/ShareButton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -53,9 +54,9 @@ export async function generateStaticParams() {
     // по первому запросу через Supabase, а не 404-ят). Раньше здесь стоял
     // limit=3000 (все статьи из сайтмапа) — это было ~40% всех страниц
     // билда и основная причина многочасовых/падающих локальных сборок.
-    const res = await fetch(
+    const res = await fetchWithHardTimeout(
       `${url}/rest/v1/blog_posts?select=slug&published=eq.true&tag=neq.${tag}&order=created_at.desc&limit=200`,
-      { headers: { apikey: key, Authorization: `Bearer ${key}` } }
+      { apikey: key, Authorization: `Bearer ${key}` }
     );
     if (!res.ok) return [];
     const rows: { slug: string }[] = await res.json();

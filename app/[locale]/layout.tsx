@@ -128,9 +128,13 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider>
           <Header />
+          {/* В обычном потоке сразу под header (не fixed) — раньше баннер
+              был fixed bottom-0, как и StickyBar/CountryStickyBar (freemium-
+              CTA), и полностью перекрывал кнопку покупки на каждом первом
+              визите (P1 продуктового аудита). */}
+          <CookieBanner />
           {children}
           <FavoritesLimitModal />
-          <CookieBanner />
         </NextIntlClientProvider>
         <YandexMetrika />
         <Script

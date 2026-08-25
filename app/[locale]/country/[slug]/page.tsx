@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { fetchWithHardTimeout } from "@/lib/supabase";
 import {
   COUNTRY_CONTENT,
   COUNTRY_NAMES_GENITIVE,
@@ -47,9 +48,9 @@ export async function generateStaticParams() {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     if (!url || !key) return [];
-    const res = await fetch(
+    const res = await fetchWithHardTimeout(
       `${url}/rest/v1/cities?select=country_slug&limit=1000`,
-      { headers: { apikey: key, Authorization: `Bearer ${key}` } }
+      { apikey: key, Authorization: `Bearer ${key}` }
     );
     if (!res.ok) return [];
     const rows: { country_slug: string | null }[] = await res.json();

@@ -27,6 +27,20 @@ export function Reveal({
       return;
     }
 
+    // Элемент уже во вьюпорте на момент монтирования (страница открыта не
+    // с самого верха, быстрый скролл ботом/скриншот-инструментом до
+    // срабатывания observer, и т.п.) — не ждать скролла, показать сразу.
+    // Раньше контент в <Reveal> оставался opacity:0 для инструментов,
+    // которые не скроллят (продуктовый аудит 2026-08-25).
+    const rect = el.getBoundingClientRect();
+    const alreadyVisible =
+      rect.top < (window.innerHeight || document.documentElement.clientHeight) - 80 &&
+      rect.bottom > 0;
+    if (alreadyVisible) {
+      setVisible(true);
+      return;
+    }
+
     const obs = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
