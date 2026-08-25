@@ -11,6 +11,9 @@ export type ChecklistStep = {
   title: string;
   description: string;
   group: ChecklistGroupKey;
+  // Необязательная ссылка на полезный материал по теме шага (статья блога
+  // или инструмент сайта) — показывается прямо внутри пункта чек-листа.
+  link?: { href: string; label: string };
 };
 
 export const GROUP_LABELS: Record<ChecklistGroupKey, string> = {
@@ -46,6 +49,7 @@ export const CHECKLIST_STEPS: Record<ChecklistVariant, ChecklistStep[]> = {
       title: "Апостиль и переводы документов",
       description:
         "Диплом, свидетельства о рождении и браке, справки — заранее проставьте апостиль и сделайте присяжный перевод.",
+      link: { href: "/blog/apostil-na-dokumenty-2026", label: "Где поставить апостиль и сколько это стоит" },
     },
     {
       id: "money",
@@ -53,6 +57,7 @@ export const CHECKLIST_STEPS: Record<ChecklistVariant, ChecklistStep[]> = {
       title: "Сформируйте финансовую подушку",
       description:
         "Заложите 3–6 месяцев расходов плюс депозит и первый платёж за жильё. Подумайте, как переводить деньги за рубеж.",
+      link: { href: "/blog/skolko-deneg-nuzhno-na-pereezd-2026", label: "Сколько денег нужно на переезд — расчёт" },
     },
     {
       id: "home-ru",
@@ -60,6 +65,7 @@ export const CHECKLIST_STEPS: Record<ChecklistVariant, ChecklistStep[]> = {
       title: "Решите вопрос с текущим жильём",
       description:
         "Продать, сдать в аренду или оставить — и забронируйте отель/квартиру на первые недели на новом месте.",
+      link: { href: "/blog/ipoteka-v-rossii-pri-pereezde-sdat-ili-pogasit-2026", label: "Ипотека при переезде: сдать или погасить" },
     },
     {
       id: "bank",
@@ -67,6 +73,7 @@ export const CHECKLIST_STEPS: Record<ChecklistVariant, ChecklistStep[]> = {
       title: "Откройте местный счёт и карту",
       description:
         "Локальная карта нужна для аренды, связи и повседневных платежей. Уточните список документов заранее.",
+      link: { href: "/blog/kak-otkryt-schet-v-zarubezhnom-banke-2026", label: "Как открыть счёт в зарубежном банке" },
     },
     {
       id: "sim",
@@ -81,6 +88,7 @@ export const CHECKLIST_STEPS: Record<ChecklistVariant, ChecklistStep[]> = {
       title: "Оформите медицинскую страховку",
       description:
         "До получения местной страховки держите действующий полис путешественника с адекватным покрытием.",
+      link: { href: "/blog/meditsinskaya-strahovka-za-rubezhom", label: "Как выбрать медицинскую страховку" },
     },
     {
       id: "rent",
@@ -102,6 +110,7 @@ export const CHECKLIST_STEPS: Record<ChecklistVariant, ChecklistStep[]> = {
       title: "Разберитесь с налогами и счетами",
       description:
         "Уведомите ФНС о зарубежном счёте, отслеживайте 183 дня для налогового резидентства РФ.",
+      link: { href: "/blog/nalogovoe-rezidentstvo-183-dnya-2026", label: "Правило 183 дней для налогового резидентства" },
     },
   ],
   russia: [
@@ -111,6 +120,7 @@ export const CHECKLIST_STEPS: Record<ChecklistVariant, ChecklistStep[]> = {
       title: "Выберите город и район",
       description:
         "Изучите рынок аренды, инфраструктуру и транспорт. Сравните бюджет на жизнь в калькуляторе на странице города.",
+      link: { href: "/search", label: "Сравнить города в калькуляторе" },
     },
     {
       id: "work",
