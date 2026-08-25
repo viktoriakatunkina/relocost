@@ -1,3 +1,12 @@
+"use client";
+
+// Клиентский компонент: useTranslations/useLocale из next-intl — их
+// "изоморфное" поведение (работают и в RSC, и на клиенте) на практике даёт
+// расхождение при гидратации между серверным и клиентским рендером
+// (React error #418/#423 на /, /city/[slug], /about — продуктовый аудит
+// 2026-08-25). С "use client" рендер идёт ОДНИМ путём (через
+// NextIntlClientProvider) и на сервере (для начального HTML), и при
+// гидратации — расхождений быть не может.
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { CityWithMinRent } from "@/lib/types";
@@ -42,7 +51,7 @@ export function CityCard({
   const country = countryName(city, locale);
 
   return (
-    <div className="group relative aspect-[3/4] md:aspect-[4/5] overflow-hidden rounded-3xl transition-all duration-500 hover:-translate-y-1 hover:shadow-card">
+    <div className="group relative aspect-square sm:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-2xl sm:rounded-3xl transition-all duration-500 hover:-translate-y-1 hover:shadow-card">
       <FavoriteButton slug={city.slug} cityName={name} variant="card" />
       <Link href={`/city/${city.slug}`} className="absolute inset-0 block">
         {photo ? (
@@ -68,25 +77,25 @@ export function CityCard({
 
         <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/65 to-pine-tree/25" />
         <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-        <div className="absolute inset-0 ring-1 ring-inset ring-cream/5 rounded-3xl" />
+        <div className="absolute inset-0 ring-1 ring-inset ring-cream/5 rounded-2xl sm:rounded-3xl" />
 
-        <div className="relative h-full flex flex-col justify-between p-4 md:p-6">
+        <div className="relative h-full flex flex-col justify-between p-2.5 sm:p-4 lg:p-6">
           <div className="flex items-start justify-between gap-3">
             <span
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-pill bg-black/45 backdrop-blur-md text-xs uppercase tracking-[0.15em] text-white font-semibold mr-12 max-w-[70%] border border-white/15 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"
+              className="inline-flex items-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-1.5 rounded-pill bg-black/45 backdrop-blur-md text-[9px] sm:text-xs uppercase tracking-[0.1em] sm:tracking-[0.15em] text-white font-semibold mr-8 sm:mr-12 max-w-[65%] sm:max-w-[70%] border border-white/15 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"
             >
-              <span className="text-base leading-none" aria-hidden>{city.flag_emoji}</span>
+              <span className="text-sm sm:text-base leading-none" aria-hidden>{city.flag_emoji}</span>
               <span className="truncate">{country}</span>
             </span>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-1.5 sm:space-y-3">
             <div>
-              <h3 className="font-serif text-[1.8rem] md:text-[2.6rem] leading-[1.05] text-cream drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">
+              <h3 className="font-serif text-base sm:text-2xl lg:text-[2.6rem] leading-[1.05] text-cream drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)] truncate">
                 {name}
               </h3>
               {city.min_rent > 0 && (
-                <p className="mt-2 text-copper text-sm font-medium tracking-wide drop-shadow-[0_1px_8px_rgba(0,0,0,0.7)]">
+                <p className="mt-0.5 sm:mt-2 text-copper text-[10px] sm:text-sm font-medium tracking-wide drop-shadow-[0_1px_8px_rgba(0,0,0,0.7)] truncate">
                   {tc("rentFrom")}{" "}
                   <span className="text-cream font-semibold">{formatMinRent(city.min_rent, null)}</span>
                   {tc("perMonth")}
@@ -94,19 +103,24 @@ export function CityCard({
               )}
             </div>
 
-            <div className="flex flex-wrap items-center gap-1.5 pt-1">
+            <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 pt-0.5 sm:pt-1">
               {difficulty && (
-                <span className="chip">
-                  <span className={`w-2 h-2 rounded-full ${difficulty.dotClass}`} aria-hidden />
+                <span className="chip !px-1.5 !py-0.5 !text-[9px] sm:!px-2.5 sm:!py-1 sm:!text-[11px]">
+                  <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${difficulty.dotClass}`} aria-hidden />
                   {td(DIFFICULTY_KEY[difficulty.color])}
                 </span>
               )}
-              <span className="chip">
+              <span className="chip !px-1.5 !py-0.5 !text-[9px] sm:!px-2.5 sm:!py-1 sm:!text-[11px]">
                 {visa.status === "visa_free" ? <VisaFreeIcon /> : <VisaRequiredIcon />}
                 {visa.status === "visa_free" ? tv("free") : tv("required")}
               </span>
               {city.currency && (
-                <span className="chip hidden md:inline-flex">
+                // !hidden — .chip задаёт display:inline-flex безусловно и лежит
+                // в том же слое @layer utilities ниже по файлу, поэтому обычный
+                // `hidden` проигрывает каскад и чип оставался виден на мобильном
+                // (несмотря на md:), из-за чего валюта на узких карточках иногда
+                // переносилась на 2 строки и ломала высоту ряда сетки.
+                <span className="chip !hidden md:!inline-flex">
                   {currencyLabel(city.currency)}
                 </span>
               )}
@@ -114,7 +128,7 @@ export function CityCard({
           </div>
         </div>
 
-        <div className="absolute right-5 bottom-5 w-9 h-9 rounded-full bg-copper text-pine-tree flex items-center justify-center opacity-0 translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+        <div className="hidden sm:flex absolute right-5 bottom-5 w-9 h-9 rounded-full bg-copper text-pine-tree items-center justify-center opacity-0 translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
           <ArrowIcon />
         </div>
       </Link>

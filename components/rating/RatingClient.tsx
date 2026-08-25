@@ -64,7 +64,7 @@ function ScoreBar({ value, available }: { value: number; available: boolean }) {
 function RankMedal({ rank }: { rank: number }) {
   if (rank > 3) {
     return (
-      <span className="text-brandy/40 font-serif text-lg tabular-nums">{rank}</span>
+      <span className="text-brandy/40 font-serif text-sm sm:text-lg tabular-nums">{rank}</span>
     );
   }
   const configs = [
@@ -75,7 +75,7 @@ function RankMedal({ rank }: { rank: number }) {
   const cfg = configs[rank - 1];
   return (
     <span
-      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold border-2 shadow-sm shrink-0 ${cfg.bg} ${cfg.text} ${cfg.border}`}
+      className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold border-2 shadow-sm shrink-0 ${cfg.bg} ${cfg.text} ${cfg.border}`}
       aria-label={cfg.label}
     >
       {rank}
@@ -141,64 +141,86 @@ function RatingCard({ city, rank }: { city: RatedCity; rank: number }) {
 
   return (
     <div
-      className={`rounded-2xl border ${cardBorder} overflow-hidden flex flex-col hover:border-copper/35 transition-colors group`}
+      className={`rounded-xl sm:rounded-2xl border ${cardBorder} overflow-hidden flex flex-col hover:border-copper/35 transition-colors group`}
     >
       {/* Card header */}
-      <div className="px-5 pt-5 pb-4">
-        <div className="flex items-start justify-between gap-3 mb-4">
+      <div className="px-2.5 pt-2.5 pb-2 sm:px-5 sm:pt-5 sm:pb-4">
+        <div className="flex items-start justify-between gap-2 sm:gap-3 mb-1.5 sm:mb-4">
           <RankMedal rank={rank} />
           <div className="text-right">
-            <span className="text-copper font-bold text-2xl tabular-nums leading-none">
+            <span className="text-copper font-bold text-base sm:text-2xl tabular-nums leading-none">
               {city.total.toFixed(1)}
             </span>
-            <span className="text-brandy/45 text-xs block mt-0.5">из 10</span>
+            <span className="text-brandy/45 text-[9px] sm:text-xs block mt-0.5">из 10</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-3 mb-1">
-          <span className="text-5xl leading-none shrink-0" aria-hidden>
+        <div className="flex items-center gap-1.5 sm:gap-3 mb-0.5 sm:mb-1">
+          <span className="text-2xl sm:text-5xl leading-none shrink-0" aria-hidden>
             {city.flag}
           </span>
           <div className="min-w-0">
-            <h3 className="font-serif text-xl text-cream leading-tight group-hover:text-copper transition-colors truncate">
+            <h3 className="font-serif text-sm sm:text-xl text-cream leading-tight group-hover:text-copper transition-colors truncate">
               {city.name}
             </h3>
-            <p className="text-brandy/55 text-sm truncate">{city.country}</p>
+            <p className="text-brandy/55 text-[11px] sm:text-sm truncate">{city.country}</p>
           </div>
         </div>
 
         {city.coverage === "partial" && (
-          <p className="text-brandy/40 text-xs mt-2">оценка по 3 параметрам</p>
+          <p className="hidden sm:block text-brandy/40 text-xs mt-2">оценка по 3 параметрам</p>
         )}
       </div>
 
-      {/* Axes */}
-      <div className="px-5 pb-4 space-y-2.5 flex-1">
-        {AXES_ORDER.map((key) => {
-          const ax = city.axes[key];
-          return (
-            <div key={key} className="flex items-center gap-2">
-              <span className="text-brandy/55 text-xs w-24 shrink-0 truncate">
-                {AXIS_LABELS[key]}
-              </span>
-              <ScoreBar value={ax.value} available={ax.available} />
-              <span
-                className={`text-xs tabular-nums w-7 text-right shrink-0 font-medium ${
-                  ax.available ? "text-brandy/70" : "text-brandy/30"
-                }`}
-              >
-                {ax.available ? ax.value.toFixed(1) : "н/д"}
-              </span>
-            </div>
-          );
-        })}
+      {/* Axes: компактная 2×2 сетка на мобильном (вместо 4 строк на всю ширину —
+          иначе карточка растягивается по высоте), обычные строки от sm и шире */}
+      <div className="px-2.5 pb-2 sm:px-5 sm:pb-4 flex-1">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-1 sm:hidden">
+          {AXES_ORDER.map((key) => {
+            const ax = city.axes[key];
+            return (
+              <div key={key} className="flex items-center justify-between gap-1 min-w-0">
+                <span className="text-brandy/55 text-[10px] truncate">
+                  {AXIS_LABELS[key]}
+                </span>
+                <span
+                  className={`text-[10px] tabular-nums shrink-0 font-medium ${
+                    ax.available ? "text-brandy/70" : "text-brandy/30"
+                  }`}
+                >
+                  {ax.available ? ax.value.toFixed(1) : "н/д"}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+        <div className="hidden sm:block space-y-2.5">
+          {AXES_ORDER.map((key) => {
+            const ax = city.axes[key];
+            return (
+              <div key={key} className="flex items-center gap-2">
+                <span className="text-brandy/55 text-xs w-24 shrink-0 truncate">
+                  {AXIS_LABELS[key]}
+                </span>
+                <ScoreBar value={ax.value} available={ax.available} />
+                <span
+                  className={`text-xs tabular-nums w-7 text-right shrink-0 font-medium ${
+                    ax.available ? "text-brandy/70" : "text-brandy/30"
+                  }`}
+                >
+                  {ax.available ? ax.value.toFixed(1) : "н/д"}
+                </span>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* CTA */}
-      <div className="px-5 pb-5 pt-1">
+      <div className="px-2.5 pb-2.5 pt-0.5 sm:px-5 sm:pb-5 sm:pt-1">
         <Link
           href={`/city/${city.slug}`}
-          className="flex items-center justify-between w-full rounded-xl bg-surface-elevated border hairline px-4 py-2.5 text-sm font-medium text-brandy/80 hover:text-cream hover:border-copper/40 transition group/btn"
+          className="flex items-center justify-between w-full rounded-lg sm:rounded-xl bg-surface-elevated border hairline px-2.5 py-1.5 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-medium text-brandy/80 hover:text-cream hover:border-copper/40 transition group/btn"
         >
           <span>Открыть город</span>
           <svg
@@ -226,7 +248,11 @@ function RatingCard({ city, rank }: { city: RatedCity; rank: number }) {
 
 export function RatingClient({ cities }: { cities: RatedCity[] }) {
   const [sort, setSort] = useState<SortKey>("total");
-  const [view, setView] = useState<ViewMode>("grid");
+  // Список по умолчанию: 175+ городов гигантскими карточками — это
+  // бесконечный вертикальный скролл на мобильном (и просто менее сканируемо
+  // на десктопе для сортируемого рейтинга). Компактные карточки остаются
+  // доступны через переключатель.
+  const [view, setView] = useState<ViewMode>("list");
 
   const sorted = useMemo(() => {
     return [...cities].sort((a, b) => {
@@ -291,29 +317,29 @@ export function RatingClient({ cities }: { cities: RatedCity[] }) {
 
       {/* Grid view */}
       {view === "grid" ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4">
           {sorted.map((c, i) => (
             <RatingCard key={c.slug} city={c} rank={i + 1} />
           ))}
         </div>
       ) : (
         /* List view */
-        <ol className="space-y-2.5">
+        <ol className="space-y-1.5 sm:space-y-2.5">
           {sorted.map((c, i) => {
             const m = metric(c, sort);
             return (
               <li key={c.slug}>
                 <Link
                   href={`/city/${c.slug}`}
-                  className="flex items-center gap-4 rounded-2xl bg-surface border hairline px-4 py-3.5 md:px-5 hover:border-copper/30 transition group"
+                  className="flex items-center gap-2.5 sm:gap-4 rounded-xl sm:rounded-2xl bg-surface border hairline px-3 py-2.5 sm:px-4 sm:py-3.5 md:px-5 hover:border-copper/30 transition group"
                 >
                   {/* Rank */}
-                  <span className="w-8 shrink-0 flex justify-center">
+                  <span className="w-7 sm:w-8 shrink-0 flex justify-center">
                     <RankMedal rank={i + 1} />
                   </span>
 
                   {/* Flag */}
-                  <span className="text-2xl leading-none shrink-0" aria-hidden>
+                  <span className="text-xl sm:text-2xl leading-none shrink-0" aria-hidden>
                     {c.flag}
                   </span>
 

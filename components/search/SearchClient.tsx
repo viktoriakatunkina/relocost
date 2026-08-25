@@ -637,15 +637,15 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
 
   return (
     <div className="max-w-6xl mx-auto px-6">
-      <div className="rounded-3xl bg-surface/80 backdrop-blur border hairline shadow-card p-5 md:p-7 mb-8">
+      <div className="rounded-3xl bg-surface/80 backdrop-blur border hairline shadow-card p-4 sm:p-5 md:p-7 mb-5 sm:mb-8">
         {/* Строка поиска + «Очистить» */}
-        <div className="flex items-center gap-3 mb-7">
-          <div className="relative flex-1">
+        <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-7">
+          <div className="relative flex-1 min-w-0">
             <span
-              className="absolute left-5 top-1/2 -translate-y-1/2 text-copper pointer-events-none"
+              className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-copper pointer-events-none"
               aria-hidden
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="sm:w-5 sm:h-5">
                 <circle cx="11" cy="11" r="7" />
                 <line x1="21" y1="21" x2="16.5" y2="16.5" />
               </svg>
@@ -655,8 +655,7 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t("inputPlaceholder")}
-              className="w-full pr-5 py-4 rounded-pill bg-pine-tree/60 text-cream placeholder-brandy/45 text-lg border hairline focus:border-copper focus:outline-none transition [color-scheme:dark]"
-              style={{ paddingLeft: "3.25rem" }}
+              className="w-full pl-10 sm:pl-[3.25rem] pr-3 sm:pr-5 py-3 sm:py-4 rounded-pill bg-pine-tree/60 text-cream placeholder-brandy/45 text-sm sm:text-lg border hairline focus:border-copper focus:outline-none transition [color-scheme:dark]"
               aria-label={t("ariaInput")}
             />
           </div>
@@ -664,18 +663,19 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
             type="button"
             onClick={reset}
             disabled={!hasAnyFilter}
-            className="shrink-0 inline-flex items-center gap-1.5 rounded-pill border hairline px-4 py-3 text-sm transition text-brandy/85 hover:border-copper/60 hover:text-cream disabled:opacity-40 disabled:pointer-events-none"
+            aria-label={t("clear")}
+            className="shrink-0 inline-flex items-center gap-1.5 rounded-pill border hairline px-3 py-3 sm:px-4 text-sm transition text-brandy/85 hover:border-copper/60 hover:text-cream disabled:opacity-40 disabled:pointer-events-none"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
-            {t("clear")}
+            <span className="hidden sm:inline">{t("clear")}</span>
           </button>
         </div>
 
         {/* Тег-фильтры — «поиск как конструктор» */}
-        <div className="flex gap-2 overflow-x-auto scrollbar-none pb-1 -mx-6 px-6 md:mx-0 md:px-0 mb-4">
+        <HScroll className="mb-3 sm:mb-4">
           {EMOJI_TAGS.map((tag) => {
             const active = activeTags.has(tag.key);
             return (
@@ -703,10 +703,10 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
               Сбросить
             </button>
           )}
-        </div>
+        </HScroll>
 
         {/* Чип-группы */}
-        <div className="grid md:grid-cols-2 gap-x-10 gap-y-6">
+        <div className="grid md:grid-cols-2 gap-x-10 gap-y-3 sm:gap-y-6">
           <ChipGroup label={t("filterRegion")} value={region} options={REGION_OPTIONS} onChange={setRegion} />
           <ChipGroup label={t("filterClimate")} value={climate} options={CLIMATE_OPTIONS} onChange={setClimate} />
           <ChipGroup label={t("filterDifficulty")} value={difficulty} options={DIFFICULTY_OPTIONS} onChange={setDifficulty} />
@@ -721,7 +721,7 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
         </div>
 
         {/* Нижняя панель: тумблеры + сортировка */}
-        <div className="flex flex-wrap items-center gap-4 mt-7 pt-6 border-t hairline">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-4 pt-4 sm:mt-7 sm:pt-6 border-t hairline">
           <Toggle
             on={seasideOnly}
             onClick={() => setSeasideOnly((v) => !v)}
@@ -792,7 +792,7 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {pageItems.map((c, i) => (
               <CityCard key={c.id} city={c} index={(safePage - 1) * PAGE_SIZE + i} />
             ))}
@@ -828,11 +828,15 @@ function ChipGroup<T extends string>({
   onChange: (v: T) => void;
 }) {
   return (
-    <div>
-      <span className="block text-brandy/55 text-[11px] uppercase tracking-[0.15em] mb-2.5">
+    <div className="min-w-0">
+      <span className="block text-brandy/55 text-[11px] uppercase tracking-[0.15em] mb-1.5 sm:mb-2.5">
         {label}
       </span>
-      <div className="flex flex-wrap gap-2">
+      {/* На мобильном длинные группы (Регион, Бюджет) не помещаются в один ряд —
+          вместо переноса на 2-3 строки (растягивает страницу по высоте) даём
+          горизонтальный скролл с фейд-подсказкой. От sm и шире места хватает —
+          возвращаем перенос строк, он читается лучше скролла. */}
+      <HScroll className="sm:flex-wrap sm:overflow-visible" fadeClassName="w-5">
         {options.map(([v, lbl]) => {
           const active = v === value;
           return (
@@ -841,7 +845,7 @@ function ChipGroup<T extends string>({
               type="button"
               onClick={() => onChange(v)}
               aria-pressed={active}
-              className={`rounded-pill border px-3.5 py-2 text-sm transition ${
+              className={`shrink-0 rounded-pill border px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs sm:text-sm transition ${
                 active
                   ? "bg-copper text-pine-tree border-transparent font-semibold"
                   : "hairline text-brandy/85 hover:border-copper/60 hover:text-cream"
@@ -851,7 +855,65 @@ function ChipGroup<T extends string>({
             </button>
           );
         })}
+      </HScroll>
+    </div>
+  );
+}
+
+// Горизонтальный скролл-ряд с фейд-подсказкой по краям: показывает лёгкий
+// градиент со стороны, куда ещё можно проскроллить, чтобы пользователь не
+// думал, что список чипов «обрезан». Подсказки сами пропадают, когда скролл
+// докручен до края (или когда контент целиком помещается и скролла нет).
+function HScroll({
+  children,
+  className = "",
+  fadeClassName = "w-8",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  fadeClassName?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => {
+      setShowLeft(el.scrollLeft > 4);
+      setShowRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+    };
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener("scroll", update);
+      ro.disconnect();
+    };
+  }, []);
+
+  return (
+    <div className="relative min-w-0">
+      <div
+        ref={ref}
+        className={`flex gap-2 overflow-x-auto scrollbar-none pb-1 ${className}`}
+      >
+        {children}
       </div>
+      {showLeft && (
+        <div
+          aria-hidden
+          className={`pointer-events-none absolute left-0 top-0 bottom-1 ${fadeClassName} bg-gradient-to-r from-surface/95 to-transparent`}
+        />
+      )}
+      {showRight && (
+        <div
+          aria-hidden
+          className={`pointer-events-none absolute right-0 top-0 bottom-1 ${fadeClassName} bg-gradient-to-l from-surface/95 to-transparent`}
+        />
+      )}
     </div>
   );
 }

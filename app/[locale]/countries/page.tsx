@@ -44,6 +44,11 @@ export default async function CountriesPage({
   const foreign = countries.filter((c) => c.is_foreign);
   const domestic = countries.filter((c) => !c.is_foreign);
   const totalCities = countries.reduce((acc, c) => acc + c.city_count, 0);
+  // Города по РФ — не «1» (число стран в блоке «Внутри России», там всегда
+  // будет 1 запись — Россия), а сумма городов внутри неё. Раньше чип показывал
+  // domestic.length («1 по России»), что противоречило карточке «Россия —
+  // 7 городов» чуть ниже на той же странице.
+  const domesticCities = domestic.reduce((acc, c) => acc + c.city_count, 0);
 
   return (
     <main className="pb-12 md:pb-24">
@@ -64,12 +69,12 @@ export default async function CountriesPage({
             Страны для переезда <span className="text-copper italic">в 2026</span>
           </h1>
           <p className="text-brandy/85 text-lg md:text-xl max-w-2xl text-pretty mb-10">
-            Реальные цены жизни, виза для россиян и опыт переехавших — по {totalCities} городам популярных направлений для релокации.
+            Реальные цены жизни, визы для россиян и опыт переехавших — {totalCities} городов в {foreign.length} странах для релокации.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Stat value={totalCities} label="городов" />
-            <Stat value={foreign.length} label="зарубежных" />
-            <Stat value={domestic.length} label="по России" />
+            <Stat value={totalCities} label="городов всего" />
+            <Stat value={foreign.length} label="стран за рубежом" />
+            <Stat value={domesticCities} label="городов по России" />
           </div>
         </div>
       </section>
@@ -81,16 +86,11 @@ export default async function CountriesPage({
               За рубежом
             </h2>
           </div>
-          {/* Горизонтальный скролл на мобильном */}
-          <div className="flex overflow-x-auto gap-4 snap-x snap-mandatory scrollbar-none pb-2 -mx-6 px-6 md:hidden">
-            {foreign.map((c) => (
-              <div key={c.slug} className="shrink-0 w-[72vw] max-w-[280px] snap-start">
-                <CountryCard country={c} />
-              </div>
-            ))}
-          </div>
-          {/* Сетка на планшете и десктопе */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+          {/* Сетка на всех размерах экрана: 2 колонки на мобильном вместо
+              бесконечного горизонтального скролла через 79 карточек подряд —
+              так видно сразу несколько стран, и дальше можно просто
+              проскроллить вниз, а не «до бесконечности» вбок. */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 items-stretch">
             {foreign.map((c, i) => (
               <Reveal key={c.slug} delay={i * 40} className="h-full">
                 <CountryCard country={c} />
@@ -107,16 +107,7 @@ export default async function CountriesPage({
               Внутри России
             </h2>
           </div>
-          {/* Горизонтальный скролл на мобильном */}
-          <div className="flex overflow-x-auto gap-4 snap-x snap-mandatory scrollbar-none pb-2 -mx-6 px-6 md:hidden">
-            {domestic.map((c) => (
-              <div key={c.slug} className="shrink-0 w-[72vw] max-w-[280px] snap-start">
-                <CountryCard country={c} />
-              </div>
-            ))}
-          </div>
-          {/* Сетка на планшете и десктопе */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 items-stretch">
             {domestic.map((c, i) => (
               <Reveal key={c.slug} delay={i * 40} className="h-full">
                 <CountryCard country={c} />
