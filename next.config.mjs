@@ -1,7 +1,23 @@
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 import createNextIntlPlugin from "next-intl/plugin";
 
 // next-intl: путь к i18n/request.ts (конфиг запроса с загрузкой словарей).
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Дубли блога DN-городов (2026-08-27): один город был опубликован 2-4 раза
+// под разными транслитерациями slug'а (напр. bolivia-la-paz-dn-2026 /
+// la-paz-bolivia-dn-2026 / boliviya-lapas-... — всё Ла-Пас, Боливия).
+// 118 групп / 132 записи — карта "проигравший slug" -> "выживший slug"
+// (см. config/blog-redirects.json — там же пояснение по правилу выбора).
+// Проигравшие статьи помечены published=false в Supabase (scripts/dn-dedup),
+// здесь — 301 на выжившую, чтобы не терять уже накопленный SEO-вес/бэклинки.
+const blogRedirects = JSON.parse(
+  readFileSync(path.join(__dirname, "config/blog-redirects.json"), "utf-8"),
+).redirects;
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -24,6 +40,21 @@ const nextConfig = {
   // блог-странице. 300 сек дают очереди время разгрестись. На быстрых машинах
   // страница строится за миллисекунды, так что лимит там не срабатывает.
   staticPageGenerationTimeout: 300,
+
+  // 301-редиректы дублей блога (см. blogRedirects выше). Next.js обрабатывает
+  // next.config редиректы ДО кастомного middleware.ts (next-intl), поэтому
+  // нужны явные записи и для дефолтной локали (ru, без префикса), и отдельно
+  // для /en и /uz (у них префикс в пути, middleware сюда уже не достаёт).
+  async redirects() {
+    return Object.entries(blogRedirects).flatMap(([from, to]) => [
+      { source: `/blog/${from}`, destination: `/blog/${to}`, permanent: true },
+      {
+        source: `/:locale(en|uz)/blog/${from}`,
+        destination: `/:locale/blog/${to}`,
+        permanent: true,
+      },
+    ]);
+  },
 
   images: {
     remotePatterns: [
