@@ -24,6 +24,15 @@ echo "==> 2/4 Заливка сборки в staging ($APP/.next.incoming)"
 # --exclude 'cache': иначе rsync может упасть с "file has vanished" на
 # .next/cache/webpack; рантайму build-cache не нужен.
 rsync -az --delete --exclude 'cache' -e "$SSH" .next/ "$HOST:$APP/.next.incoming/"
+# config/ — next.config.mjs читает отсюда (например config/blog-redirects.json
+# для redirects()) через readFileSync при СТАРТЕ сервера. 2026-08-31: без этой
+# синхронизации next.config.mjs уехал на сервер раньше config/, next start упал
+# с ENOENT, systemd ушёл в restart-loop → 502 на всём сайте, и авто-откат тоже
+# не спасал (откатывает только .next, не next.config.mjs). Синхронизируем
+# ДО next.config.mjs, чтобы файл уже существовал к моменту рестарта.
+if [ -d "config" ]; then
+  rsync -az -e "$SSH" config/ "$HOST:$APP/config/"
+fi
 # next.config.mjs читается `next start` с диска при запуске, поэтому держим его
 # на сервере в синхроне (иначе runtime-конфиг расходится со сборкой).
 rsync -az -e "$SSH" next.config.mjs "$HOST:$APP/next.config.mjs"
