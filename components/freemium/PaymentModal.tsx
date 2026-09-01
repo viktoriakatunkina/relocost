@@ -77,8 +77,14 @@ export function PaymentModal({
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (email && !email.includes("@")) {
-      setError("Проверьте формат email — похоже, опечатка.");
+    // Email обязателен — сервер (app/api/payment/create) всё равно жёстко
+    // требует его и вернёт 400, если пусто. Раньше здесь трактовалось как
+    // необязательное (подпись "необязательно" + эта проверка пропускала
+    // пустое значение) — пользователь оставлял поле пустым, жал "Оплатить"
+    // и упирался в серверную ошибку про то же поле. 2026-09-01: приведено
+    // к тому же паттерну, что уже работает в CountryPaymentModal.tsx.
+    if (!email || !email.includes("@")) {
+      setError("Укажите email — отправим чек и ссылку для восстановления доступа.");
       return;
     }
     setSubmitting(true);
@@ -176,14 +182,15 @@ export function PaymentModal({
         <form onSubmit={onSubmit} className="space-y-4">
           <label className="block">
             <span className="block text-brandy/70 text-sm mb-2">
-              Email
-              <span className="text-brandy/50 ml-1 text-xs">— необязательно, пришлём чек и ссылку восстановления</span>
+              Email <span className="text-copper">*</span>
+              <span className="text-brandy/50 ml-1 text-xs">— пришлём чек и ссылку на восстановление доступа</span>
             </span>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com (необязательно)"
+              placeholder="you@example.com"
+              required
               className="w-full px-4 py-3 rounded-pill bg-pine-tree/60 border border-cream/10 text-cream placeholder-brandy/40 focus:border-copper focus:outline-none"
               autoFocus
             />
@@ -214,8 +221,7 @@ export function PaymentModal({
         </form>
 
         <p className="text-brandy/50 text-xs mt-4 text-center">
-          Оплата картой или СБП через ЮKassa. Доступ откроется сразу после
-          оплаты. Если укажете email — отправим чек и ссылку для восстановления.
+          Оплата картой или СБП через ЮKassa. Доступ откроется сразу после оплаты.
         </p>
       </div>
     </div>

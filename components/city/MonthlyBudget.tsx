@@ -134,29 +134,24 @@ export function MonthlyBudget({
           <p className="text-copper text-xs uppercase tracking-[0.18em] mb-2 font-medium">
             Бюджет «от» в месяц · {activePreset.label}
           </p>
+          {/* Итоговая сумма открыта всегда (не блюрится) — 2026-09-01:
+              продуктовый баг конверсии. Calculator.tsx ниже на этой же
+              странице бесплатно показывает почти такую же итоговую сумму
+              (сознательное решение аудита от 2026-08-25), а здесь та же по
+              сути цифра оставалась платной — посетитель упирался в блюр,
+              через 10 сек скролла видел похожую цифру бесплатно, это
+              подрывало готовность платить. Платный триггер — только
+              детальная построчная разбивка ниже (по аналогии с
+              PricesTable.tsx: там тоже платно не сам факт данных, а
+              детализация). */}
           <div className="relative inline-block">
-            <p
-              className="font-serif text-4xl md:text-6xl text-cream tabular-nums leading-none"
-              style={!budgetUnlocked ? { filter: "blur(8px)", userSelect: "none" } : undefined}
-              aria-hidden={!budgetUnlocked}
-            >
+            <p className="font-serif text-4xl md:text-6xl text-cream tabular-nums leading-none">
               <CountUp
                 key={preset}
                 value={total}
                 format={(n) => formatRub(Math.round(n))}
               />
             </p>
-            {!budgetUnlocked && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <button
-                  type="button"
-                  onClick={() => setOpenModal(true)}
-                  className="px-4 py-2 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition whitespace-nowrap shadow-card"
-                >
-                  Открыть за 49 ₽
-                </button>
-              </div>
-            )}
           </div>
 
           {/* единый долевой бар — сегменты «вырастают» по ширине при появлении */}
