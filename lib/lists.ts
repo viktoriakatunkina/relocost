@@ -553,6 +553,53 @@ export const LISTS: ListDef[] = [
     },
   },
   {
+    slug: "razvedka-pered-pereezdom",
+    eyebrow: "Подборка",
+    title: "Города, куда стоит съездить на разведку перед переездом",
+    intro:
+      "Направления, куда логично слетать на 3–7 дней перед полным переездом — проверить район, интернет, банк и «свое ли» это место. Отбор — по популярности среди переехавших и несложной логистике из России. Отсортированы по примерному бюджету короткой поездки.",
+    seoTitle: "Куда съездить на разведку перед переездом в 2026 — города | Relocost",
+    seoDescription:
+      "Подборка городов для ознакомительной поездки перед переездом: логистика из России, что проверить на месте, примерный бюджет разведки на 3–7 дней.",
+    fallbackSlugs: [
+      "tbilisi", "batumi", "kutaisi", "yerevan", "almaty", "bishkek",
+      "tashkent", "baku", "antalya", "istanbul", "belgrade", "podgorica",
+      "budva", "tivat", "limassol", "larnaca", "dubai", "bali",
+      "phuket", "bangkok", "chiang-mai", "dushanbe",
+    ],
+    tips: [
+      {
+        icon: "🗓️",
+        title: "Сколько дней",
+        text: "Минимум 3 дня для соседних направлений (Кавказ, Средняя Азия), 5–7 дней — если лететь далеко (Азия, Залив).",
+      },
+      {
+        icon: "🏘️",
+        title: "Живите не в отеле",
+        text: "Снимите квартиру на Airbnb или Booking в спальном районе, а не в туристическом центре — иначе увидите не тот город, где будете жить.",
+      },
+      {
+        icon: "🏦",
+        title: "Возьмите документы",
+        text: "На разведке уже можно открыть счет в местном банке — берите загранпаспорт и, если есть, ИНН и подтверждение дохода.",
+      },
+      {
+        icon: "📋",
+        title: "Прогоните чек-лист",
+        text: "Интернет, аптека рядом, дорога до условной «работы», рынок и супермаркет — то, что не видно на фото из объявлений об аренде.",
+      },
+    ],
+    select: (cities) => {
+      const RECON: Set<string> = new Set([
+        "tbilisi", "batumi", "kutaisi", "yerevan", "almaty", "bishkek",
+        "tashkent", "baku", "antalya", "istanbul", "belgrade", "podgorica",
+        "budva", "tivat", "limassol", "larnaca", "dubai", "bali",
+        "phuket", "bangkok", "chiang-mai", "dushanbe",
+      ]);
+      return cities.filter((c) => RECON.has(c.slug)).sort(byBudget);
+    },
+  },
+  {
     slug: "dlya-pensionerov",
     eyebrow: "Подборка",
     title: "Куда переехать пенсионеру из России: теплые и недорогие города",
