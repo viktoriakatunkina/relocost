@@ -7,7 +7,12 @@ const PKGS = [
   { key: "bundle", emoji: "🎁", label: "Расходы + Места", price: 59 },
 ];
 
-export function BlogReportCTA({ city }: { city: City | null }) {
+// Принимает только slug/name_ru — см. пояснение в ArticleInlineCTA.tsx: сюда
+// приходит либо реальный City (city_id статьи), либо «догадка» из
+// сопоставления заголовка (lib/blog-city-match.ts) для статей без city_id.
+type CTACity = Pick<City, "slug" | "name_ru">;
+
+export function BlogReportCTA({ city }: { city: CTACity | null }) {
   if (city) {
     return (
       <div

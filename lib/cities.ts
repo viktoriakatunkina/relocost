@@ -86,6 +86,19 @@ export async function getAllCitiesForSearch(): Promise<
   return data ?? [];
 }
 
+// Лёгкий список городов для сопоставления заголовка статьи блога с городом/
+// страной (lib/blog-city-match.ts) — рантайм-фолбэк CTA для статей без
+// city_id/country_slug. Используется только когда у статьи оба поля пустые.
+export async function getCitiesForTitleMatch(): Promise<
+  Pick<City, "id" | "slug" | "name_ru" | "country_ru" | "country_slug" | "flag_emoji">[]
+> {
+  const { data, error } = await supabase
+    .from("cities")
+    .select("id, slug, name_ru, country_ru, country_slug, flag_emoji");
+  if (error) return [];
+  return data ?? [];
+}
+
 export function formatRub(value: number): string {
   return new Intl.NumberFormat("ru-RU").format(value) + " ₽";
 }

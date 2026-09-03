@@ -11,7 +11,8 @@ import {
   getPostBySlug,
   getPublishedPosts,
 } from "@/lib/blog";
-import { getPopularCities } from "@/lib/cities";
+import { getPopularCities, getCitiesForTitleMatch } from "@/lib/cities";
+import { matchCitiesInTitle, matchCountryInTitle, type CityMatchLite } from "@/lib/blog-city-match";
 import { unsplashAuthorUrlWithUtm } from "@/lib/unsplash";
 import { photoSrc } from "@/lib/photo";
 import { RelatedPosts } from "@/components/blog/RelatedPosts";
@@ -112,7 +113,8 @@ export default async function BlogPostPage({
   // Локализуем тело статьи (title, content_md, seo) — ниже всё рендерится из
   // этого объекта. Для ru возвращается исходный пост без изменений.
   const post = await localizeBlogPost(rawPost, params.locale);
-  const [city, allPosts, prices, countryCities, popularCities] = await Promise.all([
+  const rawHasNoBinding = !post.city_id && !post.country_slug;
+  const [city, allPosts, prices, countryCities, popularCitiesInitial, citiesForMatchInitial] = await Promise.all([
     getCityForPost(post.city_id) as Promise<City | null>,
     getPublishedPosts(),
     post.city_id
@@ -123,11 +125,59 @@ export default async function BlogPostPage({
     (!post.city_id && post.country_slug)
       ? getCitiesByCountry(post.country_slug)
       : Promise.resolve([] as Awaited<ReturnType<typeof getCitiesByCountry>>),
-    // Популярные города — для статей без страны и без города (общие обзоры)
-    (!post.city_id && !post.country_slug)
+    // Популярные города — крайний фолбэк для статей без страны, без города и
+    // без географического упоминания в заголовке (общие практические обзоры).
+    rawHasNoBinding
       ? getPopularCities(8)
       : Promise.resolve([] as Awaited<ReturnType<typeof getPopularCities>>),
+    // Лёгкий список городов — только для статей БЕЗ city_id/country_slug, чтобы
+    // рантайм-фолбэком угадать город/страну по заголовку (см. ниже) вместо
+    // нерелевантного топ-8. Бэкафилл (scripts/backfill-blog-city-country.mjs)
+    // уже разово проставил city_id/country_slug там, где заголовок называл
+    // РОВНО один город/страну; сюда попадают статьи-сравнения нескольких
+    // городов («Тбилиси vs Ереван») и статьи без явного совпадения вовсе.
+    rawHasNoBinding
+      ? getCitiesForTitleMatch()
+      : Promise.resolve([] as CityMatchLite[]),
   ]);
+
+  // Осиротевший country_slug: у статьи ПРОСТАВЛЕН country_slug, но в таблице
+  // cities НЕТ ни одного города с таким country_slug (нашли аудитом 2026-09 —
+  // 337 опубликованных статей ссылаются на значения вроде "kosovo", "norway",
+  // "bosnia", которых нет в справочнике городов). Для CTA/читателя это
+  // неотличимо от отсутствия привязки: /country/{slug} у таких значений
+  // отдаёт 404 — то есть CTA технически кликабелен, но ведёт в никуда, что
+  // тоже объясняет проваленную конверсию клика по CTA. Лечим тем же
+  // фолбэком по заголовку, что и статьи без country_slug вовсе.
+  const countryBindingBroken = !!post.country_slug && !post.city_id && countryCities.length === 0;
+  const hasNoBinding = rawHasNoBinding || countryBindingBroken;
+  const [popularCities, citiesForMatch] = countryBindingBroken
+    ? await Promise.all([getPopularCities(8), getCitiesForTitleMatch()])
+    : [popularCitiesInitial, citiesForMatchInitial];
+
+  // Города/страна, угаданные по заголовку — используются ТОЛЬКО как источник
+  // ссылок для inline/end/sticky CTA и блока «Города из этой статьи»; НЕ
+  // подменяют собой `city` для sidebar/ArticleCityData (те требуют настоящей
+  // привязки city_id, чтобы не выдавать догадку за официальные данные города).
+  // Сопоставляем по ИСХОДНОМУ (русскому) заголовку rawPost.title, а не по
+  // локализованному post.title — база городов содержит только name_ru, и на
+  // en/uz локализованный заголовок совпадений не даст.
+  const titleMatchedCities: CityMatchLite[] = hasNoBinding
+    ? matchCitiesInTitle(rawPost.title, citiesForMatch)
+    : [];
+  const titleMatchedCountry = hasNoBinding && !titleMatchedCities.length
+    ? matchCountryInTitle(rawPost.title, citiesForMatch)
+    : null;
+  const titleCountryCities = titleMatchedCountry
+    ? await getCitiesByCountry(titleMatchedCountry.slug)
+    : [];
+
+  // CTA-контекст: реальная привязка города/страны в приоритете (кроме
+  // осиротевшего country_slug — он в приоритет не идёт), иначе — догадка по
+  // заголовку. Используется для early/mid/end/sticky CTA.
+  const effectiveCountrySlug = countryBindingBroken ? null : post.country_slug;
+  const ctaCity = city ?? titleMatchedCities[0] ?? null;
+  const ctaCountrySlug = effectiveCountrySlug ?? (titleMatchedCities.length ? null : titleMatchedCountry?.slug ?? null);
 
   const updatedLabel = new Intl.DateTimeFormat(params.locale, {
     month: "long",
@@ -261,10 +311,11 @@ export default async function BlogPostPage({
     },
   };
 
-  // Ссылка для мобильного sticky-CTA: на город статьи или на поиск.
-  const mobileCTAHref = city ? `/city/${city.slug}` : `/search`;
-  const mobileCTALabel = city
-    ? `Рассчитайте стоимость жизни в ${city.name_ru} →`
+  // Ссылка для мобильного sticky-CTA: на город статьи (реальный или угаданный
+  // по заголовку — см. ctaCity выше) или на поиск.
+  const mobileCTAHref = ctaCity ? `/city/${ctaCity.slug}` : `/search`;
+  const mobileCTALabel = ctaCity
+    ? `Рассчитайте стоимость жизни в ${ctaCity.name_ru} →`
     : "Рассчитайте стоимость переезда →";
 
   // Краткий отображаемый заголовок: берём часть до первого «;» (в SEO-заголовках
@@ -358,8 +409,8 @@ export default async function BlogPostPage({
             {hasEarlyCTA && (
               <ArticleInlineCTA
                 variant="early"
-                city={city}
-                countrySlug={post.country_slug}
+                city={ctaCity}
+                countrySlug={ctaCountrySlug}
               />
             )}
 
@@ -372,8 +423,8 @@ export default async function BlogPostPage({
             {hasMidCTA && (
               <ArticleInlineCTA
                 variant="mid"
-                city={city}
-                countrySlug={post.country_slug}
+                city={ctaCity}
+                countrySlug={ctaCountrySlug}
               />
             )}
 
@@ -386,7 +437,7 @@ export default async function BlogPostPage({
           </article>
 
           {/* End-article CTA: витрина пакетов с ценами */}
-          <BlogReportCTA city={city} />
+          <BlogReportCTA city={ctaCity} />
 
           {/* Блок городов страны: показываем когда статья о стране, но без конкретного города */}
           {!city && countryCities.length > 0 && (
@@ -417,8 +468,70 @@ export default async function BlogPostPage({
             </div>
           )}
 
-          {/* Популярные города: для общих статей без страны и без города */}
-          {!city && countryCities.length === 0 && popularCities.length > 0 && (
+          {/* Города, упомянутые в заголовке статьи (статьи-сравнения без явной
+              city_id/country_slug — «Тбилиси vs Ереван» и т.п.): показываем ИХ,
+              а не нерелевантный топ популярных, см. lib/blog-city-match.ts */}
+          {!city && countryCities.length === 0 && titleMatchedCities.length > 0 && (
+            <div className="mt-10 rounded-3xl border border-copper/25 bg-surface p-6 md:p-8">
+              <p className="text-brandy/60 text-xs uppercase tracking-wider mb-3">
+                Города из этой статьи
+              </p>
+              <h3 className="font-serif text-xl text-cream mb-5">
+                Реальные цены, калькулятор бюджета и виза — по каждому городу
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {titleMatchedCities.slice(0, 8).map((c) => (
+                  <Link
+                    key={c.slug}
+                    href={`/city/${c.slug}`}
+                    className="flex flex-col items-center gap-1.5 p-3.5 rounded-2xl bg-surface-elevated border hairline hover:border-copper/50 hover:bg-copper/5 transition text-center"
+                  >
+                    {c.flag_emoji && (
+                      <span className="text-2xl" aria-hidden>{c.flag_emoji}</span>
+                    )}
+                    <span className="text-cream text-sm font-medium leading-tight">
+                      {c.name_ru}
+                    </span>
+                    <span className="text-copper text-xs">Смотреть цены →</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Страна угадана по заголовку (без явного совпадения города) —
+              показываем города этой страны вместо топ популярных. */}
+          {!city && countryCities.length === 0 && titleMatchedCities.length === 0 && titleCountryCities.length > 0 && (
+            <div className="mt-10 rounded-3xl border border-copper/25 bg-surface p-6 md:p-8">
+              <p className="text-brandy/60 text-xs uppercase tracking-wider mb-3">
+                Города {titleMatchedCountry?.name_ru} на Relocost
+              </p>
+              <h3 className="font-serif text-xl text-cream mb-5">
+                Детальные бюджеты и гайды по переезду
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {titleCountryCities.map((c) => (
+                  <Link
+                    key={c.slug}
+                    href={`/city/${c.slug}`}
+                    className="flex flex-col items-center gap-1.5 p-3.5 rounded-2xl bg-surface-elevated border hairline hover:border-copper/50 hover:bg-copper/5 transition text-center"
+                  >
+                    {c.flag_emoji && (
+                      <span className="text-2xl" aria-hidden>{c.flag_emoji}</span>
+                    )}
+                    <span className="text-cream text-sm font-medium leading-tight">
+                      {c.name_ru}
+                    </span>
+                    <span className="text-copper text-xs">Открыть →</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Популярные города: крайний фолбэк для общих статей без страны, без
+              города и без географического упоминания в заголовке */}
+          {!city && countryCities.length === 0 && titleMatchedCities.length === 0 && titleCountryCities.length === 0 && popularCities.length > 0 && (
             <div className="mt-10 rounded-3xl border border-copper/25 bg-surface p-6 md:p-8">
               <p className="text-brandy/60 text-xs uppercase tracking-wider mb-3">
                 Популярные направления

@@ -6,17 +6,24 @@ import type { City } from "@/lib/types";
 //  - "early"  — после первых 1-2 абзацев (интро), пока читатель ещё не решил
 //    долистывать статью до конца или нет;
 //  - "mid"    — в середине контента (~55-60%), второй шанс поймать читателя.
-// Оба контекстные: если у статьи есть привязка к городу (city_id) — ведут на
-// страницу этого города; если только страна (country_slug) — на страницу
-// страны; иначе — на подбор города в поиске.
+// Оба контекстные: если у статьи есть привязка к городу (city_id, либо
+// определена рантайм-фолбэком по заголовку — см. lib/blog-city-match.ts) —
+// ведут на страницу этого города; если только страна (country_slug) — на
+// страницу страны; иначе — на подбор города в поиске.
+
+// Принимает только slug/name_ru — этого достаточно для ссылки и подписи, а
+// узкий тип позволяет передавать сюда как реальный City (из city_id), так и
+// «догадку» из сопоставления заголовка статьи (CityMatchLite), не имеющую
+// остальных полей City.
+type CTACity = Pick<City, "slug" | "name_ru">;
 
 type Props = {
   variant: "early" | "mid";
-  city: City | null;
+  city: CTACity | null;
   countrySlug: string | null;
 };
 
-function ctaHref(city: City | null, countrySlug: string | null): string {
+function ctaHref(city: CTACity | null, countrySlug: string | null): string {
   if (city) return `/city/${city.slug}`;
   if (countrySlug) return `/country/${countrySlug}`;
   return "/search";
