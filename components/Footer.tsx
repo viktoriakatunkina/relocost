@@ -23,11 +23,11 @@ export async function Footer() {
     { href: "/contacts", label: t("contacts") },
   ];
   const listLinks = [
-    { href: "/list/samye-deshevye", label: "Самые дешевые" },
-    { href: "/list/do-50000-rubley", label: "До 50 000 ₽" },
-    { href: "/list/dlya-zimovki", label: "Для зимовки" },
-    { href: "/list/u-morya", label: "У моря" },
-    { href: "/list/dlya-udalenki", label: "Для удаленки" },
+    { href: "/list/samye-deshevye", label: t("listCheapest") },
+    { href: "/list/do-50000-rubley", label: t("listBudget") },
+    { href: "/list/dlya-zimovki", label: t("listWinter") },
+    { href: "/list/u-morya", label: t("listSeaside") },
+    { href: "/list/dlya-udalenki", label: t("listRemote") },
   ];
 
   const columns = [

@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 const STORAGE_KEY = "cookie_consent";
 
 export function CookieBanner() {
+  const t = useTranslations("common");
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export function CookieBanner() {
     <div
       role="dialog"
       aria-live="polite"
-      aria-label="Уведомление об использовании cookie"
+      aria-label={t("cookieAriaLabel")}
       // Обычный поток (не fixed) сразу под header — раньше было
       // fixed bottom-0, как и StickyBar/CountryStickyBar (freemium-CTA
       // «Открыть за N ₽»), и баннер полностью накрывал кнопку покупки на
@@ -44,22 +46,21 @@ export function CookieBanner() {
     >
       <div className="mx-auto max-w-2xl flex flex-col sm:flex-row items-center gap-4 rounded-2xl bg-pine-tree/95 backdrop-blur-md border border-cream/10 px-5 py-4 shadow-card">
         <p className="text-brandy/80 text-sm leading-relaxed flex-1 text-center sm:text-left">
-          Мы используем файлы cookie для аналитики. Продолжая пользоваться
-          сайтом, Вы соглашаетесь с нашей{" "}
+          {t("cookieText")}{" "}
           <Link
             href="/privacy"
             className="text-cream/70 underline underline-offset-2 hover:text-cream transition-colors"
           >
-            Политикой конфиденциальности
+            {t("cookiePrivacyLink")}
           </Link>
-          .
+          {t("cookieSuffix")}.
         </p>
         <button
           type="button"
           onClick={accept}
           className="shrink-0 px-5 py-2.5 rounded-pill bg-copper text-pine-tree text-sm font-semibold hover:bg-brandy transition-colors min-h-[44px]"
         >
-          Понятно
+          {t("cookieAccept")}
         </button>
       </div>
     </div>

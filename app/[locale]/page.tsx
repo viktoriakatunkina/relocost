@@ -24,6 +24,22 @@ import { HeroMist, WarmOrbs } from "@/components/decor/Atmosphere";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { type Locale } from "@/i18n/routing";
 
+// Имена городов для чипов "Популярно" на главной. Список фиксированный (8
+// направлений), поэтому переводы держим прямо здесь, а не тянем из БД —
+// 2026-09-03: раньше были захардкожены только по-русски, из-за чего первый
+// экран /en и /uz показывал русские названия городов рядом с переведённым
+// заголовком (см. аудит бounce /en /uz).
+const HERO_CITY_NAMES: Record<string, Record<Locale, string>> = {
+  tbilisi: { ru: "Тбилиси 🇬🇪", en: "Tbilisi 🇬🇪", uz: "Tbilisi 🇬🇪" },
+  belgrade: { ru: "Белград 🇷🇸", en: "Belgrade 🇷🇸", uz: "Belgrad 🇷🇸" },
+  dubai: { ru: "Дубай 🇦🇪", en: "Dubai 🇦🇪", uz: "Dubay 🇦🇪" },
+  bali: { ru: "Бали 🇮🇩", en: "Bali 🇮🇩", uz: "Bali 🇮🇩" },
+  yerevan: { ru: "Ереван 🇦🇲", en: "Yerevan 🇦🇲", uz: "Yerevan 🇦🇲" },
+  limassol: { ru: "Лимасол 🇨🇾", en: "Limassol 🇨🇾", uz: "Limassol 🇨🇾" },
+  almaty: { ru: "Алматы 🇰🇿", en: "Almaty 🇰🇿", uz: "Almati 🇰🇿" },
+  tashkent: { ru: "Ташкент 🇺🇿", en: "Tashkent 🇺🇿", uz: "Toshkent 🇺🇿" },
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -133,18 +149,20 @@ export default async function HomePage({
 
           {/* Быстрый доступ к популярным городам прямо под поиском —
               на мобильном меньше чипов (4 вместо 8): каждый ряд экономит
-              высоту, а на первом экране важнее CTA ниже. */}
+              высоту, а на первом экране важнее CTA ниже.
+              2026-09-03: имена локализованы (были захардкожены по-русски
+              даже на /en и /uz — первый экран сайта смешивал языки). */}
           <div className="fade-up mt-3 md:mt-4 flex flex-wrap gap-2 max-w-2xl relative z-20" style={{ animationDelay: "420ms" }}>
-            <span className="text-brandy/50 text-xs self-center pr-1">Популярно:</span>
+            <span className="text-brandy/50 text-xs self-center pr-1">{t("popularQuickLabel")}</span>
             {[
-              { slug: "tbilisi", name: "Тбилиси 🇬🇪", mobile: true },
-              { slug: "belgrade", name: "Белград 🇷🇸", mobile: true },
-              { slug: "dubai", name: "Дубай 🇦🇪", mobile: true },
-              { slug: "bali", name: "Бали 🇮🇩", mobile: true },
-              { slug: "yerevan", name: "Ереван 🇦🇲", mobile: false },
-              { slug: "limassol", name: "Лимасол 🇨🇾", mobile: false },
-              { slug: "almaty", name: "Алматы 🇰🇿", mobile: false },
-              { slug: "tashkent", name: "Ташкент 🇺🇿", mobile: false },
+              { slug: "tbilisi", name: HERO_CITY_NAMES.tbilisi[params.locale], mobile: true },
+              { slug: "belgrade", name: HERO_CITY_NAMES.belgrade[params.locale], mobile: true },
+              { slug: "dubai", name: HERO_CITY_NAMES.dubai[params.locale], mobile: true },
+              { slug: "bali", name: HERO_CITY_NAMES.bali[params.locale], mobile: true },
+              { slug: "yerevan", name: HERO_CITY_NAMES.yerevan[params.locale], mobile: false },
+              { slug: "limassol", name: HERO_CITY_NAMES.limassol[params.locale], mobile: false },
+              { slug: "almaty", name: HERO_CITY_NAMES.almaty[params.locale], mobile: false },
+              { slug: "tashkent", name: HERO_CITY_NAMES.tashkent[params.locale], mobile: false },
             ].map((c) => (
               <Link
                 key={c.slug}
@@ -162,7 +180,7 @@ export default async function HomePage({
               href="/match"
               className="inline-flex items-center gap-2 px-7 py-4 rounded-pill bg-copper text-pine-tree font-semibold text-base hover:bg-pale-copper transition shadow-glow"
             >
-              Подобрать город по моим критериям
+              {t("matchCta")}
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </Link>
           </div>
