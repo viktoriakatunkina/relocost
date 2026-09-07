@@ -1,5 +1,7 @@
 "use client";
 
+import { Link } from "@/i18n/navigation";
+
 // Горизонтальная якорная навигация под QuickFacts.
 // Sticky при скролле; на мобиле — горизонтальный скролл без стрелок.
 
@@ -12,7 +14,16 @@ const ALL_ANCHORS = [
   { id: "faq", label: "FAQ", always: true },
 ] as const;
 
-export function CityAnchorNav({ isForeign }: { isForeign: boolean }) {
+export function CityAnchorNav({
+  isForeign,
+  tripHref,
+}: {
+  isForeign: boolean;
+  /** Ссылка на /city/[slug]/trip — передаётся вызывающей страницей только
+   *  для городов с контентом маршрутов (lib/city-routes.ts) и только на ru
+   *  (страница не переведена). Компонент не знает о CITY_ROUTES/локали. */
+  tripHref?: string;
+}) {
   const anchors = ALL_ANCHORS.filter(
     (a) => a.always || (a.foreignOnly && isForeign),
   );
@@ -33,6 +44,14 @@ export function CityAnchorNav({ isForeign }: { isForeign: boolean }) {
               {a.label}
             </a>
           ))}
+          {tripHref && (
+            <Link
+              href={tripHref}
+              className="shrink-0 px-4 py-1.5 rounded-pill border border-copper/40 text-copper text-sm whitespace-nowrap hover:border-copper/70 hover:bg-copper/10 transition-all duration-200"
+            >
+              Маршруты на день
+            </Link>
+          )}
         </div>
       </div>
     </nav>

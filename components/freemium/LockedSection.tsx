@@ -8,11 +8,16 @@ export function LockedSection({
   slug,
   pkg,
   hint,
+  onOpen,
   children,
 }: {
   slug: string;
   pkg: CityPackageType;
   hint?: string;
+  /** Доп. коллбэк при клике «Открыть за N ₽» — например, своя цель Метрики
+   *  для конкретного места использования (PaymentModal уже шлёт общий
+   *  "package_click" сам, это для контекстных целей поверх него). */
+  onOpen?: () => void;
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
@@ -44,7 +49,10 @@ export function LockedSection({
             )}
             <button
               type="button"
-              onClick={() => setOpen(true)}
+              onClick={() => {
+                onOpen?.();
+                setOpen(true);
+              }}
               className="inline-block px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy"
             >
               Открыть за {meta.price} ₽

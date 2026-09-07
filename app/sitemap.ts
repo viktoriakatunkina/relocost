@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { topComparePairs } from "@/lib/compare";
 import { getAllListSlugs } from "@/lib/lists";
+import { CITY_ROUTES } from "@/lib/city-routes";
 import { routing } from "@/i18n/routing";
 
 // force-dynamic: сайтмап генерируется при каждом запросе, не кешируется.
@@ -180,6 +181,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ];
 
+  // «Маршруты на день» — контент только на ru (dynamicParams=false, en/uz
+  // не сгенерированы), поэтому НЕ идёт через expand() (размножил бы на все
+  // локали и дал битые /en//uz-ссылки на 404). Одна ru-запись на город.
+  const tripEntries: MetadataRoute.Sitemap = Object.keys(CITY_ROUTES).map((slug) => ({
+    url: urlFor(`/city/${slug}/trip`, routing.defaultLocale),
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
   // /favorites в sitemap не включаем (noindex). /search индексируется — он выше.
-  return expand(entries);
+  return [...expand(entries), ...tripEntries];
 }

@@ -5,7 +5,9 @@ import { LockedSection } from "@/components/freemium/LockedSection";
 import type { CityContent, PlaceType } from "@/lib/cities-content";
 import { typo } from "@/lib/typography";
 
-const TYPE_LABELS: Record<PlaceType, string> = {
+// Экспортируется — переиспользуется в components/trip/RouteTimeline.tsx для
+// чипов типа точки маршрута (RouteStop["type"] — тот же набор значений).
+export const TYPE_LABELS: Record<PlaceType, string> = {
   cafe: "Кафе",
   restaurant: "Ресторан",
   district: "Район",

@@ -53,6 +53,8 @@ import {
 } from "@/components/city/CityDynamicFAQ";
 import { CityPartners } from "@/components/city/CityPartners";
 import { CityAnchorNav } from "@/components/city/CityAnchorNav";
+import { TripTeaser } from "@/components/city/TripTeaser";
+import { CITY_ROUTES } from "@/lib/city-routes";
 import { CityFavoritesCount } from "@/components/city/CityFavoritesCount";
 import { DataSourceBadge } from "@/components/DataSourceBadge";
 import { SimilarCities } from "@/components/city/SimilarCities";
@@ -249,6 +251,10 @@ export default async function CityPage({
   // Индекс качества жизни (новый блок LivingScoreCard).
   const cityQuality = getCityQuality(c.slug);
   const allPricesList = Object.values(prices).flat();
+  // Тизер и пункт навигации «Маршруты на день» — только для 6 городов с
+  // контентом (lib/city-routes.ts) и только на ru: страница /trip не
+  // переведена (осознанно, см. app/[locale]/city/[slug]/trip/page.tsx).
+  const hasTrip = params.locale === "ru" && !!CITY_ROUTES[c.slug];
   const lifeScoreResult = computeLifeScore(cityForScore, cityQuality, allPricesList);
   // Блок «Плюсы, минусы, для кого» — собирается из числовых данных города.
   const verdictBlock = buildCityVerdictBlock(c as City, {
@@ -336,7 +342,10 @@ export default async function CityPage({
 
       <QuickFacts city={c} costIndex={cityCostIndex} />
       <CityFavoritesCount />
-      <CityAnchorNav isForeign={c.is_foreign} />
+      <CityAnchorNav
+        isForeign={c.is_foreign}
+        tripHref={hasTrip ? `/city/${c.slug}/trip` : undefined}
+      />
 
       {lifeScoreResult.availableCount > 0 && (
         <Reveal>
@@ -439,6 +448,12 @@ export default async function CityPage({
       {content && (
         <Reveal>
           <BestPlaces slug={c.slug} places={content.best_places} />
+        </Reveal>
+      )}
+
+      {hasTrip && (
+        <Reveal>
+          <TripTeaser slug={c.slug} cityName={name} />
         </Reveal>
       )}
 
