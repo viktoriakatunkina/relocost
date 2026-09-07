@@ -14,6 +14,42 @@ SSH="ssh -i $KEY -o StrictHostKeyChecking=accept-new"
 
 cd "$(dirname "$0")"
 
+# --rollback: откат на .next.prev (билд, который был живым непосредственно
+# ДО последнего успешного деплоя). Без пересборки — просто меняет .next и
+# .next.prev местами и рестартует сервис.
+#
+# 2026-09-03: раньше .next.prev не поддерживался деплой-скриптом вообще —
+# был разовым ручным бэкапом от 19 августа, который никто не обновлял. При
+# сбое 2026-09-03 "откат" выполнили через него вручную и улетели на билд
+# двухнедельной давности, потеряв P0-фикс оплаты и весь свежий контент. Теперь
+# .next.prev — часть штатного пайплайна (см. блок 4/4 ниже) и всегда содержит
+# билд, живший непосредственно до текущего .next.
+if [[ "${1:-}" == "--rollback" ]]; then
+  echo "==> Rollback: меняю $APP/.next на $APP/.next.prev"
+  if ! $SSH "$HOST" "test -d $APP/.next.prev"; then
+    echo "!! $APP/.next.prev не найден — откатывать нечего."
+    echo "   Проверь вручную: ssh -i $KEY $HOST 'ls -la $APP'"
+    exit 1
+  fi
+  $SSH "$HOST" "cd $APP \
+    && rm -rf .next.rollback_from \
+    && mv .next .next.rollback_from \
+    && mv .next.prev .next \
+    && systemctl restart relocost"
+  echo "==> Жду готовности $SITE (до ~20с)"
+  if curl -fsS --retry 20 --retry-delay 1 --retry-all-errors -o /dev/null "$SITE/"; then
+    # Билд, с которого откатились, сохраняем как новый .next.prev — это даёт
+    # возможность "откатить откат" (снова ./deploy.sh --rollback) при ошибке.
+    $SSH "$HOST" "cd $APP && rm -rf .next.prev && mv .next.rollback_from .next.prev"
+    echo "==> Rollback выполнен ✓  Сайт отвечает 200."
+    exit 0
+  else
+    echo "!! После отката сайт всё равно не поднялся."
+    echo "   Логи: ssh -i $KEY $HOST 'journalctl -u relocost -n 80 --no-pager'"
+    exit 1
+  fi
+fi
+
 echo "==> 1/4 Сборка (NEXT_PUBLIC_SITE_URL=$SITE)"
 # --max-old-space-size: с i18n (~1549 страниц + OG-картинки) воркеры экспорта
 # уходят в OOM и билд падает с "Cannot find module ./chunks/*.js". 8 ГБ кучи
@@ -42,6 +78,8 @@ if [ -d "public/images" ]; then
 fi
 
 echo "==> 3/4 Атомарная замена + рестарт"
+# .next.old — временная копия ТЕКУЩЕГО (до этого деплоя) билда, живёт только
+# на время health-check ниже.
 $SSH "$HOST" "cd $APP \
   && rm -rf .next.old \
   && mv .next .next.old \
@@ -50,8 +88,12 @@ $SSH "$HOST" "cd $APP \
 
 echo "==> 4/4 Жду готовности $SITE (до ~20с)"
 if curl -fsS --retry 20 --retry-delay 1 --retry-all-errors -o /dev/null "$SITE/"; then
-  $SSH "$HOST" "cd $APP && rm -rf .next.old"
-  echo "==> Готово ✓  Сайт отвечает 200, старый билд удалён."
+  # БАГ (найден 2026-09-03, починен): раньше здесь было `rm -rf .next.old` —
+  # бэкап предыдущего билда удалялся сразу при успехе, поэтому .next.prev
+  # (для --rollback) не обновлялся деплоями вообще и протухал неделями.
+  # Теперь .next.old при успехе становится новым .next.prev.
+  $SSH "$HOST" "cd $APP && rm -rf .next.prev && mv .next.old .next.prev"
+  echo "==> Готово ✓  Сайт отвечает 200. Прошлый билд сохранён как .next.prev (./deploy.sh --rollback)."
   echo "==> IndexNow: уведомляем Яндекс и Bing о страницах"
   node scripts/indexnow.mjs || echo "!! IndexNow вернул ошибку (не критично)"
 else
