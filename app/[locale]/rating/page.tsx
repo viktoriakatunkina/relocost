@@ -3,6 +3,7 @@ import { getCitiesWithBudget } from "@/lib/city-budget";
 import { CITY_CONTENT } from "@/lib/cities-content";
 import { computeLivingScore } from "@/lib/rating";
 import { RatingClient, type RatedCity } from "@/components/rating/RatingClient";
+import { CityDeepLinks } from "@/components/CityDeepLinks";
 import { CrossLinks } from "@/components/CrossLinks";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
@@ -117,6 +118,12 @@ export default async function RatingPage({
       </section>
 
       <RatingClient cities={rated} />
+
+      <CityDeepLinks
+        cities={rated.slice(0, 60).map((c) => ({ slug: c.slug, name: c.name }))}
+        title="Бюджет и цены по городам рейтинга"
+        note="Топ-60 направлений рейтинга: детальный расчет бюджета на месяц и полная таблица цен по каждому городу."
+      />
 
       <CrossLinks
         links={[

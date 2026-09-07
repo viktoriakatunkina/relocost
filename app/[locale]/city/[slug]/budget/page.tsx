@@ -15,6 +15,7 @@ import { buildAlternates } from "@/lib/i18n-seo";
 import { cityName, countryName } from "@/lib/i18n-content";
 import { localizeCity } from "@/lib/content-i18n";
 import { AnchorPrices } from "@/components/city/AnchorPrices";
+import { BudgetFAQ, buildBudgetFaqItems } from "@/components/city/BudgetFAQ";
 import { MonthlyBudget } from "@/components/city/MonthlyBudget";
 import { Calculator } from "@/components/city/Calculator";
 import { CostVsMoscow } from "@/components/city/CostVsMoscow";
@@ -97,10 +98,24 @@ export default async function CityBudgetPage({
   const anchorItems = getAnchorPrices(prices);
   const moscowComparison =
     c.slug === "moscow" ? null : cityVsMoscow(prices, moscowBaseline);
+  const cityPrepositional = cityIn(c.slug, c.name_ru);
   const moscowSecondPersonText = moscowSecondPerson(
     moscowComparison,
-    cityIn(c.slug, c.name_ru),
+    cityPrepositional,
   );
+
+  // FAQ строится из тех же чисел, что уже показаны на странице (бюджет по
+  // категориям, состав семьи, сравнение с Москвой) — см. BudgetFAQ.
+  // Только для ru: тексты вопросов русские, а на /en и /uz отдавать
+  // русскоязычную FAQPage-разметку смысла нет.
+  const faqItems =
+    params.locale === "ru"
+      ? buildBudgetFaqItems({
+          cityIn: cityPrepositional,
+          prices,
+          avgDiff: moscowComparison?.avgDiff ?? null,
+        })
+      : [];
 
   return (
     <main className="pb-12 md:pb-24">
@@ -147,6 +162,8 @@ export default async function CityBudgetPage({
           />
         </>
       )}
+
+      <BudgetFAQ items={faqItems} />
 
       <CrossLinks
         links={[
