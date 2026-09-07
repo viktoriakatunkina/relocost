@@ -30,6 +30,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { localizeBlogPost } from "@/lib/content-i18n";
+import { BLOG_TAG_FILTER } from "@/lib/blog-visibility";
 
 export const revalidate = 3600;
 // Неизвестные slug рендерятся по первому запросу и кешируются ISR.
@@ -47,7 +48,7 @@ export async function generateStaticParams() {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     if (!url || !key) return [];
-    const tag = encodeURIComponent("города");
+
     // Предгенерируем только 200 новейших статей (порядок как в app/sitemap.ts,
     // который промотирует 1000 новейших — сайтмап и билд НЕ обязаны совпадать
     // 1:1, т.к. 2026-08-24 подтверждено, что рантайм ISR-фолбэк на VPS
@@ -56,7 +57,7 @@ export async function generateStaticParams() {
     // limit=3000 (все статьи из сайтмапа) — это было ~40% всех страниц
     // билда и основная причина многочасовых/падающих локальных сборок.
     const res = await fetchWithHardTimeout(
-      `${url}/rest/v1/blog_posts?select=slug&published=eq.true&tag=neq.${tag}&order=created_at.desc&limit=200`,
+      `${url}/rest/v1/blog_posts?select=slug&published=eq.true&${BLOG_TAG_FILTER}&order=created_at.desc&limit=200`,
       { apikey: key, Authorization: `Bearer ${key}` }
     );
     if (!res.ok) return [];

@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
-import type { BlogPost } from "@/lib/blog";
+import type { BlogPostCard } from "@/lib/blog";
 import { coverGradient, defaultCoverUrl } from "@/lib/blog";
 import { photoSrc } from "@/lib/photo";
 import { typo } from "@/lib/typography";
@@ -17,7 +17,7 @@ export function BlogCard({
   post,
   fallbackCover,
 }: {
-  post: BlogPost;
+  post: BlogPostCard;
   fallbackCover?: string | null;
 }) {
   const ownCover = photoSrc(post.cover_image_url, post.cover_url, { w: 720, q: 80 });

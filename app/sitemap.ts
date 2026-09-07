@@ -3,6 +3,8 @@ import { topComparePairs } from "@/lib/compare";
 import { getAllListSlugs } from "@/lib/lists";
 import { CITY_ROUTES } from "@/lib/city-routes";
 import { routing } from "@/i18n/routing";
+import { BLOG_TAG_FILTER } from "@/lib/blog-visibility";
+import { archivePageCount } from "@/lib/blog-archive";
 
 // force-dynamic: сайтмап генерируется при каждом запросе, не кешируется.
 // Supabase-клиент заменён на прямой fetch — кастомный fetchWithRetry
@@ -16,9 +18,19 @@ export const dynamic = "force-dynamic";
 // proxy timeout, отдаём частичный сайтмап вместо полного 504.
 const FETCH_TIMEOUT_MS = 8_000;
 
-async function fetchWithTimeout(input: string, headers: Record<string, string>) {
+// Общий бюджет на постраничную выборку статей. Страниц теперь несколько (см.
+// fetchBlogPosts), и без общего дедлайна три подряд подвисших запроса по 8 сек
+// дали бы 24 сек и гарантированный 504 от nginx. Набрали сколько успели —
+// отдаём частичный сайтмап, это лучше пустого.
+const BLOG_FETCH_BUDGET_MS = 12_000;
+
+async function fetchWithTimeout(
+  input: string,
+  headers: Record<string, string>,
+  timeoutMs = FETCH_TIMEOUT_MS,
+) {
   const ctrl = new AbortController();
-  const tid = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
+  const tid = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
     return await fetch(input, { headers, cache: "no-store", signal: ctrl.signal });
   } finally {
@@ -26,21 +38,44 @@ async function fetchWithTimeout(input: string, headers: Record<string, string>) 
   }
 }
 
+// PostgREST режет ЛЮБОЙ ответ по серверному db-max-rows=1000 — параметр
+// limit=3000 в запросе он молча игнорирует. Из-за этого в сайтмап попадала
+// только первая тысяча статей из ~2650 подходящих (аудит 2026-09-07: 65%
+// статей блога вообще не были представлены в сайтмапе). Единственный рабочий
+// способ забрать всё — идти страницами по offset, как в scripts/*.mjs.
+const BLOG_PAGE_SIZE = 1000;
+const BLOG_MAX_PAGES = 8; // страховка от бесконечного цикла: потолок 8000 статей
+
 async function fetchBlogPosts(): Promise<{ slug: string; created_at: string }[]> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return [];
+  const headers = { apikey: key, Authorization: `Bearer ${key}` };
+  const deadline = Date.now() + BLOG_FETCH_BUDGET_MS;
+  const out: { slug: string; created_at: string }[] = [];
   try {
-    const tag = encodeURIComponent("города");
-    const res = await fetchWithTimeout(
-      `${url}/rest/v1/blog_posts?select=slug,created_at&published=eq.true&tag=neq.${tag}&limit=3000&order=created_at.desc`,
-      { apikey: key, Authorization: `Bearer ${key}` }
-    );
-    if (!res.ok) return [];
-    return res.json();
+    for (let page = 0; page < BLOG_MAX_PAGES; page++) {
+      const left = deadline - Date.now();
+      if (left <= 0) break;
+      // Сортировка обязательно детерминированная (created_at может совпадать
+      // у пачки статей одного сева) — иначе постраничная выборка теряет и
+      // дублирует строки между страницами.
+      const res = await fetchWithTimeout(
+        `${url}/rest/v1/blog_posts?select=slug,created_at&published=eq.true` +
+          `&${BLOG_TAG_FILTER}&order=created_at.desc,slug.asc` +
+          `&offset=${page * BLOG_PAGE_SIZE}&limit=${BLOG_PAGE_SIZE}`,
+        headers,
+        Math.min(FETCH_TIMEOUT_MS, left),
+      );
+      if (!res.ok) break;
+      const rows: { slug: string; created_at: string }[] = await res.json();
+      out.push(...rows);
+      if (rows.length < BLOG_PAGE_SIZE) break;
+    }
   } catch {
-    return [];
+    // Возвращаем то, что успели набрать до сбоя.
   }
+  return out;
 }
 
 async function fetchCities(): Promise<{ slug: string; country_slug: string; updated_at: string | null }[]> {
@@ -172,6 +207,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.6,
+    })),
+    // Страницы архива блога — транзитные списки, через них краулер доходит
+    // до статей, на которые с /blog нет серверных ссылок (список листается
+    // на клиенте). Приоритет низкий: ценность в ссылках, не в самих списках.
+    ...Array.from({ length: archivePageCount(posts.length) }, (_, i) => i + 1).map((n) => ({
+      path: `/blog/page/${n}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.4,
     })),
     ...posts.map((p) => ({
       path: `/blog/${p.slug}`,

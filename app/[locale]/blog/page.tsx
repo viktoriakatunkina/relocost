@@ -1,10 +1,11 @@
 import { setRequestLocale } from "next-intl/server";
-import { getPublishedPostsOrThrow } from "@/lib/blog";
+import { getPublishedPostCardsOrThrow } from "@/lib/blog";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { Footer } from "@/components/Footer";
 import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
+import { ARCHIVE_PAGE_SIZE } from "@/lib/blog-archive";
 
 export const revalidate = 3600;
 
@@ -37,11 +38,14 @@ export default async function BlogPage({
   params: { locale: Locale };
 }) {
   setRequestLocale(params.locale);
-  // getPublishedPostsOrThrow (не getPublishedPosts): при сбое Supabase на
+  // getPublishedPostCardsOrThrow (не getPublishedPosts): при сбое Supabase на
   // фоновой ISR-ревалидации бросает исключение — Next.js оставляет старую
   // хорошую версию страницы в кеше вместо показа «статей нет» живым
   // посетителям (было 2026-08-25, см. комментарий в lib/blog.ts).
-  const posts = await getPublishedPostsOrThrow();
+  // Карточная (узкая) выборка: в клиентский BlogFilters НЕЛЬЗЯ отдавать
+  // content_md — на этом /blog весила 8 МБ (аудит 2026-09-07).
+  const posts = await getPublishedPostCardsOrThrow();
+  const totalPages = Math.ceil(posts.length / ARCHIVE_PAGE_SIZE);
   return (
     <main className="pb-12 md:pb-24">
       <section className="max-w-6xl mx-auto px-6 pt-12 pb-12">
@@ -78,6 +82,27 @@ export default async function BlogPage({
       <section className="max-w-6xl mx-auto px-6">
         <BlogFilters posts={posts} />
       </section>
+
+      {/* Архив: серверные ссылки на страницы блога. BlogFilters листает
+          статьи на клиенте, поэтому в HTML попадают только 12 карточек —
+          краулер не видит остальные ~2600 статей и не может до них дойти.
+          Этот блок даёт реальные <a> на постраничный архив (аудит 2026-09-07). */}
+      {totalPages > 1 && (
+        <section className="max-w-6xl mx-auto px-6 mt-16">
+          <h2 className="font-serif text-2xl text-cream mb-4">Архив статей</h2>
+          <nav className="flex flex-wrap gap-2" aria-label="Архив блога по страницам">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+              <Link
+                key={n}
+                href={`/blog/page/${n}`}
+                className="px-3 py-1.5 rounded-pill border border-cream/10 text-brandy/70 text-sm hover:text-cream hover:border-copper/30 transition"
+              >
+                {n}
+              </Link>
+            ))}
+          </nav>
+        </section>
+      )}
 
       <div className="pt-12 md:pt-24">
         <Footer />

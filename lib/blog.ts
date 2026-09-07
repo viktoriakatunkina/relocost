@@ -1,4 +1,5 @@
 import { supabase } from "./supabase";
+import { HIDDEN_BLOG_TAG } from "./blog-visibility";
 
 export type BlogPost = {
   id: string;
@@ -28,7 +29,7 @@ export async function getPublishedPosts(limit?: number): Promise<BlogPost[]> {
     .select("*")
     .eq("published", true)
     // Статьи с тегом "города" — городские справки для CityArticles, не для журнала.
-    .neq("tag", "города")
+    .neq("tag", HIDDEN_BLOG_TAG)
     .order("created_at", { ascending: false })
     // Явный лимит-потолок: без него Supabase молча обрезает до 1000 строк.
     // Передача limit=undefined сохраняет поведение «взять все» (до 2000).
@@ -54,12 +55,57 @@ export async function getPublishedPostsOrThrow(limit?: number): Promise<BlogPost
     .from("blog_posts")
     .select("*")
     .eq("published", true)
-    .neq("tag", "города")
+    .neq("tag", HIDDEN_BLOG_TAG)
     .order("created_at", { ascending: false })
     .limit(limit ?? 2000);
   const { data, error } = await q;
   if (error) throw new Error(`getPublishedPostsOrThrow: ${error.message}`);
   return (data ?? []) as BlogPost[];
+}
+
+// ── Лёгкая карточка статьи для листингов ──────────────────────────────────
+// 2026-09-07: /blog весила 8 МБ, потому что в клиентский <BlogFilters posts>
+// уезжали ПОЛНЫЕ строки blog_posts — вместе с content_md (тело статьи!) всех
+// статей разом. Ни BlogFilters, ни BlogCard тело не используют: проверено —
+// нужны только id/slug/title/tag/read_time/обложка. Для листингов берём
+// узкий набор колонок, тело остаётся на сервере.
+export type BlogPostCard = Pick<
+  BlogPost,
+  "id" | "slug" | "title" | "tag" | "read_time" | "cover_url" | "created_at"
+> & { cover_image_url?: string | null };
+
+// ВНИМАНИЕ: cover_image_url в списке НЕТ. Колонка описана в BlogPost как
+// опциональная, но миграция 202606111200 на проде так и не применена — в
+// blog_posts её физически нет. select("*") это прощал, явный список колонок
+// — нет: PostgREST отвечает «column blog_posts.cover_image_url does not
+// exist» и страница падает в 500. Добавлять сюда только после миграции.
+const CARD_COLUMNS = "id,slug,title,tag,read_time,cover_url,created_at";
+const PAGE_SIZE = 1000;
+
+// PostgREST режет любой ответ по db-max-rows=1000 и молча игнорирует .limit()
+// сверх этого — поэтому «все статьи» приходится собирать через .range().
+// Без этого /blog показывал 1000 статей из ~2650 подходящих.
+export async function getPublishedPostCardsOrThrow(): Promise<BlogPostCard[]> {
+  const out: BlogPostCard[] = [];
+  for (let page = 0; page < 8; page++) {
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select(CARD_COLUMNS)
+      .eq("published", true)
+      .neq("tag", HIDDEN_BLOG_TAG)
+      // Детерминированный порядок: created_at у статей одного сева совпадает,
+      // без вторичного ключа страницы теряли и дублировали строки.
+      .order("created_at", { ascending: false })
+      .order("slug", { ascending: true })
+      .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
+    // Ошибку не проглатываем — см. комментарий к getPublishedPostsOrThrow:
+    // на ISR-ревалидации это сохраняет старую хорошую версию страницы.
+    if (error) throw new Error(`getPublishedPostCardsOrThrow: ${error.message}`);
+    const rows = (data ?? []) as unknown as BlogPostCard[];
+    out.push(...rows);
+    if (rows.length < PAGE_SIZE) break;
+  }
+  return out;
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {

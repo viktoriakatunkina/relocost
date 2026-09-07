@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import type { BlogPost } from "@/lib/blog";
+import type { BlogPostCard } from "@/lib/blog";
 import { BlogCard } from "./BlogCard";
 
 const PAGE_SIZE = 12;
 
-export function BlogFilters({ posts }: { posts: BlogPost[] }) {
+export function BlogFilters({ posts }: { posts: BlogPostCard[] }) {
   const tags = useMemo(() => {
     const set = new Set<string>();
     for (const p of posts) if (p.tag) set.add(p.tag);
