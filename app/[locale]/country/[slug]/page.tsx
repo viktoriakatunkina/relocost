@@ -33,6 +33,11 @@ import { defaultLocale, type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { localizeCountryContent } from "@/lib/content-i18n";
 import { countryName as localizedCountryName } from "@/lib/i18n-content";
+import {
+  countryIn,
+  countryTo,
+  countryAccusative,
+} from "@/lib/country-prepositional";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -72,22 +77,35 @@ export async function generateMetadata({
 }: {
   params: { locale: Locale; slug: string };
 }) {
-  if (!COUNTRY_NAMES_RU[params.slug]) return {};
   const t = await getTranslations({
     locale: params.locale,
     namespace: "country",
   });
   const meta = await getCountryMeta(params.slug);
+  // Раньше здесь стояло `if (!COUNTRY_NAMES_RU[slug]) return {}` — а в этом
+  // справочнике всего 46 стран из 80 в каталоге. В результате 34 страницы
+  // стран (Франция, Германия, Италия, США, Польша, Япония, Канада…) отдавали
+  // не свой title/description, а общий фолбэк лейаута «Relocost —
+  // калькулятор стоимости жизни…»: ноль уникальных мета на весь кластер
+  // (проверено на проде 2026-09-07). Имя страны есть в БД для всех 80, его и
+  // берём; справочник остаётся вторым фолбэком.
   const name = meta
     ? localizedCountryName(meta, params.locale)
     : COUNTRY_NAMES_RU[params.slug];
+  if (!name) return {};
+  // Русские шаблоны ждут винительный падеж ВМЕСТЕ с предлогом («Переезд
+  // {country}» + «в Грузию»/«на Кипр»), потому что предлог тоже зависит от
+  // страны. До 2026-09-07 подставлялось имя в именительном — на всех 80
+  // страницах стран в title стояло «Переезд в Грузия». Для en/uz склонений
+  // нет, у них свои шаблоны с собственными предлогами.
+  const nameTo = params.locale === defaultLocale ? countryTo(params.slug, name) : name;
   return {
-    title: t("metaTitle", { country: name }),
-    description: t("metaDescription", { country: name }),
+    title: t("metaTitle", { country: nameTo }),
+    description: t("metaDescription", { country: nameTo }),
     alternates: buildAlternates(`/country/${params.slug}`, params.locale),
     openGraph: {
-      title: t("ogTitle", { country: name }),
-      description: t("ogDescription", { country: name }),
+      title: t("ogTitle", { country: nameTo }),
+      description: t("ogDescription", { country: nameTo }),
       type: "website",
     },
   };
@@ -135,6 +153,13 @@ export default async function CountryPage({
     params.locale === defaultLocale
       ? COUNTRY_NAMES_GENITIVE[params.slug] ?? countryName
       : countryName;
+  // Падежи для FAQ (они же уезжают в schema.org FAQPage — там кривой падеж
+  // виден и в выдаче): «Какой климат в Грузии?» — предложный, «вопросы про
+  // Грузию» — винительный без предлога, «переезд в Грузию» — с предлогом.
+  const isRu = params.locale === defaultLocale;
+  const countryWhere = isRu ? countryIn(params.slug, countryName) : countryName;
+  const countryWhereTo = isRu ? countryTo(params.slug, countryName) : countryName;
+  const countryAcc = isRu ? countryAccusative(params.slug, countryName) : countryName;
   const gradient =
     content?.hero_gradient ?? "from-kombu-green/60 via-pine-tree to-pine-tree";
 
@@ -340,12 +365,12 @@ export default async function CountryPage({
         <CountryFAQ
           content={content}
           eyebrow={t("faqEyebrow")}
-          title={t("faqTitle", { country: countryName })}
+          title={t("faqTitle", { country: countryAcc })}
           questions={{
-            visa: t("faqVisa", { country: countryName }),
-            climate: t("faqClimate", { country: countryName }),
-            language: t("faqLanguage", { country: countryName }),
-            mentality: t("faqMentality", { country: countryName }),
+            visa: t("faqVisa", { country: countryWhereTo }),
+            climate: t("faqClimate", { country: countryWhere }),
+            language: t("faqLanguage", { country: countryWhere }),
+            mentality: t("faqMentality", { country: countryWhere }),
           }}
         />
       )}
@@ -363,7 +388,7 @@ export default async function CountryPage({
         countryName={countryName}
         cities={cities}
         eyebrow={t("dynFaqEyebrow")}
-        title={t("dynFaqTitle", { country: countryName })}
+        title={t("dynFaqTitle", { country: countryWhereTo })}
         t={{
           dynFaqQ1: t("dynFaqQ1"),
           dynFaqA1: t("dynFaqA1"),
