@@ -12,8 +12,12 @@ import {
 } from "@/lib/countries";
 import { CountryHero } from "@/components/country/CountryHero";
 import { CountryVerdict } from "@/components/country/CountryVerdict";
-import { CountryFAQ } from "@/components/country/CountryFAQ";
-import { CountryDynamicFAQ } from "@/components/country/CountryDynamicFAQ";
+import { CountryFAQ, buildCountryFaqItems } from "@/components/country/CountryFAQ";
+import {
+  CountryDynamicFAQ,
+  buildCountryDynamicFaqItems,
+} from "@/components/country/CountryDynamicFAQ";
+import { FaqSchema } from "@/components/FaqSchema";
 import { DataSourceBadge } from "@/components/DataSourceBadge";
 import { ProsCons } from "@/components/city/ProsCons";
 import { buildCountryVerdictBlock } from "@/lib/city-verdict-block";
@@ -211,8 +215,34 @@ export default async function CountryPage({
     },
   );
 
+  // Вопросы обеих FAQ-секций страницы. Показываем их в двух разных блоках
+  // (ручной FAQ по стране + автоFAQ по городам), но schema.org FAQPage
+  // отдаём ОДНУ на всю страницу — иначе Google учитывает только первую
+  // разметку, а вопросы второй секции для выдачи пропадают.
+  const faqItems = content
+    ? buildCountryFaqItems(content, {
+        visa: t("faqVisa", { country: countryWhereTo }),
+        climate: t("faqClimate", { country: countryWhere }),
+        language: t("faqLanguage", { country: countryWhere }),
+        mentality: t("faqMentality", { country: countryWhere }),
+      })
+    : [];
+  const dynFaqItems = buildCountryDynamicFaqItems(countryName, cities, {
+    dynFaqQ1: t("dynFaqQ1"),
+    dynFaqA1: t("dynFaqA1"),
+    dynFaqQ2: t("dynFaqQ2"),
+    dynFaqA2: t("dynFaqA2"),
+    dynFaqQ3: t("dynFaqQ3"),
+    dynFaqA3: t("dynFaqA3"),
+    dynFaqQ4: t("dynFaqQ4"),
+    dynFaqA4: t("dynFaqA4"),
+    dynFaqQ5: t("dynFaqQ5"),
+    dynFaqA5: t("dynFaqA5"),
+  });
+
   return (
     <main className="pb-12 md:pb-24">
+      <FaqSchema items={[...faqItems, ...dynFaqItems]} />
       <Breadcrumbs
         items={[
           { name: tc("home"), href: "/" },
@@ -361,19 +391,11 @@ export default async function CountryPage({
         titleEn={t("trueSizeTitle")}
       />
 
-      {content && (
-        <CountryFAQ
-          content={content}
-          eyebrow={t("faqEyebrow")}
-          title={t("faqTitle", { country: countryAcc })}
-          questions={{
-            visa: t("faqVisa", { country: countryWhereTo }),
-            climate: t("faqClimate", { country: countryWhere }),
-            language: t("faqLanguage", { country: countryWhere }),
-            mentality: t("faqMentality", { country: countryWhere }),
-          }}
-        />
-      )}
+      <CountryFAQ
+        items={faqItems}
+        eyebrow={t("faqEyebrow")}
+        title={t("faqTitle", { country: countryAcc })}
+      />
 
       {content && (
         <CountryLegal
@@ -385,22 +407,9 @@ export default async function CountryPage({
       )}
 
       <CountryDynamicFAQ
-        countryName={countryName}
-        cities={cities}
+        items={dynFaqItems}
         eyebrow={t("dynFaqEyebrow")}
         title={t("dynFaqTitle", { country: countryWhereTo })}
-        t={{
-          dynFaqQ1: t("dynFaqQ1"),
-          dynFaqA1: t("dynFaqA1"),
-          dynFaqQ2: t("dynFaqQ2"),
-          dynFaqA2: t("dynFaqA2"),
-          dynFaqQ3: t("dynFaqQ3"),
-          dynFaqA3: t("dynFaqA3"),
-          dynFaqQ4: t("dynFaqQ4"),
-          dynFaqA4: t("dynFaqA4"),
-          dynFaqQ5: t("dynFaqQ5"),
-          dynFaqA5: t("dynFaqA5"),
-        }}
       />
 
       <CountryArticles

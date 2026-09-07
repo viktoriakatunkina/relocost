@@ -1,33 +1,32 @@
-// Автогенерируемый FAQ для страниц стран.
-// Серверный компонент — schema.org JSON-LD встроен в разметку.
+// Автогенерируемый FAQ для страниц стран (из реальных данных о городах).
+//
+// JSON-LD здесь НЕ рендерится: на странице страны есть вторая FAQ-секция
+// (CountryFAQ), а Google учитывает только один блок FAQPage на страницу.
+// Разметку собирает страница один раз через <FaqSchema> из объединённого
+// списка вопросов обеих секций.
 
 import type { CityWithMinRent } from "@/lib/types";
+import type { FaqItem } from "@/components/FaqSchema";
 import { typo } from "@/lib/typography";
 
 function fmt(n: number) {
   return n.toLocaleString("ru-RU");
 }
 
-export function CountryDynamicFAQ({
-  countryName,
-  cities,
-  eyebrow,
-  title,
-  t,
-}: {
-  countryName: string;
-  cities: CityWithMinRent[];
-  eyebrow: string;
-  title: string;
-  t: {
-    dynFaqQ1: string; dynFaqA1: string;
-    dynFaqQ2: string; dynFaqA2: string;
-    dynFaqQ3: string; dynFaqA3: string;
-    dynFaqQ4: string; dynFaqA4: string;
-    dynFaqQ5: string; dynFaqA5: string;
-  };
-}) {
-  if (!cities.length) return null;
+export type CountryDynamicFaqStrings = {
+  dynFaqQ1: string; dynFaqA1: string;
+  dynFaqQ2: string; dynFaqA2: string;
+  dynFaqQ3: string; dynFaqA3: string;
+  dynFaqQ4: string; dynFaqA4: string;
+  dynFaqQ5: string; dynFaqA5: string;
+};
+
+export function buildCountryDynamicFaqItems(
+  countryName: string,
+  cities: CityWithMinRent[],
+  t: CountryDynamicFaqStrings,
+): FaqItem[] {
+  if (!cities.length) return [];
 
   // Находим город с наименьшим min_rent как «самый дешёвый».
   const cheapest = cities.reduce((prev, cur) =>
@@ -43,30 +42,28 @@ export function CountryDynamicFAQ({
       .replace(/\{cheapestCity\}/g, cheapest.name_ru)
       .replace(/\{cheapestBudget\}/g, fmt(cheapest.min_rent));
 
-  const items = [
+  return [
     { q: sub(t.dynFaqQ1), a: sub(t.dynFaqA1) },
     { q: sub(t.dynFaqQ2), a: sub(t.dynFaqA2) },
     { q: sub(t.dynFaqQ3), a: sub(t.dynFaqA3) },
     { q: sub(t.dynFaqQ4), a: sub(t.dynFaqA4) },
     { q: sub(t.dynFaqQ5), a: sub(t.dynFaqA5) },
   ];
+}
 
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: items.map((it) => ({
-      "@type": "Question",
-      name: it.q,
-      acceptedAnswer: { "@type": "Answer", text: it.a },
-    })),
-  };
+export function CountryDynamicFAQ({
+  items,
+  eyebrow,
+  title,
+}: {
+  items: FaqItem[];
+  eyebrow: string;
+  title: string;
+}) {
+  if (!items.length) return null;
 
   return (
     <section className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
       <span className="eyebrow">{eyebrow}</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10 text-balance">
         {title}

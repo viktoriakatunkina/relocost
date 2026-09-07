@@ -1,45 +1,42 @@
 import type { CountryContent } from "@/lib/countries-content";
+import type { FaqItem } from "@/components/FaqSchema";
 import { typo } from "@/lib/typography";
 
-export function CountryFAQ({
-  content,
-  eyebrow,
-  title,
-  questions,
-}: {
-  content: CountryContent;
-  eyebrow: string;
-  title: string;
+// Ручной FAQ страны из COUNTRY_CONTENT (виза, климат, язык, менталитет).
+// JSON-LD здесь НЕ рендерится: на странице страны есть вторая FAQ-секция
+// (CountryDynamicFAQ), а Google учитывает только один блок FAQPage. Разметку
+// собирает страница один раз через <FaqSchema> из объединённого списка.
+
+export function buildCountryFaqItems(
+  content: CountryContent,
   questions: {
     visa: string;
     climate: string;
     language: string;
     mentality: string;
-  };
-}) {
-  const items = [
+  },
+): FaqItem[] {
+  return [
     { q: questions.visa, a: content.visa_note },
     { q: questions.climate, a: content.climate },
     { q: questions.language, a: content.language_note },
     { q: questions.mentality, a: content.mentality },
   ];
+}
 
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: items.map((it) => ({
-      "@type": "Question",
-      name: it.q,
-      acceptedAnswer: { "@type": "Answer", text: it.a },
-    })),
-  };
+export function CountryFAQ({
+  items,
+  eyebrow,
+  title,
+}: {
+  items: FaqItem[];
+  eyebrow: string;
+  title: string;
+}) {
+  if (!items.length) return null;
 
   return (
     <section className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
       <span className="eyebrow">{eyebrow}</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10 text-balance">
         {title}
