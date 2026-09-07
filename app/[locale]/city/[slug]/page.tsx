@@ -124,7 +124,7 @@ export async function generateMetadata({
 }) {
   const { data: city } = await supabase
     .from("cities")
-    .select("id, name_ru, seo_title, seo_description, difficulty_score")
+    .select("id, name_ru, seo_title, seo_description")
     .eq("slug", params.slug)
     .maybeSingle();
   if (!city) return {};
@@ -135,52 +135,30 @@ export async function generateMetadata({
     params.locale,
   );
 
-  // Добавляем в description балл индекса качества жизни (если есть данные).
-  let descriptionWithScore = seo.seo_description ?? undefined;
-  try {
-    const quality = getCityQuality(params.slug);
-    const { data: priceRows } = await supabase
-      .from("prices")
-      .select("item_name_ru, price_min, category")
-      .eq("city_id", city.id)
-      .in("category", ["rent", "food", "transport", "utilities"]);
-    const rows = (priceRows ?? []) as { item_name_ru: string; price_min: number }[];
-    const { min_rent, monthly_from } = monthlyBudgetFrom(rows);
-    const dummy = {
-      difficulty_score: (city as { difficulty_score: number | null }).difficulty_score,
-      min_rent,
-      monthly_from,
-    } as Parameters<typeof computeLifeScore>[0];
-    const result = computeLifeScore(
-      dummy,
-      quality,
-      (priceRows ?? []) as Parameters<typeof computeLifeScore>[2],
-    );
-    if (result.availableCount >= 2 && descriptionWithScore) {
-      const suffix = params.locale === "en"
-        ? ` Quality of life index: ${result.total}/100 (${result.grade}).`
-        : ` Индекс качества жизни: ${result.total}/100 (${result.grade}).`;
-      descriptionWithScore = descriptionWithScore + suffix;
-    }
-  } catch {
-    // generateMetadata не должен валиться из-за дополнительного запроса
-  }
+  // ВАЖНО: сюда НЕ дописывается «Индекс качества жизни: X/100 (Y)».
+  // До 2026-09-07 суффикс приклеивался к каждому description: он раздувал
+  // мета до 184–194 символов (выдача обрезает на ~160 — хвост терялся),
+  // а у городов с неполными данными в сниппет попадало «8/100 (F)»
+  // (Торонто) или «13/100 (F)» (Джакарта) — читается как поломка сайта,
+  // а не как преимущество. Сам блок «Индекс качества жизни» на странице
+  // остаётся — здесь речь только про мета-тег.
+  const description = seo.seo_description ?? undefined;
 
   return {
     title: seo.seo_title,
-    description: descriptionWithScore,
+    description,
     alternates: buildAlternates(`/city/${params.slug}`, params.locale),
     openGraph: {
       // Профиль города — это не статья. Богатые данные (Place/TouristDestination,
       // гео, цены) отдаём через JSON-LD в <CitySchema>/<ProductSchema>.
       title: seo.seo_title ?? undefined,
-      description: descriptionWithScore,
+      description,
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
       title: seo.seo_title ?? undefined,
-      description: descriptionWithScore,
+      description,
     },
   };
 }
