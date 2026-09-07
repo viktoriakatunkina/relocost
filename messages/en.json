@@ -87,7 +87,16 @@
     "listBudget": "Under ₽50,000",
     "listWinter": "For wintering",
     "listSeaside": "By the sea",
-    "listRemote": "For remote work"
+    "listRemote": "For remote work",
+    "listBudget80": "₽50,000–80,000",
+    "listWarm": "Warm countries",
+    "listIt": "For IT specialists",
+    "listEasy": "Easiest relocation",
+    "listVisaFree": "Visa-free countries",
+    "listEurope": "Moving to Europe",
+    "listKids": "Moving with kids",
+    "listSeniors": "For retirees",
+    "listRecon": "Scouting trip first"
   },
   "home": {
     "eyebrow": "Relocation calculator · 2026",

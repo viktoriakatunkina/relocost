@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getListData, getListDef, getAllListSlugs, type Tip } from "@/lib/lists";
 import { CityCard } from "@/components/CityCard";
+import { CityDeepLinks } from "@/components/CityDeepLinks";
+import { OtherLists } from "@/components/lists/OtherLists";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { type Locale } from "@/i18n/routing";
@@ -103,6 +105,14 @@ export default async function ListPage({
           </div>
         )}
       </section>
+
+      <CityDeepLinks
+        cities={cities.map((c) => ({ slug: c.slug, name: c.name_ru }))}
+        title="Бюджет и цены по городам подборки"
+        note="Развернутый расчет на месяц и полная таблица цен по каждому городу из списка."
+      />
+
+      <OtherLists currentSlug={def.slug} />
 
       <div className="pt-12 md:pt-24">
         <Footer />

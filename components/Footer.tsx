@@ -22,12 +22,24 @@ export async function Footer() {
     { href: "/privacy", label: t("privacy") },
     { href: "/contacts", label: t("contacts") },
   ];
+  // Все 14 подборок /list. До 07.09.2026 здесь было только 5 — на остальные
+  // девять не вело ни одной внутренней ссылки, и поисковик доходил до них
+  // фактически только через sitemap.
   const listLinks = [
     { href: "/list/samye-deshevye", label: t("listCheapest") },
     { href: "/list/do-50000-rubley", label: t("listBudget") },
+    { href: "/list/do-80000-rubley", label: t("listBudget80") },
     { href: "/list/dlya-zimovki", label: t("listWinter") },
+    { href: "/list/teplye-strany", label: t("listWarm") },
     { href: "/list/u-morya", label: t("listSeaside") },
     { href: "/list/dlya-udalenki", label: t("listRemote") },
+    { href: "/list/dlya-ayti", label: t("listIt") },
+    { href: "/list/prostoy-pereezd", label: t("listEasy") },
+    { href: "/list/bezvizovye", label: t("listVisaFree") },
+    { href: "/list/evropa", label: t("listEurope") },
+    { href: "/list/s-detmi", label: t("listKids") },
+    { href: "/list/dlya-pensionerov", label: t("listSeniors") },
+    { href: "/list/razvedka-pered-pereezdom", label: t("listRecon") },
   ];
 
   const columns = [

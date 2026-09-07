@@ -87,7 +87,16 @@
     "listBudget": "До 50 000 ₽",
     "listWinter": "Для зимовки",
     "listSeaside": "У моря",
-    "listRemote": "Для удаленки"
+    "listRemote": "Для удаленки",
+    "listBudget80": "Бюджет до 80 000 ₽",
+    "listWarm": "Теплые страны",
+    "listIt": "Для айтишников",
+    "listEasy": "Простой переезд",
+    "listVisaFree": "Безвизовые страны",
+    "listEurope": "Переезд в Европу",
+    "listKids": "Переезд с детьми",
+    "listSeniors": "Для пенсионеров",
+    "listRecon": "Разведка перед переездом"
   },
   "home": {
     "eyebrow": "Калькулятор переезда · 2026",

@@ -87,7 +87,16 @@
     "listBudget": "50 000 ₽ gacha",
     "listWinter": "Qishlash uchun",
     "listSeaside": "Dengiz boʻyida",
-    "listRemote": "Masofaviy ish uchun"
+    "listRemote": "Masofaviy ish uchun",
+    "listBudget80": "50 000–80 000 ₽",
+    "listWarm": "Issiq mamlakatlar",
+    "listIt": "IT mutaxassislari uchun",
+    "listEasy": "Eng oson koʻchish",
+    "listVisaFree": "Vizasiz mamlakatlar",
+    "listEurope": "Yevropaga koʻchish",
+    "listKids": "Bolalar bilan koʻchish",
+    "listSeniors": "Nafaqaxoʻrlar uchun",
+    "listRecon": "Koʻchishdan oldingi sayohat"
   },
   "home": {
     "eyebrow": "Koʻchish kalkulyatori · 2026",
