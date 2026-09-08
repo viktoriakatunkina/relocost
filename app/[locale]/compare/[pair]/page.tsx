@@ -10,6 +10,21 @@ import {
   relocationBudgets,
   TOP_COMPARE_SLUGS,
 } from "@/lib/compare";
+import {
+  loadCountryCompare,
+  countryCompareDelta,
+  countryCompareSummary,
+  countryCompareFaq,
+  COUNTRY_COMPARE_PAIRS,
+} from "@/lib/compare-countries";
+import {
+  CountryCompareHero,
+  CountryCompareTable,
+  CountryCompareVerdict,
+  CountryCompareFacts,
+  CountryCompareCities,
+} from "@/components/compare/CountryCompareView";
+import { countryIn } from "@/lib/country-prepositional";
 import { CompareHero } from "@/components/compare/CompareHero";
 import { CrossLinks } from "@/components/CrossLinks";
 import { CompareTable } from "@/components/compare/CompareTable";
@@ -51,7 +66,13 @@ export function generateStaticParams() {
       pairs.push(`${TOP[i]}-vs-${TOP[j]}`);
     }
   }
-  return pairs.flatMap((pair) => [
+  // Пары СТРАН (georgia-vs-armenia и т.п.) — тот же маршрут, но сущность
+  // другая. Спрос подтвержден Яндекс.Suggest, список в lib/compare-countries.
+  // Прегенерируем обе ориентации, как и для городов.
+  for (const [x, y] of COUNTRY_COMPARE_PAIRS) {
+    pairs.push(`${x}-vs-${y}`, `${y}-vs-${x}`);
+  }
+  return Array.from(new Set(pairs)).flatMap((pair) => [
     { locale: "ru", pair },
     { locale: "en", pair },
   ]);
@@ -65,7 +86,30 @@ export async function generateMetadata({
   const parsed = parsePair(params.pair);
   if (!parsed) return {};
   const data = await loadCompare(parsed[0], parsed[1]);
-  if (!data) return {};
+  // Города не нашлись — пробуем прочитать пару как СТРАНЫ. Порядок важен:
+  // slug'и `singapore` и `hong-kong` есть и как город, и как страна, и для них
+  // должна побеждать городская трактовка (она была на сайте раньше).
+  if (!data) {
+    const countries = await loadCountryCompare(parsed[0], parsed[1]);
+    if (!countries) return {};
+    const [first, second] = [parsed[0], parsed[1]].sort();
+    const delta = countryCompareDelta(countries);
+    const aName = countries.a.name_ru;
+    const bName = countries.b.name_ru;
+    const title = delta
+      ? `${delta.cheaper === "a" ? aName : bName} или ${delta.cheaper === "a" ? bName : aName}: где дешевле жить в 2026`
+      : `${aName} или ${bName}: где дешевле жить в 2026`;
+    return {
+      title,
+      description: `Сравнение стоимости жизни ${countryIn(countries.a.slug, aName)} и ${countryIn(countries.b.slug, bName)} в 2026 году: аренда, продукты, транспорт, ЖКХ, виза и сложность переезда. Реальные цены по городам.`,
+      alternates: buildAlternates(`/compare/${first}-vs-${second}`, params.locale),
+      openGraph: {
+        title,
+        description: `Где дешевле жить — ${aName} или ${bName}? Цены, виза, сложность переезда.`,
+        type: "article",
+      },
+    };
+  }
   const t = await getTranslations({ locale: params.locale, namespace: "compareMeta" });
   const aName = cityName(data.a, params.locale);
   const bName = cityName(data.b, params.locale);
@@ -100,7 +144,14 @@ export default async function ComparePage({
   const parsed = parsePair(params.pair);
   if (!parsed) notFound();
   const data = await loadCompare(parsed[0], parsed[1]);
-  if (!data) notFound();
+  if (!data) {
+    // Пара не про города — пробуем страны (/compare/georgia-vs-armenia).
+    const countries = await loadCountryCompare(parsed[0], parsed[1]);
+    if (!countries) notFound();
+    return (
+      <CountryComparePage data={countries} homeLabel={tc("home")} compareLabel={tc("compare")} />
+    );
+  }
 
   const aName = cityName(data.a, params.locale);
   const bName = cityName(data.b, params.locale);
@@ -156,7 +207,7 @@ export default async function ComparePage({
             40+ статей расходов — аренда, еда, транспорт, медицина
           </h3>
           <p className="text-brandy/80 mb-7 max-w-lg mx-auto text-sm leading-relaxed">
-            Таблица сравнения показывает только базовые данные. Полный прайс откроется сразу после оплаты — реальные диапазоны, не усреднённые.
+            Таблица сравнения показывает только базовые данные. Полный прайс откроется сразу после оплаты — реальные диапазоны, не усредненные.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -185,6 +236,70 @@ export default async function ComparePage({
           { href: `/compare/${data.b.slug}-vs-${data.a.slug}`, label: `${data.b.name_ru} или ${data.a.name_ru}` },
           { href: "/rating", label: "Рейтинг городов по стоимости жизни" },
           { href: "/countries", label: "Все страны" },
+        ]}
+      />
+      <div className="pt-12 md:pt-24">
+        <Footer />
+      </div>
+    </main>
+  );
+}
+
+// Страница сравнения СТРАН. Живет на том же маршруте /compare/<a>-vs-<b>:
+// URL-шаблон один и тот же, а сущность выбирается по слагам (сначала города,
+// потом страны). Так /compare остается единой точкой входа для запросов вида
+// «X или Y», которые в Suggest есть и на уровне городов, и на уровне стран.
+function CountryComparePage({
+  data,
+  homeLabel,
+  compareLabel,
+}: {
+  data: Awaited<ReturnType<typeof loadCountryCompare>> & object;
+  homeLabel: string;
+  compareLabel: string;
+}) {
+  const delta = countryCompareDelta(data);
+  const headline = delta
+    ? `${delta.cheaper === "a" ? data.a.name_ru : data.b.name_ru} дешевле, чем ${
+        delta.cheaper === "a" ? data.b.name_ru : data.a.name_ru
+      }, примерно на ${delta.pct}% по базовым расходам на месяц.`
+    : undefined;
+
+  return (
+    <main className="pb-12 md:pb-24">
+      <Breadcrumbs
+        items={[
+          { name: homeLabel, href: "/" },
+          { name: compareLabel },
+          { name: `${data.a.name_ru} — ${data.b.name_ru}` },
+        ]}
+      />
+      <CountryCompareHero data={data} headline={headline} />
+      <CountryCompareTable data={data} />
+      <CountryCompareVerdict data={data} />
+      <CountryCompareCities data={data} />
+      <CountryCompareFacts data={data} />
+      <CompareDetails
+        summary={countryCompareSummary(data)}
+        faq={countryCompareFaq(data)}
+        title={`${data.a.name_ru} или ${data.b.name_ru} — что выбрать`}
+        faqTitle={`Частые вопросы: ${data.a.name_ru} и ${data.b.name_ru}`}
+      />
+      <CrossLinks
+        links={[
+          { href: `/country/${data.a.slug}`, label: `Стоимость жизни ${countryIn(data.a.slug, data.a.name_ru)}` },
+          { href: `/country/${data.b.slug}`, label: `Стоимость жизни ${countryIn(data.b.slug, data.b.name_ru)}` },
+          { href: `/compare/${data.b.slug}-vs-${data.a.slug}`, label: `${data.b.name_ru} или ${data.a.name_ru}` },
+          ...(data.a.cost.cheapest && data.b.cost.cheapest
+            ? [
+                {
+                  href: `/compare/${data.a.cost.cheapest.slug}-vs-${data.b.cost.cheapest.slug}`,
+                  label: `${data.a.cost.cheapest.name_ru} или ${data.b.cost.cheapest.name_ru}`,
+                },
+              ]
+            : []),
+          { href: "/countries", label: "Все страны" },
+          { href: "/rating", label: "Рейтинг городов по стоимости жизни" },
         ]}
       />
       <div className="pt-12 md:pt-24">

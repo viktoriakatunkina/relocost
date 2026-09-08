@@ -11,6 +11,15 @@ import {
   getCountryMeta,
 } from "@/lib/countries";
 import { CountryHero } from "@/components/country/CountryHero";
+import { CountryCostOfLiving } from "@/components/country/CountryCostOfLiving";
+import { countryComparePartners } from "@/lib/compare-countries";
+import { COUNTRY_NAMES_RU as COUNTRY_RU_FALLBACK } from "@/lib/countries-content";
+import { getCountryCost } from "@/lib/country-cost";
+import {
+  countryCostFaq,
+  countryCostHook,
+  countryCostSummary,
+} from "@/lib/country-cost-text";
 import { CountryVerdict } from "@/components/country/CountryVerdict";
 import { CountryFAQ, buildCountryFaqItems } from "@/components/country/CountryFAQ";
 import {
@@ -40,13 +49,14 @@ import { countryName as localizedCountryName } from "@/lib/i18n-content";
 import {
   countryIn,
   countryTo,
+  countryOf,
   countryAccusative,
 } from "@/lib/country-prepositional";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
 
-// Список стран берём из реальных данных (cities.country_slug), а не из
+// Список стран берем из реальных данных (cities.country_slug), а не из
 // статического словаря COUNTRY_NAMES_RU — тот содержит только 46 записей
 // (нужен для локализованных названий/fallback), а стран с городами в БД
 // фактически ~80 (то же самое множество, что app/sitemap.ts строит из
@@ -92,7 +102,7 @@ export async function generateMetadata({
   // не свой title/description, а общий фолбэк лейаута «Relocost —
   // калькулятор стоимости жизни…»: ноль уникальных мета на весь кластер
   // (проверено на проде 2026-09-07). Имя страны есть в БД для всех 80, его и
-  // берём; справочник остаётся вторым фолбэком.
+  // берем; справочник остается вторым фолбэком.
   const name = meta
     ? localizedCountryName(meta, params.locale)
     : COUNTRY_NAMES_RU[params.slug];
@@ -127,14 +137,18 @@ export default async function CountryPage({
     getTranslations("countryVerdict"),
   ]);
 
-  const [meta, cities, rawContent] = await Promise.all([
+  const [meta, cities, rawContent, cost] = await Promise.all([
     getCountryMeta(params.slug),
     getCitiesInCountry(params.slug),
     Promise.resolve(COUNTRY_CONTENT[params.slug] ?? null),
+    // Агрегат стоимости жизни по стране — под главный запрос кластера
+    // «стоимость жизни в <стране> 2026». Считается из тех же цен, что и
+    // бюджеты городов, поэтому цифры страны и городов не расходятся.
+    getCountryCost(params.slug),
   ]);
   if (!meta) notFound();
 
-  // Статьи блога о стране/её городах — перелинковка страна → блог.
+  // Статьи блога о стране/ее городах — перелинковка страна → блог.
   const countryPosts = await getPostsForCountry(
     params.slug,
     cities.map((c) => c.id),
@@ -152,10 +166,13 @@ export default async function CountryPage({
   // Локализованное имя страны (Фаза 1): en → country_en, ru/uz → country_ru.
   const countryName = localizedCountryName(meta, params.locale);
   // Для русского заголовка «Города ...» нужен родительный падеж; для en/uz
-  // склонения нет — берём локализованное имя в именительном.
+  // склонения нет — берем локализованное имя в именительном.
+  // Родительный падеж берем из полной таблицы падежей (80 стран), а
+  // COUNTRY_NAMES_GENITIVE оставляем вторым фолбэком: в нем только 46 записей,
+  // и для остальных 34 стран заголовок выходил «Города Германия».
   const countryNameInCities =
     params.locale === defaultLocale
-      ? COUNTRY_NAMES_GENITIVE[params.slug] ?? countryName
+      ? countryOf(params.slug, COUNTRY_NAMES_GENITIVE[params.slug] ?? countryName)
       : countryName;
   // Падежи для FAQ (они же уезжают в schema.org FAQPage — там кривой падеж
   // виден и в выдаче): «Какой климат в Грузии?» — предложный, «вопросы про
@@ -164,6 +181,13 @@ export default async function CountryPage({
   const countryWhere = isRu ? countryIn(params.slug, countryName) : countryName;
   const countryWhereTo = isRu ? countryTo(params.slug, countryName) : countryName;
   const countryAcc = isRu ? countryAccusative(params.slug, countryName) : countryName;
+  // Пары сравнения стран, куда входит текущая страна. Названия оппонентов
+  // берем из справочника COUNTRY_NAMES_RU, а недостающие — из падежной
+  // таблицы (она покрывает все 80 слагов каталога).
+  const comparePartners = countryComparePartners(params.slug).map((p) => ({
+    pair: p.pair,
+    otherName: COUNTRY_RU_FALLBACK[p.other] ?? countryOf(p.other, p.other),
+  }));
   const gradient =
     content?.hero_gradient ?? "from-kombu-green/60 via-pine-tree to-pine-tree";
 
@@ -217,7 +241,7 @@ export default async function CountryPage({
 
   // Вопросы обеих FAQ-секций страницы. Показываем их в двух разных блоках
   // (ручной FAQ по стране + автоFAQ по городам), но schema.org FAQPage
-  // отдаём ОДНУ на всю страницу — иначе Google учитывает только первую
+  // отдаем ОДНУ на всю страницу — иначе Google учитывает только первую
   // разметку, а вопросы второй секции для выдачи пропадают.
   const faqItems = content
     ? buildCountryFaqItems(content, {
@@ -227,6 +251,11 @@ export default async function CountryPage({
         mentality: t("faqMentality", { country: countryWhere }),
       })
     : [];
+  // FAQ по деньгам — из чисел агрегата. Идут первыми в schema.org FAQPage:
+  // это самые частотные вопросы кластера («сколько стоит жить в», «хватит ли
+  // N рублей»), и в разметке они должны стоять раньше визовых.
+  const costFaqItems =
+    cost && isRu ? countryCostFaq(cost, params.slug, countryName) : [];
   const dynFaqItems = buildCountryDynamicFaqItems(countryName, cities, {
     dynFaqQ1: t("dynFaqQ1"),
     dynFaqA1: t("dynFaqA1"),
@@ -242,7 +271,7 @@ export default async function CountryPage({
 
   return (
     <main className="pb-12 md:pb-24">
-      <FaqSchema items={[...faqItems, ...dynFaqItems]} />
+      <FaqSchema items={[...costFaqItems, ...faqItems, ...dynFaqItems]} />
       <Breadcrumbs
         items={[
           { name: tc("home"), href: "/" },
@@ -265,12 +294,51 @@ export default async function CountryPage({
         />
       </div>
 
-      {content && (
+      {(content || cost) && (
         <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 md:pt-16">
-          <p className="text-brandy/90 text-lg md:text-xl leading-relaxed">
-            {content.intro}
-          </p>
+          {/* Хук с главной цифрой — прямой ответ на «сколько стоит жить в X».
+              Стоит ПЕРЕД описательным интро: до этого лид страницы говорил про
+              климат и менталитет, а не про деньги, ради которых сюда приходят. */}
+          {cost && isRu && (
+            <p className="text-cream text-lg md:text-xl leading-relaxed font-medium mb-4">
+              {countryCostHook(cost, params.slug, countryName)}
+            </p>
+          )}
+          {content && (
+            <p className="text-brandy/90 text-lg md:text-xl leading-relaxed">
+              {content.intro}
+            </p>
+          )}
         </section>
+      )}
+
+      {cost && (
+        <CountryCostOfLiving
+          cost={cost}
+          summary={isRu ? countryCostSummary(cost, params.slug, countryName) : []}
+          labels={{
+            title: t("costTitle", { country: countryWhere }),
+            subtitle: t("costSubtitle"),
+            colBudget: t("costColBudget"),
+            colEconomy: t("costColEconomy"),
+            colComfort: t("costColComfort"),
+            rowSolo: t("costRowSolo"),
+            rowCouple: t("costRowCouple"),
+            rowFamily: t("costRowFamily"),
+            categoriesTitle: t("costCategoriesTitle"),
+            colCategory: t("costColCategory"),
+            colMedian: t("costColMedian"),
+            colCities: t("costColCities"),
+            byCityTitle: t("costByCityTitle", { country: countryNameInCities }),
+            colCity: t("costColCity"),
+            colRent: t("costColRent"),
+            colMonthly: t("costColMonthly"),
+            methodTitle: t("costMethodTitle"),
+            method: t("costMethod"),
+            costNoteTitle: t("costNoteTitle"),
+          }}
+          costNote={isRu ? content?.cost_note : undefined}
+        />
       )}
 
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 md:pt-16 overflow-hidden md:overflow-visible">
@@ -392,7 +460,7 @@ export default async function CountryPage({
       />
 
       <CountryFAQ
-        items={faqItems}
+        items={[...costFaqItems, ...faqItems]}
         eyebrow={t("faqEyebrow")}
         title={t("faqTitle", { country: countryAcc })}
       />
@@ -419,6 +487,13 @@ export default async function CountryPage({
 
       <CrossLinks
         links={[
+          // Сравнения СТРАН с участием этой страны — единственный внутренний
+          // путь к /compare/<a>-vs-<b> на уровне стран (спрос «X или Y»
+          // подтвержден Яндекс.Suggest, см. lib/compare-countries).
+          ...comparePartners.map((p) => ({
+            href: `/compare/${p.pair}`,
+            label: `${countryName} или ${p.otherName}`,
+          })),
           { href: "/rating", label: "Рейтинг городов по стоимости" },
           { href: "/countries", label: "Все страны" },
           { href: "/search", label: "Подобрать город" },

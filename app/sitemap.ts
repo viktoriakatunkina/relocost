@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { topComparePairs } from "@/lib/compare";
+import { countryComparePairSlugs } from "@/lib/compare-countries";
 import { getAllListSlugs } from "@/lib/lists";
 import { CITY_ROUTES } from "@/lib/city-routes";
 import { routing } from "@/i18n/routing";
@@ -207,6 +208,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.6,
+    })),
+    // Сравнения СТРАН (/compare/georgia-vs-armenia). Список статический —
+    // пары отобраны по Яндекс.Suggest, запроса в Supabase не требуют, поэтому
+    // попадают в sitemap даже если блок с городами отвалился по таймауту.
+    // Приоритет выше городских пар: страновых сравнений на сайте не было, а
+    // спрос на «X или Y» на уровне стран подтверждён подсказками.
+    ...countryComparePairSlugs().map((pair) => ({
+      path: `/compare/${pair}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
     // Страницы архива блога — транзитные списки, через них краулер доходит
     // до статей, на которые с /blog нет серверных ссылок (список листается
