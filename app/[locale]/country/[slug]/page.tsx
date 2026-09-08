@@ -256,7 +256,7 @@ export default async function CountryPage({
   // N рублей»), и в разметке они должны стоять раньше визовых.
   const costFaqItems =
     cost && isRu ? countryCostFaq(cost, params.slug, countryName) : [];
-  const dynFaqItems = buildCountryDynamicFaqItems(countryName, cities, {
+  const dynFaqItems = buildCountryDynamicFaqItems(params.slug, countryName, cities, {
     dynFaqQ1: t("dynFaqQ1"),
     dynFaqA1: t("dynFaqA1"),
     dynFaqQ2: t("dynFaqQ2"),

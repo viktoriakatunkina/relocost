@@ -8,6 +8,7 @@
 import type { CityWithMinRent } from "@/lib/types";
 import type { FaqItem } from "@/components/FaqSchema";
 import { typo } from "@/lib/typography";
+import { countryIn, countryTo, countryOf } from "@/lib/country-prepositional";
 
 function fmt(n: number) {
   return n.toLocaleString("ru-RU");
@@ -22,6 +23,7 @@ export type CountryDynamicFaqStrings = {
 };
 
 export function buildCountryDynamicFaqItems(
+  countrySlug: string,
   countryName: string,
   cities: CityWithMinRent[],
   t: CountryDynamicFaqStrings,
@@ -37,7 +39,14 @@ export function buildCountryDynamicFaqItems(
 
   const sub = (tmpl: string) =>
     tmpl
+      // {country} остаётся именительным — используют шаблоны en/uz, где падеж не нужен.
       .replace(/\{country\}/g, countryName)
+      // Падежные формы для русских шаблонов (см. lib/country-prepositional.ts):
+      // {countryIn} — «в Грузии»/«на Кипре», {countryTo} — «в Грузию»/«на Кипр»,
+      // {countryOf} — «Грузии»/«Кипра» без предлога («города {countryOf}»).
+      .replace(/\{countryIn\}/g, countryIn(countrySlug, countryName))
+      .replace(/\{countryTo\}/g, countryTo(countrySlug, countryName))
+      .replace(/\{countryOf\}/g, countryOf(countrySlug, countryName))
       .replace(/\{count\}/g, String(cities.length))
       .replace(/\{cheapestCity\}/g, cheapest.name_ru)
       .replace(/\{cheapestBudget\}/g, fmt(cheapest.min_rent));
