@@ -7,6 +7,9 @@ import { Reveal } from "@/components/Reveal";
 import { type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { getSiteStats } from "@/lib/site-stats";
+import { Link } from "@/i18n/navigation";
+import { COUNTRY_COMPARE_PAIRS } from "@/lib/compare-countries";
+import { COUNTRY_NAMES_RU } from "@/lib/countries-content";
 
 export const revalidate = 86400;
 
@@ -45,7 +48,7 @@ export default async function CountriesPage({
   const domestic = countries.filter((c) => !c.is_foreign);
   const totalCities = countries.reduce((acc, c) => acc + c.city_count, 0);
   // Города по РФ — не «1» (число стран в блоке «Внутри России», там всегда
-  // будет 1 запись — Россия), а сумма городов внутри неё. Раньше чип показывал
+  // будет 1 запись — Россия), а сумма городов внутри нее. Раньше чип показывал
   // domestic.length («1 по России»), что противоречило карточке «Россия —
   // 7 городов» чуть ниже на той же странице.
   const domesticCities = domestic.reduce((acc, c) => acc + c.city_count, 0);
@@ -116,6 +119,34 @@ export default async function CountriesPage({
           </div>
         </section>
       )}
+
+      {/* Популярные сравнения стран — точка входа для краулера и для запросов
+          вида «X или Y», которые Яндекс.Suggest отдает на уровне стран.
+          Страницы /compare/<a>-vs-<b> новые, и кроме sitemap внутренних
+          ссылок на них раньше не было. */}
+      <section className="max-w-6xl mx-auto px-6 pt-12 md:pt-20">
+        <h2 className="font-serif text-3xl md:text-4xl text-cream mb-3">
+          Где дешевле жить: сравнения стран
+        </h2>
+        <p className="text-brandy/70 mb-8 max-w-3xl">
+          Стоимость жизни, аренда, виза и сложность переезда — двумя колонками,
+          по реальным ценам городов из базы.
+        </p>
+        <div className="flex flex-wrap gap-2.5">
+          {COUNTRY_COMPARE_PAIRS.map(([x, y]) => {
+            const [first, second] = [x, y].sort();
+            return (
+              <Link
+                key={`${first}-${second}`}
+                href={`/compare/${first}-vs-${second}`}
+                className="inline-flex items-center px-4 py-2.5 rounded-pill bg-surface border hairline text-brandy/85 text-sm hover:text-copper hover:border-copper/40 transition"
+              >
+                {COUNTRY_NAMES_RU[x] ?? x} или {COUNTRY_NAMES_RU[y] ?? y}
+              </Link>
+            );
+          })}
+        </div>
+      </section>
 
       <Footer />
     </main>
