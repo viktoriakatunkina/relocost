@@ -7,10 +7,6 @@ import { typo } from "@/lib/typography";
 
 type FaqItem = { q: string; a: string };
 
-// Порог «дёшево/дорого» (руб/мес) для подбора нужного варианта ответа faqA3.
-const CHEAP_THRESHOLD = 50_000;
-const EXP_THRESHOLD = 100_000;
-
 function fmt(n: number) {
   return n.toLocaleString("ru-RU");
 }
