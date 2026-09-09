@@ -9,9 +9,21 @@ import {
 } from "@/lib/unlocked";
 import { CountryPaymentModal } from "./CountryPaymentModal";
 
-export function CountryStickyBar({ slug }: { slug: string }) {
+export function CountryStickyBar({
+  slug,
+  packages,
+}: {
+  slug: string;
+  /** Какие пакеты реально продаются на этой странице. По умолчанию — оба.
+   *  На странах с ≤3 городами скрытых городов нет, значит country_cities
+   *  предлагать нечестно — остаётся только «Обзор». */
+  packages?: CountryPackageType[];
+}) {
   const unlocked = useCountryUnlocked(slug);
-  const remaining = lockedCountryRemaining(unlocked);
+  const allowed = packages ?? ["country_cities", "country_overview"];
+  const remaining = lockedCountryRemaining(unlocked).filter((p) =>
+    allowed.includes(p),
+  );
   const [openPkg, setOpenPkg] = useState<CountryPackageType | null>(null);
 
   if (remaining.length === 0) return null;
@@ -21,14 +33,20 @@ export function CountryStickyBar({ slug }: { slug: string }) {
       <div className="fixed bottom-0 inset-x-0 z-40 px-3 pb-3 md:px-6 md:pb-6">
         <div className="max-w-5xl mx-auto rounded-2xl bg-surface-elevated/95 backdrop-blur-md border border-copper/25 shadow-2xl p-3 md:p-4">
           {/* Мобиль: самый дешевый пакет + короткая кнопка */}
+          {/* Мобиль: было «от 29 ₽» — цена без предмета покупки. Теперь
+              подписываем, что именно открывается. */}
           <div className="flex md:hidden items-center gap-2 w-full">
-            <button
-              type="button"
-              onClick={() => setOpenPkg(remaining[remaining.length - 1])}
-              className="flex-1 rounded-xl bg-copper text-pine-tree font-semibold text-sm py-2.5 px-3 hover:bg-brandy transition active:scale-95"
-            >
-              от {Math.min(...remaining.map((p) => COUNTRY_PACKAGES[p].price))} ₽
-            </button>
+            {remaining.map((p) => (
+              <button
+                key={p}
+                type="button"
+                onClick={() => setOpenPkg(p)}
+                className="flex-1 rounded-xl bg-copper text-pine-tree font-semibold text-sm py-2.5 px-3 hover:bg-brandy transition active:scale-95"
+              >
+                {p === "country_overview" ? "Всё о стране" : "Города"} —{" "}
+                {COUNTRY_PACKAGES[p].price} ₽
+              </button>
+            ))}
           </div>
 
           {/* Десктоп: все пакеты */}

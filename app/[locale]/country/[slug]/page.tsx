@@ -37,6 +37,7 @@ import { CityCard } from "@/components/CityCard";
 import { LockedCities } from "@/components/country/LockedCities";
 import { LockedCountryFacts } from "@/components/country/LockedCountryFacts";
 import { CountryStickyBar } from "@/components/freemium/CountryStickyBar";
+import { VerifyOnReturn } from "@/components/freemium/VerifyOnReturn";
 import { CrossLinks } from "@/components/CrossLinks";
 import { CountryLegal } from "@/components/country/CountryLegal";
 import { TrueSizeMap } from "@/components/country/TrueSizeMap";
@@ -512,8 +513,30 @@ export default async function CountryPage({
         <Footer />
       </div>
 
-      {/* Paywall-панель: показывается, пока есть незакрытые продукты страны */}
-      {cities.length > 3 && <CountryStickyBar slug={params.slug} />}
+      {/* Разблокировка после возврата с ЮKassa. 2026-09-09: на страницах
+          стран этого компонента не было вовсе — покупатель возвращался с
+          оплаты и не видел открытого контента. */}
+      <VerifyOnReturn slug={params.slug} kind="country" />
+
+      {/* Paywall-панель.
+          Было: `cities.length > 3` — то есть на странах с 3 и меньше городами
+          (Грузия, например) закреплённого CTA не было вообще, хотя пакет
+          «Обзор» 29 ₽ там продаётся: блок фактов о стране всё равно под
+          замком (LockedCountryFacts). Единственной точкой покупки оставалась
+          одна инлайн-кнопка на 33% глубины страницы.
+          Стало: панель показываем, если на этой странице реально есть что
+          покупать. `country_cities` продаётся только там, где есть скрытые
+          города, `country_overview` — везде, где есть блок «о стране». */}
+      {(cities.length > 3 || Boolean(content)) && (
+        <CountryStickyBar
+          slug={params.slug}
+          packages={
+            cities.length > 3
+              ? ["country_cities", "country_overview"]
+              : ["country_overview"]
+          }
+        />
+      )}
     </main>
   );
 }

@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
   COUNTRY_PACKAGES,
   COUNTRY_PACKAGE_DESCRIPTIONS,
   addCountryUnlocked,
+  markCheckoutStarted,
   savePurchaseEmail,
   setPendingPayment,
   type CountryPackageType,
@@ -34,9 +37,13 @@ export function CountryPaymentModal({
   pkg: CountryPackageType | null;
   onClose: () => void;
 }) {
+  const locale = useLocale();
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (!pkg) return;
@@ -60,7 +67,7 @@ export function CountryPaymentModal({
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email || !email.includes("@")) {
-      setError("Укажите email — отправим чек и ссылку для восстановления доступа.");
+      setError("Укажите email — по нему восстановите доступ на другом устройстве.");
       return;
     }
     setSubmitting(true);
@@ -69,7 +76,7 @@ export function CountryPaymentModal({
       const res = await fetch("/api/payment/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, pkg, email }),
+        body: JSON.stringify({ slug, pkg, email, locale, kind: "country" }),
       });
       const data = await res.json();
 
@@ -91,6 +98,7 @@ export function CountryPaymentModal({
 
       if (data?.confirmation_url) {
         savePurchaseEmail(email);
+        markCheckoutStarted(slug, pkg!);
         if (data?.payment_id) {
           setPendingPayment({ payment_id: data.payment_id, slug, pkg: pkg! });
         }
@@ -106,67 +114,108 @@ export function CountryPaymentModal({
     }
   }
 
-  return (
+  // ВАЖНО: модалку рендерим порталом в document.body.
+  //
+  // Баг, найденный боем на проде 2026-09-09 (mobile, iPhone 12): клик по
+  // «📊 Открыть все цены — 49 ₽» в таблице цен НЕ показывал ничего. Замер в
+  // браузере: заголовок модалки y = -608, поле email y = -203, кнопка
+  // «Оплатить» y = -89 — вся модалка целиком ВЫШЕ вьюпорта.
+  //
+  // Причина: PricesTable, Calculator и BestPlaces обёрнуты в <Reveal>, а он
+  // вешает класс .fade-up с `animation: fadeUp ... both`. Анимация трансформа
+  // создаёт containing block для position:fixed потомков — и `fixed inset-0`
+  // считается уже не от вьюпорта, а от обёртки Reveal, которая находится
+  // высоко над экраном. Плюс тот же стековый контекст роняет z-50 модалки
+  // ниже корневых fixed-элементов (шапка, якорная навигация, StickyBar).
+  //
+  // Портал в body выносит модалку из-под любых Reveal/transform-обёрток —
+  // и чинит сразу все точки вызова (StickyBar, LockedSection, Calculator,
+  // MonthlyBudget, PricesTable, RouteTimeline).
+  // Раскладка — как в PaymentModal.tsx: bottom sheet на мобильном,
+  // прокручивается только описание, поле email и кнопка «Оплатить»
+  // закреплены внизу и видны даже с открытой клавиатурой.
+  if (!mounted) return null;
+
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-pine-tree/80 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4 bg-pine-tree/80 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md rounded-2xl bg-surface-elevated border-cream/15 p-6 md:p-8 shadow-2xl"
+        className="w-full sm:max-w-md max-h-full flex flex-col rounded-t-3xl sm:rounded-2xl bg-surface-elevated border-cream/15 shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-start justify-between gap-3 mb-5">
+        <div className="shrink-0 flex items-start justify-between gap-3 px-5 pt-5 pb-3 md:px-8 md:pt-7">
           <div>
-            <div className="flex items-center gap-2 text-copper uppercase text-xs tracking-wider mb-2">
+            <div className="flex items-center gap-2 text-copper uppercase text-xs tracking-wider mb-1.5">
               <span>{meta.emoji}</span>
               <span>Материал о стране</span>
             </div>
-            <h3 className="font-serif text-2xl text-cream">{meta.label}</h3>
+            <h3 className="font-serif text-xl md:text-2xl text-cream leading-tight">
+              {meta.label}
+            </h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-brandy/60 hover:text-cream text-2xl leading-none"
+            className="text-brandy/60 hover:text-cream text-3xl leading-none -mt-1 p-1"
             aria-label="Закрыть"
           >
-            x
+            ×
           </button>
         </div>
 
-        <p className="text-brandy/80 mb-4 leading-relaxed">
-          {COUNTRY_PACKAGE_DESCRIPTIONS[pkg]}
-        </p>
-
-        <div className="mb-6 rounded-xl bg-pine-tree/40 border border-cream/8 px-4 py-3.5 space-y-1.5">
-          <p className="text-brandy/60 text-xs uppercase tracking-wider mb-2">
-            Что Вы получите
+        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-5 md:px-8 pb-4">
+          <p className="text-brandy/80 mb-4 leading-relaxed text-sm md:text-base">
+            {COUNTRY_PACKAGE_DESCRIPTIONS[pkg]}
           </p>
-          {bullets.map((b) => (
-            <p key={b} className="text-brandy/90 text-sm leading-snug flex gap-2">
-              <span className="text-copper shrink-0" aria-hidden>
-                •
-              </span>
-              {b}
+
+          <div className="rounded-xl bg-pine-tree/40 border border-cream/8 px-4 py-3.5 space-y-1.5">
+            <p className="text-brandy/60 text-xs uppercase tracking-wider mb-2">
+              Что Вы получите
             </p>
-          ))}
+            {bullets.map((b) => (
+              <p key={b} className="text-brandy/90 text-sm leading-snug flex gap-2">
+                <span className="text-copper shrink-0" aria-hidden>
+                  •
+                </span>
+                {b}
+              </p>
+            ))}
+          </div>
+
+          <div className="mt-3 space-y-1.5">
+            <p className="text-brandy/70 text-xs leading-snug flex gap-2">
+              <span className="text-copper shrink-0" aria-hidden>✓</span>
+              Разовый платёж без подписки — доступ к материалу остаётся у Вас
+            </p>
+            <p className="text-brandy/70 text-xs leading-snug flex gap-2">
+              <span className="text-copper shrink-0" aria-hidden>✓</span>
+              Если доступ не откроется — вернём деньги, напишите нам
+            </p>
+          </div>
         </div>
 
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form
+          onSubmit={onSubmit}
+          className="shrink-0 border-t border-cream/10 bg-surface-elevated px-5 md:px-8 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] space-y-3"
+        >
           <label className="block">
             <span className="block text-brandy/70 text-sm mb-2">
               Email <span className="text-copper">*</span>
               <span className="text-brandy/50 ml-1 text-xs">
-                — пришлем чек и ссылку на восстановление доступа
+                — по нему восстановите доступ на другом устройстве
               </span>
             </span>
             <input
               type="email"
+              inputMode="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
               className="w-full px-4 py-3 rounded-pill bg-pine-tree/60 border border-cream/10 text-cream placeholder-brandy/40 focus:border-copper focus:outline-none"
-              autoFocus
             />
           </label>
           {error && (
@@ -174,17 +223,6 @@ export function CountryPaymentModal({
               {error}
             </p>
           )}
-          <p className="text-xs text-cream/50 mt-2 text-center">
-            Нажимая «Оплатить», Вы соглашаетесь с{" "}
-            <Link href="/privacy" className="underline underline-offset-2 hover:text-cream/80 transition-colors">
-              обработкой персональных данных
-            </Link>{" "}
-            и{" "}
-            <Link href="/offer" className="underline underline-offset-2 hover:text-cream/80 transition-colors">
-              публичной офертой
-            </Link>
-            .
-          </p>
           <button
             type="submit"
             disabled={submitting}
@@ -192,12 +230,23 @@ export function CountryPaymentModal({
           >
             {submitting ? "Переходим к оплате…" : `Оплатить ${meta.price} ₽`}
           </button>
+          <p className="text-brandy/50 text-[11px] leading-snug text-center">
+            Картой или СБП через ЮKassa · доступ откроется сразу после оплаты
+          </p>
+          <p className="text-[11px] text-cream/40 text-center leading-snug">
+            Нажимая «Оплатить», Вы соглашаетесь с{" "}
+            <Link href="/privacy" className="underline underline-offset-2 hover:text-cream/70 transition-colors">
+              обработкой персональных данных
+            </Link>{" "}
+            и{" "}
+            <Link href="/offer" className="underline underline-offset-2 hover:text-cream/70 transition-colors">
+              офертой
+            </Link>
+            .
+          </p>
         </form>
-
-        <p className="text-brandy/50 text-xs mt-4 text-center">
-          Оплата картой или СБП через ЮKassa. Доступ откроется сразу после оплаты.
-        </p>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

@@ -20,7 +20,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * Ответ: { packages: PackageType[] } — что разблокировать на странице города.
  */
 export async function POST(req: Request) {
-  let payload: { slug?: string; email?: string };
+  let payload: { slug?: string; email?: string; kind?: string };
   try {
     payload = await req.json();
   } catch {
@@ -39,22 +39,42 @@ export async function POST(req: Request) {
 
   const db = supabaseAdmin();
 
-  const { data: city } = await db
-    .from("cities")
-    .select("id")
-    .eq("slug", slug)
-    .maybeSingle();
-  if (!city) {
-    return NextResponse.json({ packages: [] });
-  }
+  // kind: "country" — восстановление доступа к материалам страны (там нет
+  // city_id, покупка привязана к country_slug). См. миграцию
+  // 202609090900_purchases_country_packages.sql.
+  const isCountry = payload.kind === "country";
 
-  const { data: rows, error } = await db
-    .from("purchases")
-    .select("package_type, email")
-    .eq("city_id", city.id)
-    .eq("status", "paid");
-  if (error) {
-    return NextResponse.json({ error: "Ошибка базы данных" }, { status: 500 });
+  let rows: { package_type: string; email: string | null }[] | null = null;
+
+  if (isCountry) {
+    const res = await db
+      .from("purchases")
+      .select("package_type, email")
+      .eq("country_slug", slug)
+      .eq("status", "paid");
+    // Если миграция ещё не применена — колонки нет; отвечаем пустым списком,
+    // а не 500: восстанавливать всё равно нечего.
+    if (res.error) return NextResponse.json({ packages: [] });
+    rows = res.data;
+  } else {
+    const { data: city } = await db
+      .from("cities")
+      .select("id")
+      .eq("slug", slug)
+      .maybeSingle();
+    if (!city) {
+      return NextResponse.json({ packages: [] });
+    }
+
+    const res = await db
+      .from("purchases")
+      .select("package_type, email")
+      .eq("city_id", city.id)
+      .eq("status", "paid");
+    if (res.error) {
+      return NextResponse.json({ error: "Ошибка базы данных" }, { status: 500 });
+    }
+    rows = res.data;
   }
 
   const norm = email.toLowerCase();

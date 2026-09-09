@@ -27,11 +27,30 @@ export function StickyBar({
     remaining.reduce((sum, p) => sum + CITY_PACKAGES[p].price, 0) -
     CITY_PACKAGES.bundle.price;
 
-  // Самый дешевый из незакрытых пакетов (не bundle) — точка входа на мобиле.
-  const cheapestPkg = remaining.reduce<CityPackageType>(
-    (min, p) => (CITY_PACKAGES[p].price < CITY_PACKAGES[min].price ? p : min),
-    remaining[0],
-  );
+  // Точка входа на мобиле.
+  //
+  // Было: самый дешёвый незакрытый пакет, то есть всегда «Места» 19 ₽. На
+  // мобильном (67% трафика) в панели помещаются ровно две кнопки — «Места»
+  // и «Комбо», — и «Расходы» 49 ₽ не было видно нигде в постоянном CTA.
+  // При этом по фактическим оплатам именно «Расходы» — единственный пакет,
+  // который реально покупают (5 из 7 оплат за всё время; «Места» — почти
+  // никогда). Плюс сам по себе рассинхрон: пользователь только что видел
+  // в блоке цен кнопку «Открыть за 49 ₽», а закреплённая панель предлагала
+  // 19 и 59 ₽. Теперь primary — «Расходы», если он ещё не куплен.
+  const primaryPkg: CityPackageType = remaining.includes("budget")
+    ? "budget"
+    : remaining.reduce<CityPackageType>(
+        (min, p) =>
+          CITY_PACKAGES[p].price < CITY_PACKAGES[min].price ? p : min,
+        remaining[0],
+      );
+
+  // Подпись, объясняющая ценность, вместо служебного названия пакета.
+  const PRIMARY_LABEL: Record<CityPackageType, string> = {
+    budget: "Все цены",
+    places: "Лучшие места",
+    bundle: "Всё включено",
+  };
 
   return (
     <>
@@ -41,17 +60,17 @@ export function StickyBar({
           <div className="flex md:hidden items-center gap-2 w-full">
             <button
               type="button"
-              onClick={() => setOpenPkg(cheapestPkg)}
+              onClick={() => setOpenPkg(primaryPkg)}
               className="flex-1 rounded-xl bg-copper text-pine-tree font-semibold text-sm py-2.5 px-3 hover:bg-brandy transition active:scale-95"
             >
-              {CITY_PACKAGES[cheapestPkg].short} — {CITY_PACKAGES[cheapestPkg].price} ₽
+              {PRIMARY_LABEL[primaryPkg]} — {CITY_PACKAGES[primaryPkg].price} ₽
             </button>
             <button
               type="button"
               onClick={() => setOpenPkg("bundle")}
               className="shrink-0 rounded-xl border border-copper/50 text-copper font-medium text-sm py-2.5 px-3 hover:bg-copper/10 transition active:scale-95"
             >
-              Комбо — {CITY_PACKAGES.bundle.price} ₽
+              Всё — {CITY_PACKAGES.bundle.price} ₽
             </button>
           </div>
 

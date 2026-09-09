@@ -6,6 +6,10 @@ import {
   addManyUnlocked,
   readPendingPayment,
   clearPendingPayment,
+  clearCheckoutStarted,
+  hasFreshCheckout,
+  readUnlocked,
+  readCountryUnlocked,
   readPurchaseEmail,
   type PackageType,
 } from "@/lib/unlocked";
@@ -22,7 +26,14 @@ import { reachGoal } from "@/lib/metrika";
  *    по нему /api/payment/access находит оплаченные пакеты в БД и открывает их.
  *    Так доступ восстанавливается автоматически на том же устройстве.
  */
-export function VerifyOnReturn({ slug }: { slug: string }) {
+export function VerifyOnReturn({
+  slug,
+  kind = "city",
+}: {
+  slug: string;
+  /** "country" — страница страны: покупки привязаны к country_slug, а не к городу. */
+  kind?: "city" | "country";
+}) {
   const done = useRef(false);
 
   useEffect(() => {
@@ -44,6 +55,7 @@ export function VerifyOnReturn({ slug }: { slug: string }) {
         if (data?.ok && data.slug === slug) {
           addUnlocked(slug, pending.pkg);
           clearPendingPayment();
+          clearCheckoutStarted();
           // Цель Метрики "Успешная оплата" — именно здесь, а не на редиректе
           // с ЮKassa: /api/payment/verify уже спросил реальный статус
           // платежа (succeeded && paid) и контент реально разблокирован.
@@ -71,14 +83,34 @@ export function VerifyOnReturn({ slug }: { slug: string }) {
         const res = await fetch("/api/payment/access", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ slug, email }),
+          body: JSON.stringify({ slug, email, kind }),
           cache: "no-store",
         });
         const data = await res.json();
         const pkgs: PackageType[] = Array.isArray(data?.packages)
           ? data.packages
           : [];
-        if (pkgs.length) addManyUnlocked(slug, pkgs);
+        if (!pkgs.length) return;
+
+        // Была ли разблокировка новой именно сейчас: сравниваем то, что уже
+        // лежало в localStorage, с тем, что вернул сервер.
+        const before: string[] =
+          kind === "country" ? readCountryUnlocked(slug) : readUnlocked(slug);
+        if (kind === "country") {
+          for (const p of pkgs) addUnlocked(slug, p);
+        } else {
+          addManyUnlocked(slug, pkgs);
+        }
+        const opened = pkgs.some((p) => !before.includes(p));
+
+        // Цель "payment_success" на медленном пути. Отправляем ТОЛЬКО если
+        // (а) чекаут по этому городу был начат недавно (метка в localStorage)
+        // и (б) доступ реально открылся впервые. Иначе цель срабатывала бы
+        // на каждом визите вернувшегося покупателя.
+        if (opened && hasFreshCheckout(slug)) {
+          clearCheckoutStarted();
+          reachGoal("payment_success");
+        }
       } catch {
         /* тихо: ручное восстановление доступно через RestoreAccess */
       }

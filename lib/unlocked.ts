@@ -297,3 +297,57 @@ export function clearPendingPayment() {
     /* ignore */
   }
 }
+
+// ---------------------------------------------------------------------------
+// Метка «ушли на оплату» — durable-дубль pending-платежа
+// ---------------------------------------------------------------------------
+//
+// Зачем: setPendingPayment пишет в sessionStorage, а он теряется, когда
+// возврат с ЮKassa приходит через СБП / банковское приложение / новую вкладку.
+// В этом случае разблокировка всё равно происходит — по email через
+// /api/payment/access — но цель Метрики "payment_success" НЕ отправлялась,
+// потому что висела только на быстром пути с payment_id. Результат: в Метрике
+// 0 достижений цели «Успешная оплата» при реальных оплатах в БД (проверено
+// 2026-09-09: 3 оплаченных заказа за 30 дней против 0 достижений цели).
+//
+// Метка живёт в localStorage и ограничена по времени, чтобы цель не
+// срабатывала на обычном визите покупателя спустя недели.
+
+const CHECKOUT_KEY = "relocost_checkout_started";
+/** Окно, внутри которого возврат считаем возвратом с оплаты. */
+const CHECKOUT_TTL_MS = 3 * 60 * 60 * 1000;
+
+export function markCheckoutStarted(slug: string, pkg: PackageType) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(
+      CHECKOUT_KEY,
+      JSON.stringify({ slug, pkg, ts: Date.now() }),
+    );
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Был ли для этого slug недавно начат чекаут (и не истёк ли он). */
+export function hasFreshCheckout(slug: string): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const raw = window.localStorage.getItem(CHECKOUT_KEY);
+    if (!raw) return false;
+    const p = JSON.parse(raw) as { slug?: string; ts?: number };
+    if (p?.slug !== slug || typeof p.ts !== "number") return false;
+    return Date.now() - p.ts < CHECKOUT_TTL_MS;
+  } catch {
+    return false;
+  }
+}
+
+export function clearCheckoutStarted() {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.removeItem(CHECKOUT_KEY);
+  } catch {
+    /* ignore */
+  }
+}

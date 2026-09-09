@@ -122,6 +122,47 @@ async function recoverPurchase(
   // email в metadata нет — подставляем маркер восстановления (колонка NOT NULL).
   const email = meta.email || RECOVERED_EMAIL;
 
+  // Пакеты стран не привязаны к городу — восстанавливаем по country_slug.
+  // (Колонка появляется миграцией 202609090900_purchases_country_packages.sql;
+  // до неё upsert просто вернёт ошибку и мы громко залогируем.)
+  const isCountryPkg =
+    packageType === "country_cities" || packageType === "country_overview";
+
+  if (isCountryPkg) {
+    if (!slug || safeAmount === null) {
+      console.error(
+        `${LOG_PREFIX} PAID-BUT-UNRECOVERABLE (country): paymentId=${paymentId} ` +
+          `purchaseId=${purchaseId} slug=${slug ?? "—"} pkg=${pkg ?? "—"} ` +
+          `amount=${payment.amount?.value ?? "—"} — ВОССТАНОВИТЬ ПОКУПКУ ВРУЧНУЮ`,
+      );
+      return "no-city";
+    }
+    const { error: upCountryErr } = await db.from("purchases").upsert(
+      {
+        id: purchaseId,
+        city_id: null,
+        country_slug: slug,
+        package_type: packageType,
+        email,
+        amount: safeAmount,
+        status: "paid",
+      },
+      { onConflict: "id" },
+    );
+    if (upCountryErr) {
+      console.error(
+        `${LOG_PREFIX} recover upsert (country) failed paymentId=${paymentId} ` +
+          `purchaseId=${purchaseId}: ${upCountryErr.message}`,
+      );
+      return "error";
+    }
+    console.error(
+      `${LOG_PREFIX} RECOVERED (country): paymentId=${paymentId} ` +
+        `purchaseId=${purchaseId} slug=${slug} pkg=${packageType} amount=${safeAmount}`,
+    );
+    return "recovered";
+  }
+
   // city_id обязателен (NOT NULL + FK). Ищем по slug.
   let cityId: string | null = null;
   if (slug) {
