@@ -24,6 +24,7 @@ import { EarnEquivalent } from "@/components/city/EarnEquivalent";
 import { CrossLinks } from "@/components/CrossLinks";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
+import { StickyBar } from "@/components/freemium/StickyBar";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -180,6 +181,13 @@ export default async function CityBudgetPage({
       <div className="pt-12 md:pt-24">
         <Footer />
       </div>
+
+      {/* Закреплённая панель покупки. 2026-09-09: на этой подстранице её не
+          было вообще, хотя оба блока выше (MonthlyBudget и Calculator) стоят
+          под тем же paywall'ом «Расходы» 49 ₽, а трафик у /budget заметный —
+          151 посетитель за 30 дней (16% от трафика городских страниц).
+          На /city/[slug]/prices такая панель уже стоит. */}
+      <StickyBar slug={c.slug} isForeign={!!c.is_foreign} />
     </main>
   );
 }
