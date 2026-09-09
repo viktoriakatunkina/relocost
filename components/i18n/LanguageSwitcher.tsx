@@ -12,6 +12,25 @@ const LANG_META: Record<Locale, { native: string; short: string; flag: string }>
   uz: { native: "Oʻzbekcha", short: "UZ", flag: "🇺🇿" },
 };
 
+// Срезает префикс локали, если он остался в пути.
+//
+// Нужно для непереведённых разделов (блог): middleware отдаёт по адресу
+// /en/blog/x русскую страницу через rewrite, поэтому next-intl считает
+// текущую локаль ru и usePathname() НЕ срезает «/en» (у ru префикса нет) —
+// возвращает «/en/blog/x» целиком. Без этой зачистки переключатель языка
+// собрал бы «/en/en/blog/x» и увёл бы пользователя в 404.
+//
+// Для обычных страниц функция ничего не меняет: usePathname уже отдаёт путь
+// без префикса, а собственных разделов с двухбуквенным именем (/en, /uz, /ru)
+// на сайте нет.
+function stripLocalePrefix(path: string): string {
+  const m = path.match(/^\/([^/]+)(\/.*)?$/);
+  if (m && (routing.locales as readonly string[]).includes(m[1])) {
+    return m[2] || "/";
+  }
+  return path;
+}
+
 /**
  * Переключатель языка в шапке. Реально меняет локаль: меняет URL на /, /en, /uz
  * (для дефолтной ru — без префикса), сохраняя текущий путь. Перевод интерфейса
@@ -50,7 +69,7 @@ export function LanguageSwitcher() {
     // поэтому router.replace с опцией locale корректно переключит язык,
     // сохранив текущий маршрут.
     startTransition(() => {
-      router.replace(pathname, { locale: code });
+      router.replace(stripLocalePrefix(pathname), { locale: code });
     });
   }
 

@@ -3,26 +3,24 @@ import { getPublishedPostCardsOrThrow } from "@/lib/blog";
 import { BlogFilters } from "@/components/blog/BlogFilters";
 import { Footer } from "@/components/Footer";
 import { Link } from "@/i18n/navigation";
-import { routing, type Locale } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/i18n-seo";
+import { defaultLocale, type Locale } from "@/i18n/routing";
+import { buildRuOnlyAlternates } from "@/lib/i18n-seo";
 import { ARCHIVE_PAGE_SIZE } from "@/lib/blog-archive";
 
 export const revalidate = 3600;
 
+// Только ru: /en/blog и /uz/blog middleware отдаёт rewrite'ом на русскую
+// версию (заголовки статей и так существуют только на русском).
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return [{ locale: defaultLocale }];
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: Locale };
-}) {
+export async function generateMetadata() {
   return {
     title: "Блог Relocost — гайды по переезду, цены, визы и сравнения городов",
     description:
       "Пошаговые гайды релокации, сравнения городов и подборки направлений. Только проверенные цифры и опыт переехавших.",
-    alternates: buildAlternates("/blog", params.locale),
+    alternates: buildRuOnlyAlternates("/blog"),
     openGraph: {
       title: "Блог Relocost — гайды по переезду",
       description:

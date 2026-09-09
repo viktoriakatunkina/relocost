@@ -53,19 +53,15 @@ export function buildCityFaqItems(
       .replace(/\{food\}/g, fmt(food))
       .replace(/\{transport\}/g, fmt(transport));
 
-  const a3 =
-    monthly < CHEAP_THRESHOLD
-      ? t.faqA3Cheap
-      : monthly > EXP_THRESHOLD
-        ? t.faqA3Exp
-        : t.faqA3Avg;
-
   const a5 = isForeign ? t.faqA5Foreign : t.faqA5Russia;
 
+  // 2026-09-09: faqQ1/Q2/Q3 убраны — их ответы прямо называли точный
+  // месячный бюджет и цену аренды (те же цифры, что заблюрены в Calculator/
+  // MonthlyBudget и заперты под пейволлом в PricesTable), полностью убивая
+  // мотивацию платить за «Все цены». Оставлены только вопросы без утечки
+  // конкретных сумм — они всё ещё дают SEO-ценность (FAQPage-разметка),
+  // просто не палят то, что должно быть платным.
   return [
-    { q: sub(t.faqQ1), a: sub(t.faqA1) },
-    { q: sub(t.faqQ2), a: sub(t.faqA2) },
-    { q: sub(t.faqQ3), a: sub(a3) },
     { q: sub(t.faqQ4), a: sub(t.faqA4) },
     { q: sub(t.faqQ5), a: sub(a5) },
   ];

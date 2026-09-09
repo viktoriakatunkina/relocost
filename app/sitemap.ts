@@ -3,9 +3,10 @@ import { topComparePairs } from "@/lib/compare";
 import { countryComparePairSlugs } from "@/lib/compare-countries";
 import { getAllListSlugs } from "@/lib/lists";
 import { CITY_ROUTES } from "@/lib/city-routes";
-import { routing } from "@/i18n/routing";
+import { routing, type Locale } from "@/i18n/routing";
 import { BLOG_TAG_FILTER } from "@/lib/blog-visibility";
 import { archivePageCount } from "@/lib/blog-archive";
+import { translatedLocalesFor } from "@/lib/content-i18n";
 
 // force-dynamic: сайтмап генерируется при каждом запросе, не кешируется.
 // Supabase-клиент заменён на прямой fetch — кастомный fetchWithRetry
@@ -106,10 +107,21 @@ function urlFor(path: string, locale: string): string {
   return `${BASE}/${locale}${clean}`;
 }
 
-// hreflang-альтернаты для пути: все локали + x-default на дефолтную (ru).
-function languagesFor(path: string): Record<string, string> {
+// hreflang-альтернаты для пути. По умолчанию — все локали, но если у записи
+// указан список реально переведённых локалей, в hreflang попадают только они
+// (+ ru как источник и x-default). Иначе сайтмап заявлял бы поисковику
+// языковые версии, которых нет: см. lib/i18n-seo.ts — то же правило
+// применяется в мета-тегах страниц, и расходиться они не должны.
+function languagesFor(
+  path: string,
+  translated?: readonly string[],
+): Record<string, string> {
   const out: Record<string, string> = {};
-  for (const l of routing.locales) out[l] = urlFor(path, l);
+  for (const l of routing.locales) {
+    if (l === routing.defaultLocale || !translated || translated.includes(l)) {
+      out[l] = urlFor(path, l);
+    }
+  }
   out["x-default"] = urlFor(path, routing.defaultLocale);
   return out;
 }
@@ -121,13 +133,21 @@ type Entry = {
   lastModified: Date;
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
   priority: number;
+  // Локали, на которые страница реально переведена (ru подразумевается).
+  // Не задано — считаем переведёнными все (служебные страницы вроде /quiz,
+  // /search: там весь текст интерфейсный и он переведён по-настоящему).
+  translatedLocales?: readonly Locale[];
 };
 
 function expand(entries: Entry[]): MetadataRoute.Sitemap {
   const out: MetadataRoute.Sitemap = [];
   for (const e of entries) {
-    const languages = languagesFor(e.path);
+    const languages = languagesFor(e.path, e.translatedLocales);
+    // URL в сайтмап кладём только для тех локалей, что попали в hreflang:
+    // непереведённая /uz-версия — не отдельная страница, а дубль русской
+    // (её canonical и так указывает на ru), в индексе ей делать нечего.
     for (const locale of routing.locales) {
+      if (!(locale in languages)) continue;
       out.push({
         url: urlFor(e.path, locale),
         lastModified: e.lastModified,
@@ -150,6 +170,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const countries = Array.from(
     new Set(cityRows.map((c) => c.country_slug).filter(Boolean)),
   );
+
+  // Какие города/страны реально переведены на en/uz. Читает те же JSON из
+  // content/i18n, что и страницы, с общим кешем в пределах процесса — то есть
+  // диск дёргается один раз за жизнь процесса, а не на каждый /sitemap.xml
+  // (маршрут force-dynamic).
+  const cityLocales = new Map<string, Locale[]>();
+  const countryLocales = new Map<string, Locale[]>();
+  await Promise.all([
+    ...cityRows.map(async (c) => {
+      cityLocales.set(c.slug, await translatedLocalesFor("cities", c.slug));
+    }),
+    ...countries.map(async (slug) => {
+      countryLocales.set(slug, await translatedLocalesFor("countries", slug));
+    }),
+  ]);
+  const cityL = (slug: string) => cityLocales.get(slug) ?? [routing.defaultLocale];
+  const countryL = (slug: string) =>
+    countryLocales.get(slug) ?? [routing.defaultLocale];
   // В sitemap кладём только канонические пары топ-городов (те же, что
   // прегенерятся статикой). Полный декартов набор раздувал бы sitemap.
   // topComparePairs() идёт через supabase-js (не raw fetch, см. lib/compare.ts) —
@@ -165,7 +203,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/", lastModified: now, changeFrequency: "weekly", priority: 1.0 },
     { path: "/countries", lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { path: "/about", lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    { path: "/blog", lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { path: "/search", lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { path: "/quiz", lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { path: "/rating", lastModified: now, changeFrequency: "weekly", priority: 0.7 },
@@ -181,6 +218,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: c.updated_at ? new Date(c.updated_at) : now,
       changeFrequency: "weekly" as const,
       priority: 0.9,
+      translatedLocales: cityL(c.slug),
     })),
     // Подстраницы городов — самостоятельные SEO-URL с уникальными title/description.
     // Индексируются отдельно: «бюджет семьи в X» и «цены в X» — высокочастотные
@@ -190,18 +228,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: c.updated_at ? new Date(c.updated_at) : now,
       changeFrequency: "monthly" as const,
       priority: 0.75,
+      translatedLocales: cityL(c.slug),
     })),
     ...cityRows.map((c) => ({
       path: `/city/${c.slug}/prices`,
       lastModified: c.updated_at ? new Date(c.updated_at) : now,
       changeFrequency: "monthly" as const,
       priority: 0.75,
+      translatedLocales: cityL(c.slug),
     })),
     ...countries.map((slug) => ({
       path: `/country/${slug}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+      translatedLocales: countryL(slug),
     })),
     ...comparePairs.map((pair) => ({
       path: `/compare/${pair}`,
@@ -220,6 +261,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
+  ];
+
+  // ── Блог: только ru, без en/uz и без hreflang ────────────────────────────
+  // Блог не переведён ни на одну локаль (0 статей из ~4258), поэтому НЕ идёт
+  // через expand(): раньше он размножался на три локали и сайтмап заявлял
+  // поисковику примерно вдвое больше URL, чем есть страниц, — все /en/blog/*
+  // и /uz/blog/* были тем же русским текстом. С 09.09.2026 middleware отдаёт
+  // по этим адресам русскую версию rewrite'ом, а canonical у них указывает на
+  // бесперфиксный /blog/... — в сайтмапе им делать нечего.
+  const blogEntries: Entry[] = [
+    { path: "/blog", lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     // Страницы архива блога — транзитные списки, через них краулер доходит
     // до статей, на которые с /blog нет серверных ссылок (список листается
     // на клиенте). Приоритет низкий: ценность в ссылках, не в самих списках.
@@ -236,6 +288,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     })),
   ];
+  const blogSitemap: MetadataRoute.Sitemap = blogEntries.map((e) => ({
+    url: urlFor(e.path, routing.defaultLocale),
+    lastModified: e.lastModified,
+    changeFrequency: e.changeFrequency,
+    priority: e.priority,
+  }));
 
   // «Маршруты на день» — контент только на ru (dynamicParams=false, en/uz
   // не сгенерированы), поэтому НЕ идёт через expand() (размножил бы на все
@@ -248,5 +306,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // /favorites в sitemap не включаем (noindex). /search индексируется — он выше.
-  return [...expand(entries), ...tripEntries];
+  return [...expand(entries), ...blogSitemap, ...tripEntries];
 }

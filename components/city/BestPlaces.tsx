@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useUnlocked, isUnlocked } from "@/lib/unlocked";
 import { LockedSection } from "@/components/freemium/LockedSection";
 import type { CityContent, PlaceType } from "@/lib/cities-content";
 import { typo } from "@/lib/typography";
+import { photoSrc } from "@/lib/photo";
 
 // Экспортируется — переиспользуется в components/trip/RouteTimeline.tsx для
 // чипов типа точки маршрута (RouteStop["type"] — тот же набор значений).
@@ -18,17 +20,23 @@ export const TYPE_LABELS: Record<PlaceType, string> = {
 };
 
 function PlaceCard({ p }: { p: CityContent["best_places"][number] }) {
+  // image_url всегда указывает на публичный Supabase Storage (bucket
+  // "photos", путь u/<hash>.jpg) — фото загружены туда заранее, т.к.
+  // images.unsplash.com недоступен с прод-VPS. photoSrc() дополнительно
+  // разруливает R2-фолбэк при квоте Storage (см. lib/photo.ts).
+  const src = photoSrc(p.image_url ?? null, null, { w: 800, q: 80 });
   return (
     <div className="rounded-3xl bg-surface border hairline hover:border-copper/25 hover:bg-surface-elevated transition group overflow-hidden">
-      {p.image_url && (
-        // eslint-disable-next-line @next/next/no-img-element -- фото хранятся
-        // в Supabase Storage (переменное число хостов), next/image тут избыточен.
-        <img
-          src={p.image_url}
-          alt={p.name}
-          loading="lazy"
-          className="w-full h-36 md:h-40 object-cover"
-        />
+      {src && (
+        <div className="relative w-full h-36 md:h-40">
+          <Image
+            src={src}
+            alt={p.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 420px"
+            className="object-cover"
+          />
+        </div>
       )}
       <div className="p-6 md:p-7">
         <div className="flex items-start justify-between gap-3 mb-3">

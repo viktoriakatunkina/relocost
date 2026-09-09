@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { Locale } from "@/i18n/routing";
-import { defaultLocale } from "@/i18n/routing";
+import { defaultLocale, locales } from "@/i18n/routing";
 import type { City } from "./types";
 import type { CityContent } from "./cities-content";
 import type { CountryContent } from "./countries-content";
@@ -99,6 +99,54 @@ async function loadJson<T>(
     fileCache.set(key, null); // файла нет — тихий фолбэк на русский.
     return null;
   }
+}
+
+// Есть ли у объекта хоть одно непустое переведённое поле (строка, массив
+// строк или массив объектов со строками). Пустой/битый файл переводом не
+// считаем — иначе он даст ложный hreflang ровно так же, как его отсутствие.
+function hasAnyTranslatedField(value: unknown): boolean {
+  if (typeof value === "string") return value.trim().length > 0;
+  if (Array.isArray(value)) return value.some(hasAnyTranslatedField);
+  if (value && typeof value === "object") {
+    return Object.values(value as Record<string, unknown>).some(
+      hasAnyTranslatedField,
+    );
+  }
+  return false;
+}
+
+/**
+ * Есть ли РЕАЛЬНЫЙ перевод конкретной сущности на конкретную локаль.
+ *
+ * Нужен для честного hreflang/canonical (см. lib/i18n-seo.ts): страницу
+ * /en/... можно объявлять английской версией, только если её текст правда
+ * переведён. Для ru всегда true — русский источник правды.
+ *
+ * Дёшево: читает тот же JSON, что и localize*-функции, и попадает в общий
+ * fileCache — лишних обращений к диску не делает.
+ */
+export async function hasContentTranslation(
+  locale: Locale,
+  kind: "cities" | "countries" | "blog",
+  slug: string,
+): Promise<boolean> {
+  if (locale === defaultLocale) return true;
+  const tr = await loadJson<Record<string, unknown>>(locale, kind, slug);
+  return !!tr && hasAnyTranslatedField(tr);
+}
+
+/**
+ * Список локалей, на которые сущность реально переведена (всегда включает ru).
+ * Готов к передаче в buildAlternates({ translatedLocales }).
+ */
+export async function translatedLocalesFor(
+  kind: "cities" | "countries" | "blog",
+  slug: string,
+): Promise<Locale[]> {
+  const checks = await Promise.all(
+    locales.map(async (l) => ((await hasContentTranslation(l, kind, slug)) ? l : null)),
+  );
+  return checks.filter((l): l is Locale => l !== null);
 }
 
 // Выбор строки: перевод, если непустой; иначе русский оригинал.

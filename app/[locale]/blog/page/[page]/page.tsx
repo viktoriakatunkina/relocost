@@ -6,8 +6,8 @@ import { BlogCard } from "@/components/blog/BlogCard";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Link } from "@/i18n/navigation";
-import { routing, type Locale } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/i18n-seo";
+import { defaultLocale, type Locale } from "@/i18n/routing";
+import { buildRuOnlyAlternates } from "@/lib/i18n-seo";
 
 // Постраничный архив блога — серверный рендер реальных ссылок на статьи.
 // /blog листает список на клиенте (BlogFilters), поэтому в HTML видно только
@@ -24,13 +24,13 @@ export const dynamicParams = true;
 
 const PRERENDER_PAGES = 5;
 
+// Только ru: /en/blog/page/N и /uz/... middleware отдаёт rewrite'ом на
+// русскую версию — блог не переведён ни на одну локаль.
 export function generateStaticParams() {
-  return routing.locales.flatMap((locale) =>
-    Array.from({ length: PRERENDER_PAGES }, (_, i) => ({
-      locale,
-      page: String(i + 1),
-    })),
-  );
+  return Array.from({ length: PRERENDER_PAGES }, (_, i) => ({
+    locale: defaultLocale,
+    page: String(i + 1),
+  }));
 }
 
 export async function generateMetadata({
@@ -42,7 +42,7 @@ export async function generateMetadata({
   return {
     title: `Блог Relocost — страница ${n} | гайды по переезду и стоимости жизни`,
     description: `Архив статей Relocost, страница ${n}. Гайды по релокации, стоимость жизни в городах мира, визы, сравнения направлений.`,
-    alternates: buildAlternates(`/blog/page/${n}`, params.locale),
+    alternates: buildRuOnlyAlternates(`/blog/page/${n}`),
     // Страницы пагинации — служебные списки: индексируем первую, остальные
     // оставляем краулеру как транзит к статьям (ссылки follow).
     robots: n === 1 ? undefined : { index: false, follow: true },

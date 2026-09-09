@@ -20,6 +20,7 @@ import {
   localizeCity,
   localizeCityContent,
   localizeCitySeo,
+  translatedLocalesFor,
 } from "@/lib/content-i18n";
 import { CityHero } from "@/components/city/CityHero";
 import { CityVerdict } from "@/components/city/CityVerdict";
@@ -147,7 +148,15 @@ export async function generateMetadata({
   return {
     title: seo.seo_title,
     description,
-    alternates: buildAlternates(`/city/${params.slug}`, params.locale),
+    // hreflang только на локали, где перевод города РЕАЛЬНО есть
+    // (content/i18n/{locale}/cities/{slug}.json). Раньше перечислялись все
+    // три языка безусловно — для узбекского это было ложью почти всегда
+    // (переведено 3 города), поисковик шёл по заявленной uz-версии и получал
+    // русский текст. Если текущая локаль непереведённая, canonical уходит
+    // на русскую версию — см. lib/i18n-seo.ts.
+    alternates: buildAlternates(`/city/${params.slug}`, params.locale, {
+      translatedLocales: await translatedLocalesFor("cities", params.slug),
+    }),
     openGraph: {
       // Профиль города — это не статья. Богатые данные (Place/TouristDestination,
       // гео, цены) отдаём через JSON-LD в <CitySchema>/<ProductSchema>.

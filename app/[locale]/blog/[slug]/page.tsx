@@ -27,8 +27,8 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { EmailSignupInline, EmailSignupSticky } from "@/components/blog/EmailSignup";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { type Locale } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/i18n-seo";
+import { defaultLocale, type Locale } from "@/i18n/routing";
+import { buildRuOnlyAlternates } from "@/lib/i18n-seo";
 import { localizeBlogPost } from "@/lib/content-i18n";
 import { BLOG_TAG_FILTER } from "@/lib/blog-visibility";
 
@@ -62,11 +62,12 @@ export async function generateStaticParams() {
     );
     if (!res.ok) return [];
     const rows: { slug: string }[] = await res.json();
-    return rows.flatMap((r) => [
-      { locale: "ru", slug: r.slug },
-      { locale: "en", slug: r.slug },
-      { locale: "uz", slug: r.slug },
-    ]);
+    // Только ru. Английских/узбекских версий статей не существует (0 переводов
+    // из ~4258), и с 09.09.2026 middleware отдаёт по /en/blog/* и /uz/blog/*
+    // русскую страницу через rewrite — до сегмента [locale]="en"|"uz" запрос
+    // просто не доходит. Генерировать их было бы 2× лишних страниц в билде
+    // (при хронических OOM на 8-ГБ сборке это ощутимо).
+    return rows.map((r) => ({ locale: "ru", slug: r.slug }));
   } catch {
     return [];
   }
@@ -85,7 +86,10 @@ export async function generateMetadata({
   return {
     title: post.seo_title ?? post.title,
     description: post.seo_description ?? undefined,
-    alternates: buildAlternates(`/blog/${canonicalSlug}`, params.locale),
+    // Блог не переведён ни на одну локаль: canonical всегда на русскую версию,
+    // hreflang — только ru + x-default. Раньше здесь заявлялись en/uz-версии,
+    // которых физически нет (это был тот же русский текст под другим URL).
+    alternates: buildRuOnlyAlternates(`/blog/${canonicalSlug}`),
     openGraph: {
       title: post.title,
       description: post.seo_description ?? undefined,
@@ -106,8 +110,15 @@ export default async function BlogPostPage({
   params: { locale: Locale; slug: string };
 }) {
   setRequestLocale(params.locale);
-  const tc = await getTranslations("common");
-  const tn = await getTranslations("nav");
+  // Подписи интерфейса статьи берём из РУССКОГО каталога независимо от локали
+  // в URL. Тело статьи русское всегда (переводов нет), и почти весь текст на
+  // этой странице уже захардкожен по-русски («← Все статьи», «мин чтения»,
+  // «обновлено»). Английские хлебные крошки над русским текстом читались как
+  // баг. Штатно сюда приходит только locale=ru (middleware делает rewrite
+  // /en/blog/* → /ru/blog/*), но фиксируем язык и здесь, чтобы страница не
+  // зависела от того, как до неё дошёл запрос.
+  const tc = await getTranslations({ locale: defaultLocale, namespace: "common" });
+  const tn = await getTranslations({ locale: defaultLocale, namespace: "nav" });
 
   const rawPost = await getPostBySlug(params.slug);
   if (!rawPost) notFound();
@@ -180,7 +191,8 @@ export default async function BlogPostPage({
   const ctaCity = city ?? titleMatchedCities[0] ?? null;
   const ctaCountrySlug = effectiveCountrySlug ?? (titleMatchedCities.length ? null : titleMatchedCountry?.slug ?? null);
 
-  const updatedLabel = new Intl.DateTimeFormat(params.locale, {
+  // Месяц пишем по-русски: подпись стоит рядом с русским «обновлено:».
+  const updatedLabel = new Intl.DateTimeFormat(defaultLocale, {
     month: "long",
     year: "numeric",
   }).format(new Date(post.created_at));

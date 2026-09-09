@@ -45,7 +45,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { defaultLocale, type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
-import { localizeCountryContent } from "@/lib/content-i18n";
+import { localizeCountryContent, translatedLocalesFor } from "@/lib/content-i18n";
 import { countryName as localizedCountryName } from "@/lib/i18n-content";
 import {
   countryIn,
@@ -117,7 +117,12 @@ export async function generateMetadata({
   return {
     title: t("metaTitle", { country: nameTo }),
     description: t("metaDescription", { country: nameTo }),
-    alternates: buildAlternates(`/country/${params.slug}`, params.locale),
+    // hreflang только на локали с реальным переводом страны
+    // (content/i18n/{locale}/countries/{slug}.json): en — 25 стран, uz — 3.
+    // Для остальных /en и /uz были дублем русского текста.
+    alternates: buildAlternates(`/country/${params.slug}`, params.locale, {
+      translatedLocales: await translatedLocalesFor("countries", params.slug),
+    }),
     openGraph: {
       title: t("ogTitle", { country: nameTo }),
       description: t("ogDescription", { country: nameTo }),
