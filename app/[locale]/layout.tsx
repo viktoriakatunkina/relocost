@@ -137,11 +137,26 @@ export default async function LocaleLayout({
           <FavoritesLimitModal />
         </NextIntlClientProvider>
         <YandexMetrika />
+        {/* Travelpayouts Drive — обновлённый код установки (2026-09-09,
+            старый маркер 747642 не прошёл проверку Travelpayouts, они
+            выдают новый уникальный код на верификацию установки). */}
         <Script
           id="tp-drive"
           strategy="afterInteractive"
-          src="https://emrld.ltd/NTQ3MjQ1.js?t=747642"
-        />
+          data-noptimize="1"
+          data-cfasync="false"
+          data-wpfc-render="false"
+          data-no-defer="1"
+          data-cmp-ab="2"
+        >
+          {`(function () {
+              var script = document.createElement("script");
+              script.async = 1;
+              script.setAttribute("data-cmp-ab","2");
+              script.src = 'https://emrld.ltd/NTQ3MjQ1.js?t=547245';
+              document.head.appendChild(script);
+          })();`}
+        </Script>
       </body>
     </html>
   );
