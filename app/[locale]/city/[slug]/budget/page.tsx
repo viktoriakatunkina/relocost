@@ -119,7 +119,7 @@ export default async function CityBudgetPage({
       : [];
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main className="pb-36 md:pb-24">
       <Breadcrumbs
         items={[
           { name: "Главная", href: "/" },
@@ -158,6 +158,7 @@ export default async function CityBudgetPage({
             </section>
           )}
           <EarnEquivalent
+            slug={c.slug}
             cityName={name}
             avgDiff={moscowComparison.avgDiff}
           />

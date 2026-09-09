@@ -271,7 +271,7 @@ export default async function CountryPage({
   });
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main className="pb-36 md:pb-24">
       <FaqSchema items={[...costFaqItems, ...faqItems, ...dynFaqItems]} />
       <Breadcrumbs
         items={[

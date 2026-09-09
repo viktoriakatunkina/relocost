@@ -299,7 +299,7 @@ export default async function CityPage({
   };
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main className="pb-36 md:pb-24">
       <CitySchema city={c} />
       <ProductSchema city={c} />
       <Breadcrumbs
@@ -415,7 +415,7 @@ export default async function CityPage({
             </section>
           )}
           <Reveal>
-            <EarnEquivalent cityName={name} avgDiff={moscowComparison.avgDiff} />
+            <EarnEquivalent slug={c.slug} cityName={name} avgDiff={moscowComparison.avgDiff} />
           </Reveal>
         </>
       )}

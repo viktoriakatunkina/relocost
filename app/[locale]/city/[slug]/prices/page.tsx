@@ -84,7 +84,7 @@ export default async function CityPricesPage({
   const anchorItems = getAnchorPrices(prices);
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main className="pb-36 md:pb-24">
       <Breadcrumbs
         items={[
           { name: "Главная", href: "/" },

@@ -231,10 +231,11 @@ export function Calculator({
       </div>
 
       <div className="rounded-3xl bg-surface border hairline p-6 md:p-8 overflow-hidden">
-        {/* Построчная разбивка — блюрится, если пакет не куплен. "Итого"
-            ниже всегда открыт текстом (продуктовый аудит 2026-08-25: раньше
-            блюрилось всё целиком, включая сумму — крутишь переключатель
-            Эконом/Стандарт/Комфорт и не видишь вообще никакой цифры). */}
+        {/* Построчная разбивка и итоговая сумма блюрятся, если пакет не
+            куплен (2026-09-09: показывать точную «Итого» бесплатно убивало
+            смысл покупки — тот же расчёт продаётся в пакете). Блюр, а не
+            display:none — переключатель Эконом/Стандарт/Комфорт всё равно
+            视觉но меняет размытое пятно, калькулятор не выглядит мёртвым. */}
         <div className="relative">
           <ul
             className={`space-y-3 mb-6 ${!opened ? "pointer-events-none select-none" : ""}`}
@@ -285,9 +286,22 @@ export function Calculator({
             <p className="text-copper text-xs uppercase tracking-[0.18em] mb-2 font-medium">
               Итого за месяц
             </p>
-            <p className="font-serif text-3xl md:text-5xl text-cream tabular-nums">
+            <p
+              className="font-serif text-3xl md:text-5xl text-cream tabular-nums"
+              style={!opened ? { filter: "blur(6px)" } : undefined}
+              aria-hidden={!opened}
+            >
               {formatRub(result.totalMin)} – {formatRub(result.totalMax)}
             </p>
+            {!opened && (
+              <button
+                type="button"
+                onClick={() => setPayOpen(true)}
+                className="mt-2 text-copper text-sm font-medium underline underline-offset-2 hover:text-brandy transition"
+              >
+                Открыть за {budget.price} ₽
+              </button>
+            )}
           </div>
           <p className="text-brandy/70 text-sm md:text-right md:max-w-xs text-pretty">
             {typo("Точный бюджет с медициной, развлечениями и сравнением — в пакете «Точный бюджет».")}

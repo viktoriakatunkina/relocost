@@ -4,6 +4,8 @@ import { useState } from "react";
 import { formatRub } from "@/lib/cities";
 import { typo } from "@/lib/typography";
 import { ShareButton } from "@/components/ShareButton";
+import { useUnlocked, isUnlocked } from "@/lib/unlocked";
+import { LockedSection } from "@/components/freemium/LockedSection";
 
 // «Сколько нужно зарабатывать» — фишка Numbeo/NerdWallet: эквивалент бюджета
 // между Москвой и этим городом. avgDiff (средняя относит. разница цен к Москве)
@@ -16,12 +18,16 @@ const STEP = 5_000;
 const DEFAULT = 100_000;
 
 export function EarnEquivalent({
+  slug,
   cityName,
   avgDiff,
 }: {
+  slug: string;
   cityName: string;
   avgDiff: number;
 }) {
+  const unlocked = useUnlocked(slug);
+  const opened = isUnlocked(unlocked, "budget");
   const [budget, setBudget] = useState(DEFAULT);
   const equivalent = Math.max(0, Math.round((budget * (1 + avgDiff)) / 1000) * 1000);
   const pct = Math.round(Math.abs(avgDiff) * 100);
@@ -80,23 +86,45 @@ export function EarnEquivalent({
             в {cityName} нужно
           </p>
 
-          <div className="text-center">
-            <div className="font-serif text-5xl md:text-7xl text-copper tabular-nums leading-none">
-              {formatRub(equivalent)}
-            </div>
-            <div className="text-copper/80 text-lg md:text-xl font-medium mt-1">
-              /мес
-            </div>
-          </div>
+          {opened ? (
+            <>
+              <div className="text-center">
+                <div className="font-serif text-5xl md:text-7xl text-copper tabular-nums leading-none">
+                  {formatRub(equivalent)}
+                </div>
+                <div className="text-copper/80 text-lg md:text-xl font-medium mt-1">
+                  /мес
+                </div>
+              </div>
 
-          <div className="text-center text-brandy/65 text-sm mt-4">
-            это {verdict}, чем в Москве
-          </div>
+              <div className="text-center text-brandy/65 text-sm mt-4">
+                это {verdict}, чем в Москве
+              </div>
 
-          {/* Кнопка шеринга результата */}
-          <div className="mt-7 flex justify-center">
-            <ShareButton title={hook} text={hook} variant="ghost" />
-          </div>
+              {/* Кнопка шеринга результата */}
+              <div className="mt-7 flex justify-center">
+                <ShareButton title={hook} text={hook} variant="ghost" />
+              </div>
+            </>
+          ) : (
+            <LockedSection
+              slug={slug}
+              pkg="budget"
+              hint="Точная сумма пересчитывается под Ваш бюджет — вместе с полной разбивкой по категориям."
+            >
+              <div className="text-center">
+                <div className="font-serif text-5xl md:text-7xl text-copper tabular-nums leading-none">
+                  {formatRub(equivalent)}
+                </div>
+                <div className="text-copper/80 text-lg md:text-xl font-medium mt-1">
+                  /мес
+                </div>
+              </div>
+              <div className="text-center text-brandy/65 text-sm mt-4">
+                это {verdict}, чем в Москве
+              </div>
+            </LockedSection>
+          )}
         </div>
 
         <p className="mt-7 pt-6 border-t hairline text-xs text-brandy/55 text-pretty">
