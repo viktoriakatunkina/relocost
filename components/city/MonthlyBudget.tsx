@@ -134,24 +134,36 @@ export function MonthlyBudget({
           <p className="text-copper text-xs uppercase tracking-[0.18em] mb-2 font-medium">
             Бюджет «от» в месяц · {activePreset.label}
           </p>
-          {/* Итоговая сумма открыта всегда (не блюрится) — 2026-09-01:
-              продуктовый баг конверсии. Calculator.tsx ниже на этой же
-              странице бесплатно показывает почти такую же итоговую сумму
-              (сознательное решение аудита от 2026-08-25), а здесь та же по
-              сути цифра оставалась платной — посетитель упирался в блюр,
-              через 10 сек скролла видел похожую цифру бесплатно, это
-              подрывало готовность платить. Платный триггер — только
-              детальная построчная разбивка ниже (по аналогии с
-              PricesTable.tsx: там тоже платно не сам факт данных, а
-              детализация). */}
+          {/* 2026-09-09: снова заблюрено. Решение от 2026-09-01 (открыть
+              итог, т.к. Calculator.tsx рядом всё равно показывал похожую
+              сумму бесплатно) само устарело: сегодня Calculator.tsx тоже
+              заблюрен (та же проблема — «зачем платить, если цифра и так
+              видна»), так что открывать её здесь больше не от чего
+              защищать. Платный триггер — весь блок с цифрами. */}
           <div className="relative inline-block">
-            <p className="font-serif text-4xl md:text-6xl text-cream tabular-nums leading-none">
+            <p
+              className="font-serif text-4xl md:text-6xl text-cream tabular-nums leading-none"
+              style={!budgetUnlocked ? { filter: "blur(8px)" } : undefined}
+              aria-hidden={!budgetUnlocked}
+            >
               <CountUp
                 key={preset}
                 value={total}
                 format={(n) => formatRub(Math.round(n))}
               />
             </p>
+            {!budgetUnlocked && (
+              <button
+                type="button"
+                onClick={() => setOpenModal(true)}
+                className="absolute inset-0 flex items-center justify-center"
+                aria-label="Открыть точный бюджет за 49 ₽"
+              >
+                <span className="bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-2xl px-5 py-2.5 text-copper text-sm font-semibold whitespace-nowrap hover:bg-brandy hover:text-pine-tree transition">
+                  Открыть за 49 ₽
+                </span>
+              </button>
+            )}
           </div>
 
           {/* единый долевой бар — сегменты «вырастают» по ширине при появлении */}
@@ -171,9 +183,11 @@ export function MonthlyBudget({
             ))}
           </div>
 
-          {/* строки категорий: первые 2 — бесплатно, остальные — paywall */}
+          {/* строки категорий: все под замком — 2026-09-09, раньше первые 2
+              (аренда/еда) были открыты бесплатно с точными суммами и
+              процентами, что обесценивало платную разбивку. */}
           {(() => {
-            const FREE_ROWS = 2;
+            const FREE_ROWS = 0;
             const freeSlices = slices.slice(0, FREE_ROWS);
             const lockedSlices = slices.slice(FREE_ROWS);
 
