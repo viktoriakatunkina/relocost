@@ -382,6 +382,23 @@ export default async function CityPage({
         <PricesTable prices={prices} slug={c.slug} />
       </Reveal>
 
+      {/* Тизер «Маршрутов на день» стоит СРАЗУ после денежной зоны
+          (MonthlyBudget → Calculator → PricesTable), а не в самом низу рядом
+          с BestPlaces, как было до 2026-09-09.
+          Причина: в старой позиции тизер оказывался на ~62% высоты страницы
+          (~27000px), и за 30 дней фича собрала 0 переходов — на мобильном
+          (67% трафика) до неё просто не долистывают.
+          Почему именно здесь, а не между Calculator и PricesTable: эти два
+          блока — пара CTA одного пакета "budget", разрывать их ссылкой на
+          другой раздел значит уводить пользователя из воронки покупки.
+          А сразу после них человек уже увидел все цифры и максимально готов
+          к «а что там вообще делать» — это и есть /trip (пакет "places"). */}
+      {hasTrip && (
+        <Reveal>
+          <TripTeaser slug={c.slug} cityName={name} />
+        </Reveal>
+      )}
+
       <Reveal>
         <QualityOfLife cityName={name} data={getCityQuality(c.slug)} />
       </Reveal>
@@ -426,12 +443,6 @@ export default async function CityPage({
       {content && (
         <Reveal>
           <BestPlaces slug={c.slug} places={content.best_places} />
-        </Reveal>
-      )}
-
-      {hasTrip && (
-        <Reveal>
-          <TripTeaser slug={c.slug} cityName={name} />
         </Reveal>
       )}
 

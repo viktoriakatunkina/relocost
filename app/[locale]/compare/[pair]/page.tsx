@@ -31,10 +31,11 @@ import { CompareTable } from "@/components/compare/CompareTable";
 import { Verdict } from "@/components/compare/Verdict";
 import { CompareDetails } from "@/components/compare/CompareDetails";
 import { CompareRelocation } from "@/components/compare/CompareRelocation";
+import { CompareUnlockCTA } from "@/components/compare/CompareUnlockCTA";
+import { CountryCompareUnlockCTA } from "@/components/compare/CountryCompareUnlockCTA";
 import { SecondPersonSummary } from "@/components/city/SecondPersonSummary";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
-import { Link } from "@/i18n/navigation";
 import { type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { cityName } from "@/lib/i18n-content";
@@ -189,6 +190,21 @@ export default async function ComparePage({
           />
         </section>
       )}
+      {/* Точка покупки стоит СРАЗУ после таблицы + вердикта + «что изменится
+          для Вас»: цифры уже показали разницу, решение вызревает именно здесь,
+          а не в подвале страницы.
+          Было (до 2026-09-09): единственный CTA — статические ссылки на
+          /city/<slug>/prices в самом низу, после FAQ. То есть лишний переход
+          между «захотел» и «купил» и уже вне зоны внимания.
+          Стало: кнопка открывает ту же PaymentModal, что и на странице города,
+          с теми же пакетами budget/bundle. Отдельного «пакета сравнения»
+          сознательно не заводим. */}
+      <CompareUnlockCTA
+        a={{ slug: data.a.slug, name: data.a.name_ru }}
+        b={{ slug: data.b.slug, name: data.b.name_ru }}
+        pct={delta?.pct}
+      />
+
       <CompareRelocation
         aName={aName}
         bName={bName}
@@ -196,36 +212,6 @@ export default async function ComparePage({
         budgetB={relocation.b}
       />
       <CompareDetails summary={compareSummary(data)} faq={compareFaq(data)} />
-      {/* CTA: горячий пользователь выбирает между двумя городами — подтолкнуть к покупке */}
-      <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
-        <div
-          className="rounded-3xl border-2 border-copper/45 p-6 md:p-8 text-center"
-          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(232,155,110,0.18) 0%, transparent 60%), linear-gradient(135deg, #2A3618 0%, #1A2105 100%)" }}
-        >
-          <p className="text-copper text-xs uppercase tracking-wider font-semibold mb-3">Полные данные по обоим городам</p>
-          <h3 className="font-serif text-2xl md:text-3xl text-cream mb-3 leading-tight">
-            40+ статей расходов — аренда, еда, транспорт, медицина
-          </h3>
-          <p className="text-brandy/80 mb-7 max-w-lg mx-auto text-sm leading-relaxed">
-            Таблица сравнения показывает только базовые данные. Полный прайс откроется сразу после оплаты — реальные диапазоны, не усредненные.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href={`/city/${data.a.slug}/prices`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
-            >
-              📊 Цены в {data.a.name_ru} — 49 ₽
-            </Link>
-            <Link
-              href={`/city/${data.b.slug}/prices`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill border border-copper/50 text-copper font-semibold text-sm hover:bg-copper/10 transition"
-            >
-              📊 Цены в {data.b.name_ru} — 49 ₽
-            </Link>
-          </div>
-          <p className="text-brandy/40 text-xs mt-4">Единоразовая оплата · Доступ навсегда · ЮKassa</p>
-        </div>
-      </section>
 
       <CrossLinks
         links={[
@@ -278,6 +264,26 @@ function CountryComparePage({
       <CountryCompareTable data={data} />
       <CountryCompareVerdict data={data} />
       <CountryCompareCities data={data} />
+      {/* CTA сразу после таблицы/вердикта/пятерки городов — момент, когда
+          разница в цифрах уже видна, но «а какой конкретно город» ещё нет.
+          Пакеты те же, что на /country/<slug>, отдельной цены не заводим. */}
+      <CountryCompareUnlockCTA
+        a={{
+          slug: data.a.slug,
+          name: data.a.name_ru,
+          flag: data.a.flag_emoji,
+          cityCount: data.a.cityCount,
+          hasOverview: Boolean(data.a.content),
+        }}
+        b={{
+          slug: data.b.slug,
+          name: data.b.name_ru,
+          flag: data.b.flag_emoji,
+          cityCount: data.b.cityCount,
+          hasOverview: Boolean(data.b.content),
+        }}
+        pct={delta?.pct}
+      />
       <CountryCompareFacts data={data} />
       <CompareDetails
         summary={countryCompareSummary(data)}
