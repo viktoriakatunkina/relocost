@@ -42,7 +42,7 @@ export function Reviews({
   if (!reviews.length) return null;
 
   return (
-    <section id="reviews" className="pt-14 md:pt-20">
+    <section id="reviews" className="scroll-mt-[120px] pt-14 md:pt-20">
       <div className="max-w-6xl mx-auto px-6">
         <span className="eyebrow">Опыт</span>
         <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-8 md:mb-10">

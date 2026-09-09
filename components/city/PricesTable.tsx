@@ -27,7 +27,7 @@ export function PricesTable({
 
   return (
     <>
-    <section id="prices" className="max-w-6xl mx-auto px-6 pt-14 md:pt-20 overflow-x-hidden">
+    <section id="prices" className="scroll-mt-[120px] max-w-6xl mx-auto px-6 pt-14 md:pt-20 overflow-x-hidden">
       <span className="eyebrow">База цен</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
         Цены по категориям

@@ -130,7 +130,7 @@ export function BudgetFAQ({ items }: { items: FaqItem[] }) {
   if (!items.length) return null;
 
   return (
-    <section id="faq" className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
+    <section id="faq" className="scroll-mt-[120px] max-w-4xl mx-auto px-6 pt-14 md:pt-20">
       <FaqSchema items={items} />
       <span className="eyebrow">Частые вопросы</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10 text-balance">

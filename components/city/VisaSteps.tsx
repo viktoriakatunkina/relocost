@@ -34,7 +34,7 @@ export function VisaSteps({
   steps: CityContent["visa_steps"];
 }) {
   return (
-    <section id="visa" className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
+    <section id="visa" className="scroll-mt-[120px] max-w-4xl mx-auto px-6 pt-14 md:pt-20">
       <span className="eyebrow">Документы</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
         {isForeign ? "Виза и легализация" : "Регистрация и быт"}

@@ -19,16 +19,28 @@ export const TYPE_LABELS: Record<PlaceType, string> = {
 
 function PlaceCard({ p }: { p: CityContent["best_places"][number] }) {
   return (
-    <div className="p-6 md:p-7 rounded-3xl bg-surface border hairline hover:border-copper/25 hover:bg-surface-elevated transition group">
-      <div className="flex items-start justify-between gap-3 mb-3">
-        <h3 className="font-serif text-2xl text-cream leading-tight text-pretty">{p.name}</h3>
-        <span className="chip chip-accent shrink-0">
-          {TYPE_LABELS[p.type]}
-        </span>
+    <div className="rounded-3xl bg-surface border hairline hover:border-copper/25 hover:bg-surface-elevated transition group overflow-hidden">
+      {p.image_url && (
+        // eslint-disable-next-line @next/next/no-img-element -- фото хранятся
+        // в Supabase Storage (переменное число хостов), next/image тут избыточен.
+        <img
+          src={p.image_url}
+          alt={p.name}
+          loading="lazy"
+          className="w-full h-36 md:h-40 object-cover"
+        />
+      )}
+      <div className="p-6 md:p-7">
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <h3 className="font-serif text-2xl text-cream leading-tight text-pretty">{p.name}</h3>
+          <span className="chip chip-accent shrink-0">
+            {TYPE_LABELS[p.type]}
+          </span>
+        </div>
+        <p className="text-brandy/85 leading-relaxed text-pretty">
+          {typo(p.description)}
+        </p>
       </div>
-      <p className="text-brandy/85 leading-relaxed text-pretty">
-        {typo(p.description)}
-      </p>
     </div>
   );
 }

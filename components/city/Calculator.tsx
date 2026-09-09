@@ -194,7 +194,7 @@ export function Calculator({
   const budget = PACKAGES.budget;
 
   return (
-    <section id="calculator" className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
+    <section id="calculator" className="scroll-mt-[120px] max-w-6xl mx-auto px-6 pt-14 md:pt-20">
       <span className="eyebrow">Бюджет</span>
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
         Калькулятор переезда

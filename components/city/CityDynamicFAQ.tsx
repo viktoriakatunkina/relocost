@@ -93,7 +93,7 @@ export function CityDynamicFAQ({
   };
 
   return (
-    <section id="faq" className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
+    <section id="faq" className="scroll-mt-[120px] max-w-4xl mx-auto px-6 pt-14 md:pt-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
