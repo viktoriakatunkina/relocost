@@ -10,16 +10,23 @@ export function CityDistricts({
   if (!districts?.length) return null;
 
   return (
-    <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
-      <span className="eyebrow">Где жить</span>
-      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10">
-        Районы для жизни
-      </h2>
-      <div className="grid md:grid-cols-2 gap-5">
+    <section className="pt-14 md:pt-20">
+      <div className="max-w-6xl mx-auto px-6">
+        <span className="eyebrow">Где жить</span>
+        <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10">
+          Районы для жизни
+        </h2>
+      </div>
+
+      {/* Мобиль: 2 строки, листается вбок свайпом — раньше все районы шли
+          одной колонкой на весь экран, приходилось долго скроллить вниз
+          (2026-09-10). Десктоп — прежняя вертикальная сетка в 2 колонки. */}
+      <div className="max-w-6xl mx-auto px-6 md:grid md:grid-cols-2 md:gap-5">
+        <div className="grid grid-rows-2 grid-flow-col auto-cols-[78%] sm:auto-cols-[46%] gap-4 overflow-x-auto snap-x snap-mandatory pb-2 -mx-6 px-6 md:contents md:gap-0 md:mx-0 md:px-0 md:overflow-visible scrollbar-none">
         {districts.map((d) => (
           <div
             key={d.name}
-            className="p-6 md:p-7 rounded-3xl bg-surface border hairline transition hover:border-copper/30"
+            className="snap-center shrink-0 p-6 md:p-7 rounded-3xl bg-surface border hairline transition hover:border-copper/30"
           >
             <div className="flex items-baseline justify-between gap-3 mb-3">
               <h3 className="font-serif text-2xl text-cream">{d.name}</h3>
@@ -38,6 +45,7 @@ export function CityDistricts({
             </p>
           </div>
         ))}
+        </div>
       </div>
     </section>
   );
