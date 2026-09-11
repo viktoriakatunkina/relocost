@@ -46,7 +46,7 @@ const nextConfig = {
   // нужны явные записи и для дефолтной локали (ru, без префикса), и отдельно
   // для /en и /uz (у них префикс в пути, middleware сюда уже не достаёт).
   async redirects() {
-    return Object.entries(blogRedirects).flatMap(([from, to]) => [
+    const blog = Object.entries(blogRedirects).flatMap(([from, to]) => [
       { source: `/blog/${from}`, destination: `/blog/${to}`, permanent: true },
       {
         source: `/:locale(en|uz)/blog/${from}`,
@@ -54,6 +54,26 @@ const nextConfig = {
         permanent: true,
       },
     ]);
+
+    // Дубль города (2026-09-11): `chiangmai` и `chiang-mai` — один и тот же
+    // Чиангмай двумя записями в cities (см. комментарий в lib/country-cost.ts,
+    // где агрегатор по странам уже давно схлопывал их вручную). Оставляем
+    // chiang-mai (богаче: галерея, 64 цены, маршруты+места пилотного батча),
+    // редиректим тонкий дубль на него — DB-запись chiangmai удалена.
+    const cityDupes = [
+      {
+        source: "/city/chiangmai/:path*",
+        destination: "/city/chiang-mai/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:locale(en|uz)/city/chiangmai/:path*",
+        destination: "/:locale/city/chiang-mai/:path*",
+        permanent: true,
+      },
+    ];
+
+    return [...blog, ...cityDupes];
   },
 
   images: {
