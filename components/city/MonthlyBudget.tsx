@@ -12,6 +12,7 @@ import {
 } from "@/lib/household";
 import { isUnlocked, useUnlocked } from "@/lib/unlocked";
 import { PaymentModal } from "@/components/freemium/PaymentModal";
+import { PurchaseCount } from "@/components/PurchaseCount";
 
 // Цвета сегментов бюджета — в теплой палитре сайта, но различимые между собой.
 const SLICE_COLOR: Record<string, string> = {
@@ -28,10 +29,12 @@ export function MonthlyBudget({
   prices,
   cityName,
   slug,
+  purchaseCount,
 }: {
   prices: Record<PriceCategory, Price[]>;
   cityName: string;
   slug: string;
+  purchaseCount?: number;
 }) {
   const unlocked = useUnlocked(slug);
   const budgetUnlocked = isUnlocked(unlocked, "budget");
@@ -165,6 +168,7 @@ export function MonthlyBudget({
               </button>
             )}
           </div>
+          {!budgetUnlocked && <PurchaseCount count={purchaseCount ?? 0} />}
 
           {/* единый долевой бар — сегменты «вырастают» по ширине при появлении */}
           <div className="mt-7 flex h-3.5 w-full overflow-hidden rounded-pill bg-cream/5">

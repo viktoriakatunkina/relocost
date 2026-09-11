@@ -69,6 +69,7 @@ import { cityPhotoSrc } from "@/lib/photo";
 import { CrowdPriceFeed } from "@/components/CrowdPriceFeed";
 import { CrowdPriceForm } from "@/components/CrowdPriceForm";
 import { getCityCrowdPrices, getCityCrowdCount } from "@/lib/crowd-prices";
+import { getCityPurchaseCounts } from "@/lib/purchase-counts";
 import { StickyBar } from "@/components/freemium/StickyBar";
 import { VerifyOnReturn } from "@/components/freemium/VerifyOnReturn";
 import { Reveal } from "@/components/Reveal";
@@ -202,15 +203,23 @@ export default async function CityPage({
     ? { ...CITY_CONTENT[c.slug], ...CITY_EXTRA[c.slug] }
     : undefined;
   const content = await localizeCityContent(baseContent, c.slug, params.locale);
-  const [prices, similar, articles, moscowBaseline, crowdPrices, crowdCount] =
-    await Promise.all([
-      getPricesByCity(c.id),
-      getSimilarCities(c, 4),
-      getPostsForCity(c.id, c.country_slug, 3),
-      getMoscowBaseline(),
-      getCityCrowdPrices(c.slug, 3),
-      getCityCrowdCount(c.slug),
-    ]);
+  const [
+    prices,
+    similar,
+    articles,
+    moscowBaseline,
+    crowdPrices,
+    crowdCount,
+    purchaseCounts,
+  ] = await Promise.all([
+    getPricesByCity(c.id),
+    getSimilarCities(c, 4),
+    getPostsForCity(c.id, c.country_slug, 3),
+    getMoscowBaseline(),
+    getCityCrowdPrices(c.slug, 3),
+    getCityCrowdCount(c.slug),
+    getCityPurchaseCounts(c.id),
+  ]);
   const anchorItems = getAnchorPrices(prices);
   // Сравнение с Москвой показываем всем городам, кроме самой Москвы.
   const moscowComparison =
@@ -381,7 +390,12 @@ export default async function CityPage({
 
       {/* Бесплатная визуальная выжимка бюджета — не оборачиваем в Reveal,
           чтобы цифры были в SSR-HTML (видны без JS, важно для SEO). */}
-      <MonthlyBudget prices={prices} cityName={name} slug={c.slug} />
+      <MonthlyBudget
+        prices={prices}
+        cityName={name}
+        slug={c.slug}
+        purchaseCount={purchaseCounts.budget}
+      />
 
       <Reveal>
         <Calculator slug={c.slug} prices={prices} cityName={name} />
@@ -451,7 +465,11 @@ export default async function CityPage({
 
       {content && (
         <Reveal>
-          <BestPlaces slug={c.slug} places={content.best_places} />
+          <BestPlaces
+            slug={c.slug}
+            places={content.best_places}
+            purchaseCount={purchaseCounts.places}
+          />
         </Reveal>
       )}
 

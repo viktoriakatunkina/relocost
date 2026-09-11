@@ -56,9 +56,11 @@ function PlaceCard({ p }: { p: CityContent["best_places"][number] }) {
 export function BestPlaces({
   slug,
   places,
+  purchaseCount,
 }: {
   slug: string;
   places: CityContent["best_places"];
+  purchaseCount?: number;
 }) {
   const unlocked = useUnlocked(slug);
   const opened = isUnlocked(unlocked, "places");
@@ -94,6 +96,7 @@ export function BestPlaces({
               slug={slug}
               pkg="places"
               hint={`Еще ${locked.length} проверенных мест: рестораны, рынки, коворкинги, скрытые районы.`}
+              purchaseCount={purchaseCount}
             >
               <div className="grid md:grid-cols-2 gap-5">
                 {locked.map((p) => (

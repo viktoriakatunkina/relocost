@@ -1,4 +1,5 @@
 import { supabase } from "./supabase";
+import { CITY_ROUTES } from "./city-routes";
 import type { Price, PriceCategory, City, CityWithMinRent } from "./types";
 
 export const CATEGORY_LABELS: Record<PriceCategory, string> = {
@@ -74,8 +75,15 @@ export async function getSimilarCities(
       curRent > 0 && rent > 0
         ? Math.abs(rent - curRent) / Math.max(curRent, rent)
         : 1;
+    // Лёгкий буст городам с полным контентом (маршруты+12 мест+расширенная
+    // аренда — см. CITY_ROUTES): по факту реальных покупок 5 из 6 оплат
+    // пришлись именно на такие страницы (2026-09-11) — это не гипотеза,
+    // а подтверждённый рычаг конверсии. Буст — тай-брейкер среди похожих
+    // по стране/сложности/аренде, а не замена этой логике (страна всё
+    // ещё перевешивает: 10 против буста в 2).
+    const enrichedBonus = CITY_ROUTES[c.slug] ? 2 : 0;
     // Меньше score = релевантнее. Та же страна перевешивает всё остальное.
-    const score = -sameCountry * 10 + diffDist + rentDist * 2;
+    const score = -sameCountry * 10 + diffDist + rentDist * 2 - enrichedBonus;
     return { city: { ...c, min_rent: rent } as CityWithMinRent, score };
   });
 

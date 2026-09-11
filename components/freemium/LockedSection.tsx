@@ -3,17 +3,22 @@
 import { useState } from "react";
 import { CITY_PACKAGES, type CityPackageType } from "@/lib/unlocked";
 import { PaymentModal } from "./PaymentModal";
+import { PurchaseCount } from "@/components/PurchaseCount";
 
 export function LockedSection({
   slug,
   pkg,
   hint,
+  purchaseCount,
   onOpen,
   children,
 }: {
   slug: string;
   pkg: CityPackageType;
   hint?: string;
+  /** Сколько человек уже купили этот пакет по этому городу — соцдоказательство
+   *  у CTA. Не передан/0 — просто не рендерится. */
+  purchaseCount?: number;
   /** Доп. коллбэк при клике «Открыть за N ₽» — например, своя цель Метрики
    *  для конкретного места использования (PaymentModal уже шлёт общий
    *  "package_click" сам, это для контекстных целей поверх него). */
@@ -57,6 +62,7 @@ export function LockedSection({
             >
               Открыть за {meta.price} ₽
             </button>
+            <PurchaseCount count={purchaseCount ?? 0} />
           </div>
         </div>
       </div>
