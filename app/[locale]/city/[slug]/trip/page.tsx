@@ -15,6 +15,7 @@ import { localizedUrl } from "@/lib/i18n-seo";
 import { Link } from "@/i18n/navigation";
 import { TripBoard } from "@/components/trip/TripBoard";
 import { StickyBar } from "@/components/freemium/StickyBar";
+import { getGlobalPurchaseCount } from "@/lib/purchase-counts";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 
@@ -85,6 +86,7 @@ export default async function CityTripPage({
   const name = city.name_ru;
   const totalStops = totalStopsCount(routes);
   const dayFrom = cheapestRouteFrom(routes);
+  const purchaseCount = await getGlobalPurchaseCount();
 
   return (
     <main className="pb-12 md:pb-24">
@@ -147,7 +149,7 @@ export default async function CityTripPage({
         <Footer />
       </div>
 
-      <StickyBar slug={city.slug} isForeign={city.is_foreign} />
+      <StickyBar slug={city.slug} isForeign={city.is_foreign} purchaseCount={purchaseCount} />
     </main>
   );
 }

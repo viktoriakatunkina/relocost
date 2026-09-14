@@ -16,8 +16,8 @@ export function LockedSection({
   slug: string;
   pkg: CityPackageType;
   hint?: string;
-  /** Сколько человек уже купили этот пакет по этому городу — соцдоказательство
-   *  у CTA. Не передан/0 — просто не рендерится. */
+  /** Сколько человек уже купили этот пакет — соцдоказательство у CTA.
+   *  Не передан/0 — просто не рендерится. */
   purchaseCount?: number;
   /** Доп. коллбэк при клике «Открыть за N ₽» — например, своя цель Метрики
    *  для конкретного места использования (PaymentModal уже шлёт общий
@@ -25,8 +25,21 @@ export function LockedSection({
   onOpen?: () => void;
   children: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(false);
+  const [openPkg, setOpenPkg] = useState<CityPackageType | null>(null);
   const meta = CITY_PACKAGES[pkg];
+  const bundle = CITY_PACKAGES.bundle;
+
+  // 2026-09-14: «Места» почти никогда не покупают отдельно (см. комментарий
+  // в StickyBar.tsx — 5 из 7 оплат за всё время это «Расходы», «Места» —
+  // почти никогда). Поэтому здесь, где замок стоит именно на пакете
+  // "places" (BestPlaces, RouteTimeline), первичная кнопка ведёт на Bundle
+  // — он всё равно открывает те же места, только + разбивка расходов.
+  // Разовая покупка одних мест остаётся доступна отдельной ссылкой пониже,
+  // просто не как основной CTA.
+  const upsellBundle = pkg !== "bundle" && pkg === "places";
+  const primaryPkg: CityPackageType = upsellBundle ? "bundle" : pkg;
+  const primaryMeta = CITY_PACKAGES[primaryPkg];
+  const extra = bundle.price - meta.price;
 
   return (
     <>
@@ -56,12 +69,30 @@ export function LockedSection({
               type="button"
               onClick={() => {
                 onOpen?.();
-                setOpen(true);
+                setOpenPkg(primaryPkg);
               }}
               className="inline-block px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy"
             >
-              Открыть за {meta.price} ₽
+              Открыть за {primaryMeta.price} ₽
             </button>
+            {upsellBundle && extra > 0 && (
+              <p className="mt-2 text-brandy/50 text-xs leading-snug">
+                +{extra} ₽ и получи еще все цены ·{" "}
+                <button
+                  type="button"
+                  onClick={() => {
+                    onOpen?.();
+                    setOpenPkg(pkg);
+                  }}
+                  className="underline underline-offset-2 hover:text-brandy transition"
+                >
+                  только места — {meta.price} ₽
+                </button>
+              </p>
+            )}
+            <p className="mt-2 text-brandy/45 text-[11px] leading-snug">
+              Разовый платеж, вернем деньги, если не откроется
+            </p>
             <PurchaseCount count={purchaseCount ?? 0} />
           </div>
         </div>
@@ -69,8 +100,8 @@ export function LockedSection({
 
       <PaymentModal
         slug={slug}
-        pkg={open ? pkg : null}
-        onClose={() => setOpen(false)}
+        pkg={openPkg}
+        onClose={() => setOpenPkg(null)}
       />
     </>
   );

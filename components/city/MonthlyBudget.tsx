@@ -137,38 +137,23 @@ export function MonthlyBudget({
           <p className="text-copper text-xs uppercase tracking-[0.18em] mb-2 font-medium">
             Бюджет «от» в месяц · {activePreset.label}
           </p>
-          {/* 2026-09-09: снова заблюрено. Решение от 2026-09-01 (открыть
-              итог, т.к. Calculator.tsx рядом всё равно показывал похожую
-              сумму бесплатно) само устарело: сегодня Calculator.tsx тоже
-              заблюрен (та же проблема — «зачем платить, если цифра и так
-              видна»), так что открывать её здесь больше не от чего
-              защищать. Платный триггер — весь блок с цифрами. */}
-          <div className="relative inline-block">
-            <p
-              className="font-serif text-4xl md:text-6xl text-cream tabular-nums leading-none"
-              style={!budgetUnlocked ? { filter: "blur(8px)" } : undefined}
-              aria-hidden={!budgetUnlocked}
-            >
-              <CountUp
-                key={preset}
-                value={total}
-                format={(n) => formatRub(Math.round(n))}
-              />
-            </p>
-            {!budgetUnlocked && (
-              <button
-                type="button"
-                onClick={() => setOpenModal(true)}
-                className="absolute inset-0 flex items-center justify-center"
-                aria-label="Открыть точный бюджет за 49 ₽"
-              >
-                <span className="bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-2xl px-5 py-2.5 text-copper text-sm font-semibold whitespace-nowrap hover:bg-brandy hover:text-pine-tree transition">
-                  Открыть за 49 ₽
-                </span>
-              </button>
-            )}
-          </div>
-          {!budgetUnlocked && <PurchaseCount count={purchaseCount ?? 0} />}
+          {/* 2026-09-14: итог снова открыт бесплатно (решение от 2026-09-09
+              заблюрить весь блок отменено продуктовым аудитом воронки —
+              ~190 визитов/день давали ~0.3-0.4 оплаты/день, потому что
+              ценность была не видна ДО клика на оплату: посетитель не мог
+              понять, стоит ли платить, если даже итоговую сумму не видел).
+              Замок теперь только на детальной разбивке по категориям ниже —
+              тот же принцип, что в PricesTable.tsx (первые FREE_ROWS строк
+              открыты, остальное — под блюром с CTA). Итог "от" сам по себе
+              не главный продукт: платный смысл — точные цифры по каждой
+              категории (аренда/еда/транспорт/ЖКХ) и полный прайс. */}
+          <p className="font-serif text-4xl md:text-6xl text-cream tabular-nums leading-none">
+            <CountUp
+              key={preset}
+              value={total}
+              format={(n) => formatRub(Math.round(n))}
+            />
+          </p>
 
           {/* единый долевой бар — сегменты «вырастают» по ширине при появлении */}
           <div className="mt-7 flex h-3.5 w-full overflow-hidden rounded-pill bg-cream/5">
@@ -258,6 +243,10 @@ export function MonthlyBudget({
                           >
                             Открыть за 49 ₽
                           </button>
+                          <p className="mt-2 text-brandy/45 text-[11px] leading-snug">
+                            Разовый платеж, вернем деньги, если не откроется
+                          </p>
+                          <PurchaseCount count={purchaseCount ?? 0} />
                         </div>
                       </div>
                     </li>

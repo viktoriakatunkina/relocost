@@ -11,6 +11,7 @@ import { localizeCity } from "@/lib/content-i18n";
 import { AnchorPrices } from "@/components/city/AnchorPrices";
 import { PricesTable } from "@/components/city/PricesTable";
 import { StickyBar } from "@/components/freemium/StickyBar";
+import { getGlobalPurchaseCount } from "@/lib/purchase-counts";
 import { CrossLinks } from "@/components/CrossLinks";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
@@ -80,7 +81,10 @@ export default async function CityPricesPage({
   const name = cityName(c, params.locale);
   const country = countryName(c, params.locale);
 
-  const prices = await getPricesByCity(c.id);
+  const [prices, purchaseCount] = await Promise.all([
+    getPricesByCity(c.id),
+    getGlobalPurchaseCount(),
+  ]);
   const anchorItems = getAnchorPrices(prices);
 
   return (
@@ -125,7 +129,7 @@ export default async function CityPricesPage({
         <Footer />
       </div>
 
-      <StickyBar slug={c.slug} isForeign={!!c.is_foreign} />
+      <StickyBar slug={c.slug} isForeign={!!c.is_foreign} purchaseCount={purchaseCount} />
     </main>
   );
 }

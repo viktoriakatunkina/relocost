@@ -25,6 +25,7 @@ import { CrossLinks } from "@/components/CrossLinks";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { StickyBar } from "@/components/freemium/StickyBar";
+import { getGlobalPurchaseCount } from "@/lib/purchase-counts";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -91,9 +92,10 @@ export default async function CityBudgetPage({
   const name = cityName(c, params.locale);
   const country = countryName(c, params.locale);
 
-  const [prices, moscowBaseline] = await Promise.all([
+  const [prices, moscowBaseline, purchaseCount] = await Promise.all([
     getPricesByCity(c.id),
     getMoscowBaseline(),
+    getGlobalPurchaseCount(),
   ]);
 
   const anchorItems = getAnchorPrices(prices);
@@ -142,7 +144,12 @@ export default async function CityBudgetPage({
 
       <AnchorPrices items={anchorItems} />
 
-      <MonthlyBudget prices={prices} cityName={name} slug={c.slug} />
+      <MonthlyBudget
+        prices={prices}
+        cityName={name}
+        slug={c.slug}
+        purchaseCount={purchaseCount}
+      />
 
       <Calculator slug={c.slug} prices={prices} cityName={name} />
 
@@ -188,7 +195,7 @@ export default async function CityBudgetPage({
           под тем же paywall'ом «Расходы» 49 ₽, а трафик у /budget заметный —
           151 посетитель за 30 дней (16% от трафика городских страниц).
           На /city/[slug]/prices такая панель уже стоит. */}
-      <StickyBar slug={c.slug} isForeign={!!c.is_foreign} />
+      <StickyBar slug={c.slug} isForeign={!!c.is_foreign} purchaseCount={purchaseCount} />
     </main>
   );
 }

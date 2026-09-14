@@ -15,7 +15,7 @@ export function PurchaseCount({ count }: { count: number }) {
     <p className="mt-3 text-xs text-brandy/60 flex items-center justify-center gap-1.5">
       <span aria-hidden>✓</span>
       {count} {humanWord(count)} уже {count === 1 ? "купил" : "купили"} этот
-      отчёт
+      отчет
     </p>
   );
 }

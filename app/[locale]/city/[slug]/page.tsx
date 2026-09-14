@@ -69,7 +69,7 @@ import { cityPhotoSrc } from "@/lib/photo";
 import { CrowdPriceFeed } from "@/components/CrowdPriceFeed";
 import { CrowdPriceForm } from "@/components/CrowdPriceForm";
 import { getCityCrowdPrices, getCityCrowdCount } from "@/lib/crowd-prices";
-import { getCityPurchaseCounts } from "@/lib/purchase-counts";
+import { getGlobalPurchaseCount } from "@/lib/purchase-counts";
 import { StickyBar } from "@/components/freemium/StickyBar";
 import { VerifyOnReturn } from "@/components/freemium/VerifyOnReturn";
 import { Reveal } from "@/components/Reveal";
@@ -210,7 +210,7 @@ export default async function CityPage({
     moscowBaseline,
     crowdPrices,
     crowdCount,
-    purchaseCounts,
+    purchaseCount,
   ] = await Promise.all([
     getPricesByCity(c.id),
     getSimilarCities(c, 4),
@@ -218,7 +218,7 @@ export default async function CityPage({
     getMoscowBaseline(),
     getCityCrowdPrices(c.slug, 3),
     getCityCrowdCount(c.slug),
-    getCityPurchaseCounts(c.id),
+    getGlobalPurchaseCount(),
   ]);
   const anchorItems = getAnchorPrices(prices);
   // Сравнение с Москвой показываем всем городам, кроме самой Москвы.
@@ -394,7 +394,7 @@ export default async function CityPage({
         prices={prices}
         cityName={name}
         slug={c.slug}
-        purchaseCount={purchaseCounts.budget}
+        purchaseCount={purchaseCount}
       />
 
       <Reveal>
@@ -468,7 +468,7 @@ export default async function CityPage({
           <BestPlaces
             slug={c.slug}
             places={content.best_places}
-            purchaseCount={purchaseCounts.places}
+            purchaseCount={purchaseCount}
           />
         </Reveal>
       )}
@@ -595,7 +595,7 @@ export default async function CityPage({
         <Footer />
       </div>
 
-      <StickyBar slug={c.slug} isForeign={c.is_foreign} />
+      <StickyBar slug={c.slug} isForeign={c.is_foreign} purchaseCount={purchaseCount} />
       <VerifyOnReturn slug={c.slug} />
     </main>
   );
