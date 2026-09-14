@@ -133,7 +133,7 @@ export function PricesTable({
                     {/* Градиент + кнопка */}
                     <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/80 to-transparent flex flex-col items-center justify-end pb-5 px-4">
                       <p className="text-brandy/70 text-xs mb-3 text-center">
-                        + ещё {lockedRows.length} позиций в этой категории
+                        + еще {lockedRows.length} позиций в этой категории
                       </p>
                       <button
                         type="button"

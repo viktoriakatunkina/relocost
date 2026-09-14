@@ -187,11 +187,11 @@ export function CountryPaymentModal({
           <div className="mt-3 space-y-1.5">
             <p className="text-brandy/70 text-xs leading-snug flex gap-2">
               <span className="text-copper shrink-0" aria-hidden>✓</span>
-              Разовый платёж без подписки — доступ к материалу остаётся у Вас
+              Разовый платеж без подписки — доступ к материалу остается у Вас
             </p>
             <p className="text-brandy/70 text-xs leading-snug flex gap-2">
               <span className="text-copper shrink-0" aria-hidden>✓</span>
-              Если доступ не откроется — вернём деньги, напишите нам
+              Если доступ не откроется — вернем деньги, напишите нам
             </p>
           </div>
         </div>
