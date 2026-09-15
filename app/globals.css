@@ -125,6 +125,27 @@ a:focus:not(:focus-visible) {
     border-color: var(--hairline);
   }
 
+  /* Таблицы в статьях блога (markdown -> prose-invert): дефолтные серые
+     границы Tailwind Typography почти не видны на тёмной оливковой палитре
+     сайта — таблица читалась как нераздельный текст без сетки (жалоба
+     Виктории по записи сессии 2026-09-15, статья про Будапешт). Задаём
+     границы и полосатую заливку явно через переменные бренда. */
+  .prose table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  .prose th,
+  .prose td {
+    border: 1px solid var(--hairline);
+    padding: 0.55rem 0.85rem;
+  }
+  .prose thead th {
+    background: var(--surface-elevated);
+  }
+  .prose tbody tr:nth-child(even) {
+    background: rgba(222, 197, 158, 0.04);
+  }
+
   .grain::before {
     content: "";
     position: absolute;
