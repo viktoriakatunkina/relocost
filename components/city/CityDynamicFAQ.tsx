@@ -36,6 +36,12 @@ export function buildCityFaqItems(
     faqQ5: string;
     faqA5Foreign: string; faqA5Russia: string;
   },
+  // Предложный («в Кракове») и винительный («в Тирану») падежи города с
+  // предлогом — 2026-09-15, техSEO-аудит: faqQ4/Q5 подставляли сырое
+  // (именительное) название туда, где по-русски нужен другой падеж, включая
+  // FAQPage JSON-LD. Для ru — см. lib/city-prepositional.ts (cityIn/cityTo);
+  // для en/uz падежей нет — вызывающий код передает cityName без изменений.
+  cases: { cityIn: string; cityTo: string } = { cityIn: cityName, cityTo: cityName },
 ): FaqItem[] {
   const rent = getPrice(prices, "rent", "окраине");
   const food = getPrice(prices, "food", "Продукты");
@@ -44,6 +50,8 @@ export function buildCityFaqItems(
   const sub = (tmpl: string) =>
     tmpl
       .replace(/\{city\}/g, cityName)
+      .replace(/\{cityIn\}/g, cases.cityIn)
+      .replace(/\{cityTo\}/g, cases.cityTo)
       .replace(/\{monthly\}/g, fmt(monthly || rent + food + transport))
       .replace(/\{rent\}/g, fmt(rent))
       .replace(/\{food\}/g, fmt(food))

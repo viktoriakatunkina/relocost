@@ -8,7 +8,7 @@ import {
   moscowCostIndex,
   moscowSecondPerson,
 } from "@/lib/moscow-baseline";
-import { cityIn } from "@/lib/city-prepositional";
+import { cityIn, cityTo } from "@/lib/city-prepositional";
 import { getPostsForCity } from "@/lib/blog";
 import { CITY_CONTENT } from "@/lib/cities-content";
 import { CITY_EXTRA } from "@/lib/cities-content-extra";
@@ -237,6 +237,14 @@ export default async function CityPage({
     moscowComparison,
     cityIn(c.slug, c.name_ru),
   );
+
+  // Падежи города для динамического FAQ (предложный/винительный с предлогом,
+  // «в Кракове» / «в Тирану») — только на ru, где склонение вообще имеет
+  // значение; на en/uz используем локализованное имя как есть без падежа.
+  const faqCases =
+    params.locale === "ru"
+      ? { cityIn: cityIn(c.slug, c.name_ru), cityTo: cityTo(c.slug, c.name_ru) }
+      : { cityIn: name, cityTo: name };
 
   // Месячный бюджет «от» из цен страницы — для оценки «для переезда» (LivingScore).
   const { min_rent, monthly_from } = monthlyBudgetFrom(
@@ -533,23 +541,35 @@ export default async function CityPage({
 
       <Reveal>
         <CityDynamicFAQ
-          items={buildCityFaqItems(name, c.is_foreign, prices, monthly_from, {
-            faqQ1: tCity("faqQ1"),
-            faqA1: tCity("faqA1"),
-            faqQ2: tCity("faqQ2"),
-            faqA2: tCity("faqA2"),
-            faqQ3: tCity("faqQ3"),
-            faqA3Cheap: tCity("faqA3Cheap"),
-            faqA3Avg: tCity("faqA3Avg"),
-            faqA3Exp: tCity("faqA3Exp"),
-            faqQ4: tCity("faqQ4"),
-            faqA4: tCity("faqA4"),
-            faqQ5: tCity("faqQ5"),
-            faqA5Foreign: tCity("faqA5Foreign"),
-            faqA5Russia: tCity("faqA5Russia"),
-          })}
+          items={buildCityFaqItems(
+            name,
+            c.is_foreign,
+            prices,
+            monthly_from,
+            {
+              faqQ1: tCity("faqQ1"),
+              faqA1: tCity("faqA1"),
+              faqQ2: tCity("faqQ2"),
+              faqA2: tCity("faqA2"),
+              faqQ3: tCity("faqQ3"),
+              faqA3Cheap: tCity("faqA3Cheap"),
+              faqA3Avg: tCity("faqA3Avg"),
+              faqA3Exp: tCity("faqA3Exp"),
+              faqQ4: tCity("faqQ4"),
+              faqA4: tCity("faqA4"),
+              faqQ5: tCity("faqQ5"),
+              faqA5Foreign: tCity("faqA5Foreign"),
+              faqA5Russia: tCity("faqA5Russia"),
+            },
+            // Падежи для FAQ (см. buildCityFaqItems) — только на ru: en/uz
+            // не склоняются, там {cityIn}/{cityTo} и не используются в
+            // messages/{en,uz}.json (остался {city}).
+            faqCases,
+          )}
           eyebrow={tCity("faqEyebrow")}
-          title={tCity("faqTitle").replace("{city}", name)}
+          title={tCity("faqTitle")
+            .replace("{cityIn}", faqCases.cityIn)
+            .replace("{city}", name)}
         />
       </Reveal>
 
