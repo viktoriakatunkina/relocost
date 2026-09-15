@@ -3,14 +3,16 @@
 import { useState, useMemo } from "react";
 import type { BlogPostCard } from "@/lib/blog";
 import { BlogCard } from "./BlogCard";
+import { TagFilterBar } from "./TagFilterBar";
 
 const PAGE_SIZE = 12;
 
 export function BlogFilters({ posts }: { posts: BlogPostCard[] }) {
-  const tags = useMemo(() => {
-    const set = new Set<string>();
-    for (const p of posts) if (p.tag) set.add(p.tag);
-    return Array.from(set).sort();
+  // Теги, отсортированные по частоте (популярные — заметнее и в топе выпадающего списка).
+  const tagCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const p of posts) if (p.tag) counts.set(p.tag, (counts.get(p.tag) ?? 0) + 1);
+    return Array.from(counts.entries()).sort((a, b) => b[1] - a[1]);
   }, [posts]);
 
   const [activeTag, setActiveTag] = useState<string | null>(null);
@@ -31,22 +33,11 @@ export function BlogFilters({ posts }: { posts: BlogPostCard[] }) {
 
   return (
     <>
-      {/* Фильтры по тегам */}
-      <div className="flex flex-wrap gap-2 mb-10">
-        <TagButton
-          label="Все"
-          active={activeTag === null}
-          onClick={() => handleTagChange(null)}
-        />
-        {tags.map((t) => (
-          <TagButton
-            key={t}
-            label={t}
-            active={activeTag === t}
-            onClick={() => handleTagChange(t)}
-          />
-        ))}
-      </div>
+      <TagFilterBar
+        tagCounts={tagCounts}
+        activeTag={activeTag}
+        onChange={handleTagChange}
+      />
 
       {/* Счётчик */}
       {filtered.length > 0 && (
@@ -91,30 +82,6 @@ function pluralPosts(n: number): string {
   if (mod10 === 1 && mod100 !== 11) return "статья";
   if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return "статьи";
   return "статей";
-}
-
-function TagButton({
-  label,
-  active,
-  onClick,
-}: {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`px-4 py-2 rounded-pill border text-sm transition ${
-        active
-          ? "bg-copper text-pine-tree border-copper"
-          : "border-cream/10 text-brandy/80 hover:text-cream hover:border-copper/30"
-      }`}
-    >
-      {label}
-    </button>
-  );
 }
 
 function Pagination({

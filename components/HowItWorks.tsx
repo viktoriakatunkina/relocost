@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 
 type StepAccent = {
   fg: string;
@@ -42,11 +43,14 @@ export async function HowItWorks({ cityCount }: { cityCount: number }) {
           {steps.map((s, i) => {
             const Icon = ICONS[i];
             const a = ACCENTS[i];
-            return (
-              <div
-                key={s.n}
-                className="group relative p-5 md:p-8 rounded-3xl bg-surface border hairline transition-all duration-300 hover:bg-surface-elevated hover:-translate-y-1"
-              >
+            // Карточка «Выберите город» и до правки уже выглядела кликабельной
+            // (hover-подъём есть у всех трёх), из-за чего люди по ней реально
+            // жали — см. карту кликов Метрики 2026-09-15. Ведём на тот же /search,
+            // куда указывает «Города» в шапке (components/Header.tsx).
+            const cardClass =
+              "group relative p-5 md:p-8 rounded-3xl bg-surface border hairline transition-all duration-300 hover:bg-surface-elevated hover:-translate-y-1";
+            const inner = (
+              <>
                 <div className="flex items-start justify-between mb-4 md:mb-6">
                   <div
                     className="w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
@@ -68,6 +72,19 @@ export async function HowItWorks({ cityCount }: { cityCount: number }) {
                 </div>
                 <h3 className="font-serif text-xl md:text-3xl text-cream mb-2 md:mb-3">{s.title}</h3>
                 <p className="text-brandy/85 leading-relaxed text-pretty text-sm md:text-base">{s.text}</p>
+              </>
+            );
+
+            if (i === 0) {
+              return (
+                <Link key={s.n} href="/search" className={cardClass}>
+                  {inner}
+                </Link>
+              );
+            }
+            return (
+              <div key={s.n} className={cardClass}>
+                {inner}
               </div>
             );
           })}
