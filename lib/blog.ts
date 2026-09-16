@@ -157,6 +157,7 @@ export async function getPostsForCity(
     .from("blog_posts")
     .select("*")
     .eq("published", true)
+    .neq("tag", HIDDEN_BLOG_TAG)
     .or(ors.join(","))
     .order("created_at", { ascending: false });
   const posts = (data ?? []) as BlogPost[];
@@ -181,6 +182,7 @@ export async function getPostsForCountry(
     .from("blog_posts")
     .select("*")
     .eq("published", true)
+    .neq("tag", HIDDEN_BLOG_TAG)
     .or(ors.join(","))
     .order("created_at", { ascending: false });
   return ((data ?? []) as BlogPost[]).slice(0, limit);
