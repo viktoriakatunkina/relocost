@@ -297,6 +297,14 @@ const COVER_FALLBACKS = [
   "photo-1530789253388-582c481c54b0",
 ];
 
+// Краткий отображаемый заголовок: берём часть до первого «;» (в SEO-заголовках
+// вида «Страна Город DN 2026: £ХХХ; «ХУК»: …» после первой точки с запятой идут
+// исторические врезки, которые выглядят ужасно в качестве h1/headline/og:title).
+// Общая функция для h1, OG/Twitter meta, JSON-LD и og-image — не дублировать логику.
+export function displayBlogTitle(title: string): string {
+  return title.includes(";") ? title.split(";")[0].trim() : title;
+}
+
 export function defaultCoverUrl(slug: string): string {
   const s = slug.toLowerCase().replace(/-/g, "_");
   for (const [keywords, photoId] of COVER_KEYWORD_PHOTOS) {

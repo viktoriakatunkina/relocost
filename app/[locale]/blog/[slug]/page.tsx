@@ -5,7 +5,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   coverGradient,
-
+  displayBlogTitle,
   getCitiesByCountry,
   getCityForPost,
   getPostBySlug,
@@ -42,14 +42,6 @@ export const dynamicParams = true;
 const BLOG_CANONICAL: Record<string, string> = {
   "perevod-deneg-za-granitsu-2026": "kak-perevesti-dengi-iz-rossii-za-granitsu-2026",
 };
-
-// Краткий отображаемый заголовок: берём часть до первого «;» (в SEO-заголовках
-// вида «Страна Город DN 2026: £ХХХ; «ХУК»: …» после первой точки с запятой идут
-// исторические врезки, которые выглядят ужасно в качестве h1/headline/og:title).
-// Общая функция для h1, OG/Twitter meta и JSON-LD — не дублировать логику.
-function displayBlogTitle(title: string): string {
-  return title.includes(";") ? title.split(";")[0].trim() : title;
-}
 
 export async function generateStaticParams() {
   try {

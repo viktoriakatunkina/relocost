@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { supabase } from "@/lib/supabase";
+import { displayBlogTitle } from "@/lib/blog";
 
 export const runtime = "nodejs";
 export const alt = "Relocost блог";
@@ -15,11 +16,11 @@ export async function generateStaticParams() {
 export default async function OG({ params }: { params: { slug: string } }) {
   const { data: post } = await supabase
     .from("blog_posts")
-    .select("title, tag, read_time")
+    .select("title, seo_title, tag, read_time")
     .eq("slug", params.slug)
     .maybeSingle();
 
-  const title = post?.title ?? "Статья Relocost";
+  const title = post?.seo_title ?? (post?.title ? displayBlogTitle(post.title) : "Статья Relocost");
   const tag = post?.tag ?? "Блог";
   const readTime = post?.read_time;
 
