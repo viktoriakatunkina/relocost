@@ -30,11 +30,16 @@ export function MonthlyBudget({
   cityName,
   slug,
   purchaseCount,
+  costIndex,
 }: {
   prices: Record<PriceCategory, Price[]>;
   cityName: string;
   slug: string;
   purchaseCount?: number;
+  /** Индекс стоимости жизни «Москва = 100» (уже посчитан на странице через
+   *  lib/moscow-baseline.ts) — выводим рядом с заголовком блока, ВНЕ
+   *  заблюренной зоны с суммой (см. комментарий 2026-09-14 ниже про блюр). */
+  costIndex?: number | null;
 }) {
   const unlocked = useUnlocked(slug);
   const budgetUnlocked = isUnlocked(unlocked, "budget");
@@ -134,9 +139,24 @@ export function MonthlyBudget({
         />
 
         <div className="relative">
-          <p className="text-copper text-xs uppercase tracking-[0.18em] mb-2 font-medium">
-            Бюджет «от» в месяц · {activePreset.label}
-          </p>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mb-2">
+            <p className="text-copper text-xs uppercase tracking-[0.18em] font-medium">
+              Бюджет «от» в месяц · {activePreset.label}
+            </p>
+            {/* Индекс «Москва = 100» — та же цифра, что в бейдже для блогеров
+                (lib/moscow-baseline.ts), только выведена прямо на странице.
+                Вне блюра сознательно: это открытый ориентир «дороже/дешевле
+                Москвы», а не точная сумма бюджета. */}
+            {costIndex != null && (
+              <span
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-pill bg-cream/8 border hairline text-brandy/85 text-[11px] font-medium normal-case tracking-normal"
+                title="Индекс стоимости жизни относительно Москвы: 100 = Москва"
+              >
+                Индекс {costIndex}
+                <span className="text-brandy/50">· Москва = 100</span>
+              </span>
+            )}
+          </div>
           {/* 2026-09-09: заблюрено. Решение от 2026-09-01 (открыть
               итог, т.к. Calculator.tsx рядом всё равно показывал похожую
               сумму бесплатно) само устарело: сегодня Calculator.tsx тоже

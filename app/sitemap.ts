@@ -207,6 +207,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/quiz", lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { path: "/rating", lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { path: "/checklist", lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { path: "/embed", lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     ...getAllListSlugs().map((slug) => ({
       path: `/list/${slug}`,
       lastModified: now,

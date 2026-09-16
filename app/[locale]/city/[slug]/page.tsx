@@ -403,6 +403,7 @@ export default async function CityPage({
         cityName={name}
         slug={c.slug}
         purchaseCount={purchaseCount}
+        costIndex={c.slug === "moscow" ? null : cityCostIndex}
       />
 
       <Reveal>
