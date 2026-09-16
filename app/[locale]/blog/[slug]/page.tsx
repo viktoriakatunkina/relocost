@@ -43,6 +43,14 @@ const BLOG_CANONICAL: Record<string, string> = {
   "perevod-deneg-za-granitsu-2026": "kak-perevesti-dengi-iz-rossii-za-granitsu-2026",
 };
 
+// Краткий отображаемый заголовок: берём часть до первого «;» (в SEO-заголовках
+// вида «Страна Город DN 2026: £ХХХ; «ХУК»: …» после первой точки с запятой идут
+// исторические врезки, которые выглядят ужасно в качестве h1/headline/og:title).
+// Общая функция для h1, OG/Twitter meta и JSON-LD — не дублировать логику.
+function displayBlogTitle(title: string): string {
+  return title.includes(";") ? title.split(";")[0].trim() : title;
+}
+
 export async function generateStaticParams() {
   try {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -91,14 +99,14 @@ export async function generateMetadata({
     // которых физически нет (это был тот же русский текст под другим URL).
     alternates: buildRuOnlyAlternates(`/blog/${canonicalSlug}`),
     openGraph: {
-      title: post.title,
+      title: post.seo_title ?? displayBlogTitle(post.title),
       description: post.seo_description ?? undefined,
       type: "article",
       publishedTime: post.created_at,
     },
     twitter: {
       card: "summary_large_image",
-      title: post.title,
+      title: post.seo_title ?? displayBlogTitle(post.title),
       description: post.seo_description ?? undefined,
     },
   };
@@ -204,7 +212,7 @@ export default async function BlogPostPage({
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: post.title,
+    headline: post.seo_title ?? displayBlogTitle(post.title),
     description: post.seo_description ?? undefined,
     image: `${SITE_URL}/blog/${post.slug}/opengraph-image`,
     datePublished: post.created_at,
@@ -331,12 +339,11 @@ export default async function BlogPostPage({
     ? `Рассчитайте стоимость жизни в ${ctaCity.name_ru} →`
     : "Рассчитайте стоимость переезда →";
 
-  // Краткий отображаемый заголовок: берём часть до первого «;» (в SEO-заголовках
-  // вида «Страна Город DN 2026: £ХХХ; «ХУК»: …» после первой точки с запятой идут
-  // исторические врезки, которые выглядят ужасно в качестве h1).
-  const displayTitle = post.title.includes(";")
-    ? post.title.split(";")[0].trim()
-    : post.title;
+  // h1: см. displayBlogTitle() в начале файла (та же логика, что уже
+  // используется для OG/Twitter/JSON-LD ниже в generateMetadata/articleSchema
+  // — не дублировать). Здесь без seo_title: для h1 нужен именно заголовок
+  // статьи, а не укороченная meta-версия.
+  const displayTitle = displayBlogTitle(post.title);
 
   return (
     <main className="pb-20 md:pb-24">
