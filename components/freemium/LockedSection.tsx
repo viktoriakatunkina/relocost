@@ -91,7 +91,7 @@ export function LockedSection({
               </p>
             )}
             <p className="mt-2 text-brandy/45 text-[11px] leading-snug">
-              Разовый платеж, вернем деньги, если не откроется
+              Не откроется — не переживайте, вернем деньги
             </p>
             <PurchaseCount count={purchaseCount ?? 0} />
           </div>

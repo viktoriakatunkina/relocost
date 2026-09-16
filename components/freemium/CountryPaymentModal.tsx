@@ -191,7 +191,7 @@ export function CountryPaymentModal({
             </p>
             <p className="text-brandy/70 text-xs leading-snug flex gap-2">
               <span className="text-copper shrink-0" aria-hidden>✓</span>
-              Если доступ не откроется — вернем деньги, напишите нам
+              Не откроется — не переживайте, вернем деньги, просто напишите нам
             </p>
           </div>
         </div>
