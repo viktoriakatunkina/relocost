@@ -25,8 +25,16 @@ export function CompareSuggestions({
       <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3 text-balance">
         {current.name_ru} рядом с другим городом
       </h2>
-      <p className="text-brandy/80 text-lg mb-10 max-w-xl text-pretty">
+      <p className="text-brandy/80 text-lg mb-2 max-w-xl text-pretty">
         Прямое сравнение по аренде, продуктам, транспорту, ЖКХ и сложности переезда.
+      </p>
+      {/* Почему именно эти города: реальный критерий подбора в
+          lib/prices.ts (getSimilarCities) — сначала своя страна, затем
+          похожая аренда и сложность переезда. Раньше принцип выбора
+          нигде не объяснялся — коллега не понимала, почему сравнение
+          именно с этим городом, а не с любым другим. */}
+      <p className="text-brandy/45 text-sm mb-10 max-w-xl text-pretty">
+        Подобраны по стране, близкой аренде и похожей сложности переезда — не случайный список.
       </p>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {pairs.map(({ target, pairSlug }) => (
