@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { Price, PriceCategory } from "@/lib/types";
 import { CATEGORY_LABELS, CATEGORY_ORDER } from "@/lib/prices";
 import { formatRub } from "@/lib/cities";
-import { isUnlocked, useUnlocked } from "@/lib/unlocked";
+import { CITY_PACKAGES, isUnlocked, useUnlocked } from "@/lib/unlocked";
 import { PaymentModal } from "@/components/freemium/PaymentModal";
 
 export function PricesTable({
@@ -140,7 +140,7 @@ export function PricesTable({
                         onClick={() => setOpenModal(true)}
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
                       >
-                        📊 Открыть все цены — 49 ₽
+                        📊 Открыть все цены — {CITY_PACKAGES.budget.price} ₽
                       </button>
                     </div>
                   </div>

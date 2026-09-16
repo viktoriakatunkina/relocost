@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { typo } from "@/lib/typography";
 import { type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
+import { CITY_PACKAGES, COUNTRY_PACKAGES } from "@/lib/packages";
 
 export function generateStaticParams() {
   return [{ locale: "ru" }];
@@ -31,22 +32,41 @@ export async function generateMetadata({
 }
 
 const PACKAGES: { name: string; title: string; price: string; note?: string }[] = [
-  { name: "places", title: "Лучшие места для посещения", price: "19 ₽" },
-  { name: "budget", title: "Полный список статей расходов с реальными ценами", price: "49 ₽" },
-  { name: "bundle", title: "Полный список + лучшие места", price: "59 ₽" },
+  { name: "places", title: "Лучшие места для посещения", price: `${CITY_PACKAGES.places.price} ₽` },
+  {
+    name: "budget",
+    title: "Полный список статей расходов с реальными ценами",
+    price: `${CITY_PACKAGES.budget.price} ₽`,
+  },
+  { name: "bundle", title: "Полный список + лучшие места", price: `${CITY_PACKAGES.bundle.price} ₽` },
   {
     name: "country_cities",
     title: "Список лучших городов страны по критериям + факторы переезда",
-    price: "49 ₽",
+    price: `${COUNTRY_PACKAGES.country_cities.price} ₽`,
     note: "для страниц стран",
   },
   {
     name: "country_overview",
     title: "Все самое важное о стране, особенности жизни и лучшие места",
-    price: "29 ₽",
+    price: `${COUNTRY_PACKAGES.country_overview.price} ₽`,
     note: "для страниц стран",
   },
 ];
+
+const PACKAGE_PRICE_MIN = Math.min(
+  CITY_PACKAGES.places.price,
+  CITY_PACKAGES.budget.price,
+  CITY_PACKAGES.bundle.price,
+  COUNTRY_PACKAGES.country_cities.price,
+  COUNTRY_PACKAGES.country_overview.price,
+);
+const PACKAGE_PRICE_MAX = Math.max(
+  CITY_PACKAGES.places.price,
+  CITY_PACKAGES.budget.price,
+  CITY_PACKAGES.bundle.price,
+  COUNTRY_PACKAGES.country_cities.price,
+  COUNTRY_PACKAGES.country_overview.price,
+);
 
 /* ─── вспомогательные компоненты ─────────────────────────────── */
 
@@ -119,7 +139,7 @@ export default async function OfferPage({
         {/* Быстрые факты */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
-            { label: "Стоимость", value: "от 19 до 59 ₽ за раздел" },
+            { label: "Стоимость", value: `от ${PACKAGE_PRICE_MIN} до ${PACKAGE_PRICE_MAX} ₽ за раздел` },
             { label: "Оплата", value: "ЮKassa, банковская карта" },
             { label: "Доступ", value: "сразу после оплаты" },
           ].map((f) => (

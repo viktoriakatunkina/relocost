@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { typo } from "@/lib/typography";
 import { routing, type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
+import { CITY_PACKAGES, COUNTRY_PACKAGES } from "@/lib/packages";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -184,7 +185,7 @@ export default async function ContactsPage({
               {
                 icon: <IconCard />,
                 title: "Что Вы покупаете",
-                text: "Доступ к платным информационным разделам сайта relocost.ru. Для страниц городов: «Лучшие места для посещения» (19 ₽), «Полный список статей расходов» (49 ₽) и комбо «Расходы + Лучшие места» (59 ₽). Для страниц стран: «Рейтинг городов страны» (49 ₽) и «Полный обзор страны» (29 ₽). Цены окончательные, в рублях, НДС не облагаются (режим НПД).",
+                text: `Доступ к платным информационным разделам сайта relocost.ru. Для страниц городов: «Лучшие места для посещения» (${CITY_PACKAGES.places.price} ₽), «Полный список статей расходов» (${CITY_PACKAGES.budget.price} ₽) и комбо «Расходы + Лучшие места» (${CITY_PACKAGES.bundle.price} ₽). Для страниц стран: «Рейтинг городов страны» (${COUNTRY_PACKAGES.country_cities.price} ₽) и «Полный обзор страны» (${COUNTRY_PACKAGES.country_overview.price} ₽). Цены окончательные, в рублях, НДС не облагаются (режим НПД).`,
               },
               {
                 icon: <IconShield />,

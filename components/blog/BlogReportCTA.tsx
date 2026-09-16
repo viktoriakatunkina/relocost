@@ -1,11 +1,14 @@
 import { Link } from "@/i18n/navigation";
 import type { City } from "@/lib/types";
+import { CITY_PACKAGES } from "@/lib/packages";
 
 const PKGS = [
-  { key: "places", emoji: "📍", label: "Лучшие места", price: 19 },
-  { key: "budget", emoji: "📊", label: "Все расходы",   price: 49 },
-  { key: "bundle", emoji: "🎁", label: "Расходы + Места", price: 59 },
+  { key: "places", emoji: CITY_PACKAGES.places.emoji, label: "Лучшие места", price: CITY_PACKAGES.places.price },
+  { key: "budget", emoji: CITY_PACKAGES.budget.emoji, label: "Все расходы", price: CITY_PACKAGES.budget.price },
+  { key: "bundle", emoji: CITY_PACKAGES.bundle.emoji, label: "Расходы + Места", price: CITY_PACKAGES.bundle.price },
 ];
+
+const MIN_PRICE = Math.min(CITY_PACKAGES.places.price, CITY_PACKAGES.budget.price, CITY_PACKAGES.bundle.price);
 
 // Принимает только slug/name_ru — см. пояснение в ArticleInlineCTA.tsx: сюда
 // приходит либо реальный City (city_id статьи), либо «догадка» из
@@ -26,7 +29,7 @@ export function BlogReportCTA({ city }: { city: CTACity | null }) {
           Отчёт по городу
         </p>
         <h3 className="font-serif text-2xl md:text-3xl text-cream mb-2 leading-tight">
-          Полный профиль {city.name_ru} — от 19 ₽
+          Полный профиль {city.name_ru} — от {MIN_PRICE} ₽
         </h3>
         <p className="text-brandy/90 text-sm mb-6 leading-relaxed">
           Реальные цены на аренду, еду и транспорт · Калькулятор Вашего
@@ -74,7 +77,7 @@ export function BlogReportCTA({ city }: { city: CTACity | null }) {
             Полный отчёт по городу
           </p>
           <p className="font-serif text-2xl md:text-3xl text-cream mb-2 leading-tight">
-            Реальные цены и лучшие места — от 19 ₽
+            Реальные цены и лучшие места — от {MIN_PRICE} ₽
           </p>
           <p className="text-brandy/90 text-sm">
             Калькулятор бюджета · Виза · Гайд. Выберите город и

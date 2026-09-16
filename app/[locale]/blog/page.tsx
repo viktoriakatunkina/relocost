@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { defaultLocale, type Locale } from "@/i18n/routing";
 import { buildRuOnlyAlternates } from "@/lib/i18n-seo";
 import { ARCHIVE_PAGE_SIZE } from "@/lib/blog-archive";
+import { CITY_PACKAGES } from "@/lib/packages";
 
 export const revalidate = 3600;
 
@@ -66,7 +67,7 @@ export default async function BlogPage({
             <p className="text-cream font-medium text-sm leading-snug">
               Знаете, куда переезжаете? Откройте полный отчёт по городу — цены, виза, лучшие места.
             </p>
-            <p className="text-brandy/55 text-xs mt-0.5">40+ статей расходов · единоразово · от 49 ₽</p>
+            <p className="text-brandy/55 text-xs mt-0.5">40+ статей расходов · единоразово · от {CITY_PACKAGES.budget.price} ₽</p>
           </div>
           <Link
             href="/search"

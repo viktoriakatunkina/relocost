@@ -1,5 +1,8 @@
 import { Link } from "@/i18n/navigation";
 import type { City } from "@/lib/types";
+import { CITY_PACKAGES } from "@/lib/packages";
+
+const MIN_PRICE = Math.min(CITY_PACKAGES.places.price, CITY_PACKAGES.budget.price, CITY_PACKAGES.bundle.price);
 
 // Inline CTA, вставляемый программно ВНУТРИ тела статьи (не только в конце) —
 // см. app/[locale]/blog/[slug]/page.tsx. Два места вставки:
@@ -79,8 +82,8 @@ export function ArticleInlineCTA({ variant, city, countrySlug }: Props) {
       <div className="flex-1">
         <p className="font-serif text-lg md:text-xl text-cream leading-tight mb-1.5">
           {city
-            ? `Полный отчёт по ${city.name_ru} — от 19 ₽`
-            : "Полный отчёт по городу — от 19 ₽"}
+            ? `Полный отчёт по ${city.name_ru} — от ${MIN_PRICE} ₽`
+            : `Полный отчёт по городу — от ${MIN_PRICE} ₽`}
         </p>
         <p className="text-brandy/80 text-sm">
           Реальные цены · Калькулятор бюджета · Виза · Гайд — единоразовая

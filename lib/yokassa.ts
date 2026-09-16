@@ -19,11 +19,11 @@ export type PackageType =
 
 /** Авторитетные цены (₽). Берутся ТОЛЬКО с сервера — клиенту не доверяем. */
 export const PACKAGE_PRICES: Record<PackageType, number> = {
-  places: 19,
-  budget: 49,
-  bundle: 59,
-  country_cities: 49,
-  country_overview: 29,
+  places: 149,
+  budget: 199,
+  bundle: 249,
+  country_cities: 199,
+  country_overview: 149,
 };
 
 export const PACKAGE_LABELS: Record<PackageType, string> = {

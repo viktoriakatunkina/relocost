@@ -1,6 +1,21 @@
+import { CITY_PACKAGES, COUNTRY_PACKAGES } from "@/lib/packages";
+
 const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://relocost.ru"
 ).replace(/\/$/, "");
+
+// lib/packages.ts (в отличие от lib/unlocked.ts) НЕ помечен "use client" —
+// это чистые данные без React/localStorage, поэтому его безопасно
+// импортировать сюда, в серверный компонент, без риска затянуть клиентскую
+// границу. Цены пакетов больше не дублируются литералами.
+const ALL_PACKAGE_PRICES = [
+  CITY_PACKAGES.places.price,
+  CITY_PACKAGES.budget.price,
+  CITY_PACKAGES.bundle.price,
+  COUNTRY_PACKAGES.country_cities.price,
+  COUNTRY_PACKAGES.country_overview.price,
+];
+const MAX_PACKAGE_PRICE = Math.max(...ALL_PACKAGE_PRICES);
 
 export function SiteSchemas() {
   const website = {
@@ -33,12 +48,6 @@ export function SiteSchemas() {
     sameAs: [],
   };
 
-  // Цены пакетов продублированы литералами (а не импортированы из
-  // lib/unlocked.ts) намеренно: этот файл — серверный компонент, а
-  // lib/unlocked.ts помечен "use client" (там же useState/useEffect для
-  // localStorage) — импорт значений оттуда в серверный компонент рискует
-  // затянуть клиентскую границу туда, где она не нужна. При изменении цен
-  // пакетов в lib/unlocked.ts (CITY_PACKAGES) не забудь обновить и здесь.
   const softwareApplication = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -56,14 +65,14 @@ export function SiteSchemas() {
       "Лучшие места и районы по городу",
     ],
     // Базовый расчет бюджета бесплатный, детальные блоки — разовая покупка
-    // от 19 ₽ (см. lib/unlocked.ts CITY_PACKAGES). Не указываем
+    // от CITY_PACKAGES.places.price ₽ (см. lib/packages.ts). Не указываем
     // aggregateRating — реальных агрегированных отзывов о самом сервисе
     // (не о городах) на сайте нет, выдумывать рейтинг нельзя.
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "RUB",
       lowPrice: "0",
-      highPrice: "59",
+      highPrice: String(MAX_PACKAGE_PRICE),
       offerCount: "4",
     },
   };

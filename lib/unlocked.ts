@@ -2,84 +2,44 @@
 
 import { useEffect, useState } from "react";
 
-// ---------------------------------------------------------------------------
-// Пакеты для страниц ГОРОДОВ
-// ---------------------------------------------------------------------------
-
-export type CityPackageType = "places" | "budget" | "bundle";
-
-export const CITY_PACKAGES: Record<
+// Чистые данные/типы/хелперы (цены, лейблы, isUnlocked, lockedRemaining и
+// т.п.) вынесены в lib/packages.ts — файл без "use client", безопасный для
+// импорта из серверных компонентов. Здесь — реэкспорт для обратной
+// совместимости со всеми клиентскими компонентами, которые уже импортируют
+// их из "@/lib/unlocked", плюс хуки/localStorage, которым нужен клиент.
+export {
+  CITY_PACKAGES,
+  CITY_PACKAGE_DESCRIPTIONS,
+  COUNTRY_PACKAGES,
+  COUNTRY_PACKAGE_DESCRIPTIONS,
+  PACKAGES,
+  PACKAGE_DESCRIPTIONS,
+  CITY_COMPARISON_FEATURES,
+  availablePackages,
+  isUnlocked,
+  lockedRemaining,
+  isCountryUnlocked,
+  lockedCountryRemaining,
+} from "./packages";
+export type {
   CityPackageType,
-  { label: string; price: number; emoji: string; short: string }
-> = {
-  places: { label: "Лучшие места для посещения", short: "Места", price: 19, emoji: "📍" },
-  budget: { label: "Полный список расходов с ценами", short: "Расходы", price: 49, emoji: "📊" },
-  bundle: { label: "Полный список + лучшие места", short: "Комбо", price: 59, emoji: "🎁" },
-};
-
-export const CITY_PACKAGE_DESCRIPTIONS: Record<CityPackageType, string> = {
-  places: "Лучшие места для посещения в этом городе: кафе, рестораны, районы, рынки и коворкинги.",
-  budget: "Полный список статей расходов с реальными ценами по всем категориям.",
-  bundle: "Полный список статей расходов + лучшие места — все в одном платеже.",
-};
-
-// ---------------------------------------------------------------------------
-// Пакеты для страниц СТРАН
-// ---------------------------------------------------------------------------
-
-export type CountryPackageType = "country_cities" | "country_overview";
-
-export const COUNTRY_PACKAGES: Record<
   CountryPackageType,
-  { label: string; price: number; emoji: string; short: string }
-> = {
-  country_cities: { label: "Города страны по критериям", short: "Города", price: 49, emoji: "🏙" },
-  country_overview: { label: "Все о стране и особенности", short: "Обзор", price: 29, emoji: "🌍" },
-};
-
-export const COUNTRY_PACKAGE_DESCRIPTIONS: Record<CountryPackageType, string> = {
-  country_cities: "Список лучших городов по нескольким критериям с основными факторами переезда.",
-  country_overview: "Все самое важное о стране: особенности жизни, лучшие места, практические советы.",
-};
-
-// ---------------------------------------------------------------------------
-// Единый тип для обратной совместимости с PaymentModal / API
-// ---------------------------------------------------------------------------
-
-export type PackageType = CityPackageType | CountryPackageType;
-
-/** @deprecated Используй CITY_PACKAGES или COUNTRY_PACKAGES */
-export const PACKAGES: Record<
   PackageType,
-  { label: string; price: number; emoji: string; short: string }
-> = {
-  ...CITY_PACKAGES,
-  ...COUNTRY_PACKAGES,
-};
+  ComparisonFeature,
+} from "./packages";
 
-/** @deprecated Используй CITY_PACKAGE_DESCRIPTIONS или COUNTRY_PACKAGE_DESCRIPTIONS */
-export const PACKAGE_DESCRIPTIONS: Record<PackageType, string> = {
-  ...CITY_PACKAGE_DESCRIPTIONS,
-  ...COUNTRY_PACKAGE_DESCRIPTIONS,
-};
-
-// ---------------------------------------------------------------------------
-// Хелперы — ГОРОДА
-// ---------------------------------------------------------------------------
-
-export function availablePackages(isForeign: boolean): CityPackageType[] {
-  void isForeign; // guide-пакет убран, все три продукта одинаковы для любого города
-  // "guide" убран из новой модели — все три продукта одинаковы для любого города.
-  return ["places", "budget", "bundle"];
-}
+import {
+  CITY_VALID,
+  COUNTRY_VALID,
+  ALL_VALID,
+  type CityPackageType,
+  type CountryPackageType,
+  type PackageType,
+} from "./packages";
 
 export function getStorageKey(slug: string) {
   return `relocost_unlocked_${slug}`;
 }
-
-const CITY_VALID: CityPackageType[] = ["places", "budget", "bundle"];
-const COUNTRY_VALID: CountryPackageType[] = ["country_cities", "country_overview"];
-const ALL_VALID: PackageType[] = [...CITY_VALID, ...COUNTRY_VALID];
 
 const EVENT = "relocost:unlocked-changed";
 
@@ -144,21 +104,6 @@ export function readPurchaseEmail(): string | null {
   }
 }
 
-export function isUnlocked(unlocked: CityPackageType[], pkg: CityPackageType): boolean {
-  if (unlocked.includes("bundle")) return true;
-  return unlocked.includes(pkg);
-}
-
-export function lockedRemaining(
-  unlocked: CityPackageType[],
-  isForeign: boolean,
-): CityPackageType[] {
-  void isForeign;
-  if (unlocked.includes("bundle")) return [];
-  const all = availablePackages(isForeign).filter((p) => p !== "bundle");
-  return all.filter((p) => !unlocked.includes(p));
-}
-
 export function useUnlocked(slug: string): CityPackageType[] {
   const [state, setState] = useState<CityPackageType[]>([]);
   useEffect(() => {
@@ -215,17 +160,6 @@ export function addCountryUnlocked(slug: string, pkg: CountryPackageType) {
   const cur = readCountryUnlocked(slug);
   if (cur.includes(pkg)) return;
   writeCountryUnlocked(slug, [...cur, pkg]);
-}
-
-export function isCountryUnlocked(
-  unlocked: CountryPackageType[],
-  pkg: CountryPackageType,
-): boolean {
-  return unlocked.includes(pkg);
-}
-
-export function lockedCountryRemaining(unlocked: CountryPackageType[]): CountryPackageType[] {
-  return COUNTRY_VALID.filter((p) => !unlocked.includes(p));
 }
 
 export function useCountryUnlocked(slug: string): CountryPackageType[] {
