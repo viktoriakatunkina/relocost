@@ -13,6 +13,7 @@ type IconName =
   | "star"
   | "book"
   | "check"
+  | "coins"
   | "info";
 
 interface NavItem {
@@ -104,6 +105,14 @@ function NavIcon({ name }: { name: IconName }) {
         <svg {...common}>
           <rect x="4" y="4" width="16" height="16" rx="3" />
           <polyline points="8.5 12.5 11 15 15.5 9.5" />
+        </svg>
+      );
+    case "coins":
+      return (
+        <svg {...common}>
+          <ellipse cx="9" cy="8" rx="6" ry="3.2" />
+          <path d="M3 8v8c0 1.77 2.69 3.2 6 3.2s6-1.43 6-3.2V8" />
+          <path d="M21 11.2c0 1.5-2.24 2.7-5 2.7M21 11.2c0-.98-.92-1.85-2.3-2.35M21 11.2v4.6c0 1.34-1.75 2.47-4.1 2.66" />
         </svg>
       );
     case "info":

@@ -8,6 +8,7 @@ import {
   type CityPackageType,
 } from "@/lib/unlocked";
 import { PaymentModal } from "./PaymentModal";
+import { PackageComparisonModal } from "./PackageComparisonModal";
 import { RestoreAccess } from "./RestoreAccess";
 import { PurchaseCount } from "@/components/PurchaseCount";
 
@@ -26,10 +27,13 @@ export function StickyBar({
   const unlocked = useUnlocked(slug);
   const remaining = lockedRemaining(unlocked, isForeign);
   const [openPkg, setOpenPkg] = useState<CityPackageType | null>(null);
-  // 2026-09-14: по умолчанию скрываем «Места» из списка вариантов (см.
-  // причину ниже) — этот тоггл открывает полный набор из 3 пакетов для тех,
-  // кому правда нужны только места без остального.
-  const [showAll, setShowAll] = useState(false);
+  // 2026-09-16: раньше тут был инлайн-тоггл «Показать все пакеты», который
+  // просто разворачивал ещё одну строку кнопок с ценами — то есть на вопрос
+  // «чем пакеты отличаются, кроме цены» так и не отвечал (фидбек: «каша в
+  // голове», «нигде не нашла сравнения тарифов»). Теперь тот же вход открывает
+  // полноценную таблицу сравнения (PackageComparisonModal) с чек-марками по
+  // фичам каждого пакета.
+  const [compareOpen, setCompareOpen] = useState(false);
 
   if (remaining.length === 0) return null;
 
@@ -122,26 +126,6 @@ export function StickyBar({
                 </span>
               </span>
             </button>
-            {showAll &&
-              extraPkgs.map((p) => {
-                const meta = CITY_PACKAGES[p];
-                return (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => setOpenPkg(p)}
-                    className="shrink-0 inline-flex flex-col items-start gap-0.5 px-3.5 md:px-4 py-2 min-h-[44px] justify-center rounded-pill bg-surface-elevated hover:bg-surface-elevated text-cream text-sm border hairline transition"
-                  >
-                    <span className="inline-flex items-center gap-1.5">
-                      <span>{meta.emoji}</span>
-                      <span className="hidden sm:inline">{meta.short}</span>
-                      <span className="font-semibold tabular-nums">
-                        {meta.price} ₽
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
             <button
               type="button"
               onClick={() => setOpenPkg("bundle")}
@@ -161,37 +145,21 @@ export function StickyBar({
             </button>
           </div>
 
-          {/* Полный набор из 3 пакетов доступен глубже: тоггл, а не всегда
-              на виду (см. комментарий про extraPkgs выше). */}
+          {/* Полный набор из 3 пакетов — сравнение с чек-марками по фичам, а
+              не просто ещё строка кнопок с ценами (см. комментарий у
+              compareOpen выше). */}
           {extraPkgs.length > 0 && (
             <p className="text-brandy/45 text-[11px] text-center pt-1.5">
               +{bundleExtra} ₽ в «Все включено» — и получите еще {extraLabel}
               {" · "}
               <button
                 type="button"
-                onClick={() => setShowAll((v) => !v)}
+                onClick={() => setCompareOpen(true)}
                 className="underline underline-offset-2 hover:text-brandy transition"
               >
-                {showAll ? "Скрыть" : "Показать все пакеты"}
+                Сравнить пакеты
               </button>
             </p>
-          )}
-          {showAll && extraPkgs.length > 0 && (
-            <div className="flex md:hidden flex-wrap gap-2 pt-2">
-              {extraPkgs.map((p) => {
-                const meta = CITY_PACKAGES[p];
-                return (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => setOpenPkg(p)}
-                    className="flex-1 min-w-[45%] rounded-xl border border-copper/40 text-copper text-sm font-medium py-2 px-3 hover:bg-copper/10 transition"
-                  >
-                    {meta.emoji} {meta.short} — {meta.price} ₽
-                  </button>
-                );
-              })}
-            </div>
           )}
 
           <p className="text-brandy/50 text-[11px] text-center pt-1.5">
@@ -204,6 +172,11 @@ export function StickyBar({
       </div>
 
       <PaymentModal slug={slug} pkg={openPkg} onClose={() => setOpenPkg(null)} />
+      <PackageComparisonModal
+        open={compareOpen}
+        onClose={() => setCompareOpen(false)}
+        onBuy={(pkg) => setOpenPkg(pkg)}
+      />
     </>
   );
 }
