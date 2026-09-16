@@ -1,6 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import { CITY_ROUTES } from "@/lib/city-routes";
 import { totalStopsCount, pluralPoints, pluralRoutes } from "@/lib/trip-format";
+import { CITY_PACKAGES } from "@/lib/packages";
 
 // Карточка со ссылкой на /city/[slug]/trip — только для городов, у которых
 // есть контент маршрутов (lib/city-routes.ts; список читается динамически,
@@ -34,8 +35,12 @@ export function TripTeaser({ slug, cityName }: { slug: string; cityName: string 
             </span>
             <span className="block text-brandy/75 text-sm md:text-base mt-2 leading-relaxed">
               {routes.length} {pluralRoutes(routes.length)}, {totalStops}{" "}
-              {pluralPoints(totalStops)} — с таймингом, дорогой между точками и
-              ценой каждого шага. Готовый план, а не список достопримечательностей.
+              {pluralPoints(totalStops)} — тайминг, дорога между точками и цена
+              каждого шага расписаны заранее, осталось просто идти по плану.
+            </span>
+            <span className="block text-brandy/50 text-xs mt-2">
+              Остальные — вместе с пакетом «{CITY_PACKAGES.places.short}» ({CITY_PACKAGES.places.price} ₽)
+              или «{CITY_PACKAGES.bundle.short}».
             </span>
           </div>
           <span className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm group-hover:bg-brandy transition">
