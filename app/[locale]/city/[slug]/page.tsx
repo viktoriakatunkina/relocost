@@ -68,7 +68,11 @@ import { getAnchorPrices } from "@/lib/anchor-prices";
 import { cityPhotoSrc } from "@/lib/photo";
 import { CrowdPriceFeed } from "@/components/CrowdPriceFeed";
 import { CrowdPriceForm } from "@/components/CrowdPriceForm";
-import { getCityCrowdPrices, getCityCrowdCount } from "@/lib/crowd-prices";
+import {
+  getCityCrowdPrices,
+  getCityCrowdCount,
+  getCrowdPricesCount,
+} from "@/lib/crowd-prices";
 import { getGlobalPurchaseCount } from "@/lib/purchase-counts";
 import { StickyBar } from "@/components/freemium/StickyBar";
 import { VerifyOnReturn } from "@/components/freemium/VerifyOnReturn";
@@ -211,6 +215,7 @@ export default async function CityPage({
     crowdPrices,
     crowdCount,
     purchaseCount,
+    siteCrowdCount,
   ] = await Promise.all([
     getPricesByCity(c.id),
     getSimilarCities(c, 4),
@@ -219,6 +224,10 @@ export default async function CityPage({
     getCityCrowdPrices(c.slug, 3),
     getCityCrowdCount(c.slug),
     getGlobalPurchaseCount(),
+    // Сайт-вайд агрегат — фолбэк для пустых по этому городу (см. ниже,
+    // блок «Оцените цены»): нейтральная формулировка вместо пугающего
+    // city-specific нуля, которая обесценивала бы цифры на странице.
+    getCrowdPricesCount(),
   ]);
   const anchorItems = getAnchorPrices(prices);
   // Сравнение с Москвой показываем всем городам, кроме самой Москвы.
@@ -525,11 +534,22 @@ export default async function CityPage({
             <h2 className="font-serif text-3xl md:text-5xl text-cream">
               Оцените цены в {name}
             </h2>
-            <p className="text-brandy/65 text-sm">
-              {crowdCount > 0
-                ? `${crowdCount} ${crowdCount === 1 ? "оценка" : crowdCount < 5 ? "оценки" : "оценок"} от сообщества`
-                : "Будьте первым — добавьте актуальную цену"}
-            </p>
+            {/* Для городов без своих оценок раньше было «Будьте первым» —
+                это читалось как «цифры на странице взяты с потолка,
+                добавьте нормальные сами» и подрывало доверие к цифрам
+                выше. Вместо city-specific нуля — молчание (ничего не
+                утверждаем) либо, если есть данные, нейтральный сайт-вайд
+                агрегат («N цен от сообщества Relocost»), без намёка на
+                пустоту именно этого города. */}
+            {crowdCount > 0 ? (
+              <p className="text-brandy/65 text-sm">
+                {`${crowdCount} ${crowdCount === 1 ? "оценка" : crowdCount < 5 ? "оценки" : "оценок"} от сообщества`}
+              </p>
+            ) : siteCrowdCount > 0 ? (
+              <p className="text-brandy/65 text-sm">
+                {`Сообщество Relocost уже добавило ${siteCrowdCount} ${siteCrowdCount === 1 ? "цену" : siteCrowdCount < 5 ? "цены" : "цен"} по разным городам`}
+              </p>
+            ) : null}
           </div>
           {crowdPrices.length > 0 && (
             <div className="mb-6">
