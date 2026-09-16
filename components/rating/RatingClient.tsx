@@ -266,6 +266,20 @@ export function RatingClient({ cities }: { cities: RatedCity[] }) {
 
   return (
     <section className="max-w-5xl mx-auto px-6 pb-8">
+      {/* Разводим с квизом /match: это единая объективная оценка по фиксированным
+          критериям (для всех городов одинаковая методика), а не персональный
+          подбор под приоритеты пользователя — там своя логика и свой набор
+          критериев, сравнивать балл-в-балл их не нужно. */}
+      <p className="text-brandy/45 text-xs mb-5 max-w-2xl">
+        Это общая объективная оценка — считается одинаково для всех городов.
+        Ищете город под свои приоритеты (бюджет, климат, море, виза)?
+        Загляните в{" "}
+        <Link href="/match" className="text-copper hover:underline">
+          подбор «Куда переехать»
+        </Link>
+        .
+      </p>
+
       {/* Controls row */}
       <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
         {/* Sort buttons */}

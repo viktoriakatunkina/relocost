@@ -6,6 +6,7 @@ import type { CityWithBudget } from "@/lib/types";
 import { climateTemp, isCoastal } from "@/lib/city-signals";
 import { getVisa } from "@/lib/visa";
 import { formatRub } from "@/lib/cities";
+import { getCityQuality } from "@/lib/city-quality";
 
 // Города с быстрым интернетом (аналог SearchClient — выделено в одном месте).
 const FAST_INTERNET = new Set([
@@ -65,10 +66,15 @@ function scoreClimate(city: CityWithBudget, pref: ClimatePref): number {
   return 28;
 }
 
+// ВАЖНО: раньше эта функция считала «Безопасность» из difficulty_score
+// (сложность переезда — виза/язык/адаптация), что было мисклассификацией —
+// тот же показатель, что двигает ось «Простота переезда» в /rating, просто
+// под другим названием. Реальные данные по безопасности (инверсия индекса
+// преступности) есть в lib/city-quality.ts — используем их.
 function scoreSafety(city: CityWithBudget): number {
-  const d = city.difficulty_score;
-  if (d === null) return 55;
-  return Math.max(0, Math.round((10 - d) / 9 * 100));
+  const q = getCityQuality(city.slug);
+  if (!q) return 55;
+  return Math.round(((q.safety - 1) / 4) * 100);
 }
 
 function scoreVisa(city: CityWithBudget): number {
@@ -194,7 +200,7 @@ function MatchRow({
   if (temp !== null && temp >= 18) tags.push("☀️ Тепло");
   if (isCoastal(city.slug)) tags.push("🌊 Море");
   if (getVisa(city).status === "visa_free") tags.push("✈️ Без визы");
-  if ((city.difficulty_score ?? 10) <= 4) tags.push("🛡️ Безопасно");
+  if ((getCityQuality(city.slug)?.safety ?? 0) >= 4) tags.push("🛡️ Безопасно");
   if (FAST_INTERNET.has(city.slug)) tags.push("⚡ Интернет");
 
   return (
