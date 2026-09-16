@@ -1,5 +1,6 @@
 import type { CityContent } from "@/lib/cities-content";
 import { typo } from "@/lib/typography";
+import { withRubHint, RUB_RATE_FOOTNOTE } from "@/lib/currency";
 
 // #14 + #16: «Работа и удалёнка» — рынок труда, зарплаты, сферы, связь/интернет.
 export function CityWork({
@@ -11,11 +12,17 @@ export function CityWork({
 }) {
   if (!work) return null;
 
+  // Суммы в тексте — в $/€ (как принято на рынке труда), а весь остальной
+  // сайт — в ₽. Дописываем рублёвый ориентир прямо рядом с суммой, не убирая
+  // исходную валюту (см. lib/currency.ts).
   const stats: { label: string; value: string }[] = [
-    { label: "Зарплаты", value: work.salary },
-    { label: "Удалённая работа", value: work.remote },
-    { label: "Интернет и связь", value: work.internet },
+    { label: "Зарплаты", value: withRubHint(work.salary) },
+    { label: "Удалённая работа", value: withRubHint(work.remote) },
+    { label: "Интернет и связь", value: withRubHint(work.internet) },
   ];
+  const hasCurrencyHint = /[$€]/.test(
+    `${work.salary} ${work.remote} ${work.internet}`,
+  );
 
   return (
     <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
@@ -56,6 +63,12 @@ export function CityWork({
           </div>
         ))}
       </div>
+
+      {hasCurrencyHint && (
+        <p className="text-brandy/40 text-xs mt-5 max-w-3xl text-pretty">
+          {RUB_RATE_FOOTNOTE}
+        </p>
+      )}
     </section>
   );
 }

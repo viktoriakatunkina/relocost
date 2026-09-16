@@ -1,5 +1,6 @@
 import type { CityContent } from "@/lib/cities-content";
 import { typo } from "@/lib/typography";
+import { firstRubEquivalent, RUB_RATE_FOOTNOTE } from "@/lib/currency";
 
 // #13: «Районы для жизни» — где селиться, характер района, аренда-ориентир, кому.
 export function CityDistricts({
@@ -8,6 +9,10 @@ export function CityDistricts({
   districts?: CityContent["districts"];
 }) {
   if (!districts?.length) return null;
+
+  // Аренда в тексте — в $/€, весь остальной сайт — в ₽. Дописываем рублёвый
+  // ориентир рядом с исходной суммой (lib/currency.ts), не заменяя её.
+  const hasCurrencyHint = districts.some((d) => /[$€]/.test(d.rent));
 
   return (
     <section className="pt-14 md:pt-20">
@@ -28,10 +33,20 @@ export function CityDistricts({
             key={d.name}
             className="snap-center shrink-0 p-6 md:p-7 rounded-3xl bg-surface border hairline transition hover:border-copper/30"
           >
-            <div className="flex items-baseline justify-between gap-3 mb-3">
+            <div className="flex items-start justify-between gap-3 mb-3">
               <h3 className="font-serif text-2xl text-cream">{d.name}</h3>
-              <span className="shrink-0 text-copper text-sm font-semibold whitespace-nowrap">
-                {d.rent}
+              <span className="shrink-0 text-right">
+                <span className="block text-copper text-sm font-semibold whitespace-nowrap">
+                  {d.rent}
+                </span>
+                {(() => {
+                  const rub = firstRubEquivalent(d.rent);
+                  return rub ? (
+                    <span className="block text-brandy/45 text-xs whitespace-nowrap mt-0.5">
+                      {rub}
+                    </span>
+                  ) : null;
+                })()}
               </span>
             </div>
             <p className="text-brandy/85 leading-relaxed mb-4 text-pretty">
@@ -47,6 +62,12 @@ export function CityDistricts({
         ))}
         </div>
       </div>
+
+      {hasCurrencyHint && (
+        <p className="max-w-6xl mx-auto px-6 text-brandy/40 text-xs mt-5 text-pretty">
+          {RUB_RATE_FOOTNOTE}
+        </p>
+      )}
     </section>
   );
 }
