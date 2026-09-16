@@ -89,8 +89,8 @@ export function currencyLabel(currency: string | null | undefined): string {
 // показывают заметное расхождение с актуальным курсом cbr.ru, обновите
 // значения здесь (и RUB_RATE_DATE) одним изменением на весь сайт.
 export const RUB_RATE_DATE = "16.09.2026";
-export const RUB_RATE_USD = 86;
-export const RUB_RATE_EUR = 93;
+export const RUB_RATE_USD = 84.24;
+export const RUB_RATE_EUR = 97.3;
 
 const RATE_BY_SYMBOL: Record<"$" | "€", number> = {
   $: RUB_RATE_USD,
