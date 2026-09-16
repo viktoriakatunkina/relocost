@@ -133,14 +133,15 @@ function WeightSegment({
         <button
           key={v}
           type="button"
+          aria-pressed={value === v}
           onClick={() => onChange(v)}
           className={[
             "px-2.5 py-1.5 text-[11px] transition border-r border-cream/10 last:border-r-0",
             value === v
               ? v === 0
-                ? "bg-cream/8 text-brandy/60 font-medium"
+                ? "bg-brandy/25 text-pine-tree font-semibold"
                 : v === 1
-                ? "bg-copper/20 text-copper font-medium"
+                ? "bg-copper/25 text-copper font-semibold"
                 : "bg-copper text-pine-tree font-semibold"
               : "bg-transparent text-brandy/30 hover:text-brandy/65 hover:bg-cream/5",
           ].join(" ")}
@@ -264,7 +265,12 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
         {/* Панель приоритетов */}
         <div className="md:sticky md:top-6">
           <div className="bg-surface border hairline rounded-3xl p-6 md:p-7">
-            <h2 className="font-serif text-2xl text-cream mb-6">Что важно</h2>
+            <h2 className="font-serif text-2xl text-cream mb-2">Что важно</h2>
+            <p className="text-brandy/50 text-xs mb-6 leading-relaxed">
+              нет — критерий не учитывается при подборе · важно — учитывается
+              при расчете совпадения · очень — учитывается с двойным весом,
+              сильнее влияет на итоговый %
+            </p>
 
             {/* Бюджет */}
             <div className="mb-6 pb-6 border-b border-cream/8">
@@ -277,6 +283,25 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
                   value={prefs.budgetWeight}
                   onChange={v => set("budgetWeight", v)}
                 />
+              </div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-brandy/50 text-xs shrink-0">до</span>
+                <input
+                  type="number"
+                  min={30000}
+                  max={300000}
+                  step={5000}
+                  value={prefs.maxBudget}
+                  disabled={prefs.budgetWeight === 0}
+                  onChange={e => {
+                    const raw = Number(e.target.value);
+                    if (Number.isNaN(raw)) return;
+                    const clamped = Math.min(300000, Math.max(30000, raw));
+                    set("maxBudget", clamped);
+                  }}
+                  className="w-28 px-2.5 py-1 rounded-lg bg-pine-tree/60 border border-cream/15 text-cream text-sm font-medium tabular-nums focus:border-copper focus:outline-none disabled:opacity-40"
+                />
+                <span className="text-brandy/50 text-xs">₽ / мес</span>
               </div>
               <input
                 type="range"
@@ -309,12 +334,13 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
                       <button
                         key={p}
                         type="button"
+                        aria-pressed={prefs.climatePref === p}
                         onClick={() => set("climatePref", p)}
                         className={[
                           "px-3 py-1.5 rounded-full text-xs border transition",
                           prefs.climatePref === p
-                            ? "border-copper/50 bg-copper/12 text-cream"
-                            : "border-cream/10 text-brandy/45 hover:border-cream/25 hover:text-cream/70",
+                            ? "border-copper bg-copper text-pine-tree font-semibold"
+                            : "border-cream/10 bg-transparent text-brandy/45 hover:border-cream/25 hover:text-cream/70",
                         ].join(" ")}
                       >
                         {p === "warm" ? "🌴 Тропики / жарко" : "🍃 Умеренно"}
@@ -338,10 +364,13 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
 
         {/* Результаты */}
         <div>
-          <div className="flex items-baseline justify-between mb-5">
+          <div className="flex items-baseline justify-between mb-1.5">
             <h2 className="font-serif text-2xl text-cream">Топ совпадений</h2>
             <span className="text-brandy/40 text-sm">{cities.length} городов</span>
           </div>
+          <p className="text-brandy/45 text-xs mb-5">
+            Топ-15 из {cities.length} направлений. Меняйте приоритеты — список обновляется мгновенно.
+          </p>
 
           <div className="flex flex-col gap-2.5">
             {ranked.map(({ city, score }, i) => (
@@ -353,10 +382,6 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
               />
             ))}
           </div>
-
-          <p className="text-brandy/28 text-[11px] text-center mt-8">
-            Топ-15 из {cities.length} направлений. Меняйте приоритеты — список обновляется мгновенно.
-          </p>
         </div>
       </div>
     </div>
