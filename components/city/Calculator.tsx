@@ -319,6 +319,7 @@ export function Calculator({
         slug={slug}
         pkg={payOpen ? "budget" : null}
         onClose={() => setPayOpen(false)}
+        cityName={cityName}
       />
     </section>
   );

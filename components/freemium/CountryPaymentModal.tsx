@@ -32,10 +32,14 @@ export function CountryPaymentModal({
   slug,
   pkg,
   onClose,
+  countryName,
 }: {
   slug: string;
   pkg: CountryPackageType | null;
   onClose: () => void;
+  /** Название страны для саммари заказа перед оплатой — необязательно, см.
+   *  тот же параметр в PaymentModal.tsx. */
+  countryName?: string;
 }) {
   const locale = useLocale();
   const [email, setEmail] = useState("");
@@ -189,10 +193,6 @@ export function CountryPaymentModal({
               <span className="text-copper shrink-0" aria-hidden>✓</span>
               Разовый платеж без подписки — доступ к материалу остается у Вас
             </p>
-            <p className="text-brandy/70 text-xs leading-snug flex gap-2">
-              <span className="text-copper shrink-0" aria-hidden>✓</span>
-              Не откроется — не переживайте, вернем деньги, просто напишите нам
-            </p>
           </div>
         </div>
 
@@ -200,6 +200,27 @@ export function CountryPaymentModal({
           onSubmit={onSubmit}
           className="shrink-0 border-t border-cream/10 bg-surface-elevated px-5 md:px-8 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] space-y-3"
         >
+          {/* Саммари заказа перед оплатой — см. PaymentModal.tsx. */}
+          <div className="rounded-xl border border-copper/25 bg-pine-tree/40 px-4 py-3">
+            <p className="text-brandy/55 text-[10px] uppercase tracking-wider mb-1">
+              Ваш заказ
+            </p>
+            <p className="text-cream text-sm font-semibold leading-snug">
+              {meta.emoji} {meta.label}
+              {countryName ? ` — ${countryName}` : ""}
+            </p>
+            {bullets.length > 0 && (
+              <ul className="mt-1.5 space-y-0.5">
+                {bullets.slice(0, 3).map((b) => (
+                  <li key={b} className="text-brandy/70 text-xs leading-snug flex gap-1.5">
+                    <span className="text-copper shrink-0" aria-hidden>✓</span>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className="text-copper text-sm font-bold mt-1.5">{meta.price} ₽</p>
+          </div>
           <label className="block">
             <span className="block text-brandy/70 text-sm mb-2">
               Email <span className="text-copper">*</span>

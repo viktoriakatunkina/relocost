@@ -47,7 +47,7 @@ function CountryUnlockCard({
   onBuy,
 }: {
   country: CountryTarget;
-  onBuy: (slug: string, pkg: CountryPackageType) => void;
+  onBuy: (slug: string, pkg: CountryPackageType, name: string) => void;
 }) {
   const unlocked = useCountryUnlocked(country.slug);
 
@@ -97,7 +97,7 @@ function CountryUnlockCard({
                 <button
                   key={p}
                   type="button"
-                  onClick={() => onBuy(country.slug, p)}
+                  onClick={() => onBuy(country.slug, p, country.name)}
                   className={
                     filled
                       ? "inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
@@ -127,6 +127,7 @@ export function CountryCompareUnlockCTA({
   const [modal, setModal] = useState<{
     slug: string;
     pkg: CountryPackageType;
+    name: string;
   } | null>(null);
 
   // Есть ли вообще что продавать. Проверяем по статике (число городов /
@@ -166,8 +167,14 @@ export function CountryCompareUnlockCTA({
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">
-          <CountryUnlockCard country={a} onBuy={(slug, pkg) => setModal({ slug, pkg })} />
-          <CountryUnlockCard country={b} onBuy={(slug, pkg) => setModal({ slug, pkg })} />
+          <CountryUnlockCard
+            country={a}
+            onBuy={(slug, pkg, name) => setModal({ slug, pkg, name })}
+          />
+          <CountryUnlockCard
+            country={b}
+            onBuy={(slug, pkg, name) => setModal({ slug, pkg, name })}
+          />
         </div>
 
         <p className="text-brandy/40 text-xs mt-5 text-center">
@@ -179,6 +186,7 @@ export function CountryCompareUnlockCTA({
         slug={modal?.slug ?? ""}
         pkg={modal?.pkg ?? null}
         onClose={() => setModal(null)}
+        countryName={modal?.name}
       />
     </section>
   );

@@ -186,19 +186,12 @@ export function MonthlyBudget({
                 aria-label={`Открыть «${budgetPkg.label}» за ${budgetPkg.price} ₽`}
               >
                 <span className="bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-2xl px-5 py-2.5 text-copper text-sm font-semibold whitespace-nowrap hover:bg-brandy hover:text-pine-tree transition">
-                  Открыть за 49 ₽
+                  Открыть за {budgetPkg.price} ₽
                 </span>
               </button>
             )}
           </div>
-          {!budgetUnlocked && (
-            <>
-              <p className="mt-2 text-brandy/45 text-[11px] leading-snug">
-                Не откроется — не переживайте, вернем деньги
-              </p>
-              <PurchaseCount count={purchaseCount ?? 0} />
-            </>
-          )}
+          {!budgetUnlocked && <PurchaseCount count={purchaseCount ?? 0} />}
 
           {/* единый долевой бар — сегменты «вырастают» по ширине при появлении */}
           <div className="mt-7 flex h-3.5 w-full overflow-hidden rounded-pill bg-cream/5">
@@ -313,9 +306,6 @@ export function MonthlyBudget({
                         >
                           Открыть за {budgetPkg.price} ₽
                         </button>
-                        <p className="mt-2 text-brandy/45 text-[11px] leading-snug">
-                          Не откроется — не переживайте, вернем деньги
-                        </p>
                         <PurchaseCount count={purchaseCount ?? 0} />
                       </div>
                     </li>
@@ -338,6 +328,7 @@ export function MonthlyBudget({
       slug={slug}
       pkg={openModal ? "budget" : null}
       onClose={() => setOpenModal(false)}
+      cityName={cityName}
     />
   </>
   );

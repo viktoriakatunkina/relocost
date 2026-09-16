@@ -370,7 +370,7 @@ export default async function CountryPage({
             </div>
           </>
         ) : (
-          <LockedCities slug={params.slug} cities={cities} />
+          <LockedCities slug={params.slug} cities={cities} countryName={countryName} />
         )}
       </section>
 
@@ -400,7 +400,13 @@ export default async function CountryPage({
                 wide: lastIsOrphan && i === optionals.length - 1,
               })),
             ];
-            return <LockedCountryFacts slug={params.slug} facts={allFacts} />;
+            return (
+              <LockedCountryFacts
+                slug={params.slug}
+                facts={allFacts}
+                countryName={countryName}
+              />
+            );
           })()}
         </section>
       )}
@@ -540,6 +546,7 @@ export default async function CountryPage({
               ? ["country_cities", "country_overview"]
               : ["country_overview"]
           }
+          countryName={countryName}
         />
       )}
     </main>

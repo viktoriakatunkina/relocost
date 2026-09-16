@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useCountryUnlocked, isCountryUnlocked } from "@/lib/unlocked";
+import { COUNTRY_PACKAGES, useCountryUnlocked, isCountryUnlocked } from "@/lib/unlocked";
 import { CountryPaymentModal } from "@/components/freemium/CountryPaymentModal";
 
 interface FactData {
@@ -38,9 +38,11 @@ function FactCard({
 export function LockedCountryFacts({
   slug,
   facts,
+  countryName,
 }: {
   slug: string;
   facts: FactData[];
+  countryName?: string;
 }) {
   const unlocked = useCountryUnlocked(slug);
   const opened = isCountryUnlocked(unlocked, "country_overview");
@@ -108,7 +110,7 @@ export function LockedCountryFacts({
                       onClick={() => setOpenModal(true)}
                       className="inline-block px-5 py-2.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
                     >
-                      Открыть за 29 ₽
+                      Открыть за {COUNTRY_PACKAGES.country_overview.price} ₽
                     </button>
                   </div>
                 </div>
@@ -121,6 +123,7 @@ export function LockedCountryFacts({
         slug={slug}
         pkg={openModal ? "country_overview" : null}
         onClose={() => setOpenModal(false)}
+        countryName={countryName}
       />
     </>
   );

@@ -90,9 +90,6 @@ export function LockedSection({
                 </button>
               </p>
             )}
-            <p className="mt-2 text-brandy/45 text-[11px] leading-snug">
-              Не откроется — не переживайте, вернем деньги
-            </p>
             <PurchaseCount count={purchaseCount ?? 0} />
           </div>
         </div>

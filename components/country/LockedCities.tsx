@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CityCard } from "@/components/CityCard";
 import { Link } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
-import { useCountryUnlocked, isCountryUnlocked } from "@/lib/unlocked";
+import { COUNTRY_PACKAGES, useCountryUnlocked, isCountryUnlocked } from "@/lib/unlocked";
 import { CountryPaymentModal } from "@/components/freemium/CountryPaymentModal";
 import { cityName } from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/routing";
@@ -22,9 +22,11 @@ const FREE_COUNT = 5;
 export function LockedCities({
   slug,
   cities,
+  countryName,
 }: {
   slug: string;
   cities: CityWithMinRent[];
+  countryName?: string;
 }) {
   const unlocked = useCountryUnlocked(slug);
   const opened = isCountryUnlocked(unlocked, "country_cities");
@@ -55,7 +57,7 @@ export function LockedCities({
                   Ещё {locked.length} городов
                 </p>
                 <span className="px-4 py-2 rounded-pill bg-copper text-pine-tree text-sm font-semibold">
-                  Открыть за 49 ₽
+                  Открыть за {COUNTRY_PACKAGES.country_cities.price} ₽
                 </span>
               </button>
               <LockedCityLinks cities={locked} />
@@ -88,7 +90,7 @@ export function LockedCities({
                     Рейтинг городов по критериям переезда — в одном материале.
                   </p>
                   <span className="mt-2 px-5 py-3 rounded-pill bg-copper text-pine-tree font-semibold hover:bg-brandy transition">
-                    Открыть за 49 ₽
+                    Открыть за {COUNTRY_PACKAGES.country_cities.price} ₽
                   </span>
                 </button>
                 <LockedCityLinks cities={locked} />
@@ -100,6 +102,7 @@ export function LockedCities({
         slug={slug}
         pkg={openModal ? "country_cities" : null}
         onClose={() => setOpenModal(false)}
+        countryName={countryName}
       />
     </>
   );

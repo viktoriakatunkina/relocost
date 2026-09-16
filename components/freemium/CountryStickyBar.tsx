@@ -12,12 +12,14 @@ import { CountryPaymentModal } from "./CountryPaymentModal";
 export function CountryStickyBar({
   slug,
   packages,
+  countryName,
 }: {
   slug: string;
   /** Какие пакеты реально продаются на этой странице. По умолчанию — оба.
    *  На странах с ≤3 городами скрытых городов нет, значит country_cities
    *  предлагать нечестно — остаётся только «Обзор». */
   packages?: CountryPackageType[];
+  countryName?: string;
 }) {
   const unlocked = useCountryUnlocked(slug);
   const allowed = packages ?? ["country_cities", "country_overview"];
@@ -82,6 +84,7 @@ export function CountryStickyBar({
         slug={slug}
         pkg={openPkg}
         onClose={() => setOpenPkg(null)}
+        countryName={countryName}
       />
     </>
   );

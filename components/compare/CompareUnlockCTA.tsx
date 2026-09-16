@@ -35,7 +35,7 @@ function CityUnlockCard({
   onBuy,
 }: {
   city: CityTarget;
-  onBuy: (slug: string, pkg: CityPackageType) => void;
+  onBuy: (slug: string, pkg: CityPackageType, name: string) => void;
 }) {
   const unlocked = useUnlocked(city.slug);
   const budgetOpen = isUnlocked(unlocked, "budget");
@@ -68,7 +68,7 @@ function CityUnlockCard({
           </p>
           <button
             type="button"
-            onClick={() => onBuy(city.slug, "places")}
+            onClick={() => onBuy(city.slug, "places", city.name)}
             className="mt-auto inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-pill border border-copper/50 text-copper font-semibold text-sm hover:bg-copper/10 transition"
           >
             {CITY_PACKAGES.places.emoji} Лучшие места — {CITY_PACKAGES.places.price} ₽
@@ -82,14 +82,14 @@ function CityUnlockCard({
           </p>
           <button
             type="button"
-            onClick={() => onBuy(city.slug, "budget")}
+            onClick={() => onBuy(city.slug, "budget", city.name)}
             className="mt-auto inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
           >
             {CITY_PACKAGES.budget.emoji} Полный профиль — {CITY_PACKAGES.budget.price} ₽
           </button>
           <button
             type="button"
-            onClick={() => onBuy(city.slug, "bundle")}
+            onClick={() => onBuy(city.slug, "bundle", city.name)}
             className="text-brandy/60 hover:text-copper text-xs underline underline-offset-2 transition"
           >
             {CITY_PACKAGES.bundle.emoji} + лучшие места, всё вместе —{" "}
@@ -112,9 +112,9 @@ export function CompareUnlockCTA({
   b: CityTarget;
   pct?: number;
 }) {
-  const [modal, setModal] = useState<{ slug: string; pkg: CityPackageType } | null>(
-    null,
-  );
+  const [modal, setModal] = useState<
+    { slug: string; pkg: CityPackageType; name: string } | null
+  >(null);
 
   const headline = pct
     ? `Разница в ${pct}% — это среднее. Посмотрите, из чего она складывается`
@@ -144,8 +144,8 @@ export function CompareUnlockCTA({
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">
-          <CityUnlockCard city={a} onBuy={(slug, pkg) => setModal({ slug, pkg })} />
-          <CityUnlockCard city={b} onBuy={(slug, pkg) => setModal({ slug, pkg })} />
+          <CityUnlockCard city={a} onBuy={(slug, pkg, name) => setModal({ slug, pkg, name })} />
+          <CityUnlockCard city={b} onBuy={(slug, pkg, name) => setModal({ slug, pkg, name })} />
         </div>
 
         <p className="text-brandy/40 text-xs mt-5 text-center">
@@ -157,6 +157,7 @@ export function CompareUnlockCTA({
         slug={modal?.slug ?? ""}
         pkg={modal?.pkg ?? null}
         onClose={() => setModal(null)}
+        cityName={modal?.name}
       />
     </section>
   );

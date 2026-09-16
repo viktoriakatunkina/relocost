@@ -19,10 +19,16 @@ export function PaymentModal({
   slug,
   pkg,
   onClose,
+  cityName,
 }: {
   slug: string;
   pkg: PackageType | null;
   onClose: () => void;
+  /** Название города для саммари заказа перед оплатой («вы покупаете X для
+   *  Тбилиси») — необязательно: не во всех точках вызова город уже есть под
+   *  рукой (см. LockedSection/StickyBar/PricesTable), и без него саммари
+   *  просто не показывает вторую строку, а не ломается. */
+  cityName?: string;
 }) {
   const locale = useLocale();
   const [email, setEmail] = useState("");
@@ -228,16 +234,10 @@ export function PaymentModal({
             </div>
           )}
 
-          {/* Снятие страха «заплачу и ничего не получу» — ровно то, что
-              закреплено в оферте (п. 6), без обещаний сверх неё. */}
           <div className="mt-3 space-y-1.5">
             <p className="text-brandy/70 text-xs leading-snug flex gap-2">
               <span className="text-copper shrink-0" aria-hidden>✓</span>
               Разовый платеж без подписки — доступ к материалу остается у Вас
-            </p>
-            <p className="text-brandy/70 text-xs leading-snug flex gap-2">
-              <span className="text-copper shrink-0" aria-hidden>✓</span>
-              Не откроется — не переживайте, вернем деньги, просто напишите нам
             </p>
           </div>
         </div>
@@ -247,6 +247,30 @@ export function PaymentModal({
           onSubmit={onSubmit}
           className="shrink-0 border-t border-cream/10 bg-surface-elevated px-5 md:px-8 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] space-y-3"
         >
+          {/* Саммари заказа перед оплатой — «повтор заказа» по аналогии с
+              приложением McDonald's: пользователь должен видеть, за что
+              именно платит, прямо перед кнопкой «Оплатить», а не только в
+              шапке модалки (которую он мог уже проскроллить). */}
+          <div className="rounded-xl border border-copper/25 bg-pine-tree/40 px-4 py-3">
+            <p className="text-brandy/55 text-[10px] uppercase tracking-wider mb-1">
+              Ваш заказ
+            </p>
+            <p className="text-cream text-sm font-semibold leading-snug">
+              {meta.emoji} {meta.label}
+              {cityName ? ` — ${cityName}` : ""}
+            </p>
+            {bullets.length > 0 && (
+              <ul className="mt-1.5 space-y-0.5">
+                {bullets.slice(0, 3).map((b) => (
+                  <li key={b} className="text-brandy/70 text-xs leading-snug flex gap-1.5">
+                    <span className="text-copper shrink-0" aria-hidden>✓</span>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className="text-copper text-sm font-bold mt-1.5">{meta.price} ₽</p>
+          </div>
           <label className="block">
             <span className="block text-brandy/70 text-sm mb-2">
               Email <span className="text-copper">*</span>
