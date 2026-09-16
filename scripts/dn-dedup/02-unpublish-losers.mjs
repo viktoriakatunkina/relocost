@@ -56,16 +56,25 @@ for (let i = 0; i < lookupChunks.length; i++) {
   await sleep(400);
 }
 
+// 2026-09-16: 13 записей-ключей — легаси кириллических омоглиф-slug'ов
+// (см. _comment_omoglyph_slugs_fix_2026 в config/blog-redirects.json):
+// эти строки НИКОГДА не были и не будут реальной строкой blog_posts — их
+// исправили на чистую латиницу через UPDATE ещё 2026-09-15, а битый
+// вариант оставлен в redirects только как ключ для строкового матчинга
+// URL в middleware.ts (пользователь мог зайти по старой битой ссылке).
+// Раньше это было ЖЁСТКИМ ABORT для ВСЕГО скрипта (762+ валидных записей
+// не обрабатывались из-за 13 заведомо отсутствующих) — теперь пропускаем
+// такие с предупреждением и продолжаем остальные.
 const missing = loserSlugs.filter((s) => !idBySlug.has(s));
 if (missing.length) {
-  console.error(`ABORT: ${missing.length} loser slugs not found in DB (deleted?):`, missing);
-  process.exit(1);
+  console.warn(`ПРЕДУПРЕЖДЕНИЕ: ${missing.length} loser slugs не найдены в БД — пропущены (не PATCH'аются, они не реальные строки, см. комментарий выше):`, missing);
 }
+const validLoserSlugs = loserSlugs.filter((s) => idBySlug.has(s));
 
 const DRY_RUN = process.argv.includes("--dry-run");
 console.log(DRY_RUN ? "DRY RUN — no writes" : "LIVE — will PATCH published=false");
 
-const batches = chunk(loserSlugs, 20);
+const batches = chunk(validLoserSlugs, 20);
 let totalUpdated = 0;
 for (let i = 0; i < batches.length; i++) {
   const batchSlugs = batches[i];
@@ -90,4 +99,4 @@ for (let i = 0; i < batches.length; i++) {
   await sleep(500);
 }
 
-console.log(`\nTotal updated: ${totalUpdated}/${loserSlugs.length}`);
+console.log(`\nTotal updated: ${totalUpdated}/${validLoserSlugs.length} (${missing.length} skipped, not real rows)`);
