@@ -310,7 +310,7 @@ export function Calculator({
             )}
           </div>
           <p className="text-brandy/70 text-sm md:text-right md:max-w-xs text-pretty">
-            {typo("Точный бюджет с медициной, развлечениями и сравнением — в пакете «Точный бюджет».")}
+            {typo(`Точный бюджет с медициной, развлечениями и сравнением — в пакете «${budget.label}».`)}
           </p>
         </div>
       </div>
