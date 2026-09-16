@@ -10,7 +10,7 @@ import {
   HOUSEHOLD_PRESETS,
   type HouseholdPresetKey,
 } from "@/lib/household";
-import { isUnlocked, useUnlocked } from "@/lib/unlocked";
+import { CITY_PACKAGES, isUnlocked, useUnlocked } from "@/lib/unlocked";
 import { PaymentModal } from "@/components/freemium/PaymentModal";
 import { PurchaseCount } from "@/components/PurchaseCount";
 
@@ -43,6 +43,7 @@ export function MonthlyBudget({
 }) {
   const unlocked = useUnlocked(slug);
   const budgetUnlocked = isUnlocked(unlocked, "budget");
+  const budgetPkg = CITY_PACKAGES.budget;
   const [openModal, setOpenModal] = useState(false);
 
   const base = budgetBreakdown(prices);
@@ -182,7 +183,7 @@ export function MonthlyBudget({
                 type="button"
                 onClick={() => setOpenModal(true)}
                 className="absolute inset-0 flex items-center justify-center"
-                aria-label="Открыть точный бюджет за 49 ₽"
+                aria-label={`Открыть «${budgetPkg.label}» за ${budgetPkg.price} ₽`}
               >
                 <span className="bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-2xl px-5 py-2.5 text-copper text-sm font-semibold whitespace-nowrap hover:bg-brandy hover:text-pine-tree transition">
                   Открыть за 49 ₽
@@ -193,7 +194,7 @@ export function MonthlyBudget({
           {!budgetUnlocked && (
             <>
               <p className="mt-2 text-brandy/45 text-[11px] leading-snug">
-                Разовый платеж, вернем деньги, если не откроется
+                Не откроется — не переживайте, вернем деньги
               </p>
               <PurchaseCount count={purchaseCount ?? 0} />
             </>
@@ -218,9 +219,19 @@ export function MonthlyBudget({
 
           {/* строки категорий: все под замком — 2026-09-09, раньше первые 2
               (аренда/еда) были открыты бесплатно с точными суммами и
-              процентами, что обесценивало платную разбивку. */}
+              процентами, что обесценивало платную разбивку.
+              2026-09-16: по фидбеку Вики (юзабилити-тест /match и пейволла)
+              открыта 1 строка («Аренда» — самая тяжелая и понятная статья,
+              сама по себе не дает полной картины расходов) с реальной суммой
+              и %, остальные — заперты по отдельности (иконка 🔒 + название
+              категории видно, сумма скрыта) вместо общего блюр-блока на все
+              строки сразу. Цель — дать почувствовать нехватку данных «в
+              процессе», а не пугать сплошным блюром (аналогия с авто.ру,
+              которой поделилась Вика: часть инфы открыта, важное — за
+              деньги). Итоговая сумма (total) выше по-прежнему заблюрена —
+              решение от 2026-09-14 здесь не пересматривается. */}
           {(() => {
-            const FREE_ROWS = 0;
+            const FREE_ROWS = 1;
             const freeSlices = slices.slice(0, FREE_ROWS);
             const lockedSlices = slices.slice(FREE_ROWS);
 
@@ -264,34 +275,48 @@ export function MonthlyBudget({
                   budgetUnlocked ? (
                     lockedSlices.map((s, i) => renderSlice(s, FREE_ROWS + i))
                   ) : (
-                    <li className="relative">
-                      {/* размытые строки под оверлеем */}
-                      <ul
-                        aria-hidden
-                        className="space-y-5 pointer-events-none select-none"
-                        style={{ filter: "blur(5px)" }}
-                      >
-                        {lockedSlices.map((s, i) => renderSlice(s, FREE_ROWS + i))}
-                      </ul>
-                      {/* paywall-оверлей */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-2xl px-5 py-4 text-center shadow-xl">
-                          <p className="text-cream font-serif text-lg mb-1">📊 Детальная разбивка</p>
-                          <p className="text-brandy/75 text-sm mb-3 leading-snug">
-                            Расходы по всем категориям — в пакете «Точный бюджет»
-                          </p>
-                          <button
-                            type="button"
-                            onClick={() => setOpenModal(true)}
-                            className="inline-block px-5 py-2.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
-                          >
-                            Открыть за 49 ₽
-                          </button>
-                          <p className="mt-2 text-brandy/45 text-[11px] leading-snug">
-                            Разовый платеж, вернем деньги, если не откроется
-                          </p>
-                          <PurchaseCount count={purchaseCount ?? 0} />
-                        </div>
+                    <li className="flex flex-col gap-2">
+                      {/* заперта каждая строка по отдельности: категория
+                          видна, сумма и % — нет. Дает больше «интереса
+                          купить», чем один общий блюр-блок на весь список. */}
+                      {lockedSlices.map((s) => (
+                        <button
+                          key={s.key}
+                          type="button"
+                          onClick={() => setOpenModal(true)}
+                          className="flex items-center justify-between gap-3 rounded-xl border border-copper/15 bg-copper/[0.04] px-3.5 py-3 text-left hover:border-copper/30 hover:bg-copper/[0.07] transition"
+                        >
+                          <span className="flex items-center gap-2.5 text-brandy/55 text-sm">
+                            <span aria-hidden className="text-lg leading-none opacity-60">
+                              {s.icon}
+                            </span>
+                            {s.label}
+                          </span>
+                          <span className="flex items-center gap-1.5 text-copper text-xs font-medium shrink-0">
+                            <span aria-hidden>🔒</span>
+                            <span className="hidden sm:inline">Купить полный список</span>
+                            <span className="sm:hidden">Купить</span>
+                          </span>
+                        </button>
+                      ))}
+
+                      {/* единая карточка с ценой и гарантией — под запертыми строками */}
+                      <div className="mt-3 bg-surface-elevated/80 border border-copper/25 rounded-2xl px-5 py-4 text-center">
+                        <p className="text-cream font-serif text-lg mb-1">📊 Детальная разбивка</p>
+                        <p className="text-brandy/75 text-sm mb-3 leading-snug">
+                          Точные суммы и % по каждой категории — в пакете «{budgetPkg.label}»
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => setOpenModal(true)}
+                          className="inline-block px-5 py-2.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
+                        >
+                          Открыть за {budgetPkg.price} ₽
+                        </button>
+                        <p className="mt-2 text-brandy/45 text-[11px] leading-snug">
+                          Не откроется — не переживайте, вернем деньги
+                        </p>
+                        <PurchaseCount count={purchaseCount ?? 0} />
                       </div>
                     </li>
                   )
