@@ -73,7 +73,10 @@ const CITIES = [
   },
   {
     name_ru: "Кирения", name_en: "Kyrenia", slug: "kyrenia",
-    country_ru: "Северный Кипр", country_en: "Northern Cyprus", country_slug: "northern-cyprus", flag_emoji: "🇨🇾",
+    // Флаг ТРСК не входит в Unicode (непризнанное государство, кроме Турции) —
+    // используем турецкий флаг, а не флаг Республики Кипр (🇨🇾, уже занят
+    // Лимасолом/Ларнакой/Пафосом/Никосией — визуально путал бы юрисдикции).
+    country_ru: "Северный Кипр", country_en: "Northern Cyprus", country_slug: "northern-cyprus", flag_emoji: "🇹🇷",
     population: "33 тыс", climate: "+19°C ср.", language: "Турецкий, английский",
     currency: "Турецкая лира, TRY", flight_from_moscow: "5–6 часов с пересадкой в Турции",
     is_foreign: true, difficulty_score: 3, is_popular: false,
