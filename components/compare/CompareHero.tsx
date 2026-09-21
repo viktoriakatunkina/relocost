@@ -1,5 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import type { City } from "@/lib/types";
+import { cityPhotoSrc } from "@/lib/photo";
+import { CityCardImage } from "@/components/CityCardImage";
 
 const GRADIENTS: Record<string, string> = {
   tbilisi: "from-rose-900/70 to-pine-tree",
@@ -58,21 +60,38 @@ export function CompareHero({
 function Side({ city }: { city: City }) {
   const gradient =
     GRADIENTS[city.slug] ?? "from-kombu-green/60 to-pine-tree";
+  // Реальное hero-фото города — тот же источник и приоритет (Storage/R2 →
+  // Unsplash → null), что на странице города (CityHero.tsx) и в карточках
+  // (CityCard.tsx). Раньше здесь всегда был только градиент + флаг — на
+  // /compare фото городов не попадали, хотя на самой странице города они
+  // уже есть.
+  const photo = cityPhotoSrc(city.slug, city.image_url, city.unsplash_url, {
+    w: 800,
+    q: 80,
+  });
   return (
     <Link
       href={`/city/${city.slug}`}
       className={`relative block aspect-[4/5] md:aspect-[16/10] overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} transition hover:-translate-y-1`}
     >
+      {photo && (
+        <CityCardImage
+          src={photo}
+          alt={`${city.name_ru} — ${city.country_ru}`}
+          gradient={gradient}
+          emoji={city.flag_emoji ?? undefined}
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/30 to-transparent" />
       <div className="relative h-full p-5 md:p-7 flex flex-col justify-between">
-        <span className="text-3xl md:text-5xl" aria-hidden>
+        <span className="text-3xl md:text-5xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)]" aria-hidden>
           {city.flag_emoji}
         </span>
         <div>
-          <p className="text-brandy/80 text-xs uppercase tracking-wider mb-1">
+          <p className="text-brandy/80 text-xs uppercase tracking-wider mb-1 drop-shadow-[0_1px_6px_rgba(0,0,0,0.7)]">
             {city.country_ru}
           </p>
-          <h2 className="font-serif text-3xl md:text-4xl text-cream">
+          <h2 className="font-serif text-3xl md:text-4xl text-cream drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">
             {city.name_ru}
           </h2>
         </div>
