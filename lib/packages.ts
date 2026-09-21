@@ -23,7 +23,14 @@ export const CITY_PACKAGES: Record<
 > = {
   places: { label: "Лучшие места для посещения", short: "Места", price: 149, emoji: "📍" },
   budget: { label: "Полный список расходов с ценами", short: "Расходы", price: 199, emoji: "📊" },
-  bundle: { label: "Полный список + лучшие места", short: "Комбо", price: 249, emoji: "🎁" },
+  // 2026-09-21 (предпринимательский аудит): раньше bundle назывался
+  // по-разному в трех точках одной пользовательской сессии — "Комбо" (этот
+  // short), хардкод "Все включено" в StickyBar.tsx и хардкод "Полный список +
+  // лучшие места" в чек-аут модалке (взятый из label). Единственное
+  // канонической название теперь "Все включено" — и label, и short. Компоненты
+  // (StickyBar, PaymentModal, PackageComparisonTable, TripTeaser) читают его
+  // отсюда, а не хардкодят — меняешь тут, меняется везде.
+  bundle: { label: "Все включено", short: "Все включено", price: 249, emoji: "🎁" },
 };
 
 export const CITY_PACKAGE_DESCRIPTIONS: Record<CityPackageType, string> = {
@@ -130,6 +137,27 @@ export function lockedRemaining(
 // ---------------------------------------------------------------------------
 // Хелперы — СТРАНЫ (чистые функции, без React/localStorage)
 // ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// Бандл «Бюджет по двум городам» — /compare, /match (2026-09-21,
+// предпринимательский аудит).
+//
+// НЕ путать с CITY_PACKAGES.bundle («Все включено» — places+budget ОДНОГО
+// города, 249 ₽). Это отдельная механика: пакет budget (199 ₽) сразу для
+// ДВУХ городов со скидкой — 299 ₽ вместо 398 ₽ (398 = 2×199).
+//
+// Технически — одна оплата ЮKassa создает ДВЕ обычные записи purchases
+// (package_type='budget', по одной на каждый city_id, тот же email и тот же
+// payment id в metadata) — см. app/api/payment/create-bundle/route.ts и
+// app/api/payment/webhook/route.ts. Никакой отдельный package_type/схема не
+// нужны: обе строки — это просто два самостоятельных budget-пакета, поэтому
+// вся существующая логика разблокировки (isUnlocked, /api/payment/access)
+// работает для них без изменений.
+export const CITY_PAIR_BUDGET_BUNDLE = {
+  price: 299,
+  fullPrice: CITY_PACKAGES.budget.price * 2, // 398 ₽ при текущей цене budget
+  savings: CITY_PACKAGES.budget.price * 2 - 299, // 99 ₽
+} as const;
 
 export function isCountryUnlocked(
   unlocked: CountryPackageType[],

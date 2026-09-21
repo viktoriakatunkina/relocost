@@ -63,7 +63,7 @@ export function StickyBar({
   const PRIMARY_LABEL: Record<CityPackageType, string> = {
     budget: "Все цены",
     places: "Лучшие места",
-    bundle: "Все включено",
+    bundle: CITY_PACKAGES.bundle.short,
   };
 
   // 2026-09-14 (продуктовый аудит воронки): по факту продаж покупают почти
@@ -134,7 +134,7 @@ export function StickyBar({
               <span className="inline-flex items-center gap-1.5">
                 <span>🎁</span>
                 <span>
-                  Все включено {CITY_PACKAGES.bundle.price} ₽
+                  {CITY_PACKAGES.bundle.short} {CITY_PACKAGES.bundle.price} ₽
                   {bundleSavings > 0 && (
                     <span className="font-medium text-pine-tree/70 text-xs ml-1">
                       −{bundleSavings} ₽
@@ -150,7 +150,7 @@ export function StickyBar({
               compareOpen выше). */}
           {extraPkgs.length > 0 && (
             <p className="text-brandy/45 text-[11px] text-center pt-1.5">
-              +{bundleExtra} ₽ в «Все включено» — и получите еще {extraLabel}
+              +{bundleExtra} ₽ в «{CITY_PACKAGES.bundle.short}» — и получите еще {extraLabel}
               {" · "}
               <button
                 type="button"
