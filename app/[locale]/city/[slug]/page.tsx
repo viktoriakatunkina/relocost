@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { supabase, fetchWithHardTimeout } from "@/lib/supabase";
+import { supabase, fetchWithHardTimeout, unwrapOrThrow } from "@/lib/supabase";
 import { getPricesByCity, getSimilarCities } from "@/lib/prices";
 import {
   getMoscowBaseline,
@@ -128,11 +128,14 @@ export async function generateMetadata({
 }: {
   params: { locale: Locale; slug: string };
 }) {
-  const { data: city } = await supabase
-    .from("cities")
-    .select("id, name_ru, seo_title, seo_description")
-    .eq("slug", params.slug)
-    .maybeSingle();
+  const city = await unwrapOrThrow(
+    supabase
+      .from("cities")
+      .select("id, name_ru, seo_title, seo_description")
+      .eq("slug", params.slug)
+      .maybeSingle(),
+    `city/[slug] generateMetadata(${params.slug})`,
+  );
   if (!city) return {};
   // Локализуем seo_title/description (en/uz берут перевод, иначе ru-фолбэк).
   const seo = await localizeCitySeo(
@@ -188,11 +191,10 @@ export default async function CityPage({
   const tScore = await getTranslations("livingScore");
   const tVerdict = await getTranslations("cityVerdict");
 
-  const { data: city } = await supabase
-    .from("cities")
-    .select("*")
-    .eq("slug", params.slug)
-    .maybeSingle();
+  const city = await unwrapOrThrow(
+    supabase.from("cities").select("*").eq("slug", params.slug).maybeSingle(),
+    `city/[slug] getCity(${params.slug})`,
+  );
   if (!city) notFound();
   // Локализуем текстовые DB-поля города (intro_text, climate, language, …).
   // Для ru возвращается исходный объект без изменений.

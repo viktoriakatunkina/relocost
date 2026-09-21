@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase, unwrapOrThrow } from "./supabase";
 import { getPricesByCity } from "./prices";
 import { formatRub } from "./cities";
 import type { City, Price, PriceCategory } from "./types";
@@ -111,10 +111,15 @@ export async function loadCompare(
   slugA: string,
   slugB: string,
 ): Promise<CompareResult | null> {
-  const { data: cities } = await supabase
-    .from("cities")
-    .select("*")
-    .in("slug", [slugA, slugB]);
+  // 2026-09-21: раньше `error` не проверялся — сбой запроса молча вёл к
+  // `cities = undefined` → `null` → notFound() на /compare/[pair], которое
+  // self-hosted ISR кэширует как постоянный 404. См. lib/supabase.ts
+  // unwrapOrThrow. Genuine «не нашли оба слага среди городов» (запрос
+  // отработал, просто меньше 2 строк) по-прежнему возвращает null.
+  const cities = await unwrapOrThrow(
+    supabase.from("cities").select("*").in("slug", [slugA, slugB]),
+    `loadCompare(${slugA}, ${slugB})`,
+  );
   if (!cities || cities.length !== 2) return null;
   const a = (cities as City[]).find((c) => c.slug === slugA);
   const b = (cities as City[]).find((c) => c.slug === slugB);

@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type PostgrestError } from "@supabase/supabase-js";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -103,6 +103,30 @@ export async function fetchWithHardTimeout(
   } finally {
     clearTimeout(tid);
   }
+}
+
+// 2026-09-21: тот же класс бага, что чинили в lib/blog.ts getPostBySlug —
+// найден ещё в нескольких местах (city/country/compare страницы). Паттерн:
+// `const { data } = await supabase.from(...).maybeSingle(); if (!data)
+// notFound();` — `error` из ответа не проверялся вообще, поэтому любой
+// транзиентный сбой запроса (таймаут/5xx/перегрузка VPS) молча превращался
+// в `data = null` → notFound(). Self-hosted ISR на VPS кэширует notFound()
+// как постоянный 404 в файловом кеше, даже когда данные в БД валидны.
+// Транспортный fetchWithRetry (см. выше) уже повторяет транзиентные сбои
+// НЕСКОЛЬКО РАЗ на уровне HTTP — если ошибка всё равно дошла до вызывающего
+// кода, значит все попытки исчерпаны, и это НЕ повод считать сущность
+// отсутствующей. unwrapOrThrow бросает исключение в этом случае, чтобы
+// страница ушла в app/[locale]/error.tsx (retry на следующем заходе/
+// ревалидации) вместо notFound(). Genuine «не найдено» (запрос отработал
+// без ошибки, просто нет строки: error === null, data === null) по-прежнему
+// возвращает null и корректно ведёт на notFound() — это НЕ меняется.
+export async function unwrapOrThrow<T>(
+  result: PromiseLike<{ data: T; error: PostgrestError | null }>,
+  context: string,
+): Promise<T> {
+  const { data, error } = await result;
+  if (error) throw new Error(`${context}: ${error.message}`);
+  return data;
 }
 
 export function supabaseAdmin() {

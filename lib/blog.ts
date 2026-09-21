@@ -109,6 +109,7 @@ export async function getPublishedPostCardsOrThrow(): Promise<BlogPostCard[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  let lastError: unknown = null;
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const query = supabase
@@ -124,11 +125,26 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       );
       const { data, error } = await Promise.race([query, timeout]);
       if (!error) return (data as BlogPost | null) ?? null;
-    } catch {
+      lastError = error;
+    } catch (e) {
+      lastError = e;
       if (attempt < 2) await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
     }
   }
-  return null;
+  // ВАЖНО (2026-09-21): раньше здесь стоял `return null` — вызывающий код
+  // (app/[locale]/blog/[slug]/page.tsx) трактует null как «статьи не
+  // существует» и вызывает notFound(). Но null после 3 неудачных попыток
+  // мог означать и «не достучались до Supabase» (сервер под нагрузкой/своп) —
+  // и ISR на self-hosted VPS кешировал этот notFound() как постоянный 404
+  // даже для статей с валидным контентом (обнаружено: 643 из ~2987 статей
+  // блога, 21%, отдавали живой 404 при полностью корректном content_md).
+  // Теперь при исчерпании попыток бросаем ошибку вместо null — genuine
+  // «не найдено» (query отработал, данных нет) по-прежнему возвращает null
+  // и корректно ведёт на notFound(), а «не смогли получить данные» больше
+  // не маскируется под «не существует».
+  throw new Error(
+    `getPostBySlug: не удалось получить "${slug}" после 3 попыток — ${String(lastError)}`,
+  );
 }
 
 export async function getAllPostSlugs(limit = 2000): Promise<string[]> {

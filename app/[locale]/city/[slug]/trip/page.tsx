@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
-import { supabase } from "@/lib/supabase";
+import { supabase, unwrapOrThrow } from "@/lib/supabase";
 import { CITY_ROUTES } from "@/lib/city-routes";
 import {
   cheapestRouteFrom,
@@ -47,11 +47,10 @@ export async function generateMetadata({
   params: { locale: Locale; slug: string };
 }) {
   if (!CITY_ROUTES[params.slug]) return {};
-  const { data: city } = await supabase
-    .from("cities")
-    .select("name_ru")
-    .eq("slug", params.slug)
-    .maybeSingle();
+  const city = await unwrapOrThrow(
+    supabase.from("cities").select("name_ru").eq("slug", params.slug).maybeSingle(),
+    `city/[slug]/trip generateMetadata(${params.slug})`,
+  );
   if (!city) return {};
 
   const title = `Маршруты по ${city.name_ru} на день 2026 — куда сходить и сколько потратить | Relocost`;
@@ -76,11 +75,14 @@ export default async function CityTripPage({
   const routes = CITY_ROUTES[params.slug];
   if (!routes) notFound();
 
-  const { data: city } = await supabase
-    .from("cities")
-    .select("slug, name_ru, country_ru, country_slug, is_foreign")
-    .eq("slug", params.slug)
-    .maybeSingle();
+  const city = await unwrapOrThrow(
+    supabase
+      .from("cities")
+      .select("slug, name_ru, country_ru, country_slug, is_foreign")
+      .eq("slug", params.slug)
+      .maybeSingle(),
+    `city/[slug]/trip getCity(${params.slug})`,
+  );
   if (!city) notFound();
 
   const name = city.name_ru;

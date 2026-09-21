@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase, unwrapOrThrow } from "./supabase";
 import type { City, CityWithMinRent } from "./types";
 
 export async function getCitiesInCountry(
@@ -64,12 +64,20 @@ export async function getAllCountrySlugs(): Promise<string[]> {
 export async function getCountryMeta(
   countrySlug: string,
 ): Promise<{ country_ru: string; country_en: string; flag_emoji: string | null; is_foreign: boolean } | null> {
-  const { data } = await supabase
-    .from("cities")
-    .select("country_ru, country_en, flag_emoji, is_foreign")
-    .eq("country_slug", countrySlug)
-    .limit(1)
-    .maybeSingle();
+  // 2026-09-21: раньше `error` не проверялся — любой сбой запроса (таймаут/
+  // 5xx) молча превращался в `data = null`, а вызывающий код
+  // (app/[locale]/country/[slug]/page.tsx) трактует null как «страны не
+  // существует» и вызывает notFound(), которое self-hosted ISR кэширует
+  // как постоянный 404. См. подробности в lib/supabase.ts unwrapOrThrow.
+  const data = await unwrapOrThrow(
+    supabase
+      .from("cities")
+      .select("country_ru, country_en, flag_emoji, is_foreign")
+      .eq("country_slug", countrySlug)
+      .limit(1)
+      .maybeSingle(),
+    `getCountryMeta(${countrySlug})`,
+  );
   return data ?? null;
 }
 

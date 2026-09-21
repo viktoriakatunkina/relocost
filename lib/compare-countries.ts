@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase, unwrapOrThrow } from "./supabase";
 import { formatRub } from "./cities";
 import { buildCountryCost, loadPriceRows, type CountryCost } from "./country-cost";
 import { COUNTRY_CONTENT, type CountryContent } from "./countries-content";
@@ -69,10 +69,17 @@ export async function loadCountryCompare(
   slugB: string,
 ): Promise<CountryCompareResult | null> {
   if (slugA === slugB) return null;
-  const { data: cities } = await supabase
-    .from("cities")
-    .select("id, slug, name_ru, country_slug, country_ru, flag_emoji, difficulty_score")
-    .in("country_slug", [slugA, slugB]);
+  // 2026-09-21: раньше `error` не проверялся — сбой запроса молча вёл к
+  // `cities = undefined` → null → notFound() на /compare/[pair] (страна vs
+  // страна), которое self-hosted ISR кэширует как постоянный 404. См.
+  // lib/supabase.ts unwrapOrThrow.
+  const cities = await unwrapOrThrow(
+    supabase
+      .from("cities")
+      .select("id, slug, name_ru, country_slug, country_ru, flag_emoji, difficulty_score")
+      .in("country_slug", [slugA, slugB]),
+    `loadCountryCompare(${slugA}, ${slugB})`,
+  );
   if (!cities?.length) return null;
   const inA = cities.filter((c) => c.country_slug === slugA);
   const inB = cities.filter((c) => c.country_slug === slugB);

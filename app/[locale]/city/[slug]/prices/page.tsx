@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
-import { supabase, fetchWithHardTimeout } from "@/lib/supabase";
+import { supabase, fetchWithHardTimeout, unwrapOrThrow } from "@/lib/supabase";
 import { getPricesByCity } from "@/lib/prices";
 import { getAnchorPrices } from "@/lib/anchor-prices";
 import type { City } from "@/lib/types";
@@ -45,11 +45,10 @@ export async function generateMetadata({
 }: {
   params: { locale: Locale; slug: string };
 }) {
-  const { data: city } = await supabase
-    .from("cities")
-    .select("name_ru")
-    .eq("slug", params.slug)
-    .maybeSingle();
+  const city = await unwrapOrThrow(
+    supabase.from("cities").select("name_ru").eq("slug", params.slug).maybeSingle(),
+    `city/[slug]/prices generateMetadata(${params.slug})`,
+  );
   if (!city) return {};
   return {
     title: `Цены в ${city.name_ru} 2026 — молоко, хлеб, бензин, кофе, аренда | Relocost`,
@@ -70,11 +69,10 @@ export default async function CityPricesPage({
 }) {
   setRequestLocale(params.locale);
 
-  const { data: city } = await supabase
-    .from("cities")
-    .select("*")
-    .eq("slug", params.slug)
-    .maybeSingle();
+  const city = await unwrapOrThrow(
+    supabase.from("cities").select("*").eq("slug", params.slug).maybeSingle(),
+    `city/[slug]/prices getCity(${params.slug})`,
+  );
   if (!city) notFound();
 
   const c = await localizeCity(city as City, params.locale);

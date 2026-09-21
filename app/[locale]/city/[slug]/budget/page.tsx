@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
-import { supabase, fetchWithHardTimeout } from "@/lib/supabase";
+import { supabase, fetchWithHardTimeout, unwrapOrThrow } from "@/lib/supabase";
 import { getPricesByCity } from "@/lib/prices";
 import {
   getMoscowBaseline,
@@ -56,11 +56,10 @@ export async function generateMetadata({
 }: {
   params: { locale: Locale; slug: string };
 }) {
-  const { data: city } = await supabase
-    .from("cities")
-    .select("name_ru")
-    .eq("slug", params.slug)
-    .maybeSingle();
+  const city = await unwrapOrThrow(
+    supabase.from("cities").select("name_ru").eq("slug", params.slug).maybeSingle(),
+    `city/[slug]/budget generateMetadata(${params.slug})`,
+  );
   if (!city) return {};
   return {
     title: `Бюджет семьи в ${city.name_ru} 2026 — сколько нужно денег | Relocost`,
@@ -81,11 +80,10 @@ export default async function CityBudgetPage({
 }) {
   setRequestLocale(params.locale);
 
-  const { data: city } = await supabase
-    .from("cities")
-    .select("*")
-    .eq("slug", params.slug)
-    .maybeSingle();
+  const city = await unwrapOrThrow(
+    supabase.from("cities").select("*").eq("slug", params.slug).maybeSingle(),
+    `city/[slug]/budget getCity(${params.slug})`,
+  );
   if (!city) notFound();
 
   const c = await localizeCity(city as City, params.locale);
