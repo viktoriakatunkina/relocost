@@ -27,7 +27,9 @@ const intlMiddleware = createMiddleware(routing);
 // отдаёт canonical на русскую версию — см. lib/i18n-seo.ts.
 //
 // Когда блог реально переведут — достаточно убрать /blog из этого списка.
-const UNTRANSLATED_SECTION = /^\/(?:en|uz)(\/blog(?:\/.*)?)$/;
+// /news — тот же принцип: новости пишутся и публикуются только на русском
+// (см. scripts/seed-50-news-sep2026.mjs), переводов не будет по дизайну.
+const UNTRANSLATED_SECTION = /^\/(?:en|uz)(\/(?:blog|news)(?:\/.*)?)$/;
 
 // ───────────────────────────────────────────────────────────────────────────
 // Редиректы дублей блога (перенесено из next.config.mjs redirects(), см. git

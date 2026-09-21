@@ -14,6 +14,7 @@ export async function Footer() {
     { href: "/rating", label: tn("rating") },
     { href: "/checklist", label: tn("checklist") },
     { href: "/blog", label: tn("blog") },
+    { href: "/news", label: tn("news") },
     { href: "/favorites", label: tn("favorites") },
   ];
   const projectLinks = [

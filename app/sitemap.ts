@@ -80,6 +80,25 @@ async function fetchBlogPosts(): Promise<{ slug: string; created_at: string }[]>
   return out;
 }
 
+// Новости — небольшая таблица (десятки-сотни записей), в отличие от блога не
+// нужна постраничная выборка через .range(): одного запроса с лимитом с
+// запасом достаточно.
+async function fetchNewsItems(): Promise<{ slug: string; created_at: string }[]> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return [];
+  try {
+    const res = await fetchWithTimeout(
+      `${url}/rest/v1/news_items?select=slug,created_at&published=eq.true&order=created_at.desc&limit=1000`,
+      { apikey: key, Authorization: `Bearer ${key}` },
+    );
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
+}
+
 async function fetchCities(): Promise<{ slug: string; country_slug: string; updated_at: string | null }[]> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -161,9 +180,10 @@ function expand(entries: Entry[]): MetadataRoute.Sitemap {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [cityRows, posts] = await Promise.all([
+  const [cityRows, posts, newsItems] = await Promise.all([
     fetchCities(),
     fetchBlogPosts(),
+    fetchNewsItems(),
   ]);
 
   const now = new Date();
@@ -306,6 +326,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
+  // ── Новости: только ru, тот же принцип, что у блога (не переведены). ────
+  const newsEntries: Entry[] = [
+    { path: "/news", lastModified: now, changeFrequency: "daily", priority: 0.7 },
+    ...newsItems.map((n) => ({
+      path: `/news/${n.slug}`,
+      lastModified: n.created_at ? new Date(n.created_at) : now,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+  ];
+  const newsSitemap: MetadataRoute.Sitemap = newsEntries.map((e) => ({
+    url: urlFor(e.path, routing.defaultLocale),
+    lastModified: e.lastModified,
+    changeFrequency: e.changeFrequency,
+    priority: e.priority,
+  }));
+
   // /favorites в sitemap не включаем (noindex). /search индексируется — он выше.
-  return [...expand(entries), ...blogSitemap, ...tripEntries];
+  return [...expand(entries), ...blogSitemap, ...newsSitemap, ...tripEntries];
 }
