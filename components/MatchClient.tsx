@@ -190,10 +190,17 @@ function MatchRow({
   rank,
   city,
   score,
+  compareSelected,
+  onToggleCompare,
 }: {
   rank: number;
   city: CityWithBudget;
   score: number;
+  /** Отмечен ли этот город для сравнения (см. compareSelection в
+   *  MatchClient) — до 2 городов, ведет на /compare/[a]-vs-[b] с готовым
+   *  бандл-предложением там (не встраиваем логику сравнения сюда). */
+  compareSelected: boolean;
+  onToggleCompare: () => void;
 }) {
   const temp = climateTemp(city);
   const tags: string[] = [];
@@ -204,14 +211,17 @@ function MatchRow({
   if (FAST_INTERNET.has(city.slug)) tags.push("⚡ Интернет");
 
   return (
-    <Link
-      href={`/city/${city.slug}`}
-      className="group flex items-start gap-3 bg-surface border hairline rounded-2xl p-4 hover:border-copper/35 transition-colors"
+    <div
+      className={[
+        "group relative flex items-start gap-3 bg-surface border rounded-2xl p-4 transition-colors",
+        compareSelected ? "border-copper/60" : "hairline hover:border-copper/35",
+      ].join(" ")}
     >
-      <span className="w-6 text-center text-brandy/30 text-sm font-mono shrink-0 mt-0.5">
+      <Link href={`/city/${city.slug}`} className="absolute inset-0 rounded-2xl" aria-label={city.name_ru} />
+      <span className="relative w-6 text-center text-brandy/30 text-sm font-mono shrink-0 mt-0.5">
         {rank}
       </span>
-      <div className="flex-1 min-w-0">
+      <div className="relative flex-1 min-w-0">
         <div className="flex items-start justify-between gap-3 mb-2">
           <div className="min-w-0">
             <p className="text-cream font-medium text-sm leading-snug truncate group-hover:text-copper transition-colors">
@@ -234,15 +244,35 @@ function MatchRow({
             style={{ width: `${score}%` }}
           />
         </div>
-        {tags.length > 0 && (
-          <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
-            {tags.map(t => (
-              <span key={t} className="text-[10px] text-brandy/45">{t}</span>
-            ))}
-          </div>
-        )}
+        <div className="flex items-center justify-between gap-3 mt-2">
+          {tags.length > 0 ? (
+            <div className="flex flex-wrap gap-x-3 gap-y-1">
+              {tags.map(t => (
+                <span key={t} className="text-[10px] text-brandy/45">{t}</span>
+              ))}
+            </div>
+          ) : (
+            <span />
+          )}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onToggleCompare();
+            }}
+            className={[
+              "relative z-10 shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium border transition",
+              compareSelected
+                ? "bg-copper text-pine-tree border-copper"
+                : "border-cream/15 text-brandy/50 hover:text-cream hover:border-cream/30",
+            ].join(" ")}
+          >
+            {compareSelected ? "✓ В сравнении" : "+ Сравнить"}
+          </button>
+        </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
@@ -250,9 +280,23 @@ function MatchRow({
 
 export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
   const [prefs, setPrefs] = useState<Prefs>(DEFAULT_PREFS);
+  // До 2 городов для сравнения — простой выбор прямо в результатах (не
+  // отдельная страница/логика): ведет на /compare/[a]-vs-[b], где уже готово
+  // предложение купить бюджет по обоим сразу дешевле (CompareBundleCTA).
+  const [compareSelection, setCompareSelection] = useState<string[]>([]);
 
   function set<K extends keyof Prefs>(key: K, val: Prefs[K]) {
     setPrefs(p => ({ ...p, [key]: val }));
+  }
+
+  function toggleCompare(slug: string) {
+    setCompareSelection(sel => {
+      if (sel.includes(slug)) return sel.filter(s => s !== slug);
+      if (sel.length < 2) return [...sel, slug];
+      // Уже выбраны 2 — новый выбор вытесняет самый старый (FIFO), чтобы не
+      // заставлять сначала явно снимать выбор.
+      return [sel[1], slug];
+    });
   }
 
   const ranked = useMemo(() => {
@@ -263,6 +307,9 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
   }, [cities, prefs]);
 
   const budgetFormatted = new Intl.NumberFormat("ru-RU").format(prefs.maxBudget);
+  const compareCities = compareSelection
+    .map(slug => cities.find(c => c.slug === slug))
+    .filter((c): c is CityWithBudget => Boolean(c));
 
   return (
     <div className="max-w-6xl mx-auto px-6 pb-12">
@@ -376,20 +423,48 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
           </div>
           <p className="text-brandy/45 text-xs mb-5">
             Топ-15 из {cities.length} направлений. Меняйте приоритеты — список обновляется мгновенно.
+            Отметьте до двух городов «+ Сравнить», чтобы посмотреть разницу и
+            открыть бюджет по обоим дешевле.
           </p>
 
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-2.5 pb-16">
             {ranked.map(({ city, score }, i) => (
               <MatchRow
                 key={city.slug}
                 rank={i + 1}
                 city={city}
                 score={score}
+                compareSelected={compareSelection.includes(city.slug)}
+                onToggleCompare={() => toggleCompare(city.slug)}
               />
             ))}
           </div>
         </div>
       </div>
+
+      {compareCities.length === 2 && (
+        <div className="fixed bottom-0 inset-x-0 z-40 px-3 pb-3 md:px-6 md:pb-6">
+          <div className="max-w-lg mx-auto rounded-2xl bg-surface-elevated/95 backdrop-blur-md border border-copper/30 shadow-2xl px-4 py-3 flex items-center gap-3">
+            <p className="flex-1 min-w-0 text-cream text-sm truncate">
+              <span aria-hidden>⚖️</span>{" "}
+              {compareCities[0].name_ru} и {compareCities[1].name_ru}
+            </p>
+            <button
+              type="button"
+              onClick={() => setCompareSelection([])}
+              className="shrink-0 text-brandy/50 hover:text-cream text-xs underline underline-offset-2 transition"
+            >
+              Сбросить
+            </button>
+            <Link
+              href={`/compare/${compareCities[0].slug}-vs-${compareCities[1].slug}`}
+              className="shrink-0 inline-flex items-center justify-center px-4 py-2.5 min-h-[44px] rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
+            >
+              Сравнить
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

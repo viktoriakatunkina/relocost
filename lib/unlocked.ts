@@ -20,6 +20,7 @@ export {
   lockedRemaining,
   isCountryUnlocked,
   lockedCountryRemaining,
+  CITY_PAIR_BUDGET_BUNDLE,
 } from "./packages";
 export type {
   CityPackageType,
@@ -281,6 +282,62 @@ export function clearCheckoutStarted() {
   if (typeof window === "undefined") return;
   try {
     window.localStorage.removeItem(CHECKOUT_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Ожидающий платеж — бандл «Бюджет» на ДВА города (/compare, 299 ₽ вместо 398 ₽)
+// ---------------------------------------------------------------------------
+//
+// Отдельный ключ localStorage от PENDING_KEY/PendingPayment выше — намеренно:
+// одна оплата ЮKassa разблокирует budget сразу у ДВУХ slug'ов, а не у одного,
+// и этот тип не должен пересекаться с обычным pending-платежом одиночного
+// пакета (риск для единственной сейчас работающей монетизации). См.
+// components/compare/CompareBundleCTA.tsx.
+
+const PENDING_BUNDLE_KEY = "relocost_pending_bundle_payment";
+
+export type PendingBundlePayment = {
+  payment_id: string;
+  slugA: string;
+  slugB: string;
+};
+
+export function setPendingBundlePayment(p: PendingBundlePayment) {
+  if (typeof window === "undefined") return;
+  try {
+    window.sessionStorage.setItem(PENDING_BUNDLE_KEY, JSON.stringify(p));
+  } catch {
+    /* ignore */
+  }
+}
+
+export function readPendingBundlePayment(): PendingBundlePayment | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.sessionStorage.getItem(PENDING_BUNDLE_KEY);
+    if (!raw) return null;
+    const p = JSON.parse(raw) as Partial<PendingBundlePayment>;
+    if (
+      p &&
+      typeof p.payment_id === "string" &&
+      typeof p.slugA === "string" &&
+      typeof p.slugB === "string"
+    ) {
+      return p as PendingBundlePayment;
+    }
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
+export function clearPendingBundlePayment() {
+  if (typeof window === "undefined") return;
+  try {
+    window.sessionStorage.removeItem(PENDING_BUNDLE_KEY);
   } catch {
     /* ignore */
   }

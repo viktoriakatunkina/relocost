@@ -45,17 +45,34 @@ export async function POST(req: Request) {
 
   const db = supabaseAdmin();
 
+  // Бандл «Бюджет на 2 города» (/compare, см. app/api/payment/create-bundle):
+  // один платеж ЮKassa покрывает ДВЕ покупки — вторая помечена в metadata
+  // как purchase_id_2/slug2. Для обычной одиночной покупки этих полей нет —
+  // код ниже просто не выполняется, существующий путь не меняется.
+  const purchaseId2 = payment.metadata?.purchase_id_2;
+  const slug2 = payment.metadata?.slug2;
+
   if (payment.status === "succeeded" && payment.paid) {
     // Помечаем покупку оплаченной; если записи нет — восстанавливаем её
     // (защита от потери оплаты). Идемпотентно: повторный webhook по paid-заказу
     // не создаёт дубль и не возвращает ошибку.
     await ensurePurchasePaid(db, payment, purchaseId);
+    if (purchaseId2) {
+      await ensurePurchasePaid(db, payment, purchaseId2, slug2);
+    }
   } else if (payment.status === "canceled") {
     await db
       .from("purchases")
       .update({ status: "failed" })
       .eq("id", purchaseId)
       .eq("status", "pending");
+    if (purchaseId2) {
+      await db
+        .from("purchases")
+        .update({ status: "failed" })
+        .eq("id", purchaseId2)
+        .eq("status", "pending");
+    }
   }
 
   return NextResponse.json({ ok: true });

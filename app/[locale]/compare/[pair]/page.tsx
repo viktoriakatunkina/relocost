@@ -32,6 +32,8 @@ import { Verdict } from "@/components/compare/Verdict";
 import { CompareDetails } from "@/components/compare/CompareDetails";
 import { CompareRelocation } from "@/components/compare/CompareRelocation";
 import { CompareUnlockCTA } from "@/components/compare/CompareUnlockCTA";
+import { CompareBundleCTA } from "@/components/compare/CompareBundleCTA";
+import { CompareBundleVerify } from "@/components/compare/CompareBundleVerify";
 import { CountryCompareUnlockCTA } from "@/components/compare/CountryCompareUnlockCTA";
 import { SecondPersonSummary } from "@/components/city/SecondPersonSummary";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -204,6 +206,11 @@ export default async function ComparePage({
         b={{ slug: data.b.slug, name: data.b.name_ru }}
         pct={delta?.pct}
       />
+      <CompareBundleCTA
+        a={{ slug: data.a.slug, name: data.a.name_ru }}
+        b={{ slug: data.b.slug, name: data.b.name_ru }}
+      />
+      <CompareBundleVerify aSlug={data.a.slug} bSlug={data.b.slug} />
 
       <CompareRelocation
         aName={aName}

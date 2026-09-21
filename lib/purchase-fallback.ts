@@ -51,6 +51,12 @@ export async function ensurePurchasePaid(
   db: SupabaseClient,
   payment: YooPayment,
   purchaseId: string,
+  /** Только для бандла «Бюджет на 2 города» (/compare, см.
+   *  app/api/payment/create-bundle/route.ts): восстановление ВТОРОЙ покупки
+   *  бандла (purchase_id_2) должно использовать metadata.slug2, а не
+   *  metadata.slug (тот принадлежит первому городу). Для обычной одиночной
+   *  покупки не передается — recoverPurchase берет meta.slug как раньше. */
+  slugOverride?: string,
 ): Promise<FallbackResult> {
   const paymentId = payment.id;
 
@@ -95,7 +101,7 @@ export async function ensurePurchasePaid(
   }
 
   // Записи нет — восстанавливаем из платежа.
-  return recoverPurchase(db, payment, purchaseId);
+  return recoverPurchase(db, payment, purchaseId, slugOverride);
 }
 
 /**
@@ -106,10 +112,11 @@ async function recoverPurchase(
   db: SupabaseClient,
   payment: YooPayment,
   purchaseId: string,
+  slugOverride?: string,
 ): Promise<FallbackResult> {
   const paymentId = payment.id;
   const meta = payment.metadata ?? {};
-  const slug = meta.slug;
+  const slug = slugOverride ?? meta.slug;
   const pkg = meta.pkg;
 
   // package_type ограничен check-constraint'ом — не пишем мусор.

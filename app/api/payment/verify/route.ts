@@ -40,6 +40,11 @@ export async function GET(req: Request) {
     const slug = payment.metadata?.slug;
     const pkg = payment.metadata?.pkg;
     const purchaseId = payment.metadata?.purchase_id;
+    // Бандл «Бюджет на 2 города» (/compare) — см. app/api/payment/create-bundle
+    // и app/api/payment/webhook. Для обычной одиночной покупки эти поля в
+    // metadata отсутствуют, и код ниже — no-op.
+    const purchaseId2 = payment.metadata?.purchase_id_2;
+    const slug2 = payment.metadata?.slug2;
 
     // Подстраховка на случай, если webhook еще не дошел: помечаем покупку
     // оплаченной. Если записи нет — восстанавливаем её из платежа (защита от
@@ -47,9 +52,12 @@ export async function GET(req: Request) {
     if (purchaseId) {
       const db = supabaseAdmin();
       await ensurePurchasePaid(db, payment, purchaseId);
+      if (purchaseId2) {
+        await ensurePurchasePaid(db, payment, purchaseId2, slug2);
+      }
     }
 
-    return NextResponse.json({ ok: true, slug, pkg, status: payment.status });
+    return NextResponse.json({ ok: true, slug, pkg, slug2, status: payment.status });
   }
 
   return NextResponse.json({ ok: false, status: payment.status });
