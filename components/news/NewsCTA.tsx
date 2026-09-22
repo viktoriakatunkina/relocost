@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { CITY_PACKAGES } from "@/lib/packages";
-import type { NewsCTACity } from "@/lib/news-city-match";
+import type { NewsCTATarget } from "@/lib/news-city-match";
 
 // Обязательный CTA на оплату — в КАЖДОЙ карточке списка новостей и на КАЖДОЙ
 // странице новости (ТЗ раздел «Новости»). Две плотности: "card" — компактная
@@ -14,16 +14,26 @@ const MIN_PRICE = Math.min(
 );
 
 type Props = {
-  city?: NewsCTACity | null;
+  target?: NewsCTATarget | null;
   variant?: "card" | "article";
 };
 
-function ctaHref(city?: NewsCTACity | null): string {
-  return city ? `/city/${city.slug}/budget` : "/tariffs";
+// 2026-09-22 (SEO-аудит): раньше принимали только конкретный город (либо
+// null → общий /tariffs). Когда в новости упомянута СТРАНА без конкретного
+// города (например «депортации из США»), lib/news-city-match.ts больше не
+// подставляет случайный первый город этой страны — ведём на /country/[slug]
+// честно. country_ru в БД в именительном падеже («США», «Иран», «Грузия»),
+// склонения не хранятся, поэтому для country-варианта копирайт (как и в
+// components/blog/ArticleInlineCTA.tsx) намеренно не склоняет название —
+// «цены по городам этой страны» вместо «в Иране/Иранe».
+function ctaHref(target?: NewsCTATarget | null): string {
+  if (!target) return "/tariffs";
+  return target.kind === "city" ? `/city/${target.slug}/budget` : `/country/${target.slug}`;
 }
 
-export function NewsCTA({ city, variant = "card" }: Props) {
-  const href = ctaHref(city);
+export function NewsCTA({ target, variant = "card" }: Props) {
+  const href = ctaHref(target);
+  const isCity = target?.kind === "city";
 
   if (variant === "article") {
     return (
@@ -38,9 +48,11 @@ export function NewsCTA({ city, variant = "card" }: Props) {
           Планируете переезд?
         </p>
         <p className="font-serif text-2xl md:text-3xl text-cream mb-2 leading-tight">
-          {city
-            ? `Узнайте точный бюджет жизни в ${city.name_ru} — от ${MIN_PRICE} ₽`
-            : `Узнайте точный бюджет жизни в любом городе — от ${MIN_PRICE} ₽`}
+          {isCity
+            ? `Узнайте точный бюджет жизни в ${target!.name_ru} — от ${MIN_PRICE} ₽`
+            : target
+              ? `Узнайте бюджет жизни по городам этой страны — от ${MIN_PRICE} ₽`
+              : `Узнайте точный бюджет жизни в любом городе — от ${MIN_PRICE} ₽`}
         </p>
         <p className="text-brandy/90 text-sm mb-6 leading-relaxed">
           Реальные цены на аренду, еду и транспорт · Калькулятор бюджета ·
@@ -50,7 +62,11 @@ export function NewsCTA({ city, variant = "card" }: Props) {
           href={href}
           className="inline-flex items-center gap-2 px-7 py-4 rounded-pill bg-copper text-pine-tree font-bold text-base transition hover:bg-pale-copper hover:shadow-glow"
         >
-          {city ? `Открыть бюджет ${city.name_ru}` : "Выбрать тариф"}
+          {isCity
+            ? `Открыть бюджет ${target!.name_ru}`
+            : target
+              ? "Смотреть города страны"
+              : "Выбрать тариф"}
           <span aria-hidden>→</span>
         </Link>
       </div>
@@ -64,7 +80,12 @@ export function NewsCTA({ city, variant = "card" }: Props) {
       </span>
       <p className="flex-1 min-w-[160px] text-brandy/85 text-sm leading-snug">
         Планируете переезд? Узнайте точный бюджет жизни
-        {city ? ` в ${city.name_ru}` : " в любом городе"} — от {MIN_PRICE} ₽
+        {isCity
+          ? ` в ${target!.name_ru}`
+          : target
+            ? " по городам этой страны"
+            : " в любом городе"}{" "}
+        — от {MIN_PRICE} ₽
       </p>
       <Link
         href={href}

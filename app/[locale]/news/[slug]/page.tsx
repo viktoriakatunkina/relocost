@@ -85,7 +85,7 @@ export default async function NewsItemPage({
   if (!post) notFound();
 
   const citiesForMatch = await getCitiesForTitleMatch();
-  const ctaCity = matchCityForNews(post.title, post.summary, citiesForMatch);
+  const ctaTarget = matchCityForNews(post.title, post.summary, citiesForMatch);
 
   const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://relocost.ru").replace(/\/$/, "");
   const newsSchema = {
@@ -137,9 +137,10 @@ export default async function NewsItemPage({
         </article>
 
         {/* Обязательный CTA на оплату — см. lib/news-city-match.ts: ведёт на
-            /city/[slug]/budget, если в новости упомянут город из каталога,
-            иначе на общий /tariffs. */}
-        <NewsCTA city={ctaCity} variant="article" />
+            /city/[slug]/budget при упоминании конкретного города,
+            /country/[slug] при упоминании только страны, иначе на
+            общий /tariffs. */}
+        <NewsCTA target={ctaTarget} variant="article" />
 
         {post.source_name && (
           <p className="mt-6 text-brandy/55 text-sm">

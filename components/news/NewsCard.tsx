@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import type { NewsItemCard } from "@/lib/news";
-import type { NewsCTACity } from "@/lib/news-city-match";
+import type { NewsCTATarget } from "@/lib/news-city-match";
 import { NewsCTA } from "./NewsCTA";
 
 // Дата события/публикации в карточке — короткий формат «21 сентября 2026».
@@ -20,10 +20,10 @@ function formatNewsDate(iso: string | null): string | null {
 // ссылка CTA (NewsCTA), а вложенные <a> внутри <a> невалидны и ломают клики.
 export function NewsCard({
   item,
-  ctaCity,
+  ctaTarget,
 }: {
   item: NewsItemCard;
-  ctaCity?: NewsCTACity | null;
+  ctaTarget?: NewsCTATarget | null;
 }) {
   const dateLabel = formatNewsDate(item.event_date ?? item.created_at);
   return (
@@ -43,7 +43,7 @@ export function NewsCard({
       {item.source_name && (
         <p className="text-brandy/50 text-xs mt-2">Источник: {item.source_name}</p>
       )}
-      <NewsCTA city={ctaCity} variant="card" />
+      <NewsCTA target={ctaTarget} variant="card" />
     </article>
   );
 }

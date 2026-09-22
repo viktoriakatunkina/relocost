@@ -72,7 +72,7 @@ export default async function NewsPage({
           <NewsCard
             key={item.id}
             item={item}
-            ctaCity={matchCityForNews(item.title, item.summary, citiesForMatch)}
+            ctaTarget={matchCityForNews(item.title, item.summary, citiesForMatch)}
           />
         ))}
       </section>
