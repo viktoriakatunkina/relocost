@@ -104,6 +104,8 @@ export type YooPayment = {
   amount: { value: string; currency: string };
   confirmation?: { type: string; confirmation_url?: string };
   metadata?: Record<string, string>;
+  /** Причина отмены — приходит от ЮKassa только при status === "canceled". */
+  cancellation_details?: { party?: string; reason?: string };
 };
 
 /**

@@ -177,9 +177,14 @@ export async function POST(req: Request) {
       purchase_id_2: purchaseIdB,
     });
   } catch (e) {
+    const msg = e instanceof Error ? e.message : "Ошибка оплаты";
+    console.error("[payment/create-bundle] createPayment failed", {
+      purchaseIdA,
+      purchaseIdB,
+      error: msg,
+    });
     await db.from("purchases").update({ status: "failed" }).eq("id", purchaseIdA);
     await db.from("purchases").update({ status: "failed" }).eq("id", purchaseIdB);
-    const msg = e instanceof Error ? e.message : "Ошибка оплаты";
     return NextResponse.json({ error: msg }, { status: 502 });
   }
 }

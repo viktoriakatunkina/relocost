@@ -61,6 +61,15 @@ export async function POST(req: Request) {
       await ensurePurchasePaid(db, payment, purchaseId2, slug2);
     }
   } else if (payment.status === "canceled") {
+    // Логируем причину отмены (party/reason от ЮKassa: отказ карты, 3DS,
+    // истечение срока и т.п.) — раньше "failed" в purchases ничего не
+    // объяснял, см. дашборд Даши 22.09.2026.
+    console.error("[payment/webhook] payment canceled", {
+      paymentId,
+      purchaseId,
+      purchaseId2,
+      cancellation_details: payment.cancellation_details,
+    });
     await db
       .from("purchases")
       .update({ status: "failed" })

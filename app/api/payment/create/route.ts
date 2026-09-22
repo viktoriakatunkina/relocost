@@ -187,9 +187,12 @@ export async function POST(req: Request) {
     }
     return NextResponse.json({ confirmation_url: url, payment_id: payment.id });
   } catch (e) {
+    const msg = e instanceof Error ? e.message : "Ошибка оплаты";
+    // Логируем причину — без этого "failed" в purchases невозможно было
+    // отличить от реальной блокировки карты/3DS (см. дашборд Даши 22.09.2026).
+    console.error("[payment/create] createPayment failed", { purchaseId, error: msg });
     // Помечаем заказ как failed, чтобы не висел в pending.
     await db.from("purchases").update({ status: "failed" }).eq("id", purchaseId);
-    const msg = e instanceof Error ? e.message : "Ошибка оплаты";
     return NextResponse.json({ error: msg }, { status: 502 });
   }
 }
