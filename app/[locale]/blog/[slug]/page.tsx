@@ -4,6 +4,7 @@ import Image from "next/image";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
+  cleanSeoTitle,
   coverGradient,
   displayBlogTitle,
   getCitiesByCountry,
@@ -84,21 +85,21 @@ export async function generateMetadata({
   const post = await localizeBlogPost(raw, params.locale);
   const canonicalSlug = BLOG_CANONICAL[params.slug] ?? params.slug;
   return {
-    title: post.seo_title ?? post.title,
+    title: cleanSeoTitle(post.seo_title) ?? post.title,
     description: post.seo_description ?? undefined,
     // Блог не переведён ни на одну локаль: canonical всегда на русскую версию,
     // hreflang — только ru + x-default. Раньше здесь заявлялись en/uz-версии,
     // которых физически нет (это был тот же русский текст под другим URL).
     alternates: buildRuOnlyAlternates(`/blog/${canonicalSlug}`),
     openGraph: {
-      title: post.seo_title ?? displayBlogTitle(post.title),
+      title: cleanSeoTitle(post.seo_title) ?? displayBlogTitle(post.title),
       description: post.seo_description ?? undefined,
       type: "article",
       publishedTime: post.created_at,
     },
     twitter: {
       card: "summary_large_image",
-      title: post.seo_title ?? displayBlogTitle(post.title),
+      title: cleanSeoTitle(post.seo_title) ?? displayBlogTitle(post.title),
       description: post.seo_description ?? undefined,
     },
   };
@@ -204,7 +205,7 @@ export default async function BlogPostPage({
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: post.seo_title ?? displayBlogTitle(post.title),
+    headline: cleanSeoTitle(post.seo_title) ?? displayBlogTitle(post.title),
     description: post.seo_description ?? undefined,
     image: `${SITE_URL}/blog/${post.slug}/opengraph-image`,
     datePublished: post.created_at,

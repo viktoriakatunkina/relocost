@@ -323,6 +323,16 @@ export function displayBlogTitle(title: string): string {
   return title.includes(";") ? title.split(";")[0].trim() : title;
 }
 
+// 2026-09-22 (SEO-аудит): часть seo_title в БД задвоена — " | Relocost | Relocost"
+// (разные сид-скрипты независимо дописывали суффикс поверх уже присутствующего,
+// см. scripts/fix-seo-titles.mjs). Данные в Supabase не трогаем — схлопываем
+// повторяющийся суффикс только при отображении (<title>, OG, Twitter, JSON-LD
+// headline). Если суффикса нет вообще — строка не меняется.
+export function cleanSeoTitle(title: string | null | undefined): string | null {
+  if (!title) return title ?? null;
+  return title.replace(/(?:\s*\|\s*Relocost\s*)+$/i, " | Relocost").trim();
+}
+
 export function defaultCoverUrl(slug: string): string {
   const s = slug.toLowerCase().replace(/-/g, "_");
   for (const [keywords, photoId] of COVER_KEYWORD_PHOTOS) {
