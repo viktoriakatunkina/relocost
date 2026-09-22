@@ -19,11 +19,11 @@ const FILE = "/Users/viktoriadimark/Desktop/Работа/Клод/relocost/lib/c
 const CITY_QUERIES = {
   didim: [
     ["Храм Аполлона", "Didim Apollo temple columns"],
-    ["Античный Милет", "Miletus ancient theater Turkey"],
-    ["Пляж Алтынкум", "Altinkum beach Turkey"],
+    ["Античный Милет", "Miletus theatre Turkey ruins"],
+    ["Пляж Алтынкум", "Aegean golden sand beach Turkey"],
     ["Акбюк", "Akbuk Turkey coast"],
     ["Воскресный базар Дидима", "Turkey bazaar market stalls"],
-    ["Марина Дидим", "Didim marina yachts"],
+    ["Марина Дидим", "yacht marina Aegean Turkey"],
     ["Рыбный ресторан на набережной Алтынкума", "seafood restaurant Turkey coast"],
     ["Кафе у Храма Аполлона", "cafe ancient ruins Turkey"],
     ["Русский магазин и пекарня в Ешилькёй", "bakery shop shelves bread"],
@@ -32,9 +32,9 @@ const CITY_QUERIES = {
     ["Бухта Кучукада", "quiet cove Aegean sea"],
   ],
   "hua-hin": [
-    ["Ночной рынок Чатчай", "Chatchai night market Thailand"],
+    ["Ночной рынок Чатчай", "Thailand street food night market"],
     ["Пляж Хуахина", "Hua Hin beach Thailand"],
-    ["Летний дворец Клай Кангвон", "royal palace Thailand coast"],
+    ["Летний дворец Клай Кангвон", "Thailand teak palace"],
     ["Кхао Такиаб (Гора обезьян)", "Khao Takiab monkey mountain Thailand"],
     ["Гольф-клуб Black Mountain", "golf course Thailand mountains"],
     ["Cicada Market", "Cicada Market Hua Hin"],
