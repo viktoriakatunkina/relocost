@@ -20,7 +20,16 @@ export function RelatedPosts({
       if (current.city_id && p.city_id === current.city_id) score += 2;
       return { p, score };
     })
-    .sort((a, b) => b.score - a.score || a.p.created_at < b.p.created_at ? 1 : -1)
+    .sort((a, b) => {
+      // 2026-09-22 (SEO-аудит): было "b.score - a.score || a.p.created_at < b.p.created_at ? 1 : -1"
+      // — из-за приоритета операторов (`||` связывает крепче тернарника) это
+      // читалось как "(b.score - a.score || ...) ? 1 : -1": ЛЮБАЯ ненулевая
+      // разница скоров (включая отрицательную) truthy => всегда возвращало 1,
+      // то есть сортировка по скору фактически не работала — реальный корень
+      // бага "Тбилиси рекомендует Марбелью" при формально верном скоринге.
+      if (b.score !== a.score) return b.score - a.score;
+      return a.p.created_at < b.p.created_at ? 1 : -1;
+    })
     .slice(0, limit)
     .map((x) => x.p);
 
