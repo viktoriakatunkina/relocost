@@ -271,6 +271,15 @@ export default async function BlogPostPage({
   // половина/вторая половина) — вынесен один раз, чтобы не дублировать
   // table/img-рендереры на каждый ReactMarkdown при 3-частичном сплите.
   const markdownComponents: Components = {
+    // 2026-09-22 (SEO-аудит): ~500 из 753 md-файлов в content/blog/ начинают
+    // тело статьи с "# Заголовок" — без этого переопределения react-markdown
+    // рендерит его как второй <h1> на странице поверх шаблонного <h1> с
+    // displayTitle (см. выше). Данные не трогаем — просто понижаем уровень
+    // тега при рендере, на странице остается ровно один h1.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    h1({ node, ...props }) {
+      return <h2 {...props} />;
+    },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     table({ node, ...props }) {
       return (
