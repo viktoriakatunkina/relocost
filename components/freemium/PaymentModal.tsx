@@ -179,9 +179,25 @@ export function PaymentModal({
   // «Оплатить» уезжала на y≈430 — то есть в момент максимального намерения
   // пользователь видел поле email и НЕ видел кнопки оплаты вообще.
   //
-  // Стало: на мобильном — bottom sheet во всю ширину; карточка = flex-колонка
-  // с max-h 92dvh, где прокручивается только описание, а поле email + кнопка
-  // «Оплатить» закреплены в нижней нескроллящейся части и видны всегда.
+  // Стало (2026-09-09): на мобильном — bottom sheet во всю ширину; карточка =
+  // flex-колонка с max-h 92dvh, где прокручивается только описание, а поле
+  // email + кнопка «Оплатить» закреплены в нижней нескроллящейся части.
+  //
+  // Регресс (найден 2026-09-23): позже добавили блок «Ваш заказ» (~219px,
+  // дублировал буллеты, уже показанные выше) в нескроллящийся футер —
+  // общая высота нескроллящейся нижней части выросла до ~510px. На
+  // компактных экранах (iPhone SE/8-класс, 375×667) с открытой клавиатурой
+  // видимая высота падает до ~376px — кнопка «Оплатить» физически уезжала
+  // за пределы экрана, и её нельзя было доскроллить, потому что футер был
+  // `shrink-0` (не участвовал в прокрутке). Подтверждено метрикой: клики по
+  // "package_click" шли, а pending-записи в purchases не создавались вовсе.
+  //
+  // Стало (2026-09-23): шапка + описание + футер (саммари заказа, email,
+  // кнопка) — единый прокручиваемый контейнер. Плюс саммари заказа сокращён
+  // до одной строки (без повтора буллетов). Теперь на любом экране, даже
+  // при нехватке места, пользователь может прокрутить карточку целиком и
+  // физически добраться до кнопки «Оплатить» — она никогда не обрезана
+  // нескроллящимся контейнером.
   if (!mounted) return null;
 
   return createPortal(
@@ -190,11 +206,10 @@ export function PaymentModal({
       onClick={onClose}
     >
       <div
-        className="w-full sm:max-w-md max-h-full flex flex-col rounded-t-3xl sm:rounded-2xl bg-surface-elevated border-cream/15 shadow-2xl overflow-hidden"
+        className="w-full sm:max-w-md max-h-[100dvh] sm:max-h-[85vh] overflow-y-auto overflow-x-hidden overscroll-contain rounded-t-3xl sm:rounded-2xl bg-surface-elevated border-cream/15 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Шапка — не прокручивается: пользователь всегда видит, за что платит */}
-        <div className="shrink-0 flex items-start justify-between gap-3 px-5 pt-5 pb-3 md:px-8 md:pt-7">
+        <div className="flex items-start justify-between gap-3 px-5 pt-5 pb-3 md:px-8 md:pt-7">
           <div>
             <div className="flex items-center gap-2 text-copper uppercase text-xs tracking-wider mb-1.5">
               <span>{meta.emoji}</span>
@@ -214,8 +229,7 @@ export function PaymentModal({
           </button>
         </div>
 
-        {/* Прокручиваемая середина */}
-        <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-5 md:px-8 pb-4">
+        <div className="px-5 md:px-8 pb-2">
           <p className="text-brandy/80 mb-4 leading-relaxed text-sm md:text-base">
             {PACKAGE_DESCRIPTIONS[pkg]}
           </p>
@@ -242,34 +256,28 @@ export function PaymentModal({
           </div>
         </div>
 
-        {/* Нижняя часть — всегда на экране, даже с открытой клавиатурой */}
+        {/* Футер — часть общего прокручиваемого контейнера (см. комментарий
+            выше про регресс 2026-09-23): не выносим в отдельный
+            нескроллящийся блок, иначе кнопка «Оплатить» снова может уехать
+            за пределы экрана на компактных вьюпортах. */}
         <form
           onSubmit={onSubmit}
-          className="shrink-0 border-t border-cream/10 bg-surface-elevated px-5 md:px-8 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] space-y-3"
+          className="border-t border-cream/10 px-5 md:px-8 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] space-y-3"
         >
-          {/* Саммари заказа перед оплатой — «повтор заказа» по аналогии с
-              приложением McDonald's: пользователь должен видеть, за что
-              именно платит, прямо перед кнопкой «Оплатить», а не только в
-              шапке модалки (которую он мог уже проскроллить). */}
-          <div className="rounded-xl border border-copper/25 bg-pine-tree/40 px-4 py-3">
-            <p className="text-brandy/55 text-[10px] uppercase tracking-wider mb-1">
-              Ваш заказ
+          {/* Саммари заказа перед оплатой — компактная строка (пакет + город +
+              цена) прямо перед кнопкой «Оплатить», без повтора буллетов
+              ценности (они уже показаны выше в теле модалки). Сокращено
+              2026-09-23 — полный блок с буллетами почти вернул футер к
+              непроходимой высоте на SE-классе. */}
+          <div className="flex items-center justify-between gap-3 rounded-xl border border-copper/25 bg-pine-tree/40 px-4 py-2.5">
+            <p className="min-w-0 flex items-center gap-1.5 text-cream text-sm font-semibold leading-snug">
+              <span aria-hidden>{meta.emoji}</span>
+              <span className="truncate">
+                {meta.label}
+                {cityName ? ` — ${cityName}` : ""}
+              </span>
             </p>
-            <p className="text-cream text-sm font-semibold leading-snug">
-              {meta.emoji} {meta.label}
-              {cityName ? ` — ${cityName}` : ""}
-            </p>
-            {bullets.length > 0 && (
-              <ul className="mt-1.5 space-y-0.5">
-                {bullets.slice(0, 3).map((b) => (
-                  <li key={b} className="text-brandy/70 text-xs leading-snug flex gap-1.5">
-                    <span className="text-copper shrink-0" aria-hidden>✓</span>
-                    {b}
-                  </li>
-                ))}
-              </ul>
-            )}
-            <p className="text-copper text-sm font-bold mt-1.5">{meta.price} ₽</p>
+            <p className="shrink-0 text-copper text-sm font-bold">{meta.price} ₽</p>
           </div>
           <label className="block">
             <span className="block text-brandy/70 text-sm mb-2">
