@@ -30,6 +30,25 @@ import { getGlobalPurchaseCount } from "@/lib/purchase-counts";
 export const revalidate = 86400;
 export const dynamicParams = true;
 
+// Точечная перелинковка с бесплатными статьями блога, которые разбирают
+// бюджет ровно этого же города (2026-09-24, чистка каннибализации: см.
+// config/blog-redirects.json — эти пары НЕ редиректятся, платная страница и
+// бесплатная статья намеренно сосуществуют с разными углами подачи —
+// платная даёт точную разбивку по 40+ категориям через калькулятор,
+// бесплатная — ориентировочные цифры и контекст места/личный опыт). Раньше
+// ссылка была только в одну сторону (из статьи блога на /city/{slug}) —
+// здесь добавляем обратную. Список короткий и статичный (7 городов), поэтому
+// захардкожен, а не вычисляется запросом к blog_posts на каждый рендер.
+const BUDGET_BLOG_CROSSLINK: Record<string, string> = {
+  seminyak: "seminyak-byudzhet-zhizni-2026",
+  lombok: "lombok-byudzhet-zhizni-2026",
+  aktau: "aktau-byudzhet-odin-para-semya-2026",
+  alanya: "alanya-byudzhet-odin-para-semya-2026",
+  baku: "baku-byudzhet-odin-para-semya-2026",
+  malaga: "malaga-byudzhet-odin-para-semya-2026",
+  minsk: "minsk-byudzhet-odin-para-semya-2026",
+};
+
 export async function generateStaticParams() {
   try {
     const res = await fetchWithHardTimeout(
@@ -179,6 +198,14 @@ export default async function CityBudgetPage({
           { href: `/country/${c.country_slug}`, label: `Жизнь в ${c.country_ru}` },
           ...(c.slug !== "moscow"
             ? [{ href: `/compare/${c.slug}-vs-moscow`, label: `${name} или Москва` }]
+            : []),
+          ...(BUDGET_BLOG_CROSSLINK[c.slug]
+            ? [
+                {
+                  href: `/blog/${BUDGET_BLOG_CROSSLINK[c.slug]}`,
+                  label: `Личный опыт и ориентировочные цифры: ${name}`,
+                },
+              ]
             : []),
           { href: "/rating", label: "Рейтинг городов" },
         ]}
