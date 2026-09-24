@@ -53,7 +53,7 @@ function EmailForm({
   if (status === "ok") {
     return (
       <p className={compact ? "text-dingley text-sm font-medium" : "text-dingley font-medium"}>
-        Спасибо! Чек-лист отправим в течение 24 часов.
+        Спасибо! Мы записали Ваш email и пришлём чек-лист.
       </p>
     );
   }
@@ -96,8 +96,17 @@ function EmailForm({
   );
 }
 
-// Инлайн-блок в конце статьи блога.
-export function EmailSignupInline({ source = "blog" }: { source?: string }) {
+// Инлайн-блок — в конце статьи блога, а также (с кастомным заголовком/
+// описанием под конкретный город или страну) на страницах /city и /country.
+export function EmailSignupInline({
+  source = "blog",
+  title = "Чек-лист переезда на email",
+  description = "Пошаговый план: что сделать до и после переезда, документы, финансы, первые недели на новом месте.",
+}: {
+  source?: string;
+  title?: string;
+  description?: string;
+}) {
   const [subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
@@ -114,10 +123,10 @@ export function EmailSignupInline({ source = "blog" }: { source?: string }) {
         Бесплатно
       </p>
       <h3 className="font-serif text-2xl text-cream mb-2">
-        Чек-лист переезда на email
+        {title}
       </h3>
       <p className="text-brandy/80 text-sm mb-5 leading-relaxed">
-        Пошаговый план: что сделать до и после переезда, документы, финансы, первые недели на новом месте.
+        {description}
       </p>
       <EmailForm source={source} />
     </div>

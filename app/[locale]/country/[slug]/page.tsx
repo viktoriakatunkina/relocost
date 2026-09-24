@@ -43,6 +43,7 @@ import { CountryLegal } from "@/components/country/CountryLegal";
 import { TrueSizeMap } from "@/components/country/TrueSizeMap";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
+import { EmailSignupInline } from "@/components/blog/EmailSignup";
 import { defaultLocale, type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { localizeCountryContent, translatedLocalesFor } from "@/lib/content-i18n";
@@ -519,6 +520,22 @@ export default async function CountryPage({
             : []),
         ]}
       />
+
+      {/* Лид-магнит: чек-лист переезда на email. 2026-09-24: маркетинговый
+          аудит нашёл, что форма стояла только на страницах блога — здесь,
+          на профиле страны, человек уже видел цены и панель пакетов, то
+          есть теплее и охотнее оставит email. */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 md:pt-16">
+        <EmailSignupInline
+          source={`country-${params.slug}`}
+          title={isRu ? `Чек-лист переезда ${countryWhereTo}` : undefined}
+          description={
+            isRu
+              ? `Документы, визы, деньги и первые недели ${countryWhere} — короткая подборка на почту.`
+              : undefined
+          }
+        />
+      </section>
 
       <div className="pt-12 md:pt-24">
         <Footer />

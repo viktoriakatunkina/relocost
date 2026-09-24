@@ -81,6 +81,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CitySchema } from "@/components/city/CitySchema";
 import { ProductSchema } from "@/components/city/ProductSchema";
 import { Footer } from "@/components/Footer";
+import { EmailSignupInline } from "@/components/blog/EmailSignup";
 
 export const revalidate = 86400;
 // Неизвестные slug рендерятся по первому запросу и кешируются ISR.
@@ -632,6 +633,28 @@ export default async function CityPage({
 
       <Reveal>
         <BadgeEmbed slug={c.slug} cityName={name} />
+      </Reveal>
+
+      {/* Лид-магнит: чек-лист переезда на email. 2026-09-24: маркетинговый
+          аудит нашёл, что эта форма стояла только на самых "холодных"
+          страницах блога — здесь, на профиле города, человек уже смотрел
+          калькулятор и цены пакетов, то есть теплее и охотнее оставит email. */}
+      <Reveal>
+        <section className="max-w-4xl mx-auto px-6 pt-14 md:pt-20">
+          <EmailSignupInline
+            source={`city-${c.slug}`}
+            title={
+              params.locale === "ru"
+                ? `Чек-лист переезда ${cityTo(c.slug, c.name_ru)}`
+                : undefined
+            }
+            description={
+              params.locale === "ru"
+                ? `Документы, жильё, деньги и первые недели ${cityIn(c.slug, c.name_ru)} — короткая подборка на почту.`
+                : undefined
+            }
+          />
+        </section>
       </Reveal>
 
       <div className="pt-12 md:pt-24">
