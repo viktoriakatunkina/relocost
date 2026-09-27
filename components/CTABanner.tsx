@@ -57,24 +57,24 @@ export async function CTABanner({
             <Stat
               label={th("statCities")}
               value={String(cityCount)}
-              description="Азия, Европа, СНГ и Ближний Восток"
               accent="#E89B6E"
+              big
             />
             <Stat
               label={th("statCountries")}
               value={String(countryCount)}
-              description="Все направления — безвиз и виза"
               accent="#E0A93E"
+              big
             />
             <Stat
               label={t("statRealPrices")}
               value="✓"
-              description="Аренда, еда, транспорт — из открытых источников, не с потолка"
+              description="Не с потолка, а из открытых источников"
             />
             <Stat
               label={t("statVisa")}
               value="✓"
-              description="Как въехать россиянину, сколько можно жить без визы"
+              description="Как въехать и сколько можно жить без визы"
             />
           </div>
         </div>
@@ -88,11 +88,13 @@ function Stat({
   value,
   description,
   accent,
+  big,
 }: {
   label: string;
   value: string;
   description?: string;
   accent?: string;
+  big?: boolean;
 }) {
   const isCheck = value === "✓";
   return (
@@ -100,7 +102,7 @@ function Stat({
       <div
         className="font-serif leading-none tabular-nums lining-nums"
         style={{
-          fontSize: isCheck ? "2rem" : "2.5rem",
+          fontSize: isCheck ? "2rem" : big ? "3.25rem" : "2.5rem",
           color: isCheck ? "#E89B6E" : (accent ?? "#F6F1E8"),
         }}
       >
