@@ -101,23 +101,31 @@ export default async function HomePage({
           92vh + все отступы вместе выталкивали CTA "Подобрать город" и
           статистику за пределы первого экрана на реальном iPhone (Виктория
           прислала скриншот 2026-08-25: кнопка обрезана снизу). */}
-      <section className="relative isolate md:min-h-[92vh] flex flex-col justify-center px-6 py-8 md:py-12 overflow-hidden">
-        <Image
-          src="/images/hero-v3.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover -z-20 opacity-55"
-        />
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(26,33,5,0.65) 0%, rgba(26,33,5,0.85) 55%, rgba(26,33,5,0.98) 100%), radial-gradient(ellipse at 15% 20%, rgba(216,148,120,0.25) 0%, transparent 50%), radial-gradient(ellipse at 85% 75%, rgba(106,120,77,0.4) 0%, transparent 55%)",
-          }}
-          aria-hidden
-        />
+      {/* 2026-09-27: overflow-hidden раньше висел на всей секции (включая
+          выпадающий список поиска) — на невысоких десктопных окнах
+          (широкий, но невысокий viewport, например ~550-650px высоты)
+          подсказки при вводе города обрезались нижней границей секции и
+          визуально «пропадали». Фон/дымка теперь клипаются собственной
+          обёрткой ниже, а не всей секцией — HeroMist уже и так сам себя
+          клипает (см. components/decor/Atmosphere.tsx). */}
+      <section className="relative isolate md:min-h-[92vh] flex flex-col justify-center px-6 py-8 md:py-12">
+        <div className="absolute inset-0 overflow-hidden" aria-hidden>
+          <Image
+            src="/images/hero-v3.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover -z-20 opacity-55"
+          />
+          <div
+            className="absolute inset-0 -z-10"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(26,33,5,0.65) 0%, rgba(26,33,5,0.85) 55%, rgba(26,33,5,0.98) 100%), radial-gradient(ellipse at 15% 20%, rgba(216,148,120,0.25) 0%, transparent 50%), radial-gradient(ellipse at 85% 75%, rgba(106,120,77,0.4) 0%, transparent 55%)",
+            }}
+          />
+        </div>
 
         <HeroMist />
 
