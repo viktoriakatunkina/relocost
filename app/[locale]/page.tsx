@@ -65,7 +65,7 @@ export default async function HomePage({
 
   const [popular, cities, posts, allCountries, searchCountries, crowdCount] =
     await Promise.all([
-      getPopularCities(6),
+      getPopularCities(5),
       getAllCitiesForSearch(),
       getPublishedPosts(3),
       getAllCountriesAggregated(),
