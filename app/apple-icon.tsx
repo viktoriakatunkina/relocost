@@ -11,13 +11,16 @@ export default function AppleIcon() {
         style={{
           width: "100%",
           height: "100%",
-          background: "#C4866D",
+          background: "#1A2105",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           borderRadius: 36,
         }}
       >
+        {/* 2026-09-27: цвета приведены к реальному логотипу сайта (тёмный
+            фон, оранжевый пин, белый круг) — раньше был медный фон с
+            тёмным знаком, не совпадавший с логотипом в шапке. */}
         <svg
           width="120"
           height="120"
@@ -26,9 +29,9 @@ export default function AppleIcon() {
         >
           <path
             d="M32 8c-9.9 0-18 7.9-18 17.7 0 13.2 18 30.3 18 30.3s18-17.1 18-30.3C50 15.9 41.9 8 32 8z"
-            fill="#1A2105"
+            fill="#E89B6E"
           />
-          <circle cx="32" cy="25" r="7" fill="#C4866D" />
+          <circle cx="32" cy="25" r="7" fill="#FFFFFF" />
         </svg>
       </div>
     ),
