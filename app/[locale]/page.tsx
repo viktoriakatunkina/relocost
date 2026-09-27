@@ -310,8 +310,16 @@ export default async function HomePage({
         <HowItWorks cityCount={cityCount} />
       </Reveal>
       <Reveal>
-        <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-20">
-          <div className="relative overflow-hidden rounded-3xl border-2 border-copper/55 p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-6 shadow-[0_0_80px_rgba(232,155,110,0.14)]" style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(232,155,110,0.22) 0%, rgba(232,155,110,0.06) 50%, transparent 70%), linear-gradient(135deg, #2A3618 0%, #1A2105 100%)" }}>
+        {/* 2026-09-27: раньше pt-20 на десктопе + собственный py-14
+            у блока "3 шага" выше создавали ~136px пустоты между секциями —
+            сократили до pt-8 на десктопе (мобильный отступ не трогаем).
+            Фон блока раньше плавно затухал ровно в цвет фона страницы
+            (#1A2105 в правом нижнем углу градиента), из-за чего блок
+            "растворялся" — теперь база теплее (медный/оливковый диагональный
+            градиент без точного совпадения с фоном страницы) и медные
+            блики/рамка/свечение заметно интенсивнее. */}
+        <section className="max-w-6xl mx-auto px-6 pt-14 md:pt-8">
+          <div className="relative overflow-hidden rounded-3xl border-2 border-copper p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-6 shadow-[0_0_90px_rgba(232,155,110,0.28)]" style={{ background: "radial-gradient(ellipse at 20% 25%, rgba(232,155,110,0.38) 0%, transparent 55%), radial-gradient(ellipse at 85% 80%, rgba(216,148,120,0.3) 0%, transparent 60%), linear-gradient(135deg, #4A3320 0%, #33431F 55%, #232D10 100%)" }}>
             <div className="flex-1">
               <span className="eyebrow">Не знаете, с чего начать</span>
               <h2 className="font-serif text-3xl md:text-4xl text-cream mt-4 mb-3 text-balance">
