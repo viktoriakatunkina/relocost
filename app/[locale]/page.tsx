@@ -136,8 +136,12 @@ export default async function HomePage({
               {t("eyebrow")}
             </p>
           </div>
+          {/* 2026-09-27: на десктопе исходный clamp(…,7vw,6.5rem) давал
+              ~100px и занимал почти всю ширину hero-контейнера (3 строки).
+              На md+ уменьшаем кап и сужаем ширину — заголовок компактнее,
+              мобильный размер (base clamp) не трогаем. */}
           <h1
-            className="font-serif text-[clamp(2.25rem,7vw,6.5rem)] text-cream leading-[1.05] md:leading-[1.02] mb-4 md:mb-8 fade-up text-balance text-shadow-hero"
+            className="font-serif text-[clamp(2.25rem,7vw,6.5rem)] md:text-[clamp(2.75rem,4.5vw,4.5rem)] md:max-w-3xl text-cream leading-[1.05] md:leading-[1.05] mb-4 md:mb-8 fade-up text-balance text-shadow-hero"
             style={{ animationDelay: "120ms", letterSpacing: "-0.02em" }}
           >
             {t("heroTitlePre")}
