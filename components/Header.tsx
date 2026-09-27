@@ -1,6 +1,5 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 import { FavoritesNavLink } from "@/components/FavoritesNavLink";
 import { MobileNav } from "@/components/MobileNav";
 import { Logo } from "@/components/Logo";
@@ -61,12 +60,13 @@ export async function Header() {
           >
             {t("calculate")}
           </Link>
-          <LanguageSwitcher />
         </nav>
 
-        {/* Правый блок на мобильном: переключатель языка + бургер */}
+        {/* Правый блок на мобильном: бургер.
+            2026-09-27: переключатель языка убран из UI по всему хедеру
+            (десктоп + мобайл) — сайт пока отказался от en/uz-перевода,
+            механизм i18n/middleware не трогаем, просто скрыли переключатель. */}
         <div className="flex md:hidden items-center gap-2">
-          <LanguageSwitcher />
           <MobileNav
             nav={mobileNav}
             favoritesLabel={t("favorites")}
