@@ -7,6 +7,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { isR2Src } from "@/lib/photo";
 
 interface Props {
   src: string;
@@ -49,6 +50,7 @@ export function CityCardImage({ src, alt, gradient, emoji, letter }: Props) {
       sizes="(max-width: 1024px) 50vw, 33vw"
       className="object-cover transition duration-700 group-hover:scale-110"
       onError={() => setErrored(true)}
+      unoptimized={isR2Src(src)}
     />
   );
 }

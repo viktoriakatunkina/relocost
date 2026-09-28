@@ -5,7 +5,7 @@ import { useUnlocked, isUnlocked } from "@/lib/unlocked";
 import { LockedSection } from "@/components/freemium/LockedSection";
 import type { CityContent, PlaceType } from "@/lib/cities-content";
 import { typo } from "@/lib/typography";
-import { photoSrc } from "@/lib/photo";
+import { photoSrc, isR2Src } from "@/lib/photo";
 
 // Экспортируется — переиспользуется в components/trip/RouteTimeline.tsx для
 // чипов типа точки маршрута (RouteStop["type"] — тот же набор значений).
@@ -35,6 +35,7 @@ function PlaceCard({ p }: { p: CityContent["best_places"][number] }) {
             fill
             sizes="(max-width: 768px) 100vw, 420px"
             className="object-cover"
+            unoptimized={isR2Src(src)}
           />
         </div>
       )}

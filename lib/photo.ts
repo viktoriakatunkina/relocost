@@ -79,3 +79,35 @@ export function cityPhotoSrc(
   if (R2_BASE && (local || unsplashBase)) return `${R2_BASE}/city/${slug}.jpg`;
   return photoSrc(local, unsplashBase, opts);
 }
+
+// R2 (Cloudflare) не резолвится/не скачивается с приемлемой скоростью с
+// прод-VPS (2026-09-28: прямой curl с сервера — ~3 КБ/с, 82 КБ из 551 КБ за
+// 25 сек и обрыв по таймауту; при этом с браузеров пользователей R2 обычно
+// быстрый — это проблема именно исходящей сети ЭТОГО VPS до R2, не самого
+// R2). next/image со встроенным оптимизатором качает ОРИГИНАЛ через sharp на
+// сервере перед отдачей — то есть каждый /_next/image?url=...r2.dev/... это
+// попытка VPS самому скачать файл с R2. При зависающих скачиваниях эти
+// незавершённые fetch'и (буферы + сокеты) копятся в памяти next-server и не
+// освобождаются вовремя (nginx отдаёт клиенту 504 по proxy_read_timeout, но
+// backend-процесс не всегда прерывает исходный fetch) — так процесс улетает
+// с ~90 МБ до 800+ МБ за 15-20 минут и кладёт весь VPS (shared с ztmobile,
+// foodlore, lunarika). Подробности в /opt/relocost — memory-leak расследование.
+//
+// Фикс: для R2-URL отдаём картинку БЕЗ серверной оптимизации Next — сразу
+// оригинальный R2 URL, его скачивает браузер пользователя напрямую с edge
+// Cloudflare, минуя наш VPS целиком. Egress по-прежнему уходит через R2 (не
+// Supabase Storage), т.е. смысл миграции на R2 сохраняется — просто без
+// прогона через sharp на этом сервере. Photo Storage-URL (Supabase) по
+// прежнему идут через штатный оптимизатор Next — тот хост с VPS доступен
+// нормально.
+//
+// isR2Src(src) передаётся в <Image unoptimized={...}> (НЕ через кастомный
+// loader — билд 2026-09-28 падал с "Functions cannot be passed directly to
+// Client Components": часть мест, где рисуется фото (CityHero, BlogCard,
+// blog/[slug]/page), — серверные компоненты, а next/image <Image> сам
+// является Client Component, и функция-loader не сериализуется через RSC-
+// границу. unoptimized — обычный boolean, сериализуется без проблем и даёт
+// тот же результат: next/image рендерит src как есть, без /_next/image).
+export function isR2Src(src: string | null | undefined): boolean {
+  return !!src && !!R2_BASE && src.startsWith(R2_BASE);
+}
