@@ -2,14 +2,21 @@ import { supabase } from "./supabase";
 import { CITY_ROUTES } from "./city-routes";
 import type { Price, PriceCategory, City, CityWithMinRent } from "./types";
 
+// 2026-09-29 (правка 3): "ЖКХ и связь" → "ЖКХ" — интернет/мобильная связь
+// переехали в свою категорию "communication", ярлык больше не двоится.
 export const CATEGORY_LABELS: Record<PriceCategory, string> = {
   rent: "Аренда",
   food: "Еда и продукты",
   transport: "Транспорт",
-  utilities: "ЖКХ и связь",
+  utilities: "ЖКХ",
   cafe: "Кафе и рестораны",
-  health: "Медицина и фитнес",
+  health: "Медицина",
   entertainment: "Развлечения",
+  communication: "Связь и интернет",
+  clothing: "Одежда",
+  sports: "Спорт и фитнес",
+  kids: "Дети и образование",
+  beauty: "Красота и уход",
 };
 
 export const CATEGORY_ORDER: PriceCategory[] = [
@@ -17,9 +24,14 @@ export const CATEGORY_ORDER: PriceCategory[] = [
   "food",
   "transport",
   "utilities",
+  "communication",
   "cafe",
   "health",
+  "sports",
   "entertainment",
+  "clothing",
+  "beauty",
+  "kids",
 ];
 
 export async function getPricesByCity(

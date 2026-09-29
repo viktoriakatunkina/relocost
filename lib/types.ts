@@ -56,7 +56,16 @@ export type PriceCategory =
   | "utilities"
   | "cafe"
   | "health"
-  | "entertainment";
+  | "entertainment"
+  // 5 новых категорий (правка 3, 2026-09-29) — только в детальной таблице
+  // цен платного отчёта, в формулу monthly_from (lib/city-budget.ts) НЕ
+  // входят (решение Виктории: не раздувать главную цифру бюджета без
+  // пересчёта и переобъяснения пользователям задним числом).
+  | "communication"
+  | "clothing"
+  | "sports"
+  | "kids"
+  | "beauty";
 
 export type CityWithMinRent = City & { min_rent: number };
 

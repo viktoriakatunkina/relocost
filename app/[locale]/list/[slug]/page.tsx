@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getListData, getListDef, getAllListSlugs, type Tip } from "@/lib/lists";
-import { CityCard } from "@/components/CityCard";
+import { ListCitiesGrid } from "@/components/lists/ListCitiesGrid";
 import { CityDeepLinks } from "@/components/CityDeepLinks";
 import { OtherLists } from "@/components/lists/OtherLists";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -77,17 +77,23 @@ export default async function ListPage({
 
       {def.tips.length > 0 && (
         <section className="max-w-6xl mx-auto px-6 pt-6 pb-2">
+          {/* 2026-09-29: были голыми рамками без акцента (плоская bg-kombu-green,
+              эмодзи как обычный текст) — теперь иконка в тёплой медной плашке
+              и hover-лифт, тот же язык, что у CityCard/CountryCard/HeroStat. */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {def.tips.map((tip: Tip) => (
               <div
                 key={tip.title}
-                className="rounded-xl border border-dingley/25 bg-kombu-green/40 p-4"
+                className="group rounded-2xl border hairline bg-surface p-5 transition hover:-translate-y-1 hover:border-copper/40 hover:shadow-card"
               >
-                <span className="text-2xl leading-none block mb-2" aria-hidden="true">
+                <span
+                  className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-copper/15 text-xl leading-none mb-3 transition group-hover:bg-copper/25"
+                  aria-hidden="true"
+                >
                   {tip.icon}
                 </span>
-                <p className="font-semibold text-cream text-sm mb-1">{tip.title}</p>
-                <p className="text-brandy/75 text-sm leading-relaxed">{tip.text}</p>
+                <p className="font-serif text-cream text-base mb-1.5">{tip.title}</p>
+                <p className="text-brandy/75 text-sm leading-relaxed text-pretty">{tip.text}</p>
               </div>
             ))}
           </div>
@@ -98,11 +104,7 @@ export default async function ListPage({
         {cities.length === 0 ? (
           <p className="text-brandy/70">Пока нет подходящих городов.</p>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
-            {cities.map((c, i) => (
-              <CityCard key={c.id} city={c} index={i} />
-            ))}
-          </div>
+          <ListCitiesGrid cities={cities} />
         )}
       </section>
 

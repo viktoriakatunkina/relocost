@@ -24,26 +24,29 @@ export function CityDeepLinks({
     <section className="max-w-6xl mx-auto px-6 pt-12 md:pt-16">
       <h2 className="font-serif text-2xl md:text-3xl text-cream mb-2">{title}</h2>
       {note && <p className="text-brandy/60 text-sm mb-6 max-w-2xl">{note}</p>}
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2 text-sm">
+      {/* 2026-09-29: было похоже на голую текстовую таблицу — название
+          города и два подчёркнутых-на-hover слова "бюджет"/"цены" без формы
+          кнопки, непонятно, что это вообще кликабельно. Теперь каждая строка
+          — карточка с явными пилюлями-ссылками. */}
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {cities.map((c) => (
           <li
             key={c.slug}
-            className="flex items-baseline justify-between gap-3 border-b hairline py-2"
+            className="flex items-center justify-between gap-3 rounded-xl border hairline bg-surface/50 px-4 py-3 transition hover:border-copper/30 hover:bg-surface"
           >
-            <span className="text-brandy/85 truncate">{c.name}</span>
-            <span className="shrink-0 text-brandy/45">
+            <span className="text-cream/90 text-sm truncate min-w-0">{c.name}</span>
+            <span className="flex items-center gap-1.5 shrink-0">
               <Link
                 href={`/city/${c.slug}/budget`}
-                className="text-brandy/80 hover:text-copper transition"
+                className="px-2.5 py-1 rounded-pill border border-cream/15 text-brandy/85 text-xs font-medium hover:border-copper/50 hover:text-cream hover:bg-copper/10 transition"
               >
-                бюджет
+                Бюджет
               </Link>
-              {" · "}
               <Link
                 href={`/city/${c.slug}/prices`}
-                className="text-brandy/80 hover:text-copper transition"
+                className="px-2.5 py-1 rounded-pill border border-cream/15 text-brandy/85 text-xs font-medium hover:border-copper/50 hover:text-cream hover:bg-copper/10 transition"
               >
-                цены
+                Цены
               </Link>
             </span>
           </li>

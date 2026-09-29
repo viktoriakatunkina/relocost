@@ -939,19 +939,25 @@ async function buildListsPreview(slugs: string[]): Promise<ListPreview[]> {
     .map((s) => getListDef(s))
     .filter((d): d is ListDef => Boolean(d));
   const citySlugs = defs.map((d) => d.fallbackSlugs[0]).filter(Boolean);
-  const { data } = await supabase
+  // 2026-09-29: селект раньше включал cities.image_url — колонки нет в живой
+  // БД (миграция 202606111200 не применена, см. комментарий у City.image_url
+  // в lib/types.ts), весь запрос падал молча (data оставался пуст), и фото
+  // не подставлялись НИ У ОДНОЙ карточки подборок — ни здесь, ни в блоке
+  // "Подборки" на главной. cityPhotoSrc для R2-пути достаточно unsplash_url.
+  const { data, error } = await supabase
     .from("cities")
-    .select("slug, image_url, unsplash_url")
+    .select("slug, unsplash_url")
     .in("slug", citySlugs);
+  if (error) console.error("buildListsPreview: cities query failed", error);
   const bySlug = new Map(
-    (data ?? []).map((c) => [c.slug as string, c as { image_url: string | null; unsplash_url: string | null }]),
+    (data ?? []).map((c) => [c.slug as string, c as { unsplash_url: string | null }]),
   );
 
   return defs.map((def) => {
     const citySlug = def.fallbackSlugs[0];
     const city = citySlug ? bySlug.get(citySlug) : undefined;
     const photo = citySlug
-      ? cityPhotoSrc(citySlug, city?.image_url, city?.unsplash_url, { w: 480, q: 75 })
+      ? cityPhotoSrc(citySlug, null, city?.unsplash_url, { w: 480, q: 75 })
       : null;
     return {
       slug: def.slug,
