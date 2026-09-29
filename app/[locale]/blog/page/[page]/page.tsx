@@ -121,30 +121,43 @@ export default async function BlogArchivePage({
           </Link>
         </nav>
 
-        <nav
-          className="flex flex-wrap gap-2 mt-6"
-          aria-label="Страницы архива блога"
-        >
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) =>
-            n === page ? (
-              <span
-                key={n}
-                aria-current="page"
-                className="px-3 py-1.5 rounded-pill border border-copper bg-copper text-pine-tree text-sm font-medium"
-              >
-                {n}
-              </span>
-            ) : (
-              <Link
-                key={n}
-                href={`/blog/page/${n}`}
-                className="px-3 py-1.5 rounded-pill border border-cream/10 text-brandy/70 text-sm hover:text-cream hover:border-copper/30 transition"
-              >
-                {n}
-              </Link>
-            ),
-          )}
-        </nav>
+        {/* 2026-09-29 (UI-аудит): полный список из totalPages (188+) ссылок —
+            намеренная SEO-инфраструктура, НЕ убираем (см. комментарий у
+            <nav> выше про перелинковку ~2600 статей). Проблема была чисто
+            визуальная — стена цифр на весь экран у живого человека. <details>
+            решает оба: краулер/скринридер видит все ссылки в DOM как раньше
+            (Google explicitly индексирует контент внутри закрытого <details>),
+            человек по умолчанию видит компактный список. */}
+        <details className="mt-6 group">
+          <summary className="cursor-pointer inline-flex items-center gap-2 px-4 h-10 rounded-xl border border-cream/10 text-brandy/80 text-sm hover:text-cream hover:border-copper/30 transition list-none [&::-webkit-details-marker]:hidden">
+            Все {totalPages} страниц архива
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition group-open:rotate-180" aria-hidden><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <nav
+            className="flex flex-wrap gap-2 mt-4"
+            aria-label="Страницы архива блога"
+          >
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) =>
+              n === page ? (
+                <span
+                  key={n}
+                  aria-current="page"
+                  className="px-3 py-1.5 rounded-pill border border-copper bg-copper text-pine-tree text-sm font-medium"
+                >
+                  {n}
+                </span>
+              ) : (
+                <Link
+                  key={n}
+                  href={`/blog/page/${n}`}
+                  className="px-3 py-1.5 rounded-pill border border-cream/10 text-brandy/70 text-sm hover:text-cream hover:border-copper/30 transition"
+                >
+                  {n}
+                </Link>
+              ),
+            )}
+          </nav>
+        </details>
       </section>
 
       <div className="pt-12 md:pt-24">

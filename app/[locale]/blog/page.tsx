@@ -86,20 +86,29 @@ export default async function BlogPage({
           статьи на клиенте, поэтому в HTML попадают только 12 карточек —
           краулер не видит остальные ~2600 статей и не может до них дойти.
           Этот блок даёт реальные <a> на постраничный архив (аудит 2026-09-07). */}
+      {/* 2026-09-29 (UI-аудит): та же правка, что в /blog/page/[page] —
+          <details> вместо голой стены из totalPages ссылок. Краулер/
+          скринридер видит все ссылки в DOM как раньше, человек по умолчанию
+          видит компактный сворачиваемый блок. */}
       {totalPages > 1 && (
         <section className="max-w-6xl mx-auto px-6 mt-16">
-          <h2 className="font-serif text-2xl text-cream mb-4">Архив статей</h2>
-          <nav className="flex flex-wrap gap-2" aria-label="Архив блога по страницам">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
-              <Link
-                key={n}
-                href={`/blog/page/${n}`}
-                className="px-3 py-1.5 rounded-pill border border-cream/10 text-brandy/70 text-sm hover:text-cream hover:border-copper/30 transition"
-              >
-                {n}
-              </Link>
-            ))}
-          </nav>
+          <details className="group">
+            <summary className="cursor-pointer inline-flex items-center gap-2 font-serif text-2xl text-cream mb-4 list-none [&::-webkit-details-marker]:hidden">
+              Архив статей — {totalPages} страниц
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition group-open:rotate-180" aria-hidden><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <nav className="flex flex-wrap gap-2 mt-2" aria-label="Архив блога по страницам">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                <Link
+                  key={n}
+                  href={`/blog/page/${n}`}
+                  className="px-3 py-1.5 rounded-pill border border-cream/10 text-brandy/70 text-sm hover:text-cream hover:border-copper/30 transition"
+                >
+                  {n}
+                </Link>
+              ))}
+            </nav>
+          </details>
         </section>
       )}
 
