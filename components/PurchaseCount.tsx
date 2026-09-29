@@ -7,7 +7,8 @@
 // сигнатура компонента (count) оставлены как есть — 6+ мест вызова по
 // сайту (StickyBar, LockedSection, MonthlyBudget) не трогаем, значение
 // count больше не используется.
-export function PurchaseCount({ count: _count }: { count: number }) {
+export function PurchaseCount({ count }: { count: number }) {
+  void count;
   return (
     <p className="mt-3 text-xs text-brandy/60 flex items-center justify-center gap-1.5 flex-wrap">
       <span className="inline-flex items-center gap-1">
