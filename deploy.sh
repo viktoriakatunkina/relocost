@@ -35,6 +35,7 @@ if [[ "${1:-}" == "--rollback" ]]; then
     && rm -rf .next.rollback_from \
     && mv .next .next.rollback_from \
     && mv .next.prev .next \
+    && (rsync -a --ignore-existing .next.rollback_from/static/ .next/static/ 2>/dev/null || true) \
     && systemctl restart relocost"
   echo "==> Жду готовности $SITE (до ~20с)"
   if curl -fsS --retry 20 --retry-delay 1 --retry-all-errors -o /dev/null "$SITE/"; then
@@ -80,10 +81,24 @@ fi
 echo "==> 3/4 Атомарная замена + рестарт"
 # .next.old — временная копия ТЕКУЩЕГО (до этого деплоя) билда, живёт только
 # на время health-check ниже.
+#
+# 2026-09-29 (Вебвизор поймал живого пользователя с полностью неоформленной
+# страницей — голый HTML без CSS): после mv .next .next.old хэшированные
+# JS/CSS файлы предыдущего билда (/_next/static/css/<hash>.css и т.п.)
+# физически исчезают с диска. У любого, чей браузер уже загрузил HTML со
+# ссылками на СТАРЫЙ хэш (открыл страницу за секунды до этого свапа, или
+# просто держит вкладку открытой и подгружает ленивый чанк) — 404 на CSS/JS,
+# сайт рендерится без стилей. Имена файлов у Next.js — content-hash,
+# коллизий не бывает, поэтому безопасно донести файлы старого билда,
+# которых нет в новом, в новый .next/static — --ignore-existing ничего не
+# перезаписывает, просто расширяет набор доступных файлов на один цикл
+# деплоя вперёд. Не критично к неудаче (fresh-инсталл без .next.old/static) —
+# обёрнуто в подшелл с || true, чтобы не сорвать цепочку &&.
 $SSH "$HOST" "cd $APP \
   && rm -rf .next.old \
   && mv .next .next.old \
   && mv .next.incoming .next \
+  && (rsync -a --ignore-existing .next.old/static/ .next/static/ 2>/dev/null || true) \
   && systemctl restart relocost"
 
 echo "==> 4/4 Жду готовности $SITE (до ~20с)"
