@@ -19,10 +19,12 @@ function Item({
   icon,
   title,
   text,
+  footer,
 }: {
   icon: ReactNode;
   title: string;
   text?: string;
+  footer?: ReactNode;
 }) {
   if (!text) return null;
   return (
@@ -38,9 +40,17 @@ function Item({
         <p className="text-brandy/80 text-sm md:text-base leading-relaxed text-pretty">
           {text}
         </p>
+        {footer}
       </div>
     </div>
   );
+}
+
+// Форматирует "YYYY-MM-DD" в "DD.MM.YYYY" для отображения — без Intl (нужен
+// ровно этот формат, а не локаль-зависимый).
+function formatRuDate(iso: string): string {
+  const [y, m, d] = iso.split("-");
+  return `${d}.${m}.${y}`;
 }
 
 export function CountryLegal({
@@ -48,11 +58,17 @@ export function CountryLegal({
   visa,
   residency,
   taxes,
+  visaSource,
 }: {
   countryName: string;
   visa?: string;
   residency?: string;
   taxes?: string;
+  // Источник + дата проверки визового статуса (lib/visa.ts::getVisaSource) —
+  // 2026-09-29, P0 "доверие к данным": вместо общего "сверяйтесь с
+  // официальными источниками" показываем конкретную ссылку и дату конкретно
+  // для этой страны, когда она уже проверена (см. VISA_SOURCES).
+  visaSource?: { sourceUrl: string; verifiedAt: string } | null;
 }) {
   if (!visa && !residency && !taxes) return null;
   return (
@@ -67,7 +83,26 @@ export function CountryLegal({
         источниками.
       </p>
       <div className="rounded-3xl bg-surface border hairline p-6 md:p-9 space-y-7">
-        <Item icon={VisaIcon} title="Виза и въезд" text={visa} />
+        <Item
+          icon={VisaIcon}
+          title="Виза и въезд"
+          text={visa}
+          footer={
+            visaSource && (
+              <p className="text-brandy/50 text-xs mt-2.5">
+                Проверено: {formatRuDate(visaSource.verifiedAt)} ·{" "}
+                <a
+                  href={visaSource.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  className="underline underline-offset-2 hover:text-copper transition"
+                >
+                  официальный источник →
+                </a>
+              </p>
+            )
+          }
+        />
         <Item icon={DocIcon} title="ВНЖ и легализация" text={residency} />
         <Item icon={TaxIcon} title="Налоги" text={taxes} />
       </div>

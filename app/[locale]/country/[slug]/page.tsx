@@ -40,6 +40,7 @@ import { CountryStickyBar } from "@/components/freemium/CountryStickyBar";
 import { VerifyOnReturn } from "@/components/freemium/VerifyOnReturn";
 import { CrossLinks } from "@/components/CrossLinks";
 import { CountryLegal } from "@/components/country/CountryLegal";
+import { getVisaSource } from "@/lib/visa";
 import { TrueSizeMap } from "@/components/country/TrueSizeMap";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
@@ -484,6 +485,7 @@ export default async function CountryPage({
           visa={content.visa_note}
           residency={content.residency_note}
           taxes={content.taxes_note}
+          visaSource={getVisaSource(params.slug)}
         />
       )}
 
