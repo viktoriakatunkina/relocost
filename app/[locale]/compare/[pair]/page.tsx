@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   loadCompare,
@@ -155,7 +155,7 @@ export default async function ComparePage({
   // Порядок canonical (алфавитный) один и тот же для city- и country-пар,
   // поэтому редиректим ДО попытки понять, город это или страна.
   const canonicalSlug = pairSlug(...([...parsed].sort() as [string, string]));
-  if (params.pair !== canonicalSlug) redirect(`/compare/${canonicalSlug}`);
+  if (params.pair !== canonicalSlug) permanentRedirect(`/compare/${canonicalSlug}`);
   const data = await loadCompare(parsed[0], parsed[1]);
   if (!data) {
     // Пара не про города — пробуем страны (/compare/georgia-vs-armenia).

@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { getPublishedPostCardsOrThrow } from "@/lib/blog";
 import { ARCHIVE_PAGE_SIZE, archivePageCount } from "@/lib/blog-archive";
@@ -63,7 +63,7 @@ export default async function BlogArchivePage({
   // 2026-09-30 (SEO-аудит): /blog/page/1 дублировал /blog — тот же контент,
   // два URL под один intent. 301 на канонический /blog, страницы 2+ без
   // изменений (там уже свой self-canonical, см. generateMetadata выше).
-  if (page === 1) redirect("/blog");
+  if (page === 1) permanentRedirect("/blog");
 
   const posts = await getPublishedPostCardsOrThrow();
   const totalPages = archivePageCount(posts.length);
