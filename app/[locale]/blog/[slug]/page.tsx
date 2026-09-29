@@ -32,6 +32,8 @@ import { defaultLocale, type Locale } from "@/i18n/routing";
 import { buildRuOnlyAlternates } from "@/lib/i18n-seo";
 import { localizeBlogPost } from "@/lib/content-i18n";
 import { BLOG_TAG_FILTER, HIDDEN_BLOG_TAG } from "@/lib/blog-visibility";
+import { extractBlogFaqItems } from "@/lib/blog-faq";
+import { FaqSchema } from "@/components/FaqSchema";
 
 export const revalidate = 3600;
 // Неизвестные slug рендерятся по первому запросу и кешируются ISR.
@@ -234,6 +236,13 @@ export default async function BlogPostPage({
     },
   };
 
+  // GEO/AEO-правка 2026-09-29: у 438 из 1000 статей уже есть секция
+  // "## Часто задаваемые вопросы"/"## FAQ" в тексте, но без FAQPage
+  // JSON-LD — ни AI-движки, ни Google не могли вытащить эти пары как
+  // структурированные факты для прямого ответа. Разметка добавляется по
+  // тексту статьи автоматически, без правки содержимого. См. lib/blog-faq.ts.
+  const blogFaqItems = extractBlogFaqItems(post.content_md);
+
   // Разбивка контента на 3 части для inline CTA "в процессе" чтения, а не
   // только в конце статьи: после интро (~1-2 абзаца) и в середине (~55-60%).
   // Замки/CTA внутри контента системно работают для ВСЕХ статей блога (текущих
@@ -360,6 +369,7 @@ export default async function BlogPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
+      <FaqSchema items={blogFaqItems} />
       <Breadcrumbs
         items={[
           { name: tc("home"), href: "/" },

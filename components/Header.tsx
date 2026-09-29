@@ -13,9 +13,11 @@ export async function Header() {
   const nav = [
     { href: "/search", label: t("cities") },
     { href: "/countries", label: t("countries") },
+    { href: "/list", label: t("lists") },
     { href: "/match", label: t("match") },
     { href: "/quiz", label: t("quiz") },
     { href: "/blog", label: t("blog") },
+    { href: "/project", label: t("project") },
   ] as const;
 
   // Мобильное меню богаче десктопной навигации (Виктория, 2026-08-25:
@@ -25,6 +27,7 @@ export async function Header() {
   const mobileNav = [
     { href: "/search", label: t("cities"), icon: "city" as const },
     { href: "/countries", label: t("countries"), icon: "globe" as const },
+    { href: "/list", label: t("lists"), icon: "list" as const },
     { href: "/match", label: t("match"), icon: "sliders" as const },
     { href: "/quiz", label: t("quiz"), icon: "compass" as const },
     { href: "/rating", label: t("rating"), icon: "star" as const },

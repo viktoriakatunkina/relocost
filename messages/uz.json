@@ -2,6 +2,8 @@
   "nav": {
     "cities": "Shaharlar",
     "countries": "Davlatlar",
+    "lists": "Toʻplamlar",
+    "project": "Loyiha",
     "blog": "Jurnal",
     "news": "Yangiliklar",
     "favorites": "Saqlanganlar",
@@ -34,7 +36,8 @@
     "cookiePrivacyLink": "Maxfiylik siyosatimizga",
     "cookieAccept": "Tushunarli",
     "cookieAriaLabel": "Cookie-fayllardan foydalanish haqida bildirishnoma",
-    "cookieSuffix": " rozilik bildirasiz"
+    "cookieSuffix": " rozilik bildirasiz",
+    "learnMore": "Batafsil"
   },
   "city": {
     "share": "Ulashish",
@@ -117,6 +120,9 @@
     "countriesEyebrow": "Davlatlar boʻyicha",
     "countriesTitle": "Davlatlar katalogi",
     "countriesSubtitle": "Yoʻnalishni tanlang: har bir davlat uchun shaharlar roʻyxati, narxlar, viza bosqichlari va koʻchishning umumiy murakkabligi.",
+    "listsEyebrow": "Tanlovlar",
+    "listsTitle": "Tayyor shaharlar toʻplamlari",
+    "listsSubtitle": "Yoʻnalishlarni siz uchun muhim mezonlar boʻyicha guruhladik — byudjet, iqlim, ish va oila.",
     "popularQuickLabel": "Ommabop:",
     "matchCta": "Menga mos shaharni tanlash"
   },
@@ -366,5 +372,13 @@
       "gradeD": "Byudjet yoʻnalish",
       "gradeF": "Qiyin sharoitlar"
     }
+  },
+  "listsIndex": {
+    "title": "Shaharlar toʻplamlari",
+    "subtitle": "Byudjet, iqlim, vizalar va turmush holatiga qarab tayyor yoʻnalishlar roʻyxati — oʻzingizga mosini tanlang va shaharlarga oʻting."
+  },
+  "projectIndex": {
+    "title": "Relocost haqida",
+    "subtitle": "Tariflar, bloggerlar uchun vidjet, hujjatlar va aloqalar — xizmat haqida hamma narsa bir joyda."
   }
 }

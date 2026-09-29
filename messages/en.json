@@ -2,6 +2,8 @@
   "nav": {
     "cities": "Cities",
     "countries": "Countries",
+    "lists": "Collections",
+    "project": "Project",
     "blog": "Journal",
     "news": "News",
     "favorites": "Saved",
@@ -34,7 +36,8 @@
     "cookiePrivacyLink": "Privacy Policy",
     "cookieAccept": "Got it",
     "cookieAriaLabel": "Cookie usage notice",
-    "cookieSuffix": ""
+    "cookieSuffix": "",
+    "learnMore": "Learn more"
   },
   "city": {
     "share": "Share",
@@ -117,6 +120,9 @@
     "countriesEyebrow": "By country",
     "countriesTitle": "Country catalog",
     "countriesSubtitle": "Pick a destination: for each country you get a list of cities, prices, visa steps and the overall difficulty of moving.",
+    "listsEyebrow": "Curated picks",
+    "listsTitle": "Ready-made city collections",
+    "listsSubtitle": "Destinations grouped by what matters to you — budget, climate, work and family.",
     "popularQuickLabel": "Popular:",
     "matchCta": "Match me to a city"
   },
@@ -366,5 +372,13 @@
       "gradeD": "Budget destination",
       "gradeF": "Challenging conditions"
     }
+  },
+  "listsIndex": {
+    "title": "All city collections",
+    "subtitle": "Ready-made destination lists by budget, climate, visas and life situation — pick yours and jump straight to the cities."
+  },
+  "projectIndex": {
+    "title": "About Relocost",
+    "subtitle": "Pricing, the blogger widget, legal documents and contacts — everything about the service in one place."
   }
 }

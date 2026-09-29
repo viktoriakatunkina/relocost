@@ -43,10 +43,16 @@ export default async function CountriesPage({
   setRequestLocale(params.locale);
   const tc = await getTranslations("common");
   const tn = await getTranslations("nav");
-  const countries = await getAllCountriesAggregated();
+  const [countries, { cityCount: totalCities }] = await Promise.all([
+    getAllCountriesAggregated(),
+    getSiteStats(),
+  ]);
   const foreign = countries.filter((c) => c.is_foreign);
   const domestic = countries.filter((c) => !c.is_foreign);
-  const totalCities = countries.reduce((acc, c) => acc + c.city_count, 0);
+  // totalCities — из getSiteStats(), а не локальный reduce по countries:
+  // 2026-09-29, живая проверка поймала расхождение чисел между главной и
+  // этой страницей (см. комментарий в app/[locale]/page.tsx) — теперь обе
+  // страницы читают из одного источника.
   // Города по РФ — не «1» (число стран в блоке «Внутри России», там всегда
   // будет 1 запись — Россия), а сумма городов внутри нее. Раньше чип показывал
   // domestic.length («1 по России»), что противоречило карточке «Россия —

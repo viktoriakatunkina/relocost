@@ -15,7 +15,8 @@ type IconName =
   | "check"
   | "coins"
   | "info"
-  | "news";
+  | "news"
+  | "list";
 
 interface NavItem {
   href: string;
@@ -132,6 +133,17 @@ function NavIcon({ name }: { name: IconName }) {
           <line x1="6.5" y1="9" x2="13.5" y2="9" />
           <line x1="6.5" y1="12.5" x2="13.5" y2="12.5" />
           <line x1="6.5" y1="16" x2="10.5" y2="16" />
+        </svg>
+      );
+    case "list":
+      return (
+        <svg {...common}>
+          <line x1="9" y1="6" x2="20" y2="6" />
+          <line x1="9" y1="12" x2="20" y2="12" />
+          <line x1="9" y1="18" x2="20" y2="18" />
+          <circle cx="4.5" cy="6" r="1.3" fill="currentColor" stroke="none" />
+          <circle cx="4.5" cy="12" r="1.3" fill="currentColor" stroke="none" />
+          <circle cx="4.5" cy="18" r="1.3" fill="currentColor" stroke="none" />
         </svg>
       );
   }

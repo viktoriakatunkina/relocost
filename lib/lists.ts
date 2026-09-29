@@ -1,7 +1,9 @@
+import { supabase } from "./supabase";
 import { getCitiesWithBudget } from "./city-budget";
 import { climateTemp, COASTAL } from "./city-signals";
 import { CITY_CONTENT } from "./cities-content";
 import { getCityQuality } from "./city-quality";
+import { cityPhotoSrc } from "./photo";
 import type { CityWithBudget } from "./types";
 
 // SEO-подборки городов («Города до 50 000 ₽», «Куда уехать на зимовку» и т.п.).
@@ -907,4 +909,64 @@ export async function getListData(
     return { def, cities: buildFallbackCities(def.fallbackSlugs) };
   }
   return { def, cities };
+}
+
+// ── Превью подборок с фото (главная — правка 8, индекс /list — правка 9,
+// 2026-09-29) ────────────────────────────────────────────────────────────
+// Топ-6 по кликабельности заголовка (бюджет/климат/семья — самые частые
+// интенты) для блока на главной. Индекс /list показывает все 14.
+const TOP_LIST_SLUGS = [
+  "samye-deshevye",
+  "do-50000-rubley",
+  "dlya-zimovki",
+  "dlya-udalenki",
+  "u-morya",
+  "s-detmi",
+];
+
+export type ListPreview = {
+  slug: string;
+  shortTitle: string;
+  eyebrow: string;
+  intro: string;
+  photo: string | null;
+};
+
+// Фото карточки — первый город из fallbackSlugs подборки (репрезентативный
+// для темы: например phuket для «зимовки», bishkek для «самых дешевых»).
+async function buildListsPreview(slugs: string[]): Promise<ListPreview[]> {
+  const defs = slugs
+    .map((s) => getListDef(s))
+    .filter((d): d is ListDef => Boolean(d));
+  const citySlugs = defs.map((d) => d.fallbackSlugs[0]).filter(Boolean);
+  const { data } = await supabase
+    .from("cities")
+    .select("slug, image_url, unsplash_url")
+    .in("slug", citySlugs);
+  const bySlug = new Map(
+    (data ?? []).map((c) => [c.slug as string, c as { image_url: string | null; unsplash_url: string | null }]),
+  );
+
+  return defs.map((def) => {
+    const citySlug = def.fallbackSlugs[0];
+    const city = citySlug ? bySlug.get(citySlug) : undefined;
+    const photo = citySlug
+      ? cityPhotoSrc(citySlug, city?.image_url, city?.unsplash_url, { w: 480, q: 75 })
+      : null;
+    return {
+      slug: def.slug,
+      shortTitle: def.shortTitle,
+      eyebrow: def.eyebrow,
+      intro: def.intro,
+      photo,
+    };
+  });
+}
+
+export async function getListsPreview(): Promise<ListPreview[]> {
+  return buildListsPreview(TOP_LIST_SLUGS);
+}
+
+export async function getAllListsPreview(): Promise<ListPreview[]> {
+  return buildListsPreview(getAllListSlugs());
 }

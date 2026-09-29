@@ -7,6 +7,9 @@ import {
   getAllCountriesAggregated,
   getAllCountriesForSearch,
 } from "@/lib/countries";
+import { getListsPreview } from "@/lib/lists";
+import { getSiteStats } from "@/lib/site-stats";
+import { isR2Src } from "@/lib/photo";
 import type { SearchItem } from "@/components/SearchBar";
 import { CityCard } from "@/components/CityCard";
 import { CountryCard } from "@/components/country/CountryCard";
@@ -23,6 +26,19 @@ import { Footer } from "@/components/Footer";
 import { HeroMist, WarmOrbs } from "@/components/decor/Atmosphere";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { type Locale } from "@/i18n/routing";
+
+// Подписи карточек блока «Подборки» на главной берём из уже переведённых
+// footer.list* ключей (messages/{locale}.json) — те же названия, что в
+// подвале сайта, чтобы не плодить второй набор переводов на одни и те же
+// 6 подборок (правка 8, 2026-09-29).
+const LIST_LABEL_KEY: Record<string, string> = {
+  "samye-deshevye": "listCheapest",
+  "do-50000-rubley": "listBudget",
+  "dlya-zimovki": "listWinter",
+  "dlya-udalenki": "listRemote",
+  "u-morya": "listSeaside",
+  "s-detmi": "listKids",
+};
 
 // Имена городов для чипов "Популярно" на главной. Список фиксированный (8
 // направлений), поэтому переводы держим прямо здесь, а не тянем из БД —
@@ -59,8 +75,9 @@ export default async function HomePage({
   setRequestLocale(params.locale);
   const t = await getTranslations("home");
   const tc = await getTranslations("common");
+  const tf = await getTranslations("footer");
 
-  const [popular, cities, posts, allCountries, searchCountries, crowdCount] =
+  const [popular, cities, posts, allCountries, searchCountries, crowdCount, listsPreview, siteStats] =
     await Promise.all([
       getPopularCities(6),
       getAllCitiesForSearch(),
@@ -68,10 +85,22 @@ export default async function HomePage({
       getAllCountriesAggregated(),
       getAllCountriesForSearch(),
       getCrowdPricesCount(),
+      getListsPreview(),
+      getSiteStats(),
     ]);
   const countriesPreview = allCountries.slice(0, 8);
 
-  const cityCount = cities.length;
+  // Счётчики городов/стран на главной — из getSiteStats(), единого
+  // источника чисел для всего сайта (lib/site-stats.ts), а НЕ из
+  // cities.length/allCountries.length. 2026-09-29: живая проверка (AI-агент
+  // прошёлся по сайту персоной "не знаю куда ехать") поймала расхождение
+  // цифр между страницами (219 на главной, 213 на /countries, 175 на
+  // /search) — разные страницы считали числа каждая по-своему и ISR-кеш
+  // каждой страницы обновлялся в свой момент за день активного добавления
+  // городов. getSiteStats() уже существовал именно для этого, просто
+  // главная его не использовала — теперь использует.
+  const cityCount = siteStats.cityCount;
+  const countryCount = siteStats.countryCount;
   const searchItems: SearchItem[] = [
     ...searchCountries.map((c) => ({
       type: "country" as const,
@@ -197,7 +226,7 @@ export default async function HomePage({
               за пределы первого экрана на телефоне. */}
           <div className="hidden md:grid mt-10 grid-cols-3 max-w-2xl gap-3 sm:gap-5 fade-up relative z-10" style={{ animationDelay: "480ms" }}>
             <HeroStat value={String(cityCount)} label={t("statCities")} />
-            <HeroStat value={String(allCountries.length)} label={t("statCountries")} />
+            <HeroStat value={String(countryCount)} label={t("statCountries")} />
             <HeroStat value="7" label={t("statCategories")} />
           </div>
         </div>
@@ -294,12 +323,59 @@ export default async function HomePage({
               href="/countries"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-pill border hairline text-cream/90 hover:text-cream hover:border-copper transition"
             >
-              {tc("allCountries", { count: allCountries.length })}
+              {tc("allCountries", { count: countryCount })}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </Link>
           </div>
         </div>
       </section>
+
+      {listsPreview.length > 0 && (
+        <section className="relative isolate overflow-hidden py-12 px-6">
+          <div className="max-w-6xl mx-auto">
+            <Reveal>
+              <span className="eyebrow">{t("listsEyebrow")}</span>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl text-cream mt-6 text-balance text-pretty">
+                {t("listsTitle")}
+              </h2>
+              <p className="text-brandy/80 text-lg mt-4 max-w-xl text-pretty font-medium">
+                {t("listsSubtitle")}
+              </p>
+            </Reveal>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 mt-8">
+              {listsPreview.map((l, i) => (
+                <Reveal key={l.slug} delay={i * 50}>
+                  <Link
+                    href={`/list/${l.slug}`}
+                    className="group relative flex h-32 sm:h-40 md:h-44 flex-col justify-end overflow-hidden rounded-2xl border hairline bg-surface transition hover:-translate-y-1 hover:border-copper/40 hover:shadow-card"
+                  >
+                    {l.photo ? (
+                      <Image
+                        src={l.photo}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className="object-cover transition duration-700 group-hover:scale-105"
+                        unoptimized={isR2Src(l.photo)}
+                      />
+                    ) : (
+                      <div
+                        className="absolute inset-0 bg-gradient-to-br from-kombu-green via-kombu-green to-pine-tree"
+                        aria-hidden
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/60 to-transparent" />
+                    <span className="relative z-10 px-3 sm:px-4 pb-3 sm:pb-4 text-cream font-serif text-sm sm:text-lg leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] group-hover:text-copper transition">
+                      {LIST_LABEL_KEY[l.slug] ? tf(LIST_LABEL_KEY[l.slug]) : l.shortTitle}
+                    </span>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <Reveal>
         <HowItWorks cityCount={cityCount} />
@@ -370,7 +446,7 @@ export default async function HomePage({
         <BlogPreview posts={posts} />
       </Reveal>
       <Reveal>
-        <CTABanner cityCount={cityCount} countryCount={allCountries.length} />
+        <CTABanner cityCount={cityCount} countryCount={countryCount} />
       </Reveal>
       <Footer />
     </>
