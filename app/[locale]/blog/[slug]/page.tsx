@@ -31,7 +31,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { defaultLocale, type Locale } from "@/i18n/routing";
 import { buildRuOnlyAlternates } from "@/lib/i18n-seo";
 import { localizeBlogPost } from "@/lib/content-i18n";
-import { BLOG_TAG_FILTER } from "@/lib/blog-visibility";
+import { BLOG_TAG_FILTER, HIDDEN_BLOG_TAG } from "@/lib/blog-visibility";
 
 export const revalidate = 3600;
 // Неизвестные slug рендерятся по первому запросу и кешируются ISR.
@@ -84,9 +84,16 @@ export async function generateMetadata({
   // Локализуем заголовок/seo статьи (en/uz — перевод, иначе ru-фолбэк).
   const post = await localizeBlogPost(raw, params.locale);
   const canonicalSlug = BLOG_CANONICAL[params.slug] ?? params.slug;
+  // Посты со скрытым тегом (HIDDEN_BLOG_TAG) уже исключены из sitemap,
+  // /blog-листинга и всех функций перелинковки (lib/blog.ts), но сама
+  // страница оставалась index-able — часть из ~1880 таких URL (старая
+  // keyword-stuffed "DN-волна") реально проиндексирована Google. 2026-09-29:
+  // закрываем их от индексации явно, раз уж не показываем их нигде на сайте.
+  const isHidden = raw.tag === HIDDEN_BLOG_TAG;
   return {
     title: cleanSeoTitle(post.seo_title) ?? post.title,
     description: post.seo_description ?? undefined,
+    ...(isHidden ? { robots: { index: false, follow: false } } : {}),
     // Блог не переведён ни на одну локаль: canonical всегда на русскую версию,
     // hreflang — только ru + x-default. Раньше здесь заявлялись en/uz-версии,
     // которых физически нет (это был тот же русский текст под другим URL).
