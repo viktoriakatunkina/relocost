@@ -1,8 +1,9 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   loadCompare,
   parsePair,
+  pairSlug,
   compareSummary,
   compareDelta,
   compareSecondPerson,
@@ -146,6 +147,15 @@ export default async function ComparePage({
 
   const parsed = parsePair(params.pair);
   if (!parsed) notFound();
+  // 2026-09-30 (SEO-аудит): reverse-дубли — /tbilisi-vs-yerevan и
+  // /yerevan-vs-tbilisi оба отдавали 200 с одинаковыми данными, canonical-тег
+  // уже указывал на алфавитную пару (см. generateMetadata выше), но это
+  // только хинт — Google не гарантированно его слушает при живом 200 на
+  // обеих версиях. 301 на алфавитную пару убирает дубль однозначно.
+  // Порядок canonical (алфавитный) один и тот же для city- и country-пар,
+  // поэтому редиректим ДО попытки понять, город это или страна.
+  const canonicalSlug = pairSlug(...([...parsed].sort() as [string, string]));
+  if (params.pair !== canonicalSlug) redirect(`/compare/${canonicalSlug}`);
   const data = await loadCompare(parsed[0], parsed[1]);
   if (!data) {
     // Пара не про города — пробуем страны (/compare/georgia-vs-armenia).

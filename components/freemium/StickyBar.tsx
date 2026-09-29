@@ -73,46 +73,30 @@ export function StickyBar({
     remaining.reduce((sum, p) => sum + CITY_PACKAGES[p].price, 0) -
     CITY_PACKAGES.bundle.price;
 
-  // Точка входа на мобиле.
-  //
-  // Было: самый дешёвый незакрытый пакет, то есть всегда «Места» 19 ₽. На
-  // мобильном (67% трафика) в панели помещаются ровно две кнопки — «Места»
-  // и «Комбо», — и «Расходы» 49 ₽ не было видно нигде в постоянном CTA.
-  // При этом по фактическим оплатам именно «Расходы» — единственный пакет,
-  // который реально покупают (5 из 7 оплат за всё время; «Места» — почти
-  // никогда). Плюс сам по себе рассинхрон: пользователь только что видел
-  // в блоке цен кнопку «Открыть за 49 ₽», а закреплённая панель предлагала
-  // 19 и 59 ₽. Теперь primary — «Расходы», если он ещё не куплен.
-  const primaryPkg: CityPackageType = remaining.includes("budget")
-    ? "budget"
-    : remaining.reduce<CityPackageType>(
-        (min, p) =>
-          CITY_PACKAGES[p].price < CITY_PACKAGES[min].price ? p : min,
-        remaining[0],
-      );
+  // 2026-09-30 (аудит монетизации): раньше primary-кнопкой был "budget"
+  // (199 ₽, "Все цены") — сам факт трёх конкурирующих цен (149/199/249)
+  // заставлял решать "какой из трёх" прямо перед оплатой, это лишний шаг
+  // trения. Теперь при обоих незакрытых пакетах (самый частый случай — новый
+  // посетитель) единственный герой-оффер — bundle (249 ₽, "мой полный
+  // расчёт"): продаём результат ("сколько нужно лично мне"), а не строчки
+  // цен. "budget" отдельно (199 ₽) — только downsell под героем, "places"
+  // (149 ₽) как равноправная кнопка больше не показывается — доступен через
+  // "Сравнить пакеты". Если один из двух уже куплен — оффер один и тот же,
+  // бандл теряет смысл (переплата за уже открытое), просто показываем то,
+  // что ещё заперто.
+  const hasBundleOffer = remaining.length === 2;
+  const heroPkg: CityPackageType = hasBundleOffer ? "bundle" : remaining[0];
+  const downsellPkg: CityPackageType | null = hasBundleOffer ? "budget" : null;
 
-  // Подпись, объясняющая ценность, вместо служебного названия пакета.
-  const PRIMARY_LABEL: Record<CityPackageType, string> = {
-    budget: "Все цены",
+  const HERO_LABEL: Record<CityPackageType, string> = {
+    bundle: "Мой полный расчёт",
+    budget: "Расходы",
     places: "Лучшие места",
-    bundle: CITY_PACKAGES.bundle.short,
   };
 
-  // 2026-09-14 (продуктовый аудит воронки): по факту продаж покупают почти
-  // всегда «Расходы» или «Все включено» — «Места» отдельной покупкой берут
-  // почти никогда (см. комментарий выше). Раньше desktop-версия панели
-  // рендерила ВСЕ незакрытые пакеты как равнозначные кнопки, из-за чего
-  // «Места» выглядели таким же основным выбором, как «Расходы» — хотя
-  // реальный выбор почти всегда между двумя. Теперь по умолчанию видно
-  // только primary ("Расходы") + Bundle; остальные пакеты (по факту — только
-  // "Места") скрыты за тогглом «Показать все пакеты», а рядом с Bundle —
-  // явная подсказка, сколько стоит доплатить, чтобы получить их тоже.
-  const extraPkgs = remaining.filter((p) => p !== primaryPkg);
-  const bundleExtra = CITY_PACKAGES.bundle.price - CITY_PACKAGES[primaryPkg].price;
-  const extraLabel =
-    extraPkgs.length === 1
-      ? CITY_PACKAGES[extraPkgs[0]].short
-      : extraPkgs.map((p) => CITY_PACKAGES[p].short).join(" и ");
+  const extraPkgs = remaining.filter((p) => p !== heroPkg && p !== downsellPkg);
+  const bundleExtra = CITY_PACKAGES.bundle.price - CITY_PACKAGES[heroPkg].price;
+  const extraLabel = extraPkgs.map((p) => CITY_PACKAGES[p].short).join(" и ");
 
   return (
     <>
@@ -122,80 +106,86 @@ export function StickyBar({
             <PurchaseCount count={purchaseCount} />
           )}
 
-          {/* Мобиль: primary-кнопка самого востребованного пакета + outline «Все — N ₽» (bundle) */}
+          {/* Мобиль: hero-кнопка (bundle, если оба пакета ещё заперты) +
+              downsell outline рядом («Только расходы»). Один герой-оффер,
+              а не три равноправные цены перед оплатой. */}
           <div className="flex md:hidden items-center gap-2 w-full">
             <button
               type="button"
-              onClick={() => setOpenPkg(primaryPkg)}
+              onClick={() => setOpenPkg(heroPkg)}
               className="flex-1 rounded-xl bg-copper text-pine-tree font-semibold text-sm py-2.5 px-3 hover:bg-brandy transition active:scale-95"
             >
-              {PRIMARY_LABEL[primaryPkg]} — {CITY_PACKAGES[primaryPkg].price} ₽
+              {heroPkg === "bundle" && <span aria-hidden>🎁 </span>}
+              {HERO_LABEL[heroPkg]} — {CITY_PACKAGES[heroPkg].price} ₽
             </button>
-            <button
-              type="button"
-              onClick={() => setOpenPkg("bundle")}
-              className="shrink-0 rounded-xl border border-copper/50 text-copper font-medium text-sm py-2.5 px-3 hover:bg-copper/10 transition active:scale-95"
-            >
-              Все — {CITY_PACKAGES.bundle.price} ₽
-            </button>
+            {downsellPkg && (
+              <button
+                type="button"
+                onClick={() => setOpenPkg(downsellPkg)}
+                className="shrink-0 rounded-xl border border-copper/50 text-copper font-medium text-sm py-2.5 px-3 hover:bg-copper/10 transition active:scale-95"
+              >
+                Только {CITY_PACKAGES[downsellPkg].short.toLowerCase()} — {CITY_PACKAGES[downsellPkg].price} ₽
+              </button>
+            )}
           </div>
 
-          {/* Десктоп: primary pill + bundle CTA (по умолчанию — 2 варианта) */}
+          {/* Десктоп: та же иерархия — hero-pill выделена копером, downsell рядом приглушённым. */}
           <div className="hidden md:flex items-center gap-3 overflow-x-auto scrollbar-none">
             <span className="text-brandy/60 text-xs uppercase tracking-wider pl-2 pr-1 whitespace-nowrap">
               Открыть
             </span>
             <button
               type="button"
-              onClick={() => setOpenPkg(primaryPkg)}
-              className="shrink-0 inline-flex flex-col items-start gap-0.5 px-3.5 md:px-4 py-2 min-h-[44px] justify-center rounded-pill bg-surface-elevated hover:bg-surface-elevated text-cream text-sm border hairline transition"
+              onClick={() => setOpenPkg(heroPkg)}
+              className="shrink-0 inline-flex flex-col items-center gap-0.5 px-4 md:px-5 py-2 min-h-[44px] justify-center rounded-pill bg-copper text-pine-tree text-sm font-semibold border border-copper transition hover:bg-brandy"
             >
               <span className="inline-flex items-center gap-1.5">
-                <span>{CITY_PACKAGES[primaryPkg].emoji}</span>
-                <span className="hidden sm:inline">{CITY_PACKAGES[primaryPkg].short}</span>
-                <span className="font-semibold tabular-nums">
-                  {CITY_PACKAGES[primaryPkg].price} ₽
-                </span>
+                {heroPkg === "bundle" && <span aria-hidden>🎁</span>}
+                <span>{HERO_LABEL[heroPkg]}</span>
+                <span className="font-semibold tabular-nums">{CITY_PACKAGES[heroPkg].price} ₽</span>
+                {heroPkg === "bundle" && bundleSavings > 0 && (
+                  <span className="font-medium text-pine-tree/70 text-xs">
+                    −{bundleSavings} ₽
+                  </span>
+                )}
               </span>
             </button>
-            <button
-              type="button"
-              onClick={() => setOpenPkg("bundle")}
-              className="shrink-0 inline-flex flex-col items-center gap-0.5 px-4 md:px-5 py-2 min-h-[44px] justify-center rounded-pill bg-copper text-pine-tree text-sm font-semibold border border-copper transition hover:bg-brandy ml-auto"
-            >
-              <span className="inline-flex items-center gap-1.5">
-                <span>🎁</span>
-                <span>
-                  {CITY_PACKAGES.bundle.short} {CITY_PACKAGES.bundle.price} ₽
-                  {bundleSavings > 0 && (
-                    <span className="font-medium text-pine-tree/70 text-xs ml-1">
-                      −{bundleSavings} ₽
-                    </span>
-                  )}
-                </span>
-              </span>
-            </button>
-          </div>
-
-          {/* Полный набор из 3 пакетов — сравнение с чек-марками по фичам, а
-              не просто ещё строка кнопок с ценами (см. комментарий у
-              compareOpen выше). */}
-          {extraPkgs.length > 0 && (
-            <p className="text-brandy/45 text-[11px] text-center pt-1.5">
-              +{bundleExtra} ₽ в «{CITY_PACKAGES.bundle.short}» — и получите еще {extraLabel}
-              {" · "}
+            {downsellPkg && (
               <button
                 type="button"
-                onClick={() => setCompareOpen(true)}
-                className="underline underline-offset-2 hover:text-brandy transition"
+                onClick={() => setOpenPkg(downsellPkg)}
+                className="shrink-0 inline-flex flex-col items-start gap-0.5 px-3.5 md:px-4 py-2 min-h-[44px] justify-center rounded-pill bg-surface-elevated hover:bg-surface-elevated text-cream text-sm border hairline transition ml-auto"
               >
-                Сравнить пакеты
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="hidden sm:inline">Только {CITY_PACKAGES[downsellPkg].short.toLowerCase()}</span>
+                  <span className="font-semibold tabular-nums">
+                    {CITY_PACKAGES[downsellPkg].price} ₽
+                  </span>
+                </span>
               </button>
-            </p>
-          )}
+            )}
+          </div>
+
+          {/* Сравнение пакетов по фичам (чек-марками) — доступ к "Местам"
+              отдельно тоже отсюда, без равноправной кнопки на видном месте. */}
+          <p className="text-brandy/45 text-[11px] text-center pt-1.5">
+            {hasBundleOffer
+              ? `«${HERO_LABEL.bundle}» включает и расходы, и лучшие места`
+              : extraPkgs.length > 0
+                ? `+${bundleExtra} ₽ — и получите ещё ${extraLabel}`
+                : null}
+            {(hasBundleOffer || extraPkgs.length > 0) && " · "}
+            <button
+              type="button"
+              onClick={() => setCompareOpen(true)}
+              className="underline underline-offset-2 hover:text-brandy transition"
+            >
+              Сравнить пакеты
+            </button>
+          </p>
 
           <p className="text-brandy/50 text-[11px] text-center pt-1.5">
-            Открывается сразу после оплаты · единоразовый платеж · доступ навсегда
+            Открывается сразу после оплаты
           </p>
           <div className="flex justify-end pt-1">
             <RestoreAccess slug={slug} />

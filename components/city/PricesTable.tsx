@@ -133,14 +133,14 @@ export function PricesTable({
                     {/* Градиент + кнопка */}
                     <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/80 to-transparent flex flex-col items-center justify-end pb-5 px-4">
                       <p className="text-brandy/70 text-xs mb-3 text-center">
-                        + еще {lockedRows.length} позиций в этой категории
+                        + еще {lockedRows.length} позиций — в полном расчёте расходов
                       </p>
                       <button
                         type="button"
                         onClick={() => setOpenModal(true)}
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
                       >
-                        📊 Открыть все цены — {CITY_PACKAGES.budget.price} ₽
+                        📊 Получить полный расчёт расходов — {CITY_PACKAGES.budget.price} ₽
                       </button>
                     </div>
                   </div>

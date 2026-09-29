@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { getPublishedPostCardsOrThrow } from "@/lib/blog";
 import { ARCHIVE_PAGE_SIZE, archivePageCount } from "@/lib/blog-archive";
@@ -27,9 +27,11 @@ const PRERENDER_PAGES = 5;
 // Только ru: /en/blog/page/N и /uz/... middleware отдаёт rewrite'ом на
 // русскую версию — блог не переведён ни на одну локаль.
 export function generateStaticParams() {
-  return Array.from({ length: PRERENDER_PAGES }, (_, i) => ({
+  // i=0 (page 1) пропускаем — страница только редиректит на /blog,
+  // прегенерить её как статичную нечего.
+  return Array.from({ length: PRERENDER_PAGES - 1 }, (_, i) => ({
     locale: defaultLocale,
-    page: String(i + 1),
+    page: String(i + 2),
   }));
 }
 
@@ -58,6 +60,10 @@ export default async function BlogArchivePage({
 
   const page = Number(params.page);
   if (!Number.isInteger(page) || page < 1) notFound();
+  // 2026-09-30 (SEO-аудит): /blog/page/1 дублировал /blog — тот же контент,
+  // два URL под один intent. 301 на канонический /blog, страницы 2+ без
+  // изменений (там уже свой self-canonical, см. generateMetadata выше).
+  if (page === 1) redirect("/blog");
 
   const posts = await getPublishedPostCardsOrThrow();
   const totalPages = archivePageCount(posts.length);
