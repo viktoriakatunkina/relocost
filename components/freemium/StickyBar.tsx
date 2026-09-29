@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   CITY_PACKAGES,
   lockedRemaining,
@@ -34,6 +34,38 @@ export function StickyBar({
   // полноценную таблицу сравнения (PackageComparisonModal) с чек-марками по
   // фичам каждого пакета.
   const [compareOpen, setCompareOpen] = useState(false);
+
+  // 2026-09-29 (продуктовый аудит): бар — position:fixed, из потока
+  // документа не занимает места, поэтому на мобильном последний экран
+  // футера (реквизиты, копирайт) физически перекрывался баром навсегда —
+  // доскроллить до конца страницы было некуда, юр. информация становилась
+  // недоступна. StickyBar рендерится в DOM ПОСЛЕ <Footer/> (см. city/[slug]/
+  // page.tsx), поэтому обычный spacer-див тут футер не подвинет — вместо
+  // этого пишем измеренную высоту бара в CSS-переменную на <html>, а Footer
+  // читает её как свой padding-bottom (var(--sticky-bar-height, 0px) —
+  // на страницах без бара переменной нет, фолбэк 0). Высоту не хардкодим:
+  // контент бара плавает (строка соц-доказательства и "+N ₽ в Комбо" не
+  // всегда есть) — ResizeObserver подстраивается сам при любых будущих правках.
+  const barRef = useRef<HTMLDivElement | null>(null);
+  const [barHeight, setBarHeight] = useState(0);
+
+  useEffect(() => {
+    const el = barRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const obs = new ResizeObserver((entries) => {
+      const h = entries[0]?.borderBoxSize?.[0]?.blockSize ?? entries[0]?.contentRect.height;
+      if (h) setBarHeight(h);
+    });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--sticky-bar-height", `${barHeight}px`);
+    return () => {
+      document.documentElement.style.setProperty("--sticky-bar-height", "0px");
+    };
+  }, [barHeight]);
 
   if (remaining.length === 0) return null;
 
@@ -84,7 +116,7 @@ export function StickyBar({
 
   return (
     <>
-      <div className="fixed bottom-0 inset-x-0 z-40 px-3 pb-3 md:px-6 md:pb-6">
+      <div ref={barRef} className="fixed bottom-0 inset-x-0 z-40 px-3 pb-3 md:px-6 md:pb-6">
         <div className="max-w-5xl mx-auto rounded-2xl bg-surface-elevated/95 backdrop-blur-md border border-copper/25 shadow-2xl p-3 md:p-4">
           {!!purchaseCount && (
             <PurchaseCount count={purchaseCount} />

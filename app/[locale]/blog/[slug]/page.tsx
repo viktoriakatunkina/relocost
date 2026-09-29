@@ -298,8 +298,16 @@ export default async function BlogPostPage({
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     table({ node, ...props }) {
+      // 2026-09-29 (продуктовый аудит): раньше здесь был bleed-трюк
+      // (-mx-6 px-6) для визуального расширения таблицы до края экрана —
+      // после фикса .prose table (min-width:600px вместо width:100%,
+      // см. globals.css) это сочетание на мобильном стало приводить к
+      // горизонтальному скроллу ВСЕЙ страницы вместо скролла только
+      // таблицы (div растягивался вместе с ней). w-full max-w-full жёстко
+      // фиксирует ширину обёртки контейнером — скроллится гарантированно
+      // только то, что внутри div, независимо от ширины таблицы.
       return (
-        <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
+        <div className="w-full max-w-full overflow-x-auto">
           <table {...props} />
         </div>
       );

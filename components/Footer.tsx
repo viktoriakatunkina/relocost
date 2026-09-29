@@ -63,7 +63,10 @@ export async function Footer() {
   );
 
   return (
-    <footer className="relative border-t hairline mt-16 md:mt-24">
+    <footer
+      className="relative border-t hairline mt-16 md:mt-24"
+      style={{ paddingBottom: "var(--sticky-bar-height, 0px)" }}
+    >
       <div className="max-w-6xl mx-auto px-5 sm:px-6 py-10 md:py-16">
 
         {/* Десктоп: логотип + 3 колонки в одной сетке */}
