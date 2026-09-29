@@ -63,8 +63,40 @@ const blogRedirectsMap: Map<string, string> = new Map(
 
 const BLOG_SLUG_PATH = /^(?:\/(en|uz))?\/blog\/([^/]+)\/?$/;
 
+// 2026-09-30: /blog/page/1 (дубль /blog) и не-канонический порядок пары
+// /compare/[b]-vs-[a] раньше редиректились через permanentRedirect() внутри
+// самих page.tsx — но self-hosted Next.js 14.2 на ISR/SSG-страницах отдаёт
+// такой редирект с кодом 307, а не заявленным 308 (permanentRedirect
+// корректно выставляет Location, только статус-код теряется при кешировании
+// статической/ISR-страницы). Проверено вживую curl'ом на некэшированном URL
+// после деплоя 043d0f8. Перенесли обе проверки в middleware — тут редирект
+// собирается вручную через NextResponse.redirect(url, 308) на каждый запрос,
+// без статического кеша, тем же проверенным способом, что уже работает для
+// blogRedirectsMap выше. Старые permanentRedirect() в page.tsx оставлены —
+// они больше не должны срабатывать (middleware матчит эти пути раньше), но
+// это безопасный fallback, если сюда когда-нибудь попадёт запрос в обход
+// middleware (например, прямой вызов page-компонента в тестах).
+const BLOG_PAGE_ONE_PATH = /^(?:\/(?:en|uz))?\/blog\/page\/1\/?$/;
+const COMPARE_PAIR_PATH = /^(?:\/(?:en|uz))?\/compare\/([a-z][a-z-]*)-vs-([a-z][a-z-]*)\/?$/;
+
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (BLOG_PAGE_ONE_PATH.test(pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/blog";
+    return NextResponse.redirect(url, 308);
+  }
+
+  const compareMatch = pathname.match(COMPARE_PAIR_PATH);
+  if (compareMatch) {
+    const [, a, b] = compareMatch;
+    if (a !== b && a > b) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/compare/${b}-vs-${a}`;
+      return NextResponse.redirect(url, 308);
+    }
+  }
 
   // Дубли блога — проверяем РАНЬШЕ ветки UNTRANSLATED_SECTION ниже: та тоже
   // матчит /en/blog/* и /uz/blog/* (rewrite на ru-версию ТОГО ЖЕ slug'а), но
