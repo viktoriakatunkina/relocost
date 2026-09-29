@@ -27,6 +27,7 @@ export const FEATURED_CITY_SLUGS = [
   "istanbul",
   "dubai",
   "belgrade",
+  "batumi",
 ] as const;
 
 // Дотягивает min_rent (аренда 1-комн. на окраине) для набора городов.

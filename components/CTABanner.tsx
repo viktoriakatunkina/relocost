@@ -12,7 +12,7 @@ export async function CTABanner({
   const th = await getTranslations("home");
 
   return (
-    <section className="py-12 px-6">
+    <section className="pt-12 pb-2 md:pb-3 px-6">
       <div className="relative max-w-4xl mx-auto rounded-[2rem] overflow-hidden border hairline">
         <div
           aria-hidden
@@ -66,16 +66,8 @@ export async function CTABanner({
               accent="#E0A93E"
               big
             />
-            <Stat
-              label={t("statRealPrices")}
-              value="✓"
-              description="Не с потолка, а из открытых источников"
-            />
-            <Stat
-              label={t("statVisa")}
-              value="✓"
-              description="Как въехать и сколько можно жить без визы"
-            />
+            <Stat label={t("statRealPrices")} value="✓" />
+            <Stat label={t("statVisa")} value="✓" />
           </div>
         </div>
       </div>

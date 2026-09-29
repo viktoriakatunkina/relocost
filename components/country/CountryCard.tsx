@@ -76,14 +76,6 @@ export function CountryCard({ country }: { country: CountryAggregate }) {
           <h3 className="font-serif text-base sm:text-2xl md:text-[2rem] text-cream leading-tight mb-0.5 sm:mb-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)] group-hover:text-copper transition truncate">
             {name}
           </h3>
-          {country.cities_preview.length > 0 && (
-            <p className="hidden sm:block text-cream/80 text-sm leading-relaxed line-clamp-2 min-h-[2.5rem] drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
-              {country.cities_preview.join(", ")}
-              {country.city_count > country.cities_preview.length &&
-                ` ${tc("more")}`}
-            </p>
-          )}
-
           <div className="flex items-end justify-between gap-2 sm:gap-3 pt-1.5 sm:pt-4 border-t border-white/15">
             {difficulty && (
               <span className="inline-flex items-center gap-1 sm:gap-1.5 text-cream text-[10px] sm:text-sm drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">

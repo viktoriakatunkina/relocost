@@ -31,13 +31,10 @@ import { type Locale } from "@/i18n/routing";
 // заголовком (см. аудит бounce /en /uz).
 const HERO_CITY_NAMES: Record<string, Record<Locale, string>> = {
   tbilisi: { ru: "Тбилиси 🇬🇪", en: "Tbilisi 🇬🇪", uz: "Tbilisi 🇬🇪" },
-  belgrade: { ru: "Белград 🇷🇸", en: "Belgrade 🇷🇸", uz: "Belgrad 🇷🇸" },
-  dubai: { ru: "Дубай 🇦🇪", en: "Dubai 🇦🇪", uz: "Dubay 🇦🇪" },
-  bali: { ru: "Бали 🇮🇩", en: "Bali 🇮🇩", uz: "Bali 🇮🇩" },
   yerevan: { ru: "Ереван 🇦🇲", en: "Yerevan 🇦🇲", uz: "Yerevan 🇦🇲" },
-  limassol: { ru: "Лимасол 🇨🇾", en: "Limassol 🇨🇾", uz: "Limassol 🇨🇾" },
-  almaty: { ru: "Алматы 🇰🇿", en: "Almaty 🇰🇿", uz: "Almati 🇰🇿" },
-  tashkent: { ru: "Ташкент 🇺🇿", en: "Tashkent 🇺🇿", uz: "Toshkent 🇺🇿" },
+  istanbul: { ru: "Стамбул 🇹🇷", en: "Istanbul 🇹🇷", uz: "Istanbul 🇹🇷" },
+  dubai: { ru: "Дубай 🇦🇪", en: "Dubai 🇦🇪", uz: "Dubay 🇦🇪" },
+  belgrade: { ru: "Белград 🇷🇸", en: "Belgrade 🇷🇸", uz: "Belgrad 🇷🇸" },
 };
 
 export async function generateMetadata({
@@ -65,7 +62,7 @@ export default async function HomePage({
 
   const [popular, cities, posts, allCountries, searchCountries, crowdCount] =
     await Promise.all([
-      getPopularCities(5),
+      getPopularCities(6),
       getAllCitiesForSearch(),
       getPublishedPosts(3),
       getAllCountriesAggregated(),
@@ -159,27 +156,25 @@ export default async function HomePage({
             <SearchBar items={searchItems} />
           </div>
 
-          {/* Быстрый доступ к популярным городам прямо под поиском —
-              на мобильном меньше чипов (4 вместо 8): каждый ряд экономит
-              высоту, а на первом экране важнее CTA ниже.
+          {/* Быстрый доступ к популярным городам прямо под поиском.
+              2026-09-29: сокращено с 8 до 5 (правка 2 из презентации),
+              список синхронизирован с FEATURED_CITY_SLUGS (lib/cities.ts) —
+              тот же курируемый топ-5, что и в блоке "Популярные направления".
               2026-09-03: имена локализованы (были захардкожены по-русски
               даже на /en и /uz — первый экран сайта смешивал языки). */}
           <div className="fade-up mt-3 md:mt-4 flex flex-wrap gap-2 max-w-2xl relative z-20" style={{ animationDelay: "420ms" }}>
             <span className="text-brandy/50 text-xs self-center pr-1">{t("popularQuickLabel")}</span>
             {[
-              { slug: "tbilisi", name: HERO_CITY_NAMES.tbilisi[params.locale], mobile: true },
-              { slug: "belgrade", name: HERO_CITY_NAMES.belgrade[params.locale], mobile: true },
-              { slug: "dubai", name: HERO_CITY_NAMES.dubai[params.locale], mobile: true },
-              { slug: "bali", name: HERO_CITY_NAMES.bali[params.locale], mobile: true },
-              { slug: "yerevan", name: HERO_CITY_NAMES.yerevan[params.locale], mobile: false },
-              { slug: "limassol", name: HERO_CITY_NAMES.limassol[params.locale], mobile: false },
-              { slug: "almaty", name: HERO_CITY_NAMES.almaty[params.locale], mobile: false },
-              { slug: "tashkent", name: HERO_CITY_NAMES.tashkent[params.locale], mobile: false },
+              { slug: "tbilisi", name: HERO_CITY_NAMES.tbilisi[params.locale] },
+              { slug: "yerevan", name: HERO_CITY_NAMES.yerevan[params.locale] },
+              { slug: "istanbul", name: HERO_CITY_NAMES.istanbul[params.locale] },
+              { slug: "dubai", name: HERO_CITY_NAMES.dubai[params.locale] },
+              { slug: "belgrade", name: HERO_CITY_NAMES.belgrade[params.locale] },
             ].map((c) => (
               <Link
                 key={c.slug}
                 href={`/city/${c.slug}`}
-                className={`px-3 py-1.5 rounded-pill bg-surface/70 border border-cream/15 text-cream/85 text-sm hover:bg-copper/15 hover:border-copper/40 hover:text-cream backdrop-blur-sm transition ${c.mobile ? "" : "hidden md:inline-block"}`}
+                className="px-3 py-1.5 rounded-pill bg-surface/70 border border-cream/15 text-cream/85 text-sm hover:bg-copper/15 hover:border-copper/40 hover:text-cream backdrop-blur-sm transition"
               >
                 {c.name}
               </Link>
