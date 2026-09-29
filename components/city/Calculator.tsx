@@ -270,7 +270,7 @@ export function Calculator({
                   {budget.emoji}
                 </div>
                 <h3 className="font-serif text-2xl text-cream mb-3 text-pretty">
-                  {typo(`Разбивка по категориям — в пакете ${budget.label}`)}
+                  {typo(`Ваш расчёт для «${cityName}» готов`)}
                 </h3>
                 <p className="text-brandy/85 text-sm mb-6 leading-relaxed text-pretty">
                   {typo("Сколько уходит на аренду, еду, транспорт и ЖКХ по отдельности — плюс сравнение с другим городом.")}
@@ -280,7 +280,7 @@ export function Calculator({
                   onClick={() => setPayOpen(true)}
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy hover:shadow-glow"
                 >
-                  Открыть за {budget.price} ₽
+                  Получить мой расчёт — {budget.price} ₽
                 </button>
               </div>
             </div>
@@ -305,7 +305,7 @@ export function Calculator({
                 onClick={() => setPayOpen(true)}
                 className="mt-2 text-copper text-sm font-medium underline underline-offset-2 hover:text-brandy transition"
               >
-                Открыть за {budget.price} ₽
+                Получить мой расчёт — {budget.price} ₽
               </button>
             )}
           </div>

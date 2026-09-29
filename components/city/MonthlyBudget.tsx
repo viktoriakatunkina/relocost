@@ -186,7 +186,7 @@ export function MonthlyBudget({
                 aria-label={`Открыть «${budgetPkg.label}» за ${budgetPkg.price} ₽`}
               >
                 <span className="bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-2xl px-5 py-2.5 text-copper text-sm font-semibold whitespace-nowrap hover:bg-brandy hover:text-pine-tree transition">
-                  Открыть за {budgetPkg.price} ₽
+                  Получить мой расчёт — {budgetPkg.price} ₽
                 </span>
               </button>
             )}
@@ -304,7 +304,7 @@ export function MonthlyBudget({
                           onClick={() => setOpenModal(true)}
                           className="inline-block px-5 py-2.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
                         >
-                          Открыть за {budgetPkg.price} ₽
+                          Получить мой расчёт — {budgetPkg.price} ₽
                         </button>
                         <PurchaseCount count={purchaseCount ?? 0} />
                       </div>
