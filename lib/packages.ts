@@ -102,6 +102,7 @@ export const CITY_COMPARISON_FEATURES: ComparisonFeature[] = [
   { label: "Лучшие места города — кафе, рынки, коворкинги, районы", places: true, budget: false, bundle: true },
   { label: "Полный прайс — 40+ позиций расходов по всем категориям", places: false, budget: true, bundle: true },
   { label: "Точный бюджет на месяц с разбивкой по категориям", places: false, budget: true, bundle: true },
+  { label: "Стартовые расходы на переезд: перелёт, депозит, виза, обустройство", places: false, budget: true, bundle: true },
   { label: "Маршруты на день с таймингом и ценами (сверх первого бесплатного)", places: true, budget: false, bundle: true },
 ];
 

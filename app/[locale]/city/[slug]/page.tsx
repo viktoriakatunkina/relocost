@@ -43,6 +43,8 @@ import { CityWork } from "@/components/city/CityWork";
 import { PhotoGallery } from "@/components/city/PhotoGallery";
 import { PricesTable } from "@/components/city/PricesTable";
 import { Calculator } from "@/components/city/Calculator";
+import { StartupCosts } from "@/components/city/StartupCosts";
+import { getVisa } from "@/lib/visa";
 import { DifficultyBars } from "@/components/city/DifficultyBars";
 import { BestPlaces } from "@/components/city/BestPlaces";
 import { VisaSteps } from "@/components/city/VisaSteps";
@@ -424,6 +426,20 @@ export default async function CityPage({
 
       <Reveal>
         <PricesTable prices={prices} slug={c.slug} />
+      </Reveal>
+
+      {/* Стартовые расходы (разово, на переезд) — сразу после PricesTable,
+          последней в денежной зоне MonthlyBudget→Calculator→PricesTable:
+          та же пара CTA пакета "budget", отдельного пейволла не заводит (см.
+          комментарий ниже про то, почему тизер /trip не разрывает эту зону). */}
+      <Reveal>
+        <StartupCosts
+          prices={prices}
+          cityName={name}
+          slug={c.slug}
+          countrySlug={c.country_slug}
+          visaFree={getVisa(c).status === "visa_free"}
+        />
       </Reveal>
 
       {/* Тизер «Маршрутов на день» стоит СРАЗУ после денежной зоны
