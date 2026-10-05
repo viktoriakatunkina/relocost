@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
+import { CITY_PAIR_BUDGET_BUNDLE } from "@/lib/packages";
 import {
   createPayment,
   isYokassaConfigured,
@@ -13,16 +14,20 @@ export const dynamic = "force-dynamic";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LOCALES = ["ru", "en", "uz"] as const;
 
-// Бандл «Бюджет» на ДВА города сразу — 299 ₽ вместо 398 ₽ (2×199 ₽).
-// См. lib/packages.ts (CITY_PAIR_BUDGET_BUNDLE) — там же объяснение, почему
-// это отдельный маршрут, а не расширение /api/payment/create.
-const BUNDLE_PRICE = 299;
+// Бандл «Бюджет» на ДВА города сразу, со скидкой — см. lib/packages.ts
+// (CITY_PAIR_BUDGET_BUNDLE, считается от CITY_PACKAGES.budget.price) — там
+// же объяснение, почему это отдельный маршрут, а не расширение
+// /api/payment/create. 2026-10-05: цена раньше была захардкожена здесь
+// отдельной константой (299) — при откате budget.price эта константа
+// переставала совпадать с суммой, которую показывает UI. Теперь берём
+// готовое значение из lib/packages.ts, единственного источника истины.
+const BUNDLE_PRICE = CITY_PAIR_BUDGET_BUNDLE.price;
 const BUNDLE_PKG = "budget" as const;
 // Сумма по двум записям purchases должна сложиться в BUNDLE_PRICE, а не в
-// обычную цену budget (199 ₽ каждая) — иначе сумма по БД разъедется с тем,
-// что реально списала ЮKassa (один платеж на 299 ₽).
-const SPLIT_A = 150;
-const SPLIT_B = 149;
+// обычную цену budget (49 ₽ каждая) — иначе сумма по БД разъедется с тем,
+// что реально списала ЮKassa (один платеж на BUNDLE_PRICE ₽).
+const SPLIT_A = Math.floor(BUNDLE_PRICE / 2);
+const SPLIT_B = BUNDLE_PRICE - SPLIT_A;
 
 /** См. app/api/payment/create/route.ts — тот же хелпер, продублирован
  *  намеренно: этот маршрут не должен зависеть от того файла и не должен его

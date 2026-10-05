@@ -21,8 +21,14 @@ export const CITY_PACKAGES: Record<
   CityPackageType,
   { label: string; price: number; emoji: string; short: string }
 > = {
-  places: { label: "Лучшие места для посещения", short: "Места", price: 149, emoji: "📍" },
-  budget: { label: "Полный список расходов с ценами", short: "Расходы", price: 199, emoji: "📊" },
+  // 2026-10-05: цены подняты 2026-09-16 (149/199/249) не окупились ростом
+  // чека — за 17 дней на новых ценах 2 продажи bundle против 7 продаж за
+  // 26 дней на старых (49/59/19), и обе по bundle, ни одной по budget 199 ₽.
+  // Виктория решила вернуть прежние цены. Исходные значения взяты из
+  // git-истории (commit a89ecd9^) — те же 19/49/59, что действовали до
+  // поднятия лестницы цен.
+  places: { label: "Лучшие места для посещения", short: "Места", price: 19, emoji: "📍" },
+  budget: { label: "Полный список расходов с ценами", short: "Расходы", price: 49, emoji: "📊" },
   // 2026-09-21 (предпринимательский аудит): раньше bundle назывался
   // по-разному в трех точках одной пользовательской сессии — "Комбо" (этот
   // short), хардкод "Все включено" в StickyBar.tsx и хардкод "Полный список +
@@ -30,7 +36,7 @@ export const CITY_PACKAGES: Record<
   // канонической название теперь "Все включено" — и label, и short. Компоненты
   // (StickyBar, PaymentModal, PackageComparisonTable, TripTeaser) читают его
   // отсюда, а не хардкодят — меняешь тут, меняется везде.
-  bundle: { label: "Все включено", short: "Все включено", price: 249, emoji: "🎁" },
+  bundle: { label: "Все включено", short: "Все включено", price: 59, emoji: "🎁" },
 };
 
 export const CITY_PACKAGE_DESCRIPTIONS: Record<CityPackageType, string> = {
@@ -49,8 +55,8 @@ export const COUNTRY_PACKAGES: Record<
   CountryPackageType,
   { label: string; price: number; emoji: string; short: string }
 > = {
-  country_cities: { label: "Города страны по критериям", short: "Города", price: 199, emoji: "🏙" },
-  country_overview: { label: "Все о стране и особенности", short: "Обзор", price: 149, emoji: "🌍" },
+  country_cities: { label: "Города страны по критериям", short: "Города", price: 49, emoji: "🏙" },
+  country_overview: { label: "Все о стране и особенности", short: "Обзор", price: 29, emoji: "🌍" },
 };
 
 export const COUNTRY_PACKAGE_DESCRIPTIONS: Record<CountryPackageType, string> = {
@@ -154,10 +160,19 @@ export function lockedRemaining(
 // нужны: обе строки — это просто два самостоятельных budget-пакета, поэтому
 // вся существующая логика разблокировки (isUnlocked, /api/payment/access)
 // работает для них без изменений.
+// 2026-10-05: раньше price был захардкожен (299 ₽) при fullPrice,
+// вычисляемом от CITY_PACKAGES.budget.price — при откате цен budget с 199 на
+// 49 ₽ это превратило бы "скидочный" бандл в наценку (299 > 98). Теперь
+// скидка — фиксированная доля от fullPrice, пересчитывается сама при любой
+// будущей правке budget.price, округление до 5 ₽ для красивой цены.
+const CITY_PAIR_DISCOUNT = 0.25;
+const cityPairFullPrice = CITY_PACKAGES.budget.price * 2;
+const cityPairPrice =
+  Math.round((cityPairFullPrice * (1 - CITY_PAIR_DISCOUNT)) / 5) * 5;
 export const CITY_PAIR_BUDGET_BUNDLE = {
-  price: 299,
-  fullPrice: CITY_PACKAGES.budget.price * 2, // 398 ₽ при текущей цене budget
-  savings: CITY_PACKAGES.budget.price * 2 - 299, // 99 ₽
+  price: cityPairPrice,
+  fullPrice: cityPairFullPrice,
+  savings: cityPairFullPrice - cityPairPrice,
 } as const;
 
 export function isCountryUnlocked(
