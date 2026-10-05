@@ -442,7 +442,19 @@ export default async function BlogPostPage({
       </section>
 
       <div className="max-w-6xl mx-auto px-6 pt-16 grid lg:grid-cols-[1fr_300px] gap-12">
-        <div>
+        {/* min-w-0: без этого grid-колонка наследует min-width:auto от
+            содержимого — таблица со статей (.prose table, min-width:600px,
+            см. globals.css) не даёт колонке сжаться на мобильном (где
+            grid-cols ещё не задан явно, lg: не сработал), и ВЕСЬ контент
+            статьи (включая абзацы и CTA до/после таблицы, не только саму
+            таблицу) растягивает страницу на 600px+ — горизонтальный скролл
+            всей страницы вместо скролла только таблицы внутри её
+            .overflow-x-auto обёртки. Найдено 2026-10-05 живым тестом
+            (Playwright, 390px viewport): scrollWidth 624px vs clientWidth
+            390px на статье с таблицей бюджета. Стандартная CSS-ловушка
+            flex/grid-итемов: min-width по умолчанию "auto" = min-content
+            содержимого, а не 0. */}
+        <div className="min-w-0">
           <article
             className="prose prose-invert prose-headings:font-serif prose-headings:text-cream prose-p:text-brandy/90 prose-strong:text-cream prose-a:text-copper prose-a:no-underline hover:prose-a:underline prose-li:text-brandy/90 prose-table:text-brandy/90 prose-th:text-cream prose-hr:hairline max-w-none"
           >
