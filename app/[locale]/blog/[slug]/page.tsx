@@ -15,7 +15,7 @@ import {
 import { getPopularCities, getCitiesForTitleMatch } from "@/lib/cities";
 import { matchCitiesInTitle, matchCountryInTitle, type CityMatchLite } from "@/lib/blog-city-match";
 import { unsplashAuthorUrlWithUtm } from "@/lib/unsplash";
-import { photoSrc, isR2Src } from "@/lib/photo";
+import { photoSrc, isR2Src, isUnsplashSrc } from "@/lib/photo";
 import { RelatedPosts } from "@/components/blog/RelatedPosts";
 import { ArticleCityData } from "@/components/blog/ArticleCityData";
 import { BlogReportCTA } from "@/components/blog/BlogReportCTA";
@@ -396,7 +396,7 @@ export default async function BlogPostPage({
             priority
             sizes="100vw"
             className="object-cover"
-            unoptimized={isR2Src(heroCover)}
+            unoptimized={isR2Src(heroCover) || isUnsplashSrc(heroCover)}
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-pine-tree via-pine-tree/55 to-pine-tree/30" />

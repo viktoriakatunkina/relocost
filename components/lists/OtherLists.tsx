@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getAllListsPreview } from "@/lib/lists";
-import { isR2Src } from "@/lib/photo";
+import { isR2Src, isUnsplashSrc } from "@/lib/photo";
 
 // «Другие подборки» — перелинковка между лендингами /list.
 //
@@ -37,7 +37,7 @@ export async function OtherLists({ currentSlug }: { currentSlug: string }) {
                 fill
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 className="object-cover transition duration-700 group-hover:scale-105"
-                unoptimized={isR2Src(l.photo)}
+                unoptimized={isR2Src(l.photo) || isUnsplashSrc(l.photo)}
               />
             ) : (
               <div

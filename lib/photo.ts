@@ -111,3 +111,19 @@ export function cityPhotoSrc(
 export function isR2Src(src: string | null | undefined): boolean {
   return !!src && !!R2_BASE && src.startsWith(R2_BASE);
 }
+
+// 2026-10-12: тот же класс бага, что и с R2 выше, только второй источник —
+// images.unsplash.com (см. комментарий в шапке файла: недоступен с
+// российского VPS). Подтверждено логами прод-сервера в ночь на 11.10 — 322
+// ConnectTimeoutError за ночь к Unsplash-хосту, 95 из них дошли до клиента
+// как настоящие 500 (резкий провал трафика в Метрике в тот день). Источник —
+// 19 опубликованных статей блога, у которых cover_url — прямая
+// images.unsplash.com-ссылка (фото ещё не перезалито в Storage/R2 скриптом
+// миграции): photoSrc() возвращает такой URL как есть (не Storage → не
+// попадает под toR2Url), next/image пытается оптимизировать его через sharp
+// на сервере при каждом просмотре карточки/статьи — тот же зависающий fetch,
+// что раньше клал VPS через R2. Фикс идентичен: unoptimized для таких src,
+// браузер читателя качает оригинал с Unsplash CDN напрямую, минуя VPS.
+export function isUnsplashSrc(src: string | null | undefined): boolean {
+  return !!src && src.startsWith("https://images.unsplash.com");
+}

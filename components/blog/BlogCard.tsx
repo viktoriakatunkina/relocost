@@ -2,7 +2,7 @@ import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { BlogPostCard } from "@/lib/blog";
 import { coverGradient, defaultCoverUrl } from "@/lib/blog";
-import { photoSrc, isR2Src } from "@/lib/photo";
+import { photoSrc, isR2Src, isUnsplashSrc } from "@/lib/photo";
 import { typo } from "@/lib/typography";
 
 function shortTitle(title: string): string {
@@ -37,7 +37,7 @@ export function BlogCard({
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             className="object-cover transition duration-700 group-hover:scale-105"
-            unoptimized={isR2Src(cover)}
+            unoptimized={isR2Src(cover) || isUnsplashSrc(cover)}
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-pine-tree/80 via-transparent to-transparent" />

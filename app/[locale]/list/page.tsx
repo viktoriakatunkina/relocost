@@ -5,7 +5,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 import { getAllListsPreview } from "@/lib/lists";
-import { isR2Src } from "@/lib/photo";
+import { isR2Src, isUnsplashSrc } from "@/lib/photo";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { type Locale } from "@/i18n/routing";
 
@@ -99,7 +99,7 @@ export default async function ListsIndexPage({
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition duration-700 group-hover:scale-105"
-                    unoptimized={isR2Src(l.photo)}
+                    unoptimized={isR2Src(l.photo) || isUnsplashSrc(l.photo)}
                   />
                 ) : (
                   <div

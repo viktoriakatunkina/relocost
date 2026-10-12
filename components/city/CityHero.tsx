@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { City } from "@/lib/types";
-import { cityPhotoSrc, isR2Src } from "@/lib/photo";
+import { cityPhotoSrc, isR2Src, isUnsplashSrc } from "@/lib/photo";
 import { getDifficulty } from "@/lib/difficulty";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { ShareButton } from "@/components/ShareButton";
@@ -48,7 +48,7 @@ export function CityHero({ city }: { city: City }) {
           placeholder="blur"
           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAEElEQVR42mOQUmSFIwbiOABphAQBZ5neoAAAAABJRU5ErkJggg=="
           className="object-cover"
-          unoptimized={isR2Src(photo)}
+          unoptimized={isR2Src(photo) || isUnsplashSrc(photo)}
         />
       ) : (
         <div

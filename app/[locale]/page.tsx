@@ -9,7 +9,7 @@ import {
 } from "@/lib/countries";
 import { getListsPreview } from "@/lib/lists";
 import { getSiteStats } from "@/lib/site-stats";
-import { isR2Src } from "@/lib/photo";
+import { isR2Src, isUnsplashSrc } from "@/lib/photo";
 import type { SearchItem } from "@/components/SearchBar";
 import { CityCard } from "@/components/CityCard";
 import { CountryCard } from "@/components/country/CountryCard";
@@ -357,7 +357,7 @@ export default async function HomePage({
                         fill
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                         className="object-cover transition duration-700 group-hover:scale-105"
-                        unoptimized={isR2Src(l.photo)}
+                        unoptimized={isR2Src(l.photo) || isUnsplashSrc(l.photo)}
                       />
                     ) : (
                       <div

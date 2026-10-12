@@ -8,7 +8,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { CountryAggregate } from "@/lib/countries";
 import { formatMinRent } from "@/lib/cities";
-import { cityPhotoSrc, isR2Src } from "@/lib/photo";
+import { cityPhotoSrc, isR2Src, isUnsplashSrc } from "@/lib/photo";
 import { getDifficulty } from "@/lib/difficulty";
 import { countryName } from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/routing";
@@ -46,7 +46,7 @@ export function CountryCard({ country }: { country: CountryAggregate }) {
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition duration-700 group-hover:scale-105"
-          unoptimized={isR2Src(photo)}
+          unoptimized={isR2Src(photo) || isUnsplashSrc(photo)}
         />
       ) : (
         <div
