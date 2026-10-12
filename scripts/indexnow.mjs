@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 // Уведомляет IndexNow (Яндекс, Bing) о всех страницах сайта после деплоя.
 // Читает живой sitemap.xml чтобы не дублировать логику генерации URL.
-import { createReadStream } from "fs";
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -60,14 +59,41 @@ async function submitBatch(urls) {
   return res.status;
 }
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 const urls = await getSitemapUrls();
 console.log(`IndexNow: ${urls.length} URL из sitemap`);
 
+// 2026-10-12: markSent() раньше стоял в самом конце, ПОСЛЕ всех батчей —
+// .indexnow-last-sent не обновлялся почти 1.5 месяца (с 25.08), потому что
+// каждый прогон падал с необработанным исключением на каком-то батче
+// (SocketError от Яндекса — "other side closed", вероятно сам троттлинг на
+// их стороне за слишком частые полные пинги) раньше, чем успевал дойти до
+// markSent(). Throttle в итоге НИКОГДА не срабатывал — каждый деплой заново
+// слал полный sitemap (4000+ URL) в Яндекс, что при частых деплоях (как
+// сегодня — 5+ подряд за пару часов) само усугубляло проблему. Теперь
+// markSent() вызывается СРАЗУ после проверки throttle, до отправки —
+// throttle защёлкивается на 8 часов вперёд независимо от исхода отправки:
+// лучше один раз пропустить индексацию, чем раз за разом бомбить Яндекс
+// повторными полными пингами при каждом деплое.
+markSent();
+
+let okCount = 0;
+let failCount = 0;
 for (let i = 0; i < urls.length; i += BATCH) {
   const batch = urls.slice(i, i + BATCH);
-  const status = await submitBatch(batch);
-  console.log(`  Батч ${Math.floor(i / BATCH) + 1}: ${batch.length} URL → HTTP ${status}`);
+  const batchNum = Math.floor(i / BATCH) + 1;
+  try {
+    const status = await submitBatch(batch);
+    console.log(`  Батч ${batchNum}: ${batch.length} URL → HTTP ${status}`);
+    okCount += batch.length;
+  } catch (e) {
+    console.log(`  Батч ${batchNum}: ${batch.length} URL → ошибка сети (${e.message}), пропущен`);
+    failCount += batch.length;
+  }
+  // Небольшая пауза между батчами — не слать десятки POST подряд без
+  // передышки, похоже именно это могло провоцировать обрыв соединений.
+  await sleep(250);
 }
 
-markSent();
-console.log("IndexNow готово.");
+console.log(`IndexNow готово: ${okCount} отправлено, ${failCount} пропущено из-за сетевых ошибок.`);
