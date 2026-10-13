@@ -13,9 +13,34 @@ HOST="root@168.222.143.151"
 KEY="$HOME/.ssh/relocost_vps"
 APP="/opt/relocost"
 SITE="https://relocost.ru"
-SSH="ssh -i $KEY -o StrictHostKeyChecking=accept-new"
+SSH="ssh -i $KEY -o StrictHostKeyChecking=accept-new -o ServerAliveInterval=10 -o ServerAliveCountMax=6 -o ConnectTimeout=20"
+# 2026-10-13: ServerAlive* — без них долгие rsync-передачи при нестабильной
+# сети (например, фоновые SSH-брутфорс-атаки ботов на порт 22 временно
+# переполняют очередь sshd) рвутся по-тихому без явной ошибки. Через
+# RSYNC_RSH (переменная окружения), а не inline `-e "$SSH"` — на связке
+# "старый rsync 2.6.9 из macOS + сложная цитируемая -e строка" однажды
+# поймали нестабильный парсинг аргументов под высокой нагрузкой системы
+# (rsync принимал саму ssh-команду за путь файла) — RSYNC_RSH эту
+# неоднозначность исключает.
+export RSYNC_RSH="ssh -i $KEY -o StrictHostKeyChecking=accept-new -o ServerAliveInterval=10 -o ServerAliveCountMax=6 -o ConnectTimeout=20"
 
 cd "$(dirname "$0")"
+
+# Повторяет команду до 5 раз с паузой — устойчивость к временным сетевым
+# сбоям (см. комментарий про RSYNC_RSH выше). Используем для ВСЕХ rsync к
+# серверу, не только первого шага заливки.
+retry() {
+  local attempt=1 max=5
+  until "$@"; do
+    if [ "$attempt" -ge "$max" ]; then
+      echo "!! Не удалось после $max попыток: $*" >&2
+      return 1
+    fi
+    echo "   попытка $attempt не удалась, пробую снова через 10с..."
+    attempt=$((attempt + 1))
+    sleep 10
+  done
+}
 
 # --rollback: откат на .next.prev (билд, который был живым непосредственно
 # ДО последнего успешного деплоя). Без пересборки — просто меняет .next и
@@ -60,10 +85,10 @@ echo "==> 1/4 Сборка (heap 4 ГБ, порционный режим LOWMEM_
 LOWMEM_BUILD=1 NODE_OPTIONS="--max-old-space-size=4096" NEXT_PUBLIC_SITE_URL="$SITE" npm run build
 
 echo "==> 2/4 Заливка сборки в staging ($APP/.next.incoming)"
-# Повтор rsync: первый проход иногда ловит code 24 (file vanished), если ОС
-# ещё дописывает .next/types сразу после билда — второй проход добирает.
-rsync -az --delete --exclude 'cache' -e "$SSH" .next/ "$HOST:$APP/.next.incoming/" \
-  || rsync -az --delete --exclude 'cache' -e "$SSH" .next/ "$HOST:$APP/.next.incoming/"
+# retry (не просто двойной повтор) — code 24 (file vanished) чинился и одним
+# повтором, но нестабильная сеть (см. комментарий про RSYNC_RSH выше) иногда
+# требует больше одной попытки.
+retry rsync -az --delete --exclude 'cache' .next/ "$HOST:$APP/.next.incoming/"
 # config/ — next.config.mjs читает отсюда (например config/blog-redirects.json
 # для redirects()) через readFileSync при СТАРТЕ сервера. 2026-08-31: без этой
 # синхронизации next.config.mjs уехал на сервер раньше config/, next start упал
@@ -71,12 +96,12 @@ rsync -az --delete --exclude 'cache' -e "$SSH" .next/ "$HOST:$APP/.next.incoming
 # не спасал (откатывает только .next, не next.config.mjs). Синхронизируем
 # ДО next.config.mjs, чтобы файл уже существовал к моменту рестарта.
 if [ -d "config" ]; then
-  rsync -az -e "$SSH" config/ "$HOST:$APP/config/"
+  retry rsync -az config/ "$HOST:$APP/config/"
 fi
-rsync -az -e "$SSH" next.config.mjs "$HOST:$APP/next.config.mjs"
+retry rsync -az next.config.mjs "$HOST:$APP/next.config.mjs"
 # Статика из /public — синхронизируем только если папка не пуста.
 if [ -d "public/images" ]; then
-  rsync -az -e "$SSH" public/images/ "$HOST:$APP/public/images/"
+  retry rsync -az public/images/ "$HOST:$APP/public/images/"
 fi
 
 echo "==> 3/4 Атомарная замена + рестарт"
