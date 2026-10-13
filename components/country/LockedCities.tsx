@@ -56,8 +56,11 @@ export function LockedCities({
                 <p className="text-cream/80 text-sm font-medium">
                   Ещё {locked.length} городов
                 </p>
+                <p className="text-brandy/60 text-xs max-w-[200px] leading-snug">
+                  Рейтинг по критериям переезда — в одном материале
+                </p>
                 <span className="px-4 py-2 rounded-pill bg-copper text-pine-tree text-sm font-semibold">
-                  Открыть за {COUNTRY_PACKAGES.country_cities.price} ₽
+                  Показать все города — {COUNTRY_PACKAGES.country_cities.price} ₽
                 </span>
               </button>
               <LockedCityLinks cities={locked} />
@@ -90,7 +93,7 @@ export function LockedCities({
                     Рейтинг городов по критериям переезда — в одном материале.
                   </p>
                   <span className="mt-2 px-5 py-3 rounded-pill bg-copper text-pine-tree font-semibold hover:bg-brandy transition">
-                    Открыть за {COUNTRY_PACKAGES.country_cities.price} ₽
+                    Показать все города — {COUNTRY_PACKAGES.country_cities.price} ₽
                   </span>
                 </button>
                 <LockedCityLinks cities={locked} />

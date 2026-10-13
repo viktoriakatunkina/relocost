@@ -53,7 +53,7 @@ function EmailForm({
   if (status === "ok") {
     return (
       <p className={compact ? "text-dingley text-sm font-medium" : "text-dingley font-medium"}>
-        Спасибо! Мы записали Ваш email и пришлём чек-лист.
+        Спасибо! Email сохранён.
       </p>
     );
   }

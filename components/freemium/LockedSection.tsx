@@ -73,7 +73,7 @@ export function LockedSection({
               }}
               className="inline-block px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold transition hover:bg-brandy"
             >
-              Открыть за {primaryMeta.price} ₽
+              Получить мой расчёт — {primaryMeta.price} ₽
             </button>
             {upsellBundle && extra > 0 && (
               <p className="mt-2 text-brandy/50 text-xs leading-snug">

@@ -110,7 +110,7 @@ export function LockedCountryFacts({
                       onClick={() => setOpenModal(true)}
                       className="inline-block px-5 py-2.5 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
                     >
-                      Открыть за {COUNTRY_PACKAGES.country_overview.price} ₽
+                      Открыть полный обзор — {COUNTRY_PACKAGES.country_overview.price} ₽
                     </button>
                   </div>
                 </div>
