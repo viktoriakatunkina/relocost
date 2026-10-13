@@ -15,12 +15,18 @@ function ReviewCard({
       <blockquote className="text-cream/90 leading-relaxed text-pretty mb-4 md:mb-5 text-sm md:text-lg line-clamp-6 md:line-clamp-none">
         {typo(r.text)}
       </blockquote>
+      {/* 2026-10-13 (маркетинговый аудит, решение Виктории): раньше здесь
+          стояло конкретное имя ("Алексей, 32 года, разработчик, переехал в
+          2024") — читалось как byline реального проверенного отзыва, хотя
+          текст полностью написан редакцией. Имя больше не показываем —
+          r.author используется только для рода глагола (movedVerbRu),
+          остальное подаём как обезличенный архетип сценария. */}
       <footer className="text-xs md:text-sm text-brandy/70 flex items-center gap-2 flex-wrap">
-        <span className="text-cream font-semibold">{r.author}</span>
-        {r.age ? <span className="text-brandy/50">·</span> : null}
-        {r.age ? <span>{r.age} лет</span> : null}
+        <span className="text-cream font-semibold">Типичный случай</span>
         {r.profession ? <span className="text-brandy/50">·</span> : null}
         {r.profession ? <span>{r.profession}</span> : null}
+        {r.age ? <span className="text-brandy/50">·</span> : null}
+        {r.age ? <span>{r.age} лет</span> : null}
         {r.moved_year ? <span className="text-brandy/50">·</span> : null}
         {r.moved_year ? (
           <span>
@@ -45,9 +51,12 @@ export function Reviews({
     <section id="reviews" className="scroll-mt-[120px] pt-14 md:pt-20">
       <div className="max-w-6xl mx-auto px-6">
         <span className="eyebrow">Опыт</span>
-        <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-8 md:mb-10">
-          Отзывы переехавших
+        <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
+          Типичный опыт переехавших
         </h2>
+        <p className="text-brandy/55 text-xs md:text-sm mb-8 md:mb-10">
+          Иллюстративные примеры по частым сценариям переезда — не отзывы конкретных людей.
+        </p>
       </div>
 
       {/* Мобиль: горизонтальная карусель со свайпом — раньше карточки шли
