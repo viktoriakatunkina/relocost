@@ -105,7 +105,7 @@ export const COUNTRY_CONTENT: Record<string, CountryContent> = {
     language_note:
       "Тайский с тональностью — сложный для русскоговорящих. Английский в туристических местах и центре Бангкока.",
     visa_note:
-      "Безвиз 30 дней. LTR (10 лет) для дохода $80 000+, DTV (5 лет) для удаленщиков, Education Visa (1 год) для языковых школ.",
+      "Безвиз 60 дней (продлён с 30, см. официальную таблицу МИД Таиланда). LTR (10 лет) для дохода $80 000+, DTV (5 лет) для удаленщиков, Education Visa (1 год) для языковых школ.",
     difficulty_overall: 2,
     hero_gradient: "from-yellow-900/70 via-pine-tree to-pine-tree",
   },
