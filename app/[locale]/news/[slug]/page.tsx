@@ -36,6 +36,34 @@ export async function generateStaticParams() {
   }
 }
 
+// 2026-10-13 (SEO-аудит): у части новостей заголовок (post.title) и/или summary
+// пришли из источника длинными («Ускоритель Super Heavy прибыл на стартовую
+// площадку перед первым орбитальным пуском Starship» — 92 символа) — с
+// суффиксом «| Новости Relocost» <title> доходил до 111 символов, а
+// meta-description (= summary) — до 279. Google/Яндекс обрезают это сами по
+// символам прямо посреди слова, что в сниппете выглядит как явный баг. Режем
+// по границе слова здесь же, в мета-тегах, не трогая исходные title/summary
+// в Supabase (они и на странице, и в OG-карточке остаются полными).
+function truncateAtWord(text: string, maxLen: number): string {
+  if (text.length <= maxLen) return text;
+  const cut = text.slice(0, maxLen);
+  const lastSpace = cut.lastIndexOf(" ");
+  const base = lastSpace > maxLen * 0.6 ? cut.slice(0, lastSpace) : cut;
+  return `${base.replace(/[.,;:—-]+$/, "")}…`;
+}
+
+function buildNewsMetaTitle(title: string): string {
+  const suffix = " | Новости Relocost";
+  if (title.length + suffix.length <= 70) return `${title}${suffix}`;
+  // Заголовок сам по себе длинный — бренд-суффикс в этом случае только
+  // ускоряет обрезание в выдаче ровно там, где обрезался бы сам текст новости.
+  return title.length <= 78 ? title : truncateAtWord(title, 75);
+}
+
+function buildNewsMetaDescription(summary: string): string {
+  return truncateAtWord(summary, 155);
+}
+
 function formatNewsDate(iso: string | null): string | null {
   if (!iso) return null;
   const d = new Date(iso.length === 10 ? `${iso}T00:00:00Z` : iso);
@@ -55,11 +83,15 @@ export async function generateMetadata({
 }) {
   const post = await getNewsBySlug(params.slug);
   if (!post) return {};
+  const metaDescription = buildNewsMetaDescription(post.summary);
   return {
-    title: `${post.title} | Новости Relocost`,
-    description: post.summary,
+    title: buildNewsMetaTitle(post.title),
+    description: metaDescription,
     alternates: buildRuOnlyAlternates(`/news/${post.slug}`),
     openGraph: {
+      // OG/Twitter-карточки режут текст по своим правилам при рендере
+      // (и у них больше запаса по длине) — здесь оставляем полный заголовок
+      // и summary, как раньше.
       title: post.title,
       description: post.summary,
       type: "article",
