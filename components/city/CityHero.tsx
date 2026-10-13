@@ -113,6 +113,17 @@ export function CityHero({ city }: { city: City }) {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          {/* 2026-10-13 (маркетинговый аудит): первый экран описывал факт
+              ("стоимость жизни в 2026 году"), но никуда не вёл — ни одной
+              CTA-кнопки не было, только избранное/поделиться. Якорь на
+              калькулятор сокращает путь для тех, кто не долистывает страницу. */}
+          <a
+            href="#calculator"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-pill bg-copper text-pine-tree font-bold text-sm hover:bg-pale-copper hover:shadow-glow transition whitespace-nowrap"
+          >
+            Рассчитать мой бюджет
+            <span aria-hidden>↓</span>
+          </a>
           <FavoriteButton
             slug={city.slug}
             cityName={city.name_ru}

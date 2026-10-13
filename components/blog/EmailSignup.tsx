@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useTransition } from "react";
 import { submitEmailLead } from "@/app/actions/email-lead";
+import { Link } from "@/i18n/navigation";
 
 const LS_KEY = "relocost_email_subscribed";
 
@@ -98,9 +99,16 @@ function EmailForm({
 
 // Инлайн-блок — в конце статьи блога, а также (с кастомным заголовком/
 // описанием под конкретный город или страну) на страницах /city и /country.
+//
+// 2026-10-13 (маркетинговый аудит): раньше блок обещал «пришлём чек-лист на
+// email», хотя реальной отправки писем в кодовой базе нет (submitEmailLead
+// только пишет в email_leads) — чек-лист физически никогда не приходил.
+// Честный фикс: чек-лист уже есть на сайте бесплатно (/checklist) — даём на
+// него прямую ссылку как основной CTA, а email оставляем отдельным,
+// не привязанным к конкретному обещанию, опциональным действием.
 export function EmailSignupInline({
   source = "blog",
-  title = "Чек-лист переезда на email",
+  title = "Чек-лист переезда — бесплатно",
   description = "Пошаговый план: что сделать до и после переезда, документы, финансы, первые недели на новом месте.",
 }: {
   source?: string;
@@ -128,6 +136,16 @@ export function EmailSignupInline({
       <p className="text-brandy/80 text-sm mb-5 leading-relaxed">
         {description}
       </p>
+      <Link
+        href="/checklist"
+        className="inline-flex items-center gap-2 px-6 py-3 rounded-pill bg-copper text-pine-tree font-bold text-sm hover:bg-pale-copper hover:shadow-glow transition whitespace-nowrap"
+      >
+        Открыть чек-лист
+        <span aria-hidden>→</span>
+      </Link>
+      <p className="mt-5 mb-2 text-xs text-brandy/60">
+        Или оставьте email, если хотите узнавать о новых материалах по теме переезда:
+      </p>
       <EmailForm source={source} />
     </div>
   );
@@ -135,44 +153,43 @@ export function EmailSignupInline({
 
 // Мобильный sticky-баннер — появляется после прокрутки 60%.
 // Позиционируется выше существующего sticky-CTA (bottom-[72px] + z-50).
-export function EmailSignupSticky({ source = "blog-sticky" }: { source?: string }) {
+//
+// 2026-10-13 (маркетинговый аудит): раньше здесь была форма email с текстом
+// «пришлём чек-лист на email» — реальной отправки нет (см. EmailSignupInline
+// выше), а в тесном мобильном баннере нет места честно развести «уже готовый
+// чек-лист» и «опциональная подписка на email» на два равноценных действия.
+// Чек-лист и так бесплатен и уже открыт на сайте (/checklist) — здесь прямая
+// ссылка на него честнее и быстрее для пользователя, чем форма без
+// гарантированного результата. source оставлен в сигнатуре для обратной
+// совместимости вызовов, хотя сейчас не используется (email тут не собираем).
+export function EmailSignupSticky() {
   const scrollPct = useScrollPercent();
-  const [subscribed, setSubscribed] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
-  useEffect(() => {
-    try {
-      if (localStorage.getItem(LS_KEY)) setSubscribed(true);
-    } catch { /* ssr-safe */ }
-  }, []);
-
-  const visible = scrollPct >= 60 && !dismissed && !subscribed;
+  const visible = scrollPct >= 60 && !dismissed;
 
   if (!visible) return null;
 
   return (
     <div className="md:hidden fixed bottom-[72px] inset-x-0 z-50 px-3 fade-up">
-      <div className="rounded-2xl bg-surface-elevated/97 backdrop-blur-md border border-copper/30 shadow-2xl p-4">
-        <div className="flex items-start justify-between gap-2 mb-3">
-          <p className="text-cream font-medium text-sm leading-snug">
-            Чек-лист переезда — бесплатно на email
-          </p>
-          <button
-            onClick={() => {
-              setDismissed(true);
-              try { localStorage.setItem(LS_KEY + "_dismissed", "1"); } catch { /* ssr-safe */ }
-            }}
-            className="shrink-0 text-brandy/50 hover:text-brandy text-xl leading-none transition -mt-0.5"
-            aria-label="Закрыть"
-          >
-            ×
-          </button>
-        </div>
-        <EmailForm
-          source={source}
-          compact
-          onSuccess={() => setTimeout(() => setDismissed(true), 2500)}
-        />
+      <div className="rounded-2xl bg-surface-elevated/97 backdrop-blur-md border border-copper/30 shadow-2xl p-4 flex items-center gap-3">
+        <p className="flex-1 text-cream font-medium text-sm leading-snug">
+          Чек-лист переезда — бесплатно на сайте
+        </p>
+        <Link
+          href="/checklist"
+          onClick={() => setDismissed(true)}
+          className="shrink-0 inline-flex items-center gap-1 px-4 py-2 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition whitespace-nowrap"
+        >
+          Открыть
+        </Link>
+        <button
+          onClick={() => setDismissed(true)}
+          className="shrink-0 text-brandy/50 hover:text-brandy text-xl leading-none transition"
+          aria-label="Закрыть"
+        >
+          ×
+        </button>
       </div>
     </div>
   );

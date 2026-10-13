@@ -681,8 +681,10 @@ export default async function BlogPostPage({
         <Footer />
       </div>
 
-      {/* Email-лид-магнит: scroll-triggered sticky на мобиле */}
-      <EmailSignupSticky source={`blog-sticky-${post.slug}`} />
+      {/* Чек-лист переезда: scroll-triggered sticky-ссылка на мобиле (ведёт
+          на /checklist — реальной отправки email тут больше нет, см.
+          components/blog/EmailSignup.tsx) */}
+      <EmailSignupSticky />
 
       {/* Sticky bottom CTA — только на мобиле, всегда виден */}
       <div className="md:hidden fixed bottom-0 inset-x-0 z-40 px-3 pb-3">
