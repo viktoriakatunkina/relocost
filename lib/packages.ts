@@ -27,8 +27,19 @@ export const CITY_PACKAGES: Record<
   // Виктория решила вернуть прежние цены. Исходные значения взяты из
   // git-истории (commit a89ecd9^) — те же 19/49/59, что действовали до
   // поднятия лестницы цен.
-  places: { label: "Лучшие места для посещения", short: "Места", price: 19, emoji: "📍" },
-  budget: { label: "Полный список расходов с ценами", short: "Расходы", price: 49, emoji: "📊" },
+  //
+  // 2026-10-14: 2026-10-05→10-14 на этих ценах (19/49/59) было 3 успешные
+  // оплаты — но все три по факту списались НЕ по этой цене, а по старой
+  // (149/199/249) из-за независимого бага в lib/yokassa.ts (см.
+  // feedback-relocost-price-two-sources-of-truth в памяти; баг пофикшен,
+  // PACKAGE_PRICES теперь берётся отсюда). То есть эти 3 продажи — НЕ
+  // валидный тест цены 19/49/59: покупатели не выбирали платить больше, им
+  // списали больше, чем показала кнопка. Настоящий тест высокой цены — это
+  // 149/199/249 (16.09–05.10), который дал всего 2 продажи за 19 дней.
+  // Виктория решила поднять цену, но умереннее — средний шаг между 19/49/59
+  // и 149/199/249, не повторяя скачок на максимум.
+  places: { label: "Лучшие места для посещения", short: "Места", price: 79, emoji: "📍" },
+  budget: { label: "Полный список расходов с ценами", short: "Расходы", price: 99, emoji: "📊" },
   // 2026-09-21 (предпринимательский аудит): раньше bundle назывался
   // по-разному в трех точках одной пользовательской сессии — "Комбо" (этот
   // short), хардкод "Все включено" в StickyBar.tsx и хардкод "Полный список +
@@ -36,7 +47,7 @@ export const CITY_PACKAGES: Record<
   // канонической название теперь "Все включено" — и label, и short. Компоненты
   // (StickyBar, PaymentModal, PackageComparisonTable, TripTeaser) читают его
   // отсюда, а не хардкодят — меняешь тут, меняется везде.
-  bundle: { label: "Все включено", short: "Все включено", price: 59, emoji: "🎁" },
+  bundle: { label: "Все включено", short: "Все включено", price: 129, emoji: "🎁" },
 };
 
 export const CITY_PACKAGE_DESCRIPTIONS: Record<CityPackageType, string> = {
@@ -51,12 +62,16 @@ export const CITY_PACKAGE_DESCRIPTIONS: Record<CityPackageType, string> = {
 
 export type CountryPackageType = "country_cities" | "country_overview";
 
+// 2026-10-14: исторически country_cities зеркалит цену budget, а
+// country_overview — цену places (так было и в 199/149-эпоху, и в 49/19 —
+// кроме country_overview, который на низких ценах разъехался с places на
+// 29 против 19; восстанавливаем зеркалирование при повышении).
 export const COUNTRY_PACKAGES: Record<
   CountryPackageType,
   { label: string; price: number; emoji: string; short: string }
 > = {
-  country_cities: { label: "Города страны по критериям", short: "Города", price: 49, emoji: "🏙" },
-  country_overview: { label: "Все о стране и особенности", short: "Обзор", price: 29, emoji: "🌍" },
+  country_cities: { label: "Города страны по критериям", short: "Города", price: 99, emoji: "🏙" },
+  country_overview: { label: "Все о стране и особенности", short: "Обзор", price: 79, emoji: "🌍" },
 };
 
 export const COUNTRY_PACKAGE_DESCRIPTIONS: Record<CountryPackageType, string> = {
