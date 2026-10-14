@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import { CITY_PACKAGES, COUNTRY_PACKAGES } from "@/lib/packages";
 
 /**
  * Серверный клиент ЮKassa (REST API v3).
@@ -17,13 +18,26 @@ export type PackageType =
   | "country_cities"
   | "country_overview";
 
+// 2026-10-14 (КРИТИЧЕСКИЙ БАГ, найден через отчёт Даши): эти цены были
+// захардкожены здесь ОТДЕЛЬНО от lib/packages.ts (CITY_PACKAGES/
+// COUNTRY_PACKAGES) — единственного места, откуда фронт реально показывает
+// цену на кнопках. Когда 2026-10-05 цены откатили со 149/199/249 на 19/49/59
+// (см. комментарий в lib/packages.ts), этот файл не тронули — сайт продолжал
+// ПОКАЗЫВАТЬ новые низкие цены, а при оплате (app/api/payment/create/route.ts
+// читает amount = PACKAGE_PRICES[pkg]) с карты СПИСЫВАЛИСЬ старые, в 4-5 раз
+// больше показанного. Обнаружено 2026-10-14 по факту выплаты ЮKassa:
+// 2 реальных покупателя переплатили (bundle 249₽ вместо 59₽ ×2, budget 199₽
+// вместо 49₽) — Виктории нужно решить насчёт возврата разницы вручную через
+// ЮKassa. Теперь PACKAGE_PRICES вычисляется из CITY_PACKAGES/COUNTRY_PACKAGES
+// — того же источника, что видит пользователь на странице — дублирования
+// внутри этого файла больше нет, разъехаться во второй раз не может.
 /** Авторитетные цены (₽). Берутся ТОЛЬКО с сервера — клиенту не доверяем. */
 export const PACKAGE_PRICES: Record<PackageType, number> = {
-  places: 149,
-  budget: 199,
-  bundle: 249,
-  country_cities: 199,
-  country_overview: 149,
+  places: CITY_PACKAGES.places.price,
+  budget: CITY_PACKAGES.budget.price,
+  bundle: CITY_PACKAGES.bundle.price,
+  country_cities: COUNTRY_PACKAGES.country_cities.price,
+  country_overview: COUNTRY_PACKAGES.country_overview.price,
 };
 
 export const PACKAGE_LABELS: Record<PackageType, string> = {
