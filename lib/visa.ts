@@ -71,6 +71,11 @@ export const VISA_BY_COUNTRY: Record<string, VisaStatus> = {
   "south-africa": "visa_free", // безвиз до 90 дней
   uruguay: "visa_free", // безвиз до 90 дней за 180-дневный период
 
+  // 2026-10-14: новые страны каталога (Улан-Батор, Занзибар) — проверено
+  // напрямую на kdmid.ru (консульский портал МИД РФ), см. VISA_SOURCES.
+  mongolia: "visa_free", // безвиз до 30 дней за визит, суммарно до 90 дней за 180-дневный период
+  tanzania: "visa_free", // виза по прилёту в пункте въезда либо e-visa заранее — 50$, до 90 дней однократно
+
   // --- Нужна виза заранее (Шенген/ЕС/e-visa заранее/консульская) ---
   bulgaria: "visa_required", // ЕС / Шенген
   croatia: "visa_required", // Шенген
@@ -164,6 +169,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   malta: { sourceUrl: "https://visa.vfsglobal.com/one-pager/malta/russia/english/", verifiedAt: "2026-09-29" },
   mexico: { sourceUrl: "https://www.inm.gob.mx/sae/publico/ru/solicitud.html", verifiedAt: "2026-09-29" },
   moldova: { sourceUrl: "https://mfa.gov.md/ru/content/vizovyy-rezhim-dlya-grazhdan-drugih-gosudarstv", verifiedAt: "2026-09-29" },
+  mongolia: { sourceUrl: "https://www.kdmid.ru/docs/mongolia/information-about-the-country/", verifiedAt: "2026-10-14" },
   montenegro: { sourceUrl: "https://www.gov.me/amp/clanak/crna-gora-u-potpunosti-uskladila-viznu-politiku-sa-evropskom-unijom-gradanima-brojnih-zemalja-dostupnije-podnosenje-zahtjeva-za-crnogorsku-vizu", verifiedAt: "2026-09-29" },
   morocco: { sourceUrl: "https://www.consulat.ma/index.php/en/list-countries-whose-citizens-are-exempted-entry-visa-morocco", verifiedAt: "2026-09-29" },
   nepal: { sourceUrl: "https://ntb.gov.np/plan-your-trip/before-you-come/tourist-visa", verifiedAt: "2026-09-29" },
@@ -189,6 +195,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   switzerland: { sourceUrl: "https://www.eda.admin.ch/countries/russia/en/home/visa/entry-ch/up-90-days/do-i-need-a-schengen-visa.html", verifiedAt: "2026-09-29" },
   taiwan: { sourceUrl: "https://visawebapp.boca.gov.tw/BOCA_EVISA/MRV04FORM.do", verifiedAt: "2026-09-29" },
   tajikistan: { sourceUrl: "https://consular.tj/citizens/11-visa-free.html", verifiedAt: "2026-09-29" },
+  tanzania: { sourceUrl: "https://www.kdmid.ru/docs/tanzania/information-about-the-country/", verifiedAt: "2026-10-14" },
   thailand: { sourceUrl: "https://image.mfa.go.th/mfa/0/wdW3FTtVMc/2026-05-22/thai-visa-exemption-table.pdf", verifiedAt: "2026-09-29" },
   tunisia: { sourceUrl: "https://www.kdmid.ru/docs/tunisia/information-about-the-country/", verifiedAt: "2026-09-29" },
   turkey: { sourceUrl: "https://www.mfa.gov.tr/visa-information-for-foreigners.en.mfa", verifiedAt: "2026-09-29" },
