@@ -76,6 +76,15 @@ export const VISA_BY_COUNTRY: Record<string, VisaStatus> = {
   mongolia: "visa_free", // безвиз до 30 дней за визит, суммарно до 90 дней за 180-дневный период
   tanzania: "visa_free", // виза по прилёту в пункте въезда либо e-visa заранее — 50$, до 90 дней однократно
 
+  // 2026-10-15: новые страны каталога (Асунсьон, Маврикий) — проверено
+  // напрямую на kdmid.ru (консульский портал МИД РФ), см. VISA_SOURCES. Для
+  // долгосрочного проживания без права работать на местном рынке у
+  // Маврикия есть отдельная бесплатная Premium Visa (до 1 года, источник —
+  // residency.mu/edbmauritius.org, не отражено в этом бинарном поле — см.
+  // visa_steps в lib/cities-content.ts).
+  paraguay: "visa_free", // безвиз до 90 дней за каждый 180-дневный период (межправительственное соглашение)
+  mauritius: "visa_free", // безвиз до 60 дней (из расчета 90 дней за каждые 180)
+
   // --- Нужна виза заранее (Шенген/ЕС/e-visa заранее/консульская) ---
   bulgaria: "visa_required", // ЕС / Шенген
   croatia: "visa_required", // Шенген
@@ -167,6 +176,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   lithuania: { sourceUrl: "https://ru.mfa.lt/konsuline-informacija/aktualiausia-konsuline-informacija/vizos/40", verifiedAt: "2026-09-29" },
   malaysia: { sourceUrl: "https://www.kln.gov.my/web/rus_moscow/requirement_foreigner", verifiedAt: "2026-09-29" },
   malta: { sourceUrl: "https://visa.vfsglobal.com/one-pager/malta/russia/english/", verifiedAt: "2026-09-29" },
+  mauritius: { sourceUrl: "https://www.kdmid.ru/docs/mauritius/information-about-the-country/", verifiedAt: "2026-10-15" },
   mexico: { sourceUrl: "https://www.inm.gob.mx/sae/publico/ru/solicitud.html", verifiedAt: "2026-09-29" },
   moldova: { sourceUrl: "https://mfa.gov.md/ru/content/vizovyy-rezhim-dlya-grazhdan-drugih-gosudarstv", verifiedAt: "2026-09-29" },
   mongolia: { sourceUrl: "https://www.kdmid.ru/docs/mongolia/information-about-the-country/", verifiedAt: "2026-10-14" },
@@ -177,6 +187,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   "north-macedonia": { sourceUrl: "https://www.kdmid.ru/docs/macedonia/information-about-the-country/", verifiedAt: "2026-09-29" },
   "northern-cyprus": { sourceUrl: "https://mfa.gov.ct.tr/consular-info/visa-regulations/", verifiedAt: "2026-09-29" },
   oman: { sourceUrl: "https://www.kdmid.ru/docs/oman/information-about-the-country/", verifiedAt: "2026-09-29" },
+  paraguay: { sourceUrl: "https://www.kdmid.ru/docs/paraguay/information-about-the-country/", verifiedAt: "2026-10-15" },
   peru: { sourceUrl: "https://www.kdmid.ru/docs/peru/information-about-the-country/", verifiedAt: "2026-09-29" },
   philippines: { sourceUrl: "https://moscowpe.dfa.gov.ph/consular-services/consular-visa/visa", verifiedAt: "2026-09-29" },
   poland: { sourceUrl: "https://www.gov.pl/web/rosja/wizy-informacje-ogolne", verifiedAt: "2026-09-29" },
