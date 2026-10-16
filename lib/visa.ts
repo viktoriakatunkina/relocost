@@ -85,6 +85,15 @@ export const VISA_BY_COUNTRY: Record<string, VisaStatus> = {
   paraguay: "visa_free", // безвиз до 90 дней за каждый 180-дневный период (межправительственное соглашение)
   mauritius: "visa_free", // безвиз до 60 дней (из расчета 90 дней за каждые 180)
 
+  // 2026-10-16: новые страны каталога (Кито, Санто-Доминго, Сараево) —
+  // проверено напрямую на kdmid.ru (консульский портал МИД РФ), см.
+  // VISA_SOURCES. Босния и Герцеговина — ВАЖНО: режим короче привычных
+  // 90/180, всего 30 дней за каждые 60 дней — отражено текстом на странице
+  // города/визы, это поле лишь бинарный статус "нужна ли виза заранее".
+  ecuador: "visa_free", // безвиз до 90 дней за каждый 180-дневный период (соглашение от 24.11.2012)
+  "dominican-republic": "visa_free", // безвиз до 60 дней за каждый 180-дневный период (соглашение от 15.12.2020)
+  "bosnia-and-herzegovina": "visa_free", // безвиз до 30 дней за каждый 60-дневный период (соглашение от 31.05.2013) — короче, чем у соседей по Балканам
+
   // --- Нужна виза заранее (Шенген/ЕС/e-visa заранее/консульская) ---
   bulgaria: "visa_required", // ЕС / Шенген
   croatia: "visa_required", // Шенген
@@ -141,6 +150,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   bahrain: { sourceUrl: "https://www.evisa.gov.bh/list-of-online-visa-country.html", verifiedAt: "2026-09-29" },
   belarus: { sourceUrl: "https://mfa.gov.by/visa/viezd_vyezd/agreement/", verifiedAt: "2026-09-29" },
   belgium: { sourceUrl: "https://russia.diplomatie.belgium.be/nl/naar-belgie-komen/visum-voor-belgie", verifiedAt: "2026-09-29" },
+  "bosnia-and-herzegovina": { sourceUrl: "https://www.kdmid.ru/docs/bosnia-and-herzegovina/information-about-the-country/", verifiedAt: "2026-10-16" },
   brazil: { sourceUrl: "https://concordia.itamaraty.gov.br/detalhamento-acordo/6283", verifiedAt: "2026-09-29" },
   bulgaria: { sourceUrl: "https://www.mfa.bg/ru/embassies/russiacon1/2891", verifiedAt: "2026-09-29" },
   cambodia: { sourceUrl: "https://www.evisa.gov.kh", verifiedAt: "2026-09-29" },
@@ -152,6 +162,8 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   cyprus: { sourceUrl: "https://mfa.gov.cy/visa-information.html", verifiedAt: "2026-09-29" },
   "czech-republic": { sourceUrl: "https://mzv.gov.cz/moscow/ru/vizy_i_konsulskaja/novosti/index.html", verifiedAt: "2026-09-29" },
   denmark: { sourceUrl: "https://um.dk/rusland/rejse-og-ophold/visum-og-opholdstilladelse", verifiedAt: "2026-09-29" },
+  "dominican-republic": { sourceUrl: "https://www.kdmid.ru/docs/dominican-republic/information-about-the-country/", verifiedAt: "2026-10-16" },
+  ecuador: { sourceUrl: "https://www.kdmid.ru/docs/ecuador/information-about-the-country/", verifiedAt: "2026-10-16" },
   egypt: { sourceUrl: "https://visa2egypt.gov.eg/eVisa/Home/HomePage", verifiedAt: "2026-09-29" },
   estonia: { sourceUrl: "https://kriis.ee/en/travelling-crossing-state-border/travelling-estonia/visas-russian-citizens", verifiedAt: "2026-09-29" },
   finland: { sourceUrl: "https://finlandabroad.fi/web/cyp/current-affairs/-/asset_publisher/h5w4iTUJhNne/content/finland-significantly-restricts-the-non-essential-travel-of-russian-citizens/384951", verifiedAt: "2026-09-29" },
