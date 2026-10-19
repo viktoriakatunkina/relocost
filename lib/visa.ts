@@ -94,6 +94,11 @@ export const VISA_BY_COUNTRY: Record<string, VisaStatus> = {
   "dominican-republic": "visa_free", // безвиз до 60 дней за каждый 180-дневный период (соглашение от 15.12.2020)
   "bosnia-and-herzegovina": "visa_free", // безвиз до 30 дней за каждый 60-дневный период (соглашение от 31.05.2013) — короче, чем у соседей по Балканам
 
+  // 2026-10-19: новые страны каталога (Панама-Сити, Ла-Пас) — проверено
+  // напрямую на kdmid.ru (консульский портал МИД РФ), см. VISA_SOURCES.
+  panama: "visa_free", // безвиз до 90 дней за каждый 180-дневный период
+  bolivia: "visa_free", // безвиз до 90 дней за каждый 180-дневный период (соглашение от 03.10.2016)
+
   // --- Нужна виза заранее (Шенген/ЕС/e-visa заранее/консульская) ---
   bulgaria: "visa_required", // ЕС / Шенген
   croatia: "visa_required", // Шенген
@@ -116,6 +121,11 @@ export const VISA_BY_COUNTRY: Record<string, VisaStatus> = {
   // 15 дней, этот нюанс не укладывается в бинарный статус, описать текстом
   // на странице страны). Источник — kdmid.ru, см. VISA_SOURCES.
   "north-macedonia": "visa_required",
+  // 2026-10-19: новая страна каталога (Окленд) — проверено напрямую на
+  // kdmid.ru, см. VISA_SOURCES.new-zealand. В отличие от Панамы и Боливии
+  // (эта же волна) безвизового режима и визы по прилёту нет — нужна
+  // визитёрская виза заранее.
+  "new-zealand": "visa_required",
 };
 
 // Спорные страны переведены в «Без визы» по решению Виктории (2026-06-17);
@@ -150,6 +160,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   bahrain: { sourceUrl: "https://www.evisa.gov.bh/list-of-online-visa-country.html", verifiedAt: "2026-09-29" },
   belarus: { sourceUrl: "https://mfa.gov.by/visa/viezd_vyezd/agreement/", verifiedAt: "2026-09-29" },
   belgium: { sourceUrl: "https://russia.diplomatie.belgium.be/nl/naar-belgie-komen/visum-voor-belgie", verifiedAt: "2026-09-29" },
+  bolivia: { sourceUrl: "https://www.kdmid.ru/docs/bolivia/information-about-the-country/", verifiedAt: "2026-10-19" },
   "bosnia-and-herzegovina": { sourceUrl: "https://www.kdmid.ru/docs/bosnia-and-herzegovina/information-about-the-country/", verifiedAt: "2026-10-16" },
   brazil: { sourceUrl: "https://concordia.itamaraty.gov.br/detalhamento-acordo/6283", verifiedAt: "2026-09-29" },
   bulgaria: { sourceUrl: "https://www.mfa.bg/ru/embassies/russiacon1/2891", verifiedAt: "2026-09-29" },
@@ -196,9 +207,11 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   morocco: { sourceUrl: "https://www.consulat.ma/index.php/en/list-countries-whose-citizens-are-exempted-entry-visa-morocco", verifiedAt: "2026-09-29" },
   nepal: { sourceUrl: "https://ntb.gov.np/plan-your-trip/before-you-come/tourist-visa", verifiedAt: "2026-09-29" },
   netherlands: { sourceUrl: "https://www.nederlandwereldwijd.nl/visum-nederland/schengenvisum/aanvragen-rusland", verifiedAt: "2026-09-29" },
+  "new-zealand": { sourceUrl: "https://www.kdmid.ru/docs/new-zealand/information-about-the-country/", verifiedAt: "2026-10-19" },
   "north-macedonia": { sourceUrl: "https://www.kdmid.ru/docs/macedonia/information-about-the-country/", verifiedAt: "2026-09-29" },
   "northern-cyprus": { sourceUrl: "https://mfa.gov.ct.tr/consular-info/visa-regulations/", verifiedAt: "2026-09-29" },
   oman: { sourceUrl: "https://www.kdmid.ru/docs/oman/information-about-the-country/", verifiedAt: "2026-09-29" },
+  panama: { sourceUrl: "https://www.kdmid.ru/docs/panama/information-about-the-country/", verifiedAt: "2026-10-19" },
   paraguay: { sourceUrl: "https://www.kdmid.ru/docs/paraguay/information-about-the-country/", verifiedAt: "2026-10-15" },
   peru: { sourceUrl: "https://www.kdmid.ru/docs/peru/information-about-the-country/", verifiedAt: "2026-09-29" },
   philippines: { sourceUrl: "https://moscowpe.dfa.gov.ph/consular-services/consular-visa/visa", verifiedAt: "2026-09-29" },

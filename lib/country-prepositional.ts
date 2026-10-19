@@ -31,6 +31,13 @@ const CASES: Record<string, CountryCase> = {
   bahrain: { prepositional: "Бахрейне", accusative: "Бахрейн", genitive: "Бахрейна" },
   belarus: { prepositional: "Беларуси", accusative: "Беларусь", genitive: "Беларуси" },
   belgium: { prepositional: "Бельгии", accusative: "Бельгию", genitive: "Бельгии" },
+  // 2026-10-19: Панама, Боливия, Новая Зеландия не были в справочнике, хотя
+  // уже несколько волн (Эквадор, Доминиканская Республика, Босния и
+  // Герцеговина, Парагвай, Маврикий, Монголия, Танзания) добавляли страны в
+  // cities без параллельного добавления сюда — известный пробел, возникший
+  // не в этой волне. Добавлены только 3 новых страны этой волны, остальной
+  // пробел — вне скоупа этой задачи.
+  bolivia: { prepositional: "Боливии", accusative: "Боливию", genitive: "Боливии" },
   brazil: { prepositional: "Бразилии", accusative: "Бразилию", genitive: "Бразилии" },
   bulgaria: { prepositional: "Болгарии", accusative: "Болгарию", genitive: "Болгарии" },
   cambodia: { prepositional: "Камбодже", accusative: "Камбоджу", genitive: "Камбоджи" },
@@ -74,12 +81,18 @@ const CASES: Record<string, CountryCase> = {
   morocco: { prepositional: "Марокко", accusative: "Марокко", genitive: "Марокко" },
   nepal: { prepositional: "Непале", accusative: "Непал", genitive: "Непала" },
   netherlands: { prepositional: "Нидерландах", accusative: "Нидерланды", genitive: "Нидерландов" },
+  "new-zealand": {
+    prepositional: "Новой Зеландии",
+    accusative: "Новую Зеландию",
+    genitive: "Новой Зеландии",
+  },
   "north-macedonia": {
     prepositional: "Северной Македонии",
     accusative: "Северную Македонию",
     genitive: "Северной Македонии",
   },
   oman: { prepositional: "Омане", accusative: "Оман", genitive: "Омана" },
+  panama: { prepositional: "Панаме", accusative: "Панаму", genitive: "Панамы" },
   peru: { prepositional: "Перу", accusative: "Перу", genitive: "Перу" },
   philippines: {
     prepositional: "Филиппинах",
