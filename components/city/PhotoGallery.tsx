@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { GalleryPhoto } from "@/lib/types";
 import { unsplashAuthorUrlWithUtm } from "@/lib/unsplash";
-import { photoSrc, isLocalStorageUrl } from "@/lib/photo";
+import { photoSrc, isLocalStorageUrl, isR2Src, isUnsplashSrc } from "@/lib/photo";
 
 const UNSPLASH_REF =
   "https://unsplash.com/?utm_source=relocost&utm_medium=referral";
@@ -86,6 +86,12 @@ export function PhotoGallery({
                     : "(max-width: 768px) 50vw, 380px"
                 }
                 className="object-cover transition duration-700 group-hover:scale-[1.05]"
+                // Галереи без перезалитых фото до сих пор отдают
+                // images.unsplash.com-URL (photoSrc фолбэк) — тот же класс
+                // бага, что описан в lib/photo.ts: оптимизатор на VPS висит на
+                // недоступном Unsplash и отдает 500. Найдено по nginx-логам
+                // 2026-10-19 — галерея была единственным местом без флага.
+                unoptimized={isR2Src(src) || isUnsplashSrc(src)}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-pine-tree/55 via-transparent to-transparent pointer-events-none" />
               <div className="absolute inset-0 ring-1 ring-inset ring-cream/5 pointer-events-none" />
