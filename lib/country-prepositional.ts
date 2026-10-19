@@ -45,6 +45,11 @@ const CASES: Record<string, CountryCase> = {
   chile: { prepositional: "Чили", accusative: "Чили", genitive: "Чили" },
   china: { prepositional: "Китае", accusative: "Китай", genitive: "Китая" },
   colombia: { prepositional: "Колумбии", accusative: "Колумбию", genitive: "Колумбии" },
+  // 2026-10-19: Коста-Рика, Саудовская Аравия, Руанда, Фиджи, Сенегал — те
+  // же 5 новых стран, что в lib/visa.ts этой волны (та же известная
+  // причина — предыдущие волны добавляли страны в cities без параллельного
+  // добавления в этот справочник, пробел вне скоупа этой задачи).
+  "costa-rica": { prepositional: "Коста-Рике", accusative: "Коста-Рику", genitive: "Коста-Рики" },
   croatia: { prepositional: "Хорватии", accusative: "Хорватию", genitive: "Хорватии" },
   // Острова и островные государства — предлог «на», а не «в».
   cyprus: { prepositional: "Кипре", accusative: "Кипр", genitive: "Кипра", prep: "на" },
@@ -52,6 +57,8 @@ const CASES: Record<string, CountryCase> = {
   denmark: { prepositional: "Дании", accusative: "Данию", genitive: "Дании" },
   egypt: { prepositional: "Египте", accusative: "Египет", genitive: "Египта" },
   estonia: { prepositional: "Эстонии", accusative: "Эстонию", genitive: "Эстонии" },
+  // Островное государство — предлог «на».
+  fiji: { prepositional: "Фиджи", accusative: "Фиджи", genitive: "Фиджи", prep: "на" },
   finland: { prepositional: "Финляндии", accusative: "Финляндию", genitive: "Финляндии" },
   france: { prepositional: "Франции", accusative: "Францию", genitive: "Франции", prep: "во" },
   georgia: { prepositional: "Грузии", accusative: "Грузию", genitive: "Грузии" },
@@ -105,6 +112,13 @@ const CASES: Record<string, CountryCase> = {
   qatar: { prepositional: "Катаре", accusative: "Катар", genitive: "Катара" },
   romania: { prepositional: "Румынии", accusative: "Румынию", genitive: "Румынии" },
   russia: { prepositional: "России", accusative: "Россию", genitive: "России" },
+  rwanda: { prepositional: "Руанде", accusative: "Руанду", genitive: "Руанды" },
+  "saudi-arabia": {
+    prepositional: "Саудовской Аравии",
+    accusative: "Саудовскую Аравию",
+    genitive: "Саудовской Аравии",
+  },
+  senegal: { prepositional: "Сенегале", accusative: "Сенегал", genitive: "Сенегала" },
   serbia: { prepositional: "Сербии", accusative: "Сербию", genitive: "Сербии" },
   singapore: { prepositional: "Сингапуре", accusative: "Сингапур", genitive: "Сингапура" },
   slovakia: { prepositional: "Словакии", accusative: "Словакию", genitive: "Словакии" },

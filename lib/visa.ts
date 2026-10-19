@@ -99,6 +99,24 @@ export const VISA_BY_COUNTRY: Record<string, VisaStatus> = {
   panama: "visa_free", // безвиз до 90 дней за каждый 180-дневный период
   bolivia: "visa_free", // безвиз до 90 дней за каждый 180-дневный период (соглашение от 03.10.2016)
 
+  // 2026-10-19: новые страны каталога (Сан-Хосе, Эр-Рияд, Кигали, Сува) —
+  // проверено напрямую на kdmid.ru, см. VISA_SOURCES. Саудовская Аравия —
+  // ВАЖНО: лимит 90 дней считается не за 180-дневный период, как у
+  // большинства visa_free стран каталога, а за КАЛЕНДАРНЫЙ год; соглашение
+  // вступило в силу только 11.05.2026 (совсем свежее изменение режима на
+  // дату проверки) и не распространяется на хадж/умру в период хаджа,
+  // учёбу, постоянное проживание или трудовую деятельность — эти нюансы не
+  // укладываются в бинарный статус, описаны текстом на странице города.
+  // Руанда классифицирована как visa_free по тому же принципу, что
+  // Индонезия/Таиланд в этом файле — виза оформляется по прилёту (30 дней,
+  // 50 долл. США), не требует предварительного обращения в посольство;
+  // дипломатические/служебные паспорта въезжают без визы вовсе с
+  // 05.02.2025.
+  "costa-rica": "visa_free", // безвиз до 90 дней от даты въезда (соглашение от 25.05.2019)
+  "saudi-arabia": "visa_free", // безвиз до 90 дней за календарный год (соглашение вступило в силу 11.05.2026)
+  rwanda: "visa_free", // виза по прилёту, 30 дней / 50 долл. США
+  fiji: "visa_free", // штамп на границе бесплатно, до 90 дней
+
   // --- Нужна виза заранее (Шенген/ЕС/e-visa заранее/консульская) ---
   bulgaria: "visa_required", // ЕС / Шенген
   croatia: "visa_required", // Шенген
@@ -126,6 +144,14 @@ export const VISA_BY_COUNTRY: Record<string, VisaStatus> = {
   // (эта же волна) безвизового режима и визы по прилёту нет — нужна
   // визитёрская виза заранее.
   "new-zealand": "visa_required",
+  // 2026-10-19: новая страна каталога (Дакар) — проверено напрямую на
+  // kdmid.ru, см. VISA_SOURCES.senegal. В отличие от остальных четырёх
+  // городов этой волны (Коста-Рика/Саудовская Аравия/Руанда/Фиджи) виза
+  // нужна заранее для владельцев обычных гражданских паспортов — её
+  // оформляют в Консульском отделе Посольства Сенегала в Москве
+  // (у дипломатических/служебных паспортов — безвиз до 90 дней, этот
+  // нюанс не укладывается в бинарный статус, описан текстом на странице).
+  senegal: "visa_required",
 };
 
 // Спорные страны переведены в «Без визы» по решению Виктории (2026-06-17);
@@ -169,6 +195,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   chile: { sourceUrl: "https://www.minrel.gob.cl/europa/federacion-de-rusia", verifiedAt: "2026-09-29" },
   china: { sourceUrl: "https://english.www.gov.cn/news/202605/20/content_WS6a0d70aac6d00ca5f9a0b1fe.html", verifiedAt: "2026-09-29" },
   colombia: { sourceUrl: "https://www.cancilleria.gov.co/tramites_servicios/visa/lista-a-b-c", verifiedAt: "2026-09-29" },
+  "costa-rica": { sourceUrl: "https://www.kdmid.ru/docs/costa-rica/information-about-the-country/", verifiedAt: "2026-10-19" },
   croatia: { sourceUrl: "https://mvep.gov.hr/page/179974", verifiedAt: "2026-09-29" },
   cyprus: { sourceUrl: "https://mfa.gov.cy/visa-information.html", verifiedAt: "2026-09-29" },
   "czech-republic": { sourceUrl: "https://mzv.gov.cz/moscow/ru/vizy_i_konsulskaja/novosti/index.html", verifiedAt: "2026-09-29" },
@@ -177,6 +204,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   ecuador: { sourceUrl: "https://www.kdmid.ru/docs/ecuador/information-about-the-country/", verifiedAt: "2026-10-16" },
   egypt: { sourceUrl: "https://visa2egypt.gov.eg/eVisa/Home/HomePage", verifiedAt: "2026-09-29" },
   estonia: { sourceUrl: "https://kriis.ee/en/travelling-crossing-state-border/travelling-estonia/visas-russian-citizens", verifiedAt: "2026-09-29" },
+  fiji: { sourceUrl: "https://www.kdmid.ru/docs/fiji/information-about-the-country/", verifiedAt: "2026-10-19" },
   finland: { sourceUrl: "https://finlandabroad.fi/web/cyp/current-affairs/-/asset_publisher/h5w4iTUJhNne/content/finland-significantly-restricts-the-non-essential-travel-of-russian-citizens/384951", verifiedAt: "2026-09-29" },
   france: { sourceUrl: "https://france-visas.gouv.fr/en/", verifiedAt: "2026-09-29" },
   georgia: { sourceUrl: "https://www.evisa.gov.ge/GeoVisa/en/VisaApp", verifiedAt: "2026-09-29" },
@@ -219,6 +247,9 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   portugal: { sourceUrl: "https://vistos.mne.gov.pt/pt/vistos-schengen/informacao-geral/quem-precisa-de-visto", verifiedAt: "2026-09-29" },
   qatar: { sourceUrl: "https://www.kdmid.ru/docs/qatar/information-about-the-country/", verifiedAt: "2026-09-29" },
   romania: { sourceUrl: "https://www.mae.ro/travel-conditions/3740", verifiedAt: "2026-09-29" },
+  rwanda: { sourceUrl: "https://www.kdmid.ru/docs/rwanda/information-about-the-country/", verifiedAt: "2026-10-19" },
+  "saudi-arabia": { sourceUrl: "https://www.kdmid.ru/docs/saudi-arabia/information-about-the-country/", verifiedAt: "2026-10-19" },
+  senegal: { sourceUrl: "https://www.kdmid.ru/docs/senegal/information-about-the-country/", verifiedAt: "2026-10-19" },
   serbia: { sourceUrl: "https://www.mfa.gov.rs/en/citizens/travel-serbia/visa-regime/ruska-federacija", verifiedAt: "2026-09-29" },
   singapore: { sourceUrl: "https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements/visa-detail-page/russia", verifiedAt: "2026-09-29" },
   slovakia: { sourceUrl: "https://www.mzv.sk/en/web/moskva-en/services/visa_information", verifiedAt: "2026-09-29" },
