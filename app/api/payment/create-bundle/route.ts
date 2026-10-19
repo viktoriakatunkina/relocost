@@ -162,6 +162,8 @@ export async function POST(req: Request) {
         slug2: slugB,
         pkg: BUNDLE_PKG,
         kind: "city_pair_bundle",
+        // Для ссылок в письме после оплаты (lib/purchase-email.ts).
+        locale: prefix.slice(1) || "ru",
       },
       receipt: receiptsEnabled()
         ? buildNpdReceipt({ email, description, amountRub: BUNDLE_PRICE })

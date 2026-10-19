@@ -11,11 +11,14 @@ import {
   readUnlocked,
   readCountryUnlocked,
   readPurchaseEmail,
+  savePurchaseEmail,
   type PackageType,
 } from "@/lib/unlocked";
 import { reachGoal } from "@/lib/metrika";
 
 /**
+ * Разблокирует оплаченный контент. 0) Ссылка из письма (?access=…) — см. ниже.
+ *
  * После возврата с оплаты ЮKassa разблокирует контент ДВУМЯ путями:
  *
  * 1) Быстрый путь — по payment_id из sessionStorage (положен перед уходом на
@@ -74,6 +77,46 @@ export function VerifyOnReturn({
       }
     }
     if (pending && pending.slug === slug) checkPayment(0);
+
+    // --- Путь 0: ссылка из письма после оплаты (?access=…) ---
+    // Работает на любом устройстве: токен подписан сервером
+    // (lib/access-link.ts). После входа сохраняем email, чтобы на этом
+    // устройстве дальше срабатывал путь 2, и убираем токен из адреса —
+    // чтобы его не скопировали вместе со ссылкой на страницу.
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get("access");
+    if (accessToken) {
+      params.delete("access");
+      const qs = params.toString();
+      window.history.replaceState(
+        window.history.state,
+        "",
+        window.location.pathname + (qs ? `?${qs}` : "") + window.location.hash,
+      );
+      fetch("/api/payment/access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug, token: accessToken, kind }),
+        cache: "no-store",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (cancelled) return;
+          const pkgs: PackageType[] = Array.isArray(data?.packages)
+            ? data.packages
+            : [];
+          if (!pkgs.length) return;
+          if (kind === "country") {
+            for (const p of pkgs) addUnlocked(slug, p);
+          } else {
+            addManyUnlocked(slug, pkgs);
+          }
+          if (typeof data.email === "string") savePurchaseEmail(data.email);
+        })
+        .catch(() => {
+          /* тихо: ручное восстановление доступно через RestoreAccess */
+        });
+    }
 
     // --- Путь 2: восстановление по сохранённому email ---
     const email = readPurchaseEmail();

@@ -171,7 +171,8 @@ export async function POST(req: Request) {
       description,
       returnUrl,
       customerEmail: email,
-      metadata: { purchase_id: purchaseId, slug, pkg },
+      // locale — для ссылки в письме после оплаты (lib/purchase-email.ts).
+      metadata: { purchase_id: purchaseId, slug, pkg, locale: prefix.slice(1) || "ru" },
       // Чек НПД — только при включенной фискализации на стороне ЮKassa.
       receipt: receiptsEnabled()
         ? buildNpdReceipt({ email, description, amountRub: amount })

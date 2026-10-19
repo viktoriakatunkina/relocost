@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { getPayment } from "@/lib/yokassa";
-import { ensurePurchasePaid } from "@/lib/purchase-fallback";
+import { markPaidAndNotify } from "@/lib/purchase-email";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -50,16 +50,13 @@ export async function POST(req: Request) {
   // как purchase_id_2/slug2. Для обычной одиночной покупки этих полей нет —
   // код ниже просто не выполняется, существующий путь не меняется.
   const purchaseId2 = payment.metadata?.purchase_id_2;
-  const slug2 = payment.metadata?.slug2;
 
   if (payment.status === "succeeded" && payment.paid) {
     // Помечаем покупку оплаченной; если записи нет — восстанавливаем её
     // (защита от потери оплаты). Идемпотентно: повторный webhook по paid-заказу
-    // не создаёт дубль и не возвращает ошибку.
-    await ensurePurchasePaid(db, payment, purchaseId);
-    if (purchaseId2) {
-      await ensurePurchasePaid(db, payment, purchaseId2, slug2);
-    }
+    // не создаёт дубль и не возвращает ошибку. Письмо со ссылкой на отчет
+    // уходит только при первом переходе в paid.
+    await markPaidAndNotify(db, payment);
   } else if (payment.status === "canceled") {
     // Логируем причину отмены (party/reason от ЮKassa: отказ карты, 3DS,
     // истечение срока и т.п.) — раньше "failed" в purchases ничего не
