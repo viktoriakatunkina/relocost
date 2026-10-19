@@ -26,10 +26,11 @@ const LOG_PREFIX = "[purchase-fallback]";
 
 // email в purchases NOT NULL, но в metadata платежа его нет. Маркер
 // восстановленной записи — по нему такие покупки легко найти в БД.
-const RECOVERED_EMAIL = "recovered@relocost.ru";
+export const RECOVERED_EMAIL = "recovered@relocost.ru";
 
 export type FallbackResult =
-  | "ok-existing" // запись уже была paid (или была обновлена раньше) — идемпотентно
+  | "marked-paid" // этим вызовом запись перешла pending/failed → paid (ровно один раз — по нему шлем письмо)
+  | "ok-existing" // запись уже была paid — идемпотентно
   | "recovered" // записи не было, восстановили как paid
   | "no-city" // записи не было И город по slug не найден — восстановить нельзя
   | "error"; // ошибка БД при восстановлении
@@ -39,7 +40,7 @@ export type FallbackResult =
  *
  * 1. Делает строгий update(status=paid).eq(id).neq(status,paid) с .select(),
  *    чтобы узнать, сколько строк затронуто.
- * 2. Если затронута строка — всё хорошо (обычный путь).
+ * 2. Если затронута строка — всё хорошо (обычный путь), "marked-paid".
  * 3. Если 0 строк — проверяет, существует ли запись:
  *    - существует и уже paid → идемпотентность, ничего не делаем;
  *    - не существует → upsert по id со status=paid из данных платежа.
@@ -75,9 +76,11 @@ export async function ensurePurchasePaid(
     return "error";
   }
 
-  // Затронули строку — штатный сценарий, выходим.
+  // Затронули строку — штатный сценарий, выходим. Условие neq(paid) делает
+  // переход атомарным: при одновременных webhook и verify строку обновит
+  // только один из них.
   if (updated && updated.length > 0) {
-    return "ok-existing";
+    return "marked-paid";
   }
 
   // 0 строк затронуто. Различаем два случая: запись уже paid (идемпотентность)
