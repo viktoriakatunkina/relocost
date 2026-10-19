@@ -31,6 +31,9 @@ const CASES: Record<string, CountryCase> = {
   bahrain: { prepositional: "Бахрейне", accusative: "Бахрейн", genitive: "Бахрейна" },
   belarus: { prepositional: "Беларуси", accusative: "Беларусь", genitive: "Беларуси" },
   belgium: { prepositional: "Бельгии", accusative: "Бельгию", genitive: "Бельгии" },
+  // 2026-10-19: Белиз, Сальвадор — 2 новых страны этой волны (Белиз-Сити,
+  // Сан-Сальвадор), см. lib/visa.ts этой волны.
+  belize: { prepositional: "Белизе", accusative: "Белиз", genitive: "Белиза" },
   // 2026-10-19: Панама, Боливия, Новая Зеландия не были в справочнике, хотя
   // уже несколько волн (Эквадор, Доминиканская Республика, Босния и
   // Герцеговина, Парагвай, Маврикий, Монголия, Танзания) добавляли страны в
@@ -56,6 +59,7 @@ const CASES: Record<string, CountryCase> = {
   "czech-republic": { prepositional: "Чехии", accusative: "Чехию", genitive: "Чехии" },
   denmark: { prepositional: "Дании", accusative: "Данию", genitive: "Дании" },
   egypt: { prepositional: "Египте", accusative: "Египет", genitive: "Египта" },
+  "el-salvador": { prepositional: "Сальвадоре", accusative: "Сальвадор", genitive: "Сальвадора" },
   estonia: { prepositional: "Эстонии", accusative: "Эстонию", genitive: "Эстонии" },
   // Островное государство — предлог «на».
   fiji: { prepositional: "Фиджи", accusative: "Фиджи", genitive: "Фиджи", prep: "на" },

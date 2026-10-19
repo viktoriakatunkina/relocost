@@ -152,6 +152,15 @@ export const VISA_BY_COUNTRY: Record<string, VisaStatus> = {
   // (у дипломатических/служебных паспортов — безвиз до 90 дней, этот
   // нюанс не укладывается в бинарный статус, описан текстом на странице).
   senegal: "visa_required",
+
+  // 2026-10-19: новые страны каталога (Белиз-Сити, Сан-Сальвадор) —
+  // проверено напрямую на kdmid.ru, см. VISA_SOURCES. Белиз: безвиз до 90
+  // дней за 180-дневный период по соглашению от 23.09.2021, вступившему в
+  // силу 12.01.2022. Сальвадор: безвиз до 90 дней за 180-дневный период —
+  // тот же стандартный режим, что у большинства стран Латинской Америки в
+  // этом каталоге (Боливия/Панама/Эквадор и т.д.).
+  belize: "visa_free", // безвиз до 90 дней за каждый 180-дневный период (соглашение от 23.09.2021, в силе с 12.01.2022)
+  "el-salvador": "visa_free", // безвиз до 90 дней за каждый 180-дневный период
 };
 
 // Спорные страны переведены в «Без визы» по решению Виктории (2026-06-17);
@@ -186,6 +195,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   bahrain: { sourceUrl: "https://www.evisa.gov.bh/list-of-online-visa-country.html", verifiedAt: "2026-09-29" },
   belarus: { sourceUrl: "https://mfa.gov.by/visa/viezd_vyezd/agreement/", verifiedAt: "2026-09-29" },
   belgium: { sourceUrl: "https://russia.diplomatie.belgium.be/nl/naar-belgie-komen/visum-voor-belgie", verifiedAt: "2026-09-29" },
+  belize: { sourceUrl: "https://www.kdmid.ru/docs/belize/information-about-the-country/", verifiedAt: "2026-10-19" },
   bolivia: { sourceUrl: "https://www.kdmid.ru/docs/bolivia/information-about-the-country/", verifiedAt: "2026-10-19" },
   "bosnia-and-herzegovina": { sourceUrl: "https://www.kdmid.ru/docs/bosnia-and-herzegovina/information-about-the-country/", verifiedAt: "2026-10-16" },
   brazil: { sourceUrl: "https://concordia.itamaraty.gov.br/detalhamento-acordo/6283", verifiedAt: "2026-09-29" },
@@ -203,6 +213,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   "dominican-republic": { sourceUrl: "https://www.kdmid.ru/docs/dominican-republic/information-about-the-country/", verifiedAt: "2026-10-16" },
   ecuador: { sourceUrl: "https://www.kdmid.ru/docs/ecuador/information-about-the-country/", verifiedAt: "2026-10-16" },
   egypt: { sourceUrl: "https://visa2egypt.gov.eg/eVisa/Home/HomePage", verifiedAt: "2026-09-29" },
+  "el-salvador": { sourceUrl: "https://www.kdmid.ru/docs/salvador/information-about-the-country/", verifiedAt: "2026-10-19" },
   estonia: { sourceUrl: "https://kriis.ee/en/travelling-crossing-state-border/travelling-estonia/visas-russian-citizens", verifiedAt: "2026-09-29" },
   fiji: { sourceUrl: "https://www.kdmid.ru/docs/fiji/information-about-the-country/", verifiedAt: "2026-10-19" },
   finland: { sourceUrl: "https://finlandabroad.fi/web/cyp/current-affairs/-/asset_publisher/h5w4iTUJhNne/content/finland-significantly-restricts-the-non-essential-travel-of-russian-citizens/384951", verifiedAt: "2026-09-29" },
