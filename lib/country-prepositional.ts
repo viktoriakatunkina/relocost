@@ -54,6 +54,14 @@ const CASES: Record<string, CountryCase> = {
   // добавления в этот справочник, пробел вне скоупа этой задачи).
   "costa-rica": { prepositional: "Коста-Рике", accusative: "Коста-Рику", genitive: "Коста-Рики" },
   croatia: { prepositional: "Хорватии", accusative: "Хорватию", genitive: "Хорватии" },
+  // 2026-10-20: Куба, Никарагуа, Намибия — 3 новые страны каталога (Гавана,
+  // Манагуа, Виндхук), см. lib/visa.ts этой волны. Куба — идиоматическое
+  // исключение из общего правила «остров → на»/«страна → в»: по-русски
+  // устойчиво «на Кубе» (как «на острове»), а не «в Кубе» — винительный
+  // соответственно «на Кубу». Никарагуа — несклоняемое иностранное
+  // название на «-уа» (как «Манагуа» в lib/city-prepositional.ts):
+  // все падежи совпадают с именительным.
+  cuba: { prepositional: "Кубе", accusative: "Кубу", genitive: "Кубы", prep: "на" },
   // Острова и островные государства — предлог «на», а не «в».
   cyprus: { prepositional: "Кипре", accusative: "Кипр", genitive: "Кипра", prep: "на" },
   "czech-republic": { prepositional: "Чехии", accusative: "Чехию", genitive: "Чехии" },
@@ -90,7 +98,12 @@ const CASES: Record<string, CountryCase> = {
   montenegro: { prepositional: "Черногории", accusative: "Черногорию", genitive: "Черногории" },
   // Несклоняемые.
   morocco: { prepositional: "Марокко", accusative: "Марокко", genitive: "Марокко" },
+  namibia: { prepositional: "Намибии", accusative: "Намибию", genitive: "Намибии" },
   nepal: { prepositional: "Непале", accusative: "Непал", genitive: "Непала" },
+  // Несклоняемое иностранное название на «-уа» — все падежи совпадают с
+  // именительным (см. комментарий у «cuba» выше и «Манагуа» в
+  // lib/city-prepositional.ts).
+  nicaragua: { prepositional: "Никарагуа", accusative: "Никарагуа", genitive: "Никарагуа" },
   netherlands: { prepositional: "Нидерландах", accusative: "Нидерланды", genitive: "Нидерландов" },
   "new-zealand": {
     prepositional: "Новой Зеландии",

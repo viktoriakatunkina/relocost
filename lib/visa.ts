@@ -161,6 +161,17 @@ export const VISA_BY_COUNTRY: Record<string, VisaStatus> = {
   // этом каталоге (Боливия/Панама/Эквадор и т.д.).
   belize: "visa_free", // безвиз до 90 дней за каждый 180-дневный период (соглашение от 23.09.2021, в силе с 12.01.2022)
   "el-salvador": "visa_free", // безвиз до 90 дней за каждый 180-дневный период
+
+  // 2026-10-20: новые страны каталога (Гавана, Манагуа, Виндхук) — проверено
+  // напрямую на kdmid.ru, см. VISA_SOURCES. Все три — безвиз до 90 дней за
+  // каждый 180-дневный период, тот же стандартный режим, что у большинства
+  // стран Латинской Америки/Африки в этом каталоге. Куба — нюанс: безвиз
+  // действует только для поездок до 90 дней; для пребывания дольше, учёбы
+  // или работы нужна виза посольства Кубы в Москве — не укладывается в
+  // бинарный статус, описано текстом на странице города.
+  cuba: "visa_free", // безвиз до 90 дней, по заграничному паспорту (источник: kdmid.ru)
+  nicaragua: "visa_free", // безвиз до 90 дней за 180-дневный период (соглашение в силе с июля 2010)
+  namibia: "visa_free", // безвиз до 90 дней за 180-дневный период (соглашение в силе с 02.08.2021)
 };
 
 // Спорные страны переведены в «Без визы» по решению Виктории (2026-06-17);
@@ -207,6 +218,7 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   colombia: { sourceUrl: "https://www.cancilleria.gov.co/tramites_servicios/visa/lista-a-b-c", verifiedAt: "2026-09-29" },
   "costa-rica": { sourceUrl: "https://www.kdmid.ru/docs/costa-rica/information-about-the-country/", verifiedAt: "2026-10-19" },
   croatia: { sourceUrl: "https://mvep.gov.hr/page/179974", verifiedAt: "2026-09-29" },
+  cuba: { sourceUrl: "https://www.kdmid.ru/docs/cuba/information-about-the-country/", verifiedAt: "2026-10-20" },
   cyprus: { sourceUrl: "https://mfa.gov.cy/visa-information.html", verifiedAt: "2026-09-29" },
   "czech-republic": { sourceUrl: "https://mzv.gov.cz/moscow/ru/vizy_i_konsulskaja/novosti/index.html", verifiedAt: "2026-09-29" },
   denmark: { sourceUrl: "https://um.dk/rusland/rejse-og-ophold/visum-og-opholdstilladelse", verifiedAt: "2026-09-29" },
@@ -242,6 +254,8 @@ export const VISA_SOURCES: Partial<Record<string, VisaSource>> = {
   mexico: { sourceUrl: "https://www.inm.gob.mx/sae/publico/ru/solicitud.html", verifiedAt: "2026-09-29" },
   moldova: { sourceUrl: "https://mfa.gov.md/ru/content/vizovyy-rezhim-dlya-grazhdan-drugih-gosudarstv", verifiedAt: "2026-09-29" },
   mongolia: { sourceUrl: "https://www.kdmid.ru/docs/mongolia/information-about-the-country/", verifiedAt: "2026-10-14" },
+  namibia: { sourceUrl: "https://www.kdmid.ru/docs/namibia/information-about-the-country/", verifiedAt: "2026-10-20" },
+  nicaragua: { sourceUrl: "https://www.kdmid.ru/docs/nicaragua/information-about-the-country/", verifiedAt: "2026-10-20" },
   montenegro: { sourceUrl: "https://www.gov.me/amp/clanak/crna-gora-u-potpunosti-uskladila-viznu-politiku-sa-evropskom-unijom-gradanima-brojnih-zemalja-dostupnije-podnosenje-zahtjeva-za-crnogorsku-vizu", verifiedAt: "2026-09-29" },
   morocco: { sourceUrl: "https://www.consulat.ma/index.php/en/list-countries-whose-citizens-are-exempted-entry-visa-morocco", verifiedAt: "2026-09-29" },
   nepal: { sourceUrl: "https://ntb.gov.np/plan-your-trip/before-you-come/tourist-visa", verifiedAt: "2026-09-29" },
