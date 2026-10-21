@@ -16,15 +16,27 @@ export const dynamic = "force-dynamic";
 // 2026-08-25: рантайм-доступ VPS к Supabase подтверждённо нестабилен
 // (см. коммит фикса generateStaticParams) — без таймаута зависший fetch
 // вешал ВЕСЬ /sitemap.xml на 30+ сек до 504 от nginx (у sitemap нет ISR-
-// кеша/фолбэка на stale, в отличие от страниц). 8 сек — короче, чем nginx
-// proxy timeout, отдаём частичный сайтмап вместо полного 504.
-const FETCH_TIMEOUT_MS = 8_000;
+// кеша/фолбэка на stale, в отличие от страниц). Таймаут короче, чем nginx
+// proxy_read_timeout (дефолт 60с) — отдаём частичный сайтмап вместо 504.
+//
+// 2026-10-21: после паузы/resume проекта в Supabase (см. memory) одиночные
+// запросы к REST API занимают 2-15 сек вместо обычных <1 сек — видимо,
+// Nano-тариф не держит burst из нескольких параллельных подключений
+// (sitemap бьёт в Supabase одновременно: города + до 8 страниц блога +
+// новости + сравнения). Прежние 8/12 сек оказались ЧАСТО недостаточны даже
+// без сбоев на стороне Supabase — сайтмап стабильно терял города/страны/
+// блог/сравнения на каждый запрос, попадая в поисковики неполным. Краулеры
+// намного терпимее к задержке ответа, чем живой пользователь — подняли
+// бюджет с большим запасом под 60-секундный таймаут nginx.
+const FETCH_TIMEOUT_MS = 20_000;
 
 // Общий бюджет на постраничную выборку статей. Страниц теперь несколько (см.
-// fetchBlogPosts), и без общего дедлайна три подряд подвисших запроса по 8 сек
-// дали бы 24 сек и гарантированный 504 от nginx. Набрали сколько успели —
-// отдаём частичный сайтмап, это лучше пустого.
-const BLOG_FETCH_BUDGET_MS = 12_000;
+// fetchBlogPosts), и без общего дедлайна несколько подряд подвисших запросов
+// дали бы гарантированный 504 от nginx. Набрали сколько успели — отдаём
+// частичный сайтмап, это лучше пустого. 35с — с учётом того, что ниже
+// comparePairs теперь считается ПАРАЛЛЕЛЬНО (не добавляет время поверх),
+// общий потолок запроса остаётся заметно ниже 60-секундного таймаута nginx.
+const BLOG_FETCH_BUDGET_MS = 35_000;
 
 async function fetchWithTimeout(
   input: string,
@@ -180,6 +192,18 @@ function expand(entries: Entry[]): MetadataRoute.Sitemap {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // comparePairs запускаем СРАЗУ, параллельно с городами/блогом/новостями —
+  // раньше он ждал Promise.race ПОСЛЕ них (строго последовательно), добавляя
+  // свои до FETCH_TIMEOUT_MS сверх уже потраченного времени. 2026-10-21: при
+  // медленном Supabase (см. комментарий у FETCH_TIMEOUT_MS выше) сумма двух
+  // последовательных таймаутов стабильно упиралась в 504 от nginx, роняя ВЕСЬ
+  // сайтмап, а не только блок сравнений. Старт здесь, await — ниже, после
+  // translatedLocalesFor (которая всё равно не трогает Supabase и не блокирует).
+  const comparePairsPromise = Promise.race([
+    topComparePairs(),
+    new Promise<string[]>((resolve) => setTimeout(() => resolve([]), FETCH_TIMEOUT_MS)),
+  ]);
+
   const [cityRows, posts, newsItems] = await Promise.all([
     fetchCities(),
     fetchBlogPosts(),
@@ -212,12 +236,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // прегенерятся статикой). Полный декартов набор раздувал бы sitemap.
   // topComparePairs() идёт через supabase-js (не raw fetch, см. lib/compare.ts) —
   // на нестабильном рантайм-коннекте к Supabase может тянуться десятки секунд
-  // (внутренние ретраи fetchWithRetry). Гоним с внешним таймаутом, чтобы не
-  // ронять весь сайтмап из-за одного медленного блока.
-  const comparePairs = await Promise.race([
-    topComparePairs(),
-    new Promise<string[]>((resolve) => setTimeout(() => resolve([]), FETCH_TIMEOUT_MS)),
-  ]);
+  // (внутренние ретраи fetchWithRetry). Запущен выше, параллельно с городами/
+  // блогом/новостями — здесь просто забираем результат (или [] по таймауту).
+  const comparePairs = await comparePairsPromise;
 
   const entries: Entry[] = [
     { path: "/", lastModified: now, changeFrequency: "weekly", priority: 1.0 },
