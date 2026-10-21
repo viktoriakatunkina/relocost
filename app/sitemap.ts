@@ -81,12 +81,21 @@ async function fetchBlogPosts(): Promise<{ slug: string; created_at: string }[]>
         headers,
         Math.min(FETCH_TIMEOUT_MS, left),
       );
-      if (!res.ok) break;
+      if (!res.ok) {
+        // 2026-10-21: раньше молча break — не было видно, РАЗВАЛИЛСЯ ли
+        // запрос (таймаут/сеть) или Supabase вернул ошибку (4xx/5xx) с
+        // телом, объясняющим причину. Временная диагностика после находки
+        // "сайтмап стабильно теряет контент" — см. memory.
+        const body = await res.text().catch(() => "");
+        console.error("[sitemap] fetchBlogPosts: не-ok ответ", { page, status: res.status, body: body.slice(0, 300) });
+        break;
+      }
       const rows: { slug: string; created_at: string }[] = await res.json();
       out.push(...rows);
       if (rows.length < BLOG_PAGE_SIZE) break;
     }
-  } catch {
+  } catch (e) {
+    console.error("[sitemap] fetchBlogPosts упал", e instanceof Error ? e.message : e);
     // Возвращаем то, что успели набрать до сбоя.
   }
   return out;
@@ -104,9 +113,14 @@ async function fetchNewsItems(): Promise<{ slug: string; created_at: string }[]>
       `${url}/rest/v1/news_items?select=slug,created_at&published=eq.true&order=created_at.desc&limit=1000`,
       { apikey: key, Authorization: `Bearer ${key}` },
     );
-    if (!res.ok) return [];
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      console.error("[sitemap] fetchNewsItems: не-ok ответ", { status: res.status, body: body.slice(0, 300) });
+      return [];
+    }
     return res.json();
-  } catch {
+  } catch (e) {
+    console.error("[sitemap] fetchNewsItems упал", e instanceof Error ? e.message : e);
     return [];
   }
 }
@@ -120,9 +134,14 @@ async function fetchCities(): Promise<{ slug: string; country_slug: string; upda
       `${url}/rest/v1/cities?select=slug,country_slug,updated_at&limit=1000`,
       { apikey: key, Authorization: `Bearer ${key}` }
     );
-    if (!res.ok) return [];
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      console.error("[sitemap] fetchCities: не-ok ответ", { status: res.status, body: body.slice(0, 300) });
+      return [];
+    }
     return res.json();
-  } catch {
+  } catch (e) {
+    console.error("[sitemap] fetchCities упал", e instanceof Error ? e.message : e);
     return [];
   }
 }
