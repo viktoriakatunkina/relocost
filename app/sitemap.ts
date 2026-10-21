@@ -7,73 +7,36 @@ import { routing, type Locale } from "@/i18n/routing";
 import { BLOG_TAG_FILTER } from "@/lib/blog-visibility";
 import { archivePageCount } from "@/lib/blog-archive";
 import { translatedLocalesFor } from "@/lib/content-i18n";
+import { fetchWithHardTimeout } from "@/lib/supabase";
 
-// 2026-10-21: было force-dynamic (генерация на каждый живой запрос).
-// Диагностика показала, что запросы к Supabase ИЗ ЭТОГО runtime-контекста
-// (App Router route handler) стабильно не укладываются по времени — при
-// этом те же самые данные успешно вытягиваются и на этапе `next build`
-// (все 3384 страницы городов/блога это подтверждают), и в отдельном
-// standalone-скрипте на том же сервере. Причина не выяснена до конца
-// (похоже на особенность рантайм-fetch Next.js в этой версии при текущей
-// скорости Supabase), но воспроизводится стабильно — поднятие таймаутов
-// и смена параллельных запросов на последовательные не помогли, сайтмап
-// каждый раз тихо терял города/страны/блог/сравнения.
+// 2026-10-21 (найдено при проверке индексации — сайтмап месяцами отдавал
+// только ~336 статических URL вместо ~4000+, 0 городов/стран/статей блога):
+// долго казалось, что дело в длительности таймаута или в параллельных
+// запросах (оба фикса не помогли — см. git history), но КОРНЕВАЯ причина
+// была в собственном `fetchWithTimeout` этого файла: он полагался ТОЛЬКО на
+// AbortController, а в lib/supabase.ts прямым текстом задокументирован
+// известный квирк undici — HTTP/2 keepalive на этом VPS иногда зависает
+// (Supabase не шлёт FIN), и `AbortController.abort()` НЕ ВСЕГДА реально
+// обрывает такой подвисший сокет. generateStaticParams страниц городов/блога
+// уже защищены от этого через `fetchWithHardTimeout` (AbortController +
+// независимый Promise.race с жёстким дедлайном) — именно поэтому они
+// успешно собираются, а сайтмап с голым AbortController — нет. Переиспользуем
+// готовую, уже проверенную функцию вместо местного самопального аналога.
 //
-// Фикс — не бороться с рантаймом, а генерировать сайтмап там, где Supabase
-// заведомо доступен: на этапе сборки (как и сами страницы городов/блога),
-// с фоновым обновлением раз в час (ISR). Если фоновая регенерация когда-то
-// снова упрётся в те же грабли — Next отдаёт последнюю УДАЧНУЮ версию
-// (stale-while-revalidate), а не частичный/пустой сайтмап живым краулерам.
-// Цена — сайтмап отражает изменения в БД с задержкой до часа (а при
-// деплое — пересобирается заново сразу), не мгновенно на каждый HTTP-запрос.
-// Для продакшена это более чем приемлемо: контент всё равно добавляется
-// пачками с деплоем следом, не россыпью.
+// ISR раз в час (вместо прежнего force-dynamic) оставлена как
+// дополнительная подстраховка: даже если когда-нибудь случится реальный сбой
+// Supabase, живые краулеры получат последнюю УДАЧНУЮ версию (stale-while-
+// revalidate), а не частичный/пустой сайтмап.
 export const revalidate = 3600;
 
-// 2026-08-25: рантайм-доступ VPS к Supabase подтверждённо нестабилен
-// (см. коммит фикса generateStaticParams) — без таймаута зависший fetch
-// вешал ВЕСЬ /sitemap.xml на 30+ сек до 504 от nginx (у sitemap нет ISR-
-// кеша/фолбэка на stale, в отличие от страниц). Таймаут короче, чем nginx
-// proxy_read_timeout (дефолт 60с) — отдаём частичный сайтмап вместо 504.
-//
-// 2026-10-21: после паузы/resume проекта в Supabase (см. memory) sitemap
-// стабильно терял города/страны/блог/сравнения на каждый запрос. Причина
-// оказалась не в длительности таймаута, а в том, что все запросы стартовали
-// ОДНОВРЕМЕННО (Promise.all) — Nano-тариф не вытягивает всплеск из
-// нескольких параллельных подключений разом, и все четыре блока валились
-// с "This operation was aborted" в одну и ту же секунду. Фикс — запросы
-// теперь идут СТРОГО ПОСЛЕДОВАТЕЛЬНО (см. sitemap() ниже), по одному
-// Supabase-соединению за раз. Из-за этого таймауты каждого блока суммируются
-// в общий потолок запроса — держим сумму заметно ниже 60-секундного
-// proxy_read_timeout nginx (дефолт, не менялся): 10 (города) + 20 (блог) +
-// 10 (новости) + 10 (сравнения) = 50с худший случай.
 const FETCH_TIMEOUT_MS = 10_000;
-
-// Общий бюджет на постраничную выборку статей (см. fetchBlogPosts — страниц
-// несколько, без общего дедлайна несколько подряд подвисших запросов сами
-// по себе съели бы весь бюджет). Входит в сумму последовательных таймаутов
-// выше — не поднимать без пересчёта общего потолка.
-const BLOG_FETCH_BUDGET_MS = 20_000;
-
-async function fetchWithTimeout(
-  input: string,
-  headers: Record<string, string>,
-  timeoutMs = FETCH_TIMEOUT_MS,
-) {
-  const ctrl = new AbortController();
-  const tid = setTimeout(() => ctrl.abort(), timeoutMs);
-  try {
-    return await fetch(input, { headers, cache: "no-store", signal: ctrl.signal });
-  } finally {
-    clearTimeout(tid);
-  }
-}
 
 // PostgREST режет ЛЮБОЙ ответ по серверному db-max-rows=1000 — параметр
 // limit=3000 в запросе он молча игнорирует. Из-за этого в сайтмап попадала
 // только первая тысяча статей из ~2650 подходящих (аудит 2026-09-07: 65%
 // статей блога вообще не были представлены в сайтмапе). Единственный рабочий
 // способ забрать всё — идти страницами по offset, как в scripts/*.mjs.
+const BLOG_FETCH_BUDGET_MS = 30_000;
 const BLOG_PAGE_SIZE = 1000;
 const BLOG_MAX_PAGES = 8; // страховка от бесконечного цикла: потолок 8000 статей
 
@@ -91,7 +54,7 @@ async function fetchBlogPosts(): Promise<{ slug: string; created_at: string }[]>
       // Сортировка обязательно детерминированная (created_at может совпадать
       // у пачки статей одного сева) — иначе постраничная выборка теряет и
       // дублирует строки между страницами.
-      const res = await fetchWithTimeout(
+      const res = await fetchWithHardTimeout(
         `${url}/rest/v1/blog_posts?select=slug,created_at&published=eq.true` +
           `&${BLOG_TAG_FILTER}&order=created_at.desc,slug.asc` +
           `&offset=${page * BLOG_PAGE_SIZE}&limit=${BLOG_PAGE_SIZE}`,
@@ -126,7 +89,7 @@ async function fetchNewsItems(): Promise<{ slug: string; created_at: string }[]>
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return [];
   try {
-    const res = await fetchWithTimeout(
+    const res = await fetchWithHardTimeout(
       `${url}/rest/v1/news_items?select=slug,created_at&published=eq.true&order=created_at.desc&limit=1000`,
       { apikey: key, Authorization: `Bearer ${key}` },
     );
@@ -147,7 +110,7 @@ async function fetchCities(): Promise<{ slug: string; country_slug: string; upda
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return [];
   try {
-    const res = await fetchWithTimeout(
+    const res = await fetchWithHardTimeout(
       `${url}/rest/v1/cities?select=slug,country_slug,updated_at&limit=1000`,
       { apikey: key, Authorization: `Bearer ${key}` }
     );
