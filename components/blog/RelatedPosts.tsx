@@ -1,37 +1,11 @@
-import type { BlogPost } from "@/lib/blog";
+import type { BlogPostCard } from "@/lib/blog";
 import { BlogCard } from "@/components/blog/BlogCard";
 
-export function RelatedPosts({
-  current,
-  all,
-  limit = 3,
-}: {
-  current: BlogPost;
-  all: BlogPost[];
-  limit?: number;
-}) {
-  // Скор: совпадение тега +3, совпадение страны +2, та же привязка к городу +2
-  const scored = all
-    .filter((p) => p.id !== current.id)
-    .map((p) => {
-      let score = 0;
-      if (current.tag && p.tag === current.tag) score += 3;
-      if (current.country_slug && p.country_slug === current.country_slug) score += 2;
-      if (current.city_id && p.city_id === current.city_id) score += 2;
-      return { p, score };
-    })
-    .sort((a, b) => {
-      // 2026-09-22 (SEO-аудит): было "b.score - a.score || a.p.created_at < b.p.created_at ? 1 : -1"
-      // — из-за приоритета операторов (`||` связывает крепче тернарника) это
-      // читалось как "(b.score - a.score || ...) ? 1 : -1": ЛЮБАЯ ненулевая
-      // разница скоров (включая отрицательную) truthy => всегда возвращало 1,
-      // то есть сортировка по скору фактически не работала — реальный корень
-      // бага "Тбилиси рекомендует Марбелью" при формально верном скоринге.
-      if (b.score !== a.score) return b.score - a.score;
-      return a.p.created_at < b.p.created_at ? 1 : -1;
-    })
-    .slice(0, limit)
-    .map((x) => x.p);
+// Подбор и скоринг (тег +3, страна +2, город +2) — в getRelatedPostCards
+// (lib/blog.ts): 2026-10-26 вынесен на сервер узкими запросами вместо
+// скоринга по 1000 полным статьям прямо здесь.
+export function RelatedPosts({ posts }: { posts: BlogPostCard[] }) {
+  const scored = posts;
 
   if (scored.length === 0) return null;
 

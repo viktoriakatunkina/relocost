@@ -108,9 +108,35 @@ export async function getPublishedPostCardsOrThrow(): Promise<BlogPostCard[]> {
   return out;
 }
 
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+// 2026-10-26: на сборке 16 воркеров бьют в БД разом — там 3 попытки нужны.
+// В рантайме (next start) повторы только добивают перегруженную БД: вместе с
+// ретраями fetchWithRetry выходило до 15 HTTP-запросов на одну статью, и с
+// 20.10 это раскрутило шторм statement timeout (300–480 в день). В рантайме —
+// одна попытка; ISR при ошибке оставит старую версию страницы.
+const IS_BUILD =
+  process.env.NEXT_PHASE === "phase-production-build" ||
+  process.env.LOWMEM_BUILD === "1";
+
+// generateMetadata и сама страница статьи запрашивают один и тот же slug
+// подряд — склеиваем их в один запрос. Живет секунды: только на время рендера.
+const POST_MEMO_MS = 10_000;
+const postMemo = new Map<string, { at: number; p: Promise<BlogPost | null> }>();
+
+export function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  const now = Date.now();
+  const hit = postMemo.get(slug);
+  if (hit && now - hit.at < POST_MEMO_MS) return hit.p;
+  if (postMemo.size > 500) postMemo.clear();
+  const p = fetchPostBySlug(slug);
+  postMemo.set(slug, { at: now, p });
+  p.catch(() => postMemo.delete(slug));
+  return p;
+}
+
+async function fetchPostBySlug(slug: string): Promise<BlogPost | null> {
+  const attempts = IS_BUILD ? 3 : 1;
   let lastError: unknown = null;
-  for (let attempt = 0; attempt < 3; attempt++) {
+  for (let attempt = 0; attempt < attempts; attempt++) {
     try {
       const query = supabase
         .from("blog_posts")
@@ -128,7 +154,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       lastError = error;
     } catch (e) {
       lastError = e;
-      if (attempt < 2) await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+      if (attempt < attempts - 1) await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
     }
   }
   // ВАЖНО (2026-09-21): раньше здесь стоял `return null` — вызывающий код
@@ -143,8 +169,79 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   // и корректно ведёт на notFound(), а «не смогли получить данные» больше
   // не маскируется под «не существует».
   throw new Error(
-    `getPostBySlug: не удалось получить "${slug}" после 3 попыток — ${String(lastError)}`,
+    `getPostBySlug: не удалось получить "${slug}" после ${attempts} попыток — ${String(lastError)}`,
   );
+}
+
+// ── Узкие выборки для блоков «Похожие материалы» / «Читайте также» ─────────
+// 2026-10-26: раньше страница статьи ради 3 похожих карточек тянула
+// getPublishedPosts() — до 1000 ПОЛНЫХ строк blog_posts вместе с content_md
+// (10–20 МБ на один рендер, больше лимита Data Cache — в кеш не попадало
+// никогда). Под ботами после фикса sitemap (21.10, +~2650 статей в выдаче) и
+// серии деплоев это стало главной нагрузкой на Supabase. Теперь — карточные
+// колонки и маленькие лимиты; city/country-блоки — то же самое.
+const RELATED_COLUMNS = `${CARD_COLUMNS},city_id,country_slug`;
+
+export type BlogPostRelated = BlogPostCard &
+  Pick<BlogPost, "city_id" | "country_slug">;
+
+const RELATED_POOL = 12;
+
+function relatedQuery() {
+  return supabase
+    .from("blog_posts")
+    .select(RELATED_COLUMNS)
+    .eq("published", true)
+    .neq("tag", HIDDEN_BLOG_TAG);
+}
+
+async function rows(
+  q: PromiseLike<{ data: unknown; error: unknown }>,
+): Promise<BlogPostRelated[]> {
+  const { data, error } = await q;
+  return error ? [] : ((data ?? []) as BlogPostRelated[]);
+}
+
+/**
+ * Похожие статьи: по совпадению тега (+3), страны (+2) и города (+2) — тот же
+ * скоринг, что раньше считался по 1000 статьям, но кандидаты берутся тремя
+ * маленькими индексированными запросами (свежие 12 по каждому признаку).
+ * Если совпадений нет — просто свежие статьи.
+ */
+export async function getRelatedPostCards(
+  current: Pick<BlogPost, "id" | "tag" | "city_id" | "country_slug">,
+  limit = 3,
+): Promise<BlogPostRelated[]> {
+  const byFresh = (q: ReturnType<typeof relatedQuery>) =>
+    rows(q.neq("id", current.id).order("created_at", { ascending: false }).limit(RELATED_POOL));
+
+  const pools = await Promise.all([
+    current.tag ? byFresh(relatedQuery().eq("tag", current.tag)) : [],
+    current.country_slug
+      ? byFresh(relatedQuery().eq("country_slug", current.country_slug))
+      : [],
+    current.city_id ? byFresh(relatedQuery().eq("city_id", current.city_id)) : [],
+  ]);
+
+  const seen = new Map<string, BlogPostRelated>();
+  for (const pool of pools) for (const p of pool) seen.set(p.id, p);
+  let candidates = Array.from(seen.values());
+  if (candidates.length < limit) {
+    const fresh = await byFresh(relatedQuery());
+    for (const p of fresh) if (!seen.has(p.id)) candidates.push(p);
+  }
+
+  const score = (p: BlogPostRelated) =>
+    (current.tag && p.tag === current.tag ? 3 : 0) +
+    (current.country_slug && p.country_slug === current.country_slug ? 2 : 0) +
+    (current.city_id && p.city_id === current.city_id ? 2 : 0);
+
+  candidates = candidates.sort((a, b) => {
+    const d = score(b) - score(a);
+    if (d !== 0) return d;
+    return a.created_at < b.created_at ? 1 : -1;
+  });
+  return candidates.slice(0, limit);
 }
 
 export async function getAllPostSlugs(limit = 2000): Promise<string[]> {
@@ -166,22 +263,28 @@ export async function getPostsForCity(
   cityId: string,
   countrySlug: string | null,
   limit = 3,
-): Promise<BlogPost[]> {
-  const ors = [`city_id.eq.${cityId}`];
-  if (countrySlug) ors.push(`country_slug.eq.${countrySlug}`);
-  const { data } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .eq("published", true)
-    .neq("tag", HIDDEN_BLOG_TAG)
-    .or(ors.join(","))
-    .order("created_at", { ascending: false });
-  const posts = (data ?? []) as BlogPost[];
-  // Привязанные к городу — выше страновых.
-  posts.sort(
-    (a, b) => Number(b.city_id === cityId) - Number(a.city_id === cityId),
-  );
-  return posts.slice(0, limit);
+): Promise<BlogPostRelated[]> {
+  // Привязанные к городу — выше страновых. Два узких запроса с лимитом вместо
+  // одного select("*") без лимита (сотни полных статей на страну, см. выше).
+  const [own, country] = await Promise.all([
+    rows(
+      relatedQuery()
+        .eq("city_id", cityId)
+        .order("created_at", { ascending: false })
+        .limit(limit),
+    ),
+    countrySlug
+      ? rows(
+          relatedQuery()
+            .eq("country_slug", countrySlug)
+            .order("created_at", { ascending: false })
+            .limit(limit * 2),
+        )
+      : Promise.resolve([] as BlogPostRelated[]),
+  ]);
+  const out = [...own];
+  for (const p of country) if (!out.some((o) => o.id === p.id)) out.push(p);
+  return out.slice(0, limit);
 }
 
 // Статьи блога для страницы СТРАНЫ: привязанные к стране (country_slug) или к
@@ -191,17 +294,15 @@ export async function getPostsForCountry(
   countrySlug: string,
   cityIds: string[],
   limit = 6,
-): Promise<BlogPost[]> {
+): Promise<BlogPostRelated[]> {
   const ors = [`country_slug.eq.${countrySlug}`];
   if (cityIds.length) ors.push(`city_id.in.(${cityIds.join(",")})`);
-  const { data } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .eq("published", true)
-    .neq("tag", HIDDEN_BLOG_TAG)
-    .or(ors.join(","))
-    .order("created_at", { ascending: false });
-  return ((data ?? []) as BlogPost[]).slice(0, limit);
+  return rows(
+    relatedQuery()
+      .or(ors.join(","))
+      .order("created_at", { ascending: false })
+      .limit(limit),
+  );
 }
 
 export async function getCityForPost(cityId: string | null) {

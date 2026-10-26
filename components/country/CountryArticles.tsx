@@ -1,4 +1,4 @@
-import type { BlogPost } from "@/lib/blog";
+import type { BlogPostCard } from "@/lib/blog";
 import { BlogCard } from "@/components/blog/BlogCard";
 
 // «Статьи о стране» на странице /country/* — внутренняя перелинковка страна → блог.
@@ -8,7 +8,7 @@ export function CountryArticles({
   posts,
   title,
 }: {
-  posts: BlogPost[];
+  posts: BlogPostCard[];
   title: string;
 }) {
   if (!posts.length) return null;

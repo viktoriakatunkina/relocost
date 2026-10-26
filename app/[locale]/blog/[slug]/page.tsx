@@ -10,7 +10,7 @@ import {
   getCitiesByCountry,
   getCityForPost,
   getPostBySlug,
-  getPublishedPosts,
+  getRelatedPostCards,
 } from "@/lib/blog";
 import { getPopularCities, getCitiesForTitleMatch } from "@/lib/cities";
 import { matchCitiesInTitle, matchCountryInTitle, type CityMatchLite } from "@/lib/blog-city-match";
@@ -35,7 +35,9 @@ import { BLOG_TAG_FILTER, HIDDEN_BLOG_TAG } from "@/lib/blog-visibility";
 import { extractBlogFaqItems } from "@/lib/blog-faq";
 import { FaqSchema } from "@/components/FaqSchema";
 
-export const revalidate = 3600;
+// 2026-10-26: было 3600. ~2650 статей × раз в час под ботами — постоянная
+// нагрузка на Supabase, а статьи почти не меняются. Сутки — как у городов.
+export const revalidate = 86400;
 // Неизвестные slug рендерятся по первому запросу и кешируются ISR.
 export const dynamicParams = true;
 
@@ -136,9 +138,9 @@ export default async function BlogPostPage({
   // этого объекта. Для ru возвращается исходный пост без изменений.
   const post = await localizeBlogPost(rawPost, params.locale);
   const rawHasNoBinding = !post.city_id && !post.country_slug;
-  const [city, allPosts, prices, countryCities, popularCitiesInitial, citiesForMatchInitial] = await Promise.all([
+  const [city, relatedPosts, prices, countryCities, popularCitiesInitial, citiesForMatchInitial] = await Promise.all([
     getCityForPost(post.city_id) as Promise<City | null>,
-    getPublishedPosts(),
+    getRelatedPostCards(rawPost),
     post.city_id
       ? getPricesByCity(post.city_id)
       : Promise.resolve(null as Record<PriceCategory, Price[]> | null),
@@ -675,7 +677,7 @@ export default async function BlogPostPage({
         )}
       </div>
 
-      <RelatedPosts current={post} all={allPosts} />
+      <RelatedPosts posts={relatedPosts} />
 
       <div className="pt-12 md:pt-24">
         <Footer />

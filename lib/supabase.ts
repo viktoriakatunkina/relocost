@@ -9,7 +9,16 @@ const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 // транзиентный, поэтому повтор с небольшим бэкоффом почти всегда проходит.
 // Применяем ТОЛЬКО к read-клиенту (anon) — он используется для SSG-чтений;
 // write-клиент (supabaseAdmin, оплаты) оставляем без авто-повторов.
-const RETRY_DELAYS_MS = [300, 800, 1600, 2600];
+//
+// 2026-10-26: 5 попыток оставляем только на СБОРКЕ. В рантайме (next start,
+// ISR) повторы на statement_timeout добивали перегруженную БД: каждый
+// оборванный клиентом запрос продолжает выполняться в Postgres, а мы шлем
+// следующий — с 20.10 это шторм из 300–480 statement timeout в день. В
+// рантайме — один повтор и только на сетевой/5xx-сбой, не на 57014.
+const IS_BUILD =
+  process.env.NEXT_PHASE === "phase-production-build" ||
+  process.env.LOWMEM_BUILD === "1";
+const RETRY_DELAYS_MS = IS_BUILD ? [300, 800, 1600, 2600] : [500];
 
 function delay(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
@@ -61,12 +70,14 @@ const fetchWithRetry: typeof fetch = async (input, init) => {
       // данными, но не-ок статус → supabase-js кидал весь массив постов как
       // ошибку, и падали все блог-страницы сразу). Ретрай с бэкоффом проходит.
       const body = await res.clone().text().catch(() => "");
+      const isStatementTimeout =
+        body.includes("57014") || body.includes("statement timeout");
+      if (isStatementTimeout && !IS_BUILD) return res;
       const isRetryable =
         res.status === 408 ||
         res.status === 429 ||
         res.status >= 500 ||
-        body.includes("57014") ||
-        body.includes("statement timeout");
+        isStatementTimeout;
       if (!isRetryable) return res;
       await delay(RETRY_DELAYS_MS[attempt] + Math.floor(Math.random() * 250));
     } catch (e) {

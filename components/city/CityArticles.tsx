@@ -1,4 +1,4 @@
-import type { BlogPost } from "@/lib/blog";
+import type { BlogPostCard } from "@/lib/blog";
 import { BlogCard } from "@/components/blog/BlogCard";
 
 // «Читайте также» на странице города — внутренняя перелинковка город → блог.
@@ -9,7 +9,7 @@ export function CityArticles({
   cityName,
   fallbackPhoto,
 }: {
-  posts: BlogPost[];
+  posts: BlogPostCard[];
   cityName: string;
   fallbackPhoto?: string | null;
 }) {
