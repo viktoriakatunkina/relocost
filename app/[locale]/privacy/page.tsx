@@ -84,7 +84,7 @@ export default async function PrivacyPage({
           Политика конфиденциальности
         </h1>
         <p className="text-brandy/60 text-sm">
-          Редакция от 5 августа 2026 г. Применяется к сайту relocost.ru.
+          Редакция от 26 октября 2026 г. Применяется к сайту relocost.ru.
         </p>
       </section>
 
@@ -178,7 +178,7 @@ export default async function PrivacyPage({
                       basis: "п. 5 ч. 1 ст. 6 — исполнение договора с субъектом",
                     },
                     {
-                      goal: "Направление чека и подтверждения оплаты на email",
+                      goal: "Направление на email подтверждения оплаты, ссылки доступа к оплаченным материалам и кассового чека",
                       basis: "п. 5 ч. 1 ст. 6 — исполнение договора",
                     },
                     {
@@ -216,6 +216,13 @@ export default async function PrivacyPage({
                 <div>
                   <strong className="text-cream">ООО «НКО ЮMoney» (ЮKassa)</strong>{" "}
                   {typo("— платежный сервис. Email передается для направления кассового чека в соответствии с требованиями Федерального закона № 54-ФЗ «О применении контрольно-кассовой техники».")}
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-copper mt-1 shrink-0">•</span>
+                <div>
+                  <strong className="text-cream">ООО «ЯНДЕКС» (Яндекс Почта)</strong>{" "}
+                  {typo("— почтовый сервис, через который Оператор направляет письмо с подтверждением оплаты и ссылкой доступа к оплаченным материалам. Email передается только для доставки этого письма.")}
                 </div>
               </li>
             </ul>
@@ -344,7 +351,7 @@ export default async function PrivacyPage({
         </div>
 
         <p className="text-brandy/45 text-xs">
-          Редакция от 5 августа 2026 г.
+          Редакция от 26 октября 2026 г.
         </p>
       </section>
 

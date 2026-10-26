@@ -97,7 +97,7 @@ export function PaymentModal({
     // и упирался в серверную ошибку про то же поле. 2026-09-01: приведено
     // к тому же паттерну, что уже работает в CountryPaymentModal.tsx.
     if (!email || !email.includes("@")) {
-      setError("Укажите email — по нему восстановите доступ на другом устройстве.");
+      setError("Укажите email — пришлем на него ссылку, которая откроет отчет на любом устройстве.");
       return;
     }
     setSubmitting(true);
@@ -283,7 +283,7 @@ export function PaymentModal({
             <span className="block text-brandy/70 text-sm mb-2">
               Email <span className="text-copper">*</span>
               <span className="text-brandy/50 ml-1 text-xs">
-                — по нему восстановите доступ на другом устройстве
+                — пришлем на него ссылку, которая откроет отчет на любом устройстве
               </span>
             </span>
             <input
