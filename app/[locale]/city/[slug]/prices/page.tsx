@@ -20,6 +20,8 @@ export const revalidate = 86400;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
+  // 2026-10-28: аварийный флаг, см. тот же комментарий в city/[slug]/page.tsx.
+  if (process.env.EMERGENCY_SKIP_SSG === "1") return [];
   try {
     const res = await fetchWithHardTimeout(
       `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/cities?select=slug&limit=500`,

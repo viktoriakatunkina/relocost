@@ -106,6 +106,14 @@ export const dynamicParams = true;
 // Akamai 8.6.x.x был неверным (Supabase — Cloudflare 104.18.x.x/172.64.x.x),
 // но переменная нестабильность сети — реальна, просто по другой причине.
 export async function generateStaticParams() {
+  // 2026-10-28: аварийный флаг. Supabase "Unhealthy" (Free-план, Egress 560%
+  // от квоты) — не сам этот запрос виснет (он под fetchWithHardTimeout), а
+  // РЕНДЕР каждой из полученных страниц потом: billd стоял часами без
+  // прогресса на вложенных ретраях supabase-js. EMERGENCY_SKIP_SSG=1 пропускает
+  // предгенерацию совсем — при dynamicParams=true страницы дорендерятся по
+  // одной при первом живом заходе (ISR), это и снимает залповую нагрузку.
+  // Снять флаг на следующей обычной сборке, когда база отойдёт.
+  if (process.env.EMERGENCY_SKIP_SSG === "1") return [];
   try {
     const res = await fetchWithHardTimeout(
       `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/cities?select=slug&limit=500`,

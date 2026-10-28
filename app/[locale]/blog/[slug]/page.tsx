@@ -49,6 +49,8 @@ const BLOG_CANONICAL: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
+  // 2026-10-28: аварийный флаг, см. тот же комментарий в city/[slug]/page.tsx.
+  if (process.env.EMERGENCY_SKIP_SSG === "1") return [];
   try {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
