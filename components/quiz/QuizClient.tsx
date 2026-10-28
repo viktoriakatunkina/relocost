@@ -583,11 +583,7 @@ export function QuizClient({
         <button
           type="button"
           onClick={() => {
-            const prevStep = step - 1;
-            if (QUESTIONS[prevStep]?.key === "priority") {
-              setAnswers((a) => ({ ...a, priority: [] }));
-            }
-            setStep(prevStep);
+            setStep(step - 1);
           }}
           className="mt-7 text-sm text-brandy/55 hover:text-copper transition"
         >
