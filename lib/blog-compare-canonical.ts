@@ -128,7 +128,13 @@ export const BLOG_CANONICAL_TO_COMPARE: Record<string, string> = {
   "sankt-peterburg-ili-moskva-2026": "moscow-vs-spb",
   "serbia-vs-georgia": "georgia-vs-serbia",
   "serbiya-ili-chernogoriya-2026": "montenegro-vs-serbia",
-  "severnyy-kipr-vs-kipr-sravnenie-2026": "cyprus-vs-northern-cyprus",
+  // 2026-10-28: ключ заменён на нового победителя после дедупа дублей блога
+  // (severnyy-kipr-vs-kipr-sravnenie-2026, 3356 симв., архивирован, published=false,
+  // 301-редирект на новый слаг — см. config/blog-redirects.json). Новый слаг —
+  // та же пара сущностей (Северный Кипр / Кипр), заголовок "Северный или Южный
+  // Кипр" matches по той же методологии (см. комментарий выше), просто с "Южный"
+  // вместо голого "Кипр" в качестве обозначения Республики Кипр.
+  "severnyy-ili-yuzhnyy-kipr-2026": "cyprus-vs-northern-cyprus",
   "shymkent-ili-almaty-gde-deshevle-zhit-2026": "almaty-vs-shymkent",
   "singapur-vs-gonkong-dlya-it-2026": "hong-kong-vs-singapore",
   "singapur-vs-gonkong-dlya-it-sravnenie-2026": "hong-kong-vs-singapore",
