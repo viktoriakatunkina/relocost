@@ -69,7 +69,7 @@ export function CountryStickyBar({
                 onClick={() => setOpenPkg(p)}
                 className="flex-1 rounded-xl bg-copper text-pine-tree font-semibold text-sm py-2.5 px-3 hover:bg-brandy transition active:scale-95"
               >
-                {p === "country_overview" ? "Всё о стране" : "Города"} —{" "}
+                {p === "country_overview" ? "Все о стране" : "Города"} —{" "}
                 {COUNTRY_PACKAGES[p].price} ₽
               </button>
             ))}
@@ -98,9 +98,12 @@ export function CountryStickyBar({
               );
             })}
           </div>
-          <p className="text-brandy/50 text-[11px] text-center pt-1.5">
-            Открывается сразу после оплаты
-          </p>
+          {/* 2026-10-28: строка "Открывается сразу после оплаты" убрана —
+              тот же текст уже есть в CountryPaymentModal.tsx:249 ("Картой
+              или СБП через ЮKassa · доступ откроется сразу после оплаты"),
+              показывается прямо перед кнопкой "Оплатить". На самой плашке
+              дублировал и просто добавлял лишнюю строку высоты (см. ту же
+              правку в components/freemium/StickyBar.tsx). */}
         </div>
       </div>
 
