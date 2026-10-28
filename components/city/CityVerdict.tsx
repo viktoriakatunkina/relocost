@@ -40,7 +40,7 @@ export function CityVerdict({ block, t }: CityVerdictProps) {
       aria-label={t.title}
     >
       <span className="eyebrow">{t.eyebrow}</span>
-      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-10">
+      <h2 className="section-title-primary mt-6 mb-10">
         {t.title}
       </h2>
 

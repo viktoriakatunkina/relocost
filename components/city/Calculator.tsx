@@ -196,7 +196,7 @@ export function Calculator({
   return (
     <section id="calculator" className="scroll-mt-[120px] max-w-6xl mx-auto px-6 pt-14 md:pt-20">
       <span className="eyebrow">Бюджет</span>
-      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
+      <h2 className="section-title-primary mt-6 mb-3">
         Калькулятор переезда
       </h2>
       <p className="text-brandy/80 text-lg mb-10 max-w-xl text-pretty">

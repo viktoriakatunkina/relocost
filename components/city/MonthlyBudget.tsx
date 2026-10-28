@@ -92,7 +92,7 @@ export function MonthlyBudget({
   <>
     <section className="max-w-4xl mx-auto px-6 pt-14 md:pt-20 overflow-x-hidden">
       <span className="eyebrow">Бюджет от</span>
-      <h2 className="font-serif text-3xl md:text-5xl text-cream mt-6 mb-3">
+      <h2 className="section-title-primary mt-6 mb-3">
         Сколько нужно на месяц
       </h2>
       <p className="text-brandy/80 text-lg mb-8 max-w-2xl text-pretty">

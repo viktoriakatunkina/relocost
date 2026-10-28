@@ -121,6 +121,13 @@ a:focus:not(:focus-visible) {
     opacity: 0.7;
   }
 
+  /* Заголовок секций, ведущих к решению о покупке (калькулятор, таблица цен,
+     вердикт) — выделяется цветом на фоне нейтральных text-cream заголовков
+     остальных секций, создаёт визуальную иерархию "денежных" блоков */
+  .section-title-primary {
+    @apply font-serif text-3xl md:text-5xl text-copper;
+  }
+
   .hairline {
     border-color: var(--hairline);
   }

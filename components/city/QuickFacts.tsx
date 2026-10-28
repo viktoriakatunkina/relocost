@@ -46,22 +46,37 @@ export function QuickFacts({
   return (
     <section className="max-w-6xl mx-auto px-6 pt-12">
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        {facts.map((f) => (
-          <div
-            key={f.label}
-            className="p-5 rounded-2xl bg-surface border hairline hover:bg-surface-elevated hover:border-copper/30 transition group"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-brandy/60 text-[11px] uppercase tracking-[0.15em]">
-                {f.label}
+        {facts.map((f) => {
+          const isHero = f.label === "Индекс цен";
+          return (
+            <div
+              key={f.label}
+              className={
+                isHero
+                  ? "col-span-2 sm:col-span-1 p-5 rounded-2xl bg-copper/10 border border-copper/40 hover:border-copper/60 transition group"
+                  : "p-5 rounded-2xl bg-surface border hairline hover:bg-surface-elevated hover:border-copper/30 transition group"
+              }
+            >
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-brandy/60 text-[11px] uppercase tracking-[0.15em]">
+                  {f.label}
+                </p>
+                <span className="text-copper/70 group-hover:text-copper transition" aria-hidden>
+                  {ICONS[f.label]}
+                </span>
+              </div>
+              <p
+                className={
+                  isHero
+                    ? "text-xl md:text-2xl font-serif text-copper"
+                    : "text-cream font-medium text-sm md:text-base"
+                }
+              >
+                {f.value}
               </p>
-              <span className="text-copper/70 group-hover:text-copper transition" aria-hidden>
-                {ICONS[f.label]}
-              </span>
             </div>
-            <p className="text-cream font-medium text-sm md:text-base">{f.value}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
