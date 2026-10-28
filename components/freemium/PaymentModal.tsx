@@ -323,6 +323,15 @@ export function PaymentModal({
             </Link>
             .
           </p>
+          {/* 2026-10-28 (аудит воронки): реквизиты и условия возврата на
+              /contacts уже написаны честно и подробно, но нигде не
+              всплывали именно в момент колебания на чекауте — только
+              /privacy и /offer. */}
+          <p className="text-[11px] text-cream/40 text-center leading-snug">
+            <Link href="/contacts" className="underline underline-offset-2 hover:text-cream/70 transition-colors">
+              Реквизиты и условия возврата
+            </Link>
+          </p>
         </form>
       </div>
     </div>,

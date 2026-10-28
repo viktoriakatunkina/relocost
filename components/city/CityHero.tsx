@@ -116,12 +116,20 @@ export function CityHero({ city }: { city: City }) {
           {/* 2026-10-13 (маркетинговый аудит): первый экран описывал факт
               ("стоимость жизни в 2026 году"), но никуда не вёл — ни одной
               CTA-кнопки не было, только избранное/поделиться. Якорь на
-              калькулятор сокращает путь для тех, кто не долистывает страницу. */}
+              калькулятор сокращает путь для тех, кто не долистывает страницу.
+              2026-10-28 (аудит воронки): был тем же залитым copper-pill, что
+              и платные CTA («Мой полный расчёт — N ₽») — при этом сам
+              калькулятор дальше тоже частично под замком (см. комментарий
+              2026-09-09 в MonthlyBudget.tsx). Визуально неотличимая от
+              платной бесплатная кнопка, ведущая на paywall, обесценивала
+              платную рядом. Контурный стиль (как вторичная кнопка в
+              StickyBar) сразу читается как «бесплатно/посмотреть», а не
+              «купить». */}
           <a
             href="#calculator"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-pill bg-copper text-pine-tree font-bold text-sm hover:bg-pale-copper hover:shadow-glow transition whitespace-nowrap"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-pill border border-copper/50 text-copper font-semibold text-sm hover:bg-copper/10 transition whitespace-nowrap"
           >
-            Рассчитать мой бюджет
+            Посмотреть расчёт
             <span aria-hidden>↓</span>
           </a>
           <FavoriteButton

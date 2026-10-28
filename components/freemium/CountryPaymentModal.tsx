@@ -259,6 +259,12 @@ export function CountryPaymentModal({
             </Link>
             .
           </p>
+          {/* 2026-10-28 (аудит воронки), см. тот же комментарий в PaymentModal.tsx */}
+          <p className="text-[11px] text-cream/40 text-center leading-snug">
+            <Link href="/contacts" className="underline underline-offset-2 hover:text-cream/70 transition-colors">
+              Реквизиты и условия возврата
+            </Link>
+          </p>
         </form>
       </div>
     </div>,

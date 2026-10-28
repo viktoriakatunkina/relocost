@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   addUnlocked,
   addManyUnlocked,
@@ -38,6 +38,18 @@ export function VerifyOnReturn({
   kind?: "city" | "country";
 }) {
   const done = useRef(false);
+  // 2026-10-28 (аудит воронки): раньше компонент всегда return null — после
+  // возврата с ЮKassa человек до 15 сек (6 попыток × 2.5с) смотрел на ту же
+  // заблюренную страницу без единого сигнала, что что-то вообще происходит.
+  // В момент максимальной тревоги «списали ли деньги» это реальный риск ухода
+  // со страницы до того, как контент откроется. Статус — только для пути 1
+  // (payment_id), это единственный момент, где пользователь только что САМ
+  // инициировал оплату и ждёт прямо сейчас; пути 0/2 — фоновое тихое
+  // восстановление доступа на произвольном визите, там баннер неуместен.
+  const [status, setStatus] = useState<
+    "idle" | "checking" | "success" | "timeout" | "canceled"
+  >("idle");
+  const dismissTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (done.current) return;
@@ -63,6 +75,12 @@ export function VerifyOnReturn({
           // с ЮKassa: /api/payment/verify уже спросил реальный статус
           // платежа (succeeded && paid) и контент реально разблокирован.
           reachGoal("payment_success");
+          if (!cancelled) {
+            setStatus("success");
+            dismissTimer.current = setTimeout(() => {
+              if (!cancelled) setStatus("idle");
+            }, 4000);
+          }
           return;
         }
         const transient =
@@ -71,12 +89,35 @@ export function VerifyOnReturn({
           setTimeout(() => checkPayment(attempt + 1), 2500);
           return;
         }
-        if (data?.status === "canceled") clearPendingPayment();
+        if (data?.status === "canceled") {
+          clearPendingPayment();
+          if (!cancelled) {
+            setStatus("canceled");
+            dismissTimer.current = setTimeout(() => {
+              if (!cancelled) setStatus("idle");
+            }, 5000);
+          }
+        } else if (!cancelled) {
+          setStatus("timeout");
+          dismissTimer.current = setTimeout(() => {
+            if (!cancelled) setStatus("idle");
+          }, 8000);
+        }
       } catch {
-        if (attempt < MAX_TRIES) setTimeout(() => checkPayment(attempt + 1), 2500);
+        if (attempt < MAX_TRIES) {
+          setTimeout(() => checkPayment(attempt + 1), 2500);
+        } else if (!cancelled) {
+          setStatus("timeout");
+          dismissTimer.current = setTimeout(() => {
+            if (!cancelled) setStatus("idle");
+          }, 8000);
+        }
       }
     }
-    if (pending && pending.slug === slug) checkPayment(0);
+    if (pending && pending.slug === slug) {
+      setStatus("checking");
+      checkPayment(0);
+    }
 
     // --- Путь 0: ссылка из письма после оплаты (?access=…) ---
     // Работает на любом устройстве: токен подписан сервером
@@ -162,8 +203,40 @@ export function VerifyOnReturn({
 
     return () => {
       cancelled = true;
+      if (dismissTimer.current) clearTimeout(dismissTimer.current);
     };
   }, [slug]);
 
-  return null;
+  if (status === "idle") return null;
+
+  const copy: Record<Exclude<typeof status, "idle">, string> = {
+    checking: "Проверяем оплату…",
+    success: "Оплата прошла — контент открыт",
+    timeout:
+      "Оплата обрабатывается дольше обычного. Если деньги списались — доступ откроется автоматически в течение пары минут, ссылку также пришлём на почту.",
+    canceled: "Оплата отменена",
+  };
+
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      className="fixed top-3 inset-x-3 z-50 flex justify-center md:top-4"
+    >
+      <div className="max-w-md rounded-xl bg-surface-elevated/95 backdrop-blur-md border border-copper/25 shadow-2xl px-4 py-2.5 flex items-center gap-2.5 text-sm text-cream">
+        {status === "checking" && (
+          <span
+            className="size-3.5 shrink-0 rounded-full border-2 border-copper/40 border-t-copper animate-spin"
+            aria-hidden
+          />
+        )}
+        {status === "success" && (
+          <span className="shrink-0 text-copper" aria-hidden>
+            ✓
+          </span>
+        )}
+        <span>{copy[status]}</span>
+      </div>
+    </div>
+  );
 }

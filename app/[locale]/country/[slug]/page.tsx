@@ -34,7 +34,7 @@ import { getCityQuality } from "@/lib/city-quality";
 import { CountryArticles } from "@/components/country/CountryArticles";
 import { getPostsForCountry } from "@/lib/blog";
 import { CityCard } from "@/components/CityCard";
-import { LockedCities } from "@/components/country/LockedCities";
+import { LockedCities, FREE_COUNT } from "@/components/country/LockedCities";
 import { LockedCountryFacts } from "@/components/country/LockedCountryFacts";
 import { CountryStickyBar } from "@/components/freemium/CountryStickyBar";
 import { VerifyOnReturn } from "@/components/freemium/VerifyOnReturn";
@@ -357,9 +357,14 @@ export default async function CountryPage({
         </h2>
         {cities.length === 0 ? (
           <p className="text-brandy/70">{t("citiesEmpty")}</p>
-        ) : cities.length <= 3 ? (
+        ) : cities.length <= FREE_COUNT ? (
           <>
-            {/* Если городов не больше 3 — показываем все бесплатно */}
+            {/* 2026-10-28 (аудит воронки): было захардкожено `<= 3`, а внутри
+                LockedCities бесплатными считались первые FREE_COUNT=5 — на
+                странах ровно с 4-5 городами это рендерило LockedCities с
+                ПУСТЫМ locked-массивом (ничего реально не скрыто). Теперь
+                одно число отовсюду. Если городов не больше FREE_COUNT —
+                показываем все бесплатно */}
             <div className="flex overflow-x-auto gap-4 snap-x snap-mandatory scrollbar-none pb-2 -mx-4 sm:-mx-6 px-4 sm:px-6 md:hidden">
               {cities.map((c, i) => (
                 <div key={c.id} className="shrink-0 w-[78vw] max-w-[320px] snap-start">
@@ -559,12 +564,17 @@ export default async function CountryPage({
           одна инлайн-кнопка на 33% глубины страницы.
           Стало: панель показываем, если на этой странице реально есть что
           покупать. `country_cities` продаётся только там, где есть скрытые
-          города, `country_overview` — везде, где есть блок «о стране». */}
-      {(cities.length > 3 || Boolean(content)) && (
+          города, `country_overview` — везде, где есть блок «о стране».
+          2026-10-28 (аудит воронки): порог синхронизирован с FREE_COUNT из
+          LockedCities — раньше `cities.length > 3` отдельно от FREE_COUNT=5
+          означало, что на 11 странах ровно с 4-5 городами (Кипр, Шри-Ланка,
+          Сербия и др.) country_cities продавался за 99 ₽, хотя скрытых
+          городов там физически не было — покупатель платил за ничего. */}
+      {(cities.length > FREE_COUNT || Boolean(content)) && (
         <CountryStickyBar
           slug={params.slug}
           packages={
-            cities.length > 3
+            cities.length > FREE_COUNT
               ? ["country_cities", "country_overview"]
               : ["country_overview"]
           }
