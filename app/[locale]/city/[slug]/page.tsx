@@ -58,7 +58,6 @@ import { CityPartners } from "@/components/city/CityPartners";
 import { CityAnchorNav } from "@/components/city/CityAnchorNav";
 import { TripTeaser } from "@/components/city/TripTeaser";
 import { CITY_ROUTES } from "@/lib/city-routes";
-import { CityFavoritesCount } from "@/components/city/CityFavoritesCount";
 import { DataSourceBadge } from "@/components/DataSourceBadge";
 import { SimilarCities } from "@/components/city/SimilarCities";
 import { CityArticles } from "@/components/city/CityArticles";
@@ -367,7 +366,6 @@ export default async function CityPage({
       </div>
 
       <QuickFacts city={c} costIndex={cityCostIndex} />
-      <CityFavoritesCount />
       <CityAnchorNav
         isForeign={c.is_foreign}
         tripHref={hasTrip ? `/city/${c.slug}/trip` : undefined}
