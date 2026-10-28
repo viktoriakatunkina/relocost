@@ -32,6 +32,7 @@ import { defaultLocale, type Locale } from "@/i18n/routing";
 import { buildRuOnlyAlternates } from "@/lib/i18n-seo";
 import { localizeBlogPost } from "@/lib/content-i18n";
 import { BLOG_TAG_FILTER, HIDDEN_BLOG_TAG } from "@/lib/blog-visibility";
+import { BLOG_CANONICAL_TO_COMPARE } from "@/lib/blog-compare-canonical";
 import { extractBlogFaqItems } from "@/lib/blog-faq";
 import { FaqSchema } from "@/components/FaqSchema";
 
@@ -90,6 +91,15 @@ export async function generateMetadata({
   // Локализуем заголовок/seo статьи (en/uz — перевод, иначе ru-фолбэк).
   const post = await localizeBlogPost(raw, params.locale);
   const canonicalSlug = BLOG_CANONICAL[params.slug] ?? params.slug;
+  // 2026-10-28 (SEO-аудит, находка №2): статьи-сравнения "город/страна A vs
+  // город/страна B" каннибализируют /compare/<a>-vs-<b> — тот же интент,
+  // но /compare статически сгенерирован именно под него и в title есть
+  // цифра разницы в цене (выше CTR, см. compareDelta() в lib/compare.ts).
+  // Статью не удаляем и не редиректим (часто длиннее/содержательнее) —
+  // просто отдаём canonical на /compare. Проверяем ПЕРЕД BLOG_CANONICAL:
+  // пересечений слагов между двумя картами сейчас нет, но смысл приоритета
+  // тот же — compare -> более прямой match интента, чем другая блог-статья.
+  const comparePair = BLOG_CANONICAL_TO_COMPARE[params.slug];
   // Посты со скрытым тегом (HIDDEN_BLOG_TAG) уже исключены из sitemap,
   // /blog-листинга и всех функций перелинковки (lib/blog.ts), но сама
   // страница оставалась index-able — часть из ~1880 таких URL (старая
@@ -103,7 +113,11 @@ export async function generateMetadata({
     // Блог не переведён ни на одну локаль: canonical всегда на русскую версию,
     // hreflang — только ru + x-default. Раньше здесь заявлялись en/uz-версии,
     // которых физически нет (это был тот же русский текст под другим URL).
-    alternates: buildRuOnlyAlternates(`/blog/${canonicalSlug}`),
+    // Для статей-сравнений (comparePair) canonical ведёт на /compare — тот
+    // маршрут не блоговый, поэтому строим alternates от его пути напрямую.
+    alternates: buildRuOnlyAlternates(
+      comparePair ? `/compare/${comparePair}` : `/blog/${canonicalSlug}`,
+    ),
     openGraph: {
       title: cleanSeoTitle(post.seo_title) ?? displayBlogTitle(post.title),
       description: post.seo_description ?? undefined,
