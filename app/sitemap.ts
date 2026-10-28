@@ -1,4 +1,6 @@
 import type { MetadataRoute } from "next";
+import { existsSync, readFileSync, writeFileSync } from "fs";
+import path from "path";
 import { topComparePairs } from "@/lib/compare";
 import { countryComparePairSlugs } from "@/lib/compare-countries";
 import { getAllListSlugs } from "@/lib/lists";
@@ -23,13 +25,119 @@ import { fetchWithHardTimeout } from "@/lib/supabase";
 // успешно собираются, а сайтмап с голым AbortController — нет. Переиспользуем
 // готовую, уже проверенную функцию вместо местного самопального аналога.
 //
-// ISR раз в час (вместо прежнего force-dynamic) оставлена как
+// ISR раз в час (вместо прежнего force-dynamic) задумывалась как
 // дополнительная подстраховка: даже если когда-нибудь случится реальный сбой
 // Supabase, живые краулеры получат последнюю УДАЧНУЮ версию (stale-while-
-// revalidate), а не частичный/пустой сайтмап.
+// revalidate), а не частичный/пустой сайтмап. НА ПРАКТИКЕ это не работало:
+// stale-while-revalidate у Next.js защищает только когда регенерация
+// ЗАВЕРШАЕТСЯ ОШИБКОЙ (throw) — а функции ниже на любой сбой Supabase тихо
+// возвращали [] или частичный массив, то есть для Next.js это была
+// ОБЫЧНАЯ УСПЕШНАЯ регенерация, которая немедленно подменяла собой кэш.
+// Живьём так 28.10.2026 на ~2 минуты исчезли 2277 статей блога из
+// sitemap.xml — краулеры успели забрать пустой/урезанный список, алертов не
+// было. Фикс ниже (retryWithFallback) закрывает именно эту дыру: ретрай +
+// явный собственный кэш последнего успеха (память процесса + диск, диск —
+// потому что процесс на VPS может перезапуститься между деплоями) + громкий
+// "ALERT [sitemap]" лог, который можно поймать мониторингом/grep'ом.
 export const revalidate = 3600;
 
 const FETCH_TIMEOUT_MS = 10_000;
+
+// Небольшая пауза перед единственным повтором — не лечит системную проблему
+// (упор в число одновременных соединений Nano-инстанса Supabase, см. ниже),
+// но закрывает подавляющее большинство транзиентных секундных сбоев.
+const RETRY_DELAY_MS = 2_000;
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+type BlogRow = { slug: string; created_at: string };
+type NewsRow = { slug: string; created_at: string };
+type CityRow = { slug: string; country_slug: string; updated_at: string | null };
+
+type FallbackEntry<T> = { savedAt: number; data: T };
+type FallbackCache = {
+  blog?: FallbackEntry<BlogRow[]>;
+  news?: FallbackEntry<NewsRow[]>;
+  cities?: FallbackEntry<CityRow[]>;
+};
+
+// Кэш последнего УСПЕШНОГО результата — на диске (переживает перезапуск
+// процесса между деплоями; деплой не трогает корень репозитория на VPS,
+// только .next/config/next.config.mjs/public/images — см. deploy.sh) и
+// дублируется в памяти процесса, чтобы не читать файл на каждый запрос, если
+// в этом же процессе уже был успех. Обновляется ТОЛЬКО при успехе (прямом
+// или после ретрая) — см. retryWithFallback.
+const FALLBACK_CACHE_FILE = path.join(process.cwd(), ".sitemap-fallback-cache.json");
+const memoryFallback: FallbackCache = {};
+
+function readDiskFallback(): FallbackCache {
+  try {
+    if (!existsSync(FALLBACK_CACHE_FILE)) return {};
+    return JSON.parse(readFileSync(FALLBACK_CACHE_FILE, "utf-8")) as FallbackCache;
+  } catch (e) {
+    console.error("[sitemap] не удалось прочитать fallback-кэш с диска", e instanceof Error ? e.message : e);
+    return {};
+  }
+}
+
+function getFallback<K extends keyof FallbackCache>(key: K): FallbackCache[K] | undefined {
+  if (memoryFallback[key]) return memoryFallback[key];
+  const disk = readDiskFallback()[key];
+  if (disk) memoryFallback[key] = disk as never;
+  return disk;
+}
+
+function saveFallback<K extends keyof FallbackCache>(key: K, data: NonNullable<FallbackCache[K]>["data"]): void {
+  const entry = { savedAt: Date.now(), data } as NonNullable<FallbackCache[K]>;
+  memoryFallback[key] = entry as never;
+  try {
+    const current = readDiskFallback();
+    current[key] = entry as never;
+    writeFileSync(FALLBACK_CACHE_FILE, JSON.stringify(current));
+  } catch (e) {
+    // Диск недоступен (readonly fs, нет прав) — не фатально, в памяти процесса
+    // кэш всё равно сохранён, на диск попробуем снова при следующем успехе.
+    console.error("[sitemap] не удалось сохранить fallback-кэш на диск", e instanceof Error ? e.message : e);
+  }
+}
+
+// Один retry с небольшой задержкой, а при повторном провале — не [], а
+// последний успешный снимок вместо тихой пустоты. attempt() должен ПАДАТЬ
+// (throw) на любом сбое — частичный результат (например, обрыв на середине
+// постраничной выборки блога) тоже считается сбоем для этой обёртки.
+async function retryWithFallback<K extends keyof FallbackCache>(
+  key: K,
+  label: string,
+  attempt: () => Promise<NonNullable<FallbackCache[K]>["data"]>,
+): Promise<NonNullable<FallbackCache[K]>["data"]> {
+  let lastErr: unknown;
+  for (let i = 0; i < 2; i++) {
+    try {
+      const data = await attempt();
+      saveFallback(key, data);
+      return data;
+    } catch (e) {
+      lastErr = e;
+      console.error(`[sitemap] ${label}: попытка ${i + 1}/2 провалилась`, e instanceof Error ? e.message : e);
+      if (i === 0) await delay(RETRY_DELAY_MS);
+    }
+  }
+  const fallback = getFallback(key);
+  if (fallback) {
+    const ageMin = Math.round((Date.now() - fallback.savedAt) / 60_000);
+    console.error(
+      `ALERT [sitemap] ${label}: Supabase недоступна после ретрая (${lastErr instanceof Error ? lastErr.message : lastErr}), ` +
+        `отдаю последний успешный снимок вместо пустого/урезанного сайтмапа (возраст ${ageMin} мин, ${fallback.data.length} строк)`,
+    );
+    return fallback.data as never;
+  }
+  console.error(
+    `ALERT [sitemap] ${label}: Supabase недоступна после ретрая, fallback-кэш пуст (вероятно первый запуск процесса) — отдаю []`,
+  );
+  return [] as never;
+}
 
 // PostgREST режет ЛЮБОЙ ответ по серверному db-max-rows=1000 — параметр
 // limit=3000 в запросе он молча игнорирует. Из-за этого в сайтмап попадала
@@ -40,90 +148,103 @@ const BLOG_FETCH_BUDGET_MS = 30_000;
 const BLOG_PAGE_SIZE = 1000;
 const BLOG_MAX_PAGES = 8; // страховка от бесконечного цикла: потолок 8000 статей
 
-async function fetchBlogPosts(): Promise<{ slug: string; created_at: string }[]> {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return [];
+// Один заход постраничной выборки. ПАДАЕТ (throw), если не дошли до
+// естественного конца (не-ok ответ ИЛИ исчерпан временной бюджет на середине) —
+// retryWithFallback трактует это как сбой всей попытки, а не как "частично
+// насобирали и ладно": раньше именно тихий partial-результат на обрыве
+// бюджета/страницы был неотличим от честного конца списка.
+async function fetchBlogPostsOnce(url: string, key: string): Promise<BlogRow[]> {
   const headers = { apikey: key, Authorization: `Bearer ${key}` };
   const deadline = Date.now() + BLOG_FETCH_BUDGET_MS;
-  const out: { slug: string; created_at: string }[] = [];
-  try {
-    for (let page = 0; page < BLOG_MAX_PAGES; page++) {
-      const left = deadline - Date.now();
-      if (left <= 0) break;
-      // Сортировка обязательно детерминированная (created_at может совпадать
-      // у пачки статей одного сева) — иначе постраничная выборка теряет и
-      // дублирует строки между страницами.
-      const res = await fetchWithHardTimeout(
-        `${url}/rest/v1/blog_posts?select=slug,created_at&published=eq.true` +
-          `&${BLOG_TAG_FILTER}&order=created_at.desc,slug.asc` +
-          `&offset=${page * BLOG_PAGE_SIZE}&limit=${BLOG_PAGE_SIZE}`,
-        headers,
-        Math.min(FETCH_TIMEOUT_MS, left),
-      );
-      if (!res.ok) {
-        // 2026-10-21: раньше молча break — не было видно, РАЗВАЛИЛСЯ ли
-        // запрос (таймаут/сеть) или Supabase вернул ошибку (4xx/5xx) с
-        // телом, объясняющим причину. Временная диагностика после находки
-        // "сайтмап стабильно теряет контент" — см. memory.
-        const body = await res.text().catch(() => "");
-        console.error("[sitemap] fetchBlogPosts: не-ok ответ", { page, status: res.status, body: body.slice(0, 300) });
-        break;
-      }
-      const rows: { slug: string; created_at: string }[] = await res.json();
-      out.push(...rows);
-      if (rows.length < BLOG_PAGE_SIZE) break;
+  const out: BlogRow[] = [];
+  for (let page = 0; page < BLOG_MAX_PAGES; page++) {
+    const left = deadline - Date.now();
+    if (left <= 0) {
+      throw new Error(`исчерпан бюджет времени ${BLOG_FETCH_BUDGET_MS}мс на странице ${page}, собрано ${out.length} строк`);
     }
-  } catch (e) {
-    console.error("[sitemap] fetchBlogPosts упал", e instanceof Error ? e.message : e);
-    // Возвращаем то, что успели набрать до сбоя.
+    // Сортировка обязательно детерминированная (created_at может совпадать
+    // у пачки статей одного сева) — иначе постраничная выборка теряет и
+    // дублирует строки между страницами.
+    const res = await fetchWithHardTimeout(
+      `${url}/rest/v1/blog_posts?select=slug,created_at&published=eq.true` +
+        `&${BLOG_TAG_FILTER}&order=created_at.desc,slug.asc` +
+        `&offset=${page * BLOG_PAGE_SIZE}&limit=${BLOG_PAGE_SIZE}`,
+      headers,
+      Math.min(FETCH_TIMEOUT_MS, left),
+    );
+    if (!res.ok) {
+      // 2026-10-21: раньше молча break — не было видно, РАЗВАЛИЛСЯ ли
+      // запрос (таймаут/сеть) или Supabase вернул ошибку (4xx/5xx) с
+      // телом, объясняющим причину. Временная диагностика после находки
+      // "сайтмап стабильно теряет контент" — см. memory.
+      const body = await res.text().catch(() => "");
+      throw new Error(`не-ok ответ на странице ${page}: status=${res.status} body=${body.slice(0, 300)}`);
+    }
+    const rows: BlogRow[] = await res.json();
+    out.push(...rows);
+    if (rows.length < BLOG_PAGE_SIZE) return out; // дошли до честного конца списка
   }
+  // Упёрлись в потолок BLOG_MAX_PAGES (8000 строк) — это страховка от
+  // бесконечного цикла, не сбой: при текущих ~2300 статьях блога недостижимо
+  // на практике, но если когда-нибудь будет достигнуто — отдаём набранное.
   return out;
+}
+
+async function fetchBlogPosts(): Promise<BlogRow[]> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    console.error("ALERT [sitemap] fetchBlogPosts: не заданы переменные окружения Supabase");
+    return getFallback("blog")?.data ?? [];
+  }
+  return retryWithFallback("blog", "fetchBlogPosts", () => fetchBlogPostsOnce(url, key));
 }
 
 // Новости — небольшая таблица (десятки-сотни записей), в отличие от блога не
 // нужна постраничная выборка через .range(): одного запроса с лимитом с
 // запасом достаточно.
-async function fetchNewsItems(): Promise<{ slug: string; created_at: string }[]> {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return [];
-  try {
-    const res = await fetchWithHardTimeout(
-      `${url}/rest/v1/news_items?select=slug,created_at&published=eq.true&order=created_at.desc&limit=1000`,
-      { apikey: key, Authorization: `Bearer ${key}` },
-    );
-    if (!res.ok) {
-      const body = await res.text().catch(() => "");
-      console.error("[sitemap] fetchNewsItems: не-ok ответ", { status: res.status, body: body.slice(0, 300) });
-      return [];
-    }
-    return res.json();
-  } catch (e) {
-    console.error("[sitemap] fetchNewsItems упал", e instanceof Error ? e.message : e);
-    return [];
+async function fetchNewsItemsOnce(url: string, key: string): Promise<NewsRow[]> {
+  const res = await fetchWithHardTimeout(
+    `${url}/rest/v1/news_items?select=slug,created_at&published=eq.true&order=created_at.desc&limit=1000`,
+    { apikey: key, Authorization: `Bearer ${key}` },
+  );
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`не-ok ответ: status=${res.status} body=${body.slice(0, 300)}`);
   }
+  return res.json();
 }
 
-async function fetchCities(): Promise<{ slug: string; country_slug: string; updated_at: string | null }[]> {
+async function fetchNewsItems(): Promise<NewsRow[]> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return [];
-  try {
-    const res = await fetchWithHardTimeout(
-      `${url}/rest/v1/cities?select=slug,country_slug,updated_at&limit=1000`,
-      { apikey: key, Authorization: `Bearer ${key}` }
-    );
-    if (!res.ok) {
-      const body = await res.text().catch(() => "");
-      console.error("[sitemap] fetchCities: не-ok ответ", { status: res.status, body: body.slice(0, 300) });
-      return [];
-    }
-    return res.json();
-  } catch (e) {
-    console.error("[sitemap] fetchCities упал", e instanceof Error ? e.message : e);
-    return [];
+  if (!url || !key) {
+    console.error("ALERT [sitemap] fetchNewsItems: не заданы переменные окружения Supabase");
+    return getFallback("news")?.data ?? [];
   }
+  return retryWithFallback("news", "fetchNewsItems", () => fetchNewsItemsOnce(url, key));
+}
+
+async function fetchCitiesOnce(url: string, key: string): Promise<CityRow[]> {
+  const res = await fetchWithHardTimeout(
+    `${url}/rest/v1/cities?select=slug,country_slug,updated_at&limit=1000`,
+    { apikey: key, Authorization: `Bearer ${key}` }
+  );
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`не-ok ответ: status=${res.status} body=${body.slice(0, 300)}`);
+  }
+  return res.json();
+}
+
+async function fetchCities(): Promise<CityRow[]> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    console.error("ALERT [sitemap] fetchCities: не заданы переменные окружения Supabase");
+    return getFallback("cities")?.data ?? [];
+  }
+  return retryWithFallback("cities", "fetchCities", () => fetchCitiesOnce(url, key));
 }
 
 const BASE = (

@@ -50,3 +50,7 @@ scripts/.photo-fill-plan.json
 
 # IndexNow throttle — timestamp последней полной отправки (не секрет, локальный стейт)
 .indexnow-last-sent
+
+# app/sitemap.ts: кэш последнего успешного результата (города/блог/новости),
+# фолбэк на случай сбоя Supabase — не секрет, локальный стейт, живёт на VPS
+.sitemap-fallback-cache.json
