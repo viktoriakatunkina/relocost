@@ -4,6 +4,14 @@
 // (CountryFAQ), а Google учитывает только один блок FAQPage на страницу.
 // Разметку собирает страница один раз через <FaqSchema> из объединённого
 // списка вопросов обеих секций.
+//
+// UI-аудит 2026-10-28: items[0..2] buildCountryDynamicFaqItems() (стоимость
+// жизни / самый дешевый город / виза) пересекаются по смыслу с CountryFAQ
+// выше на странице. Страница (app/[locale]/country/[slug]/page.tsx) передает
+// сюда в items УЖЕ отфильтрованную версию без видимых дублей, а в FaqSchema —
+// полный список (schema.org трогать не нужно). Если меняешь порядок/состав
+// вопросов в buildCountryDynamicFaqItems, синхронизируй индексы фильтра
+// dynFaqHideCost/dynFaqHideVisa в page.tsx.
 
 import type { CityWithMinRent } from "@/lib/types";
 import type { FaqItem } from "@/components/FaqSchema";

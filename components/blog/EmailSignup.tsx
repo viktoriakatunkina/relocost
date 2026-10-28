@@ -6,22 +6,6 @@ import { Link } from "@/i18n/navigation";
 
 const LS_KEY = "relocost_email_subscribed";
 
-// Отслеживаем процент прокрутки страницы (0–100).
-function useScrollPercent() {
-  const [pct, setPct] = useState(0);
-  useEffect(() => {
-    const handler = () => {
-      const el = document.documentElement;
-      const total = el.scrollHeight - el.clientHeight;
-      if (total <= 0) { setPct(100); return; }
-      setPct(Math.round((el.scrollTop / total) * 100));
-    };
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
-  return pct;
-}
-
 // Форма подписки — общая логика
 function EmailForm({
   source,
@@ -151,46 +135,18 @@ export function EmailSignupInline({
   );
 }
 
-// Мобильный sticky-баннер — появляется после прокрутки 60%.
-// Позиционируется выше существующего sticky-CTA (bottom-[72px] + z-50).
-//
-// 2026-10-13 (маркетинговый аудит): раньше здесь была форма email с текстом
-// «пришлём чек-лист на email» — реальной отправки нет (см. EmailSignupInline
-// выше), а в тесном мобильном баннере нет места честно развести «уже готовый
-// чек-лист» и «опциональная подписка на email» на два равноценных действия.
-// Чек-лист и так бесплатен и уже открыт на сайте (/checklist) — здесь прямая
-// ссылка на него честнее и быстрее для пользователя, чем форма без
-// гарантированного результата. source оставлен в сигнатуре для обратной
-// совместимости вызовов, хотя сейчас не используется (email тут не собираем).
-export function EmailSignupSticky() {
-  const scrollPct = useScrollPercent();
-  const [dismissed, setDismissed] = useState(false);
-
-  const visible = scrollPct >= 60 && !dismissed;
-
-  if (!visible) return null;
-
-  return (
-    <div className="md:hidden fixed bottom-[72px] inset-x-0 z-50 px-3 fade-up">
-      <div className="rounded-2xl bg-surface-elevated/97 backdrop-blur-md border border-copper/30 shadow-2xl p-4 flex items-center gap-3">
-        <p className="flex-1 text-cream font-medium text-sm leading-snug">
-          Чек-лист переезда — бесплатно на сайте
-        </p>
-        <Link
-          href="/checklist"
-          onClick={() => setDismissed(true)}
-          className="shrink-0 inline-flex items-center gap-1 px-4 py-2 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition whitespace-nowrap"
-        >
-          Открыть
-        </Link>
-        <button
-          onClick={() => setDismissed(true)}
-          className="shrink-0 text-brandy/50 hover:text-brandy text-xl leading-none transition"
-          aria-label="Закрыть"
-        >
-          ×
-        </button>
-      </div>
-    </div>
-  );
-}
+// 2026-10-28 (UI/UX-аудит): был мобильный sticky-баннер EmailSignupSticky —
+// появлялся после прокрутки 60% на bottom-[72px], прямо НАД денежным sticky
+// CTA статьи блога (app/[locale]/blog/[slug]/page.tsx, fixed bottom-0,
+// рендерится БЕЗУСЛОВНО на каждой статье — ведет на /city/<slug> статьи или
+// на /search). Вместе это ~140px (≈17% высоты экрана iPhone) и два конкурента
+// за один клик пользователя на одном экране. Денежный CTA — прямой платный
+// путь (выше приоритет), lead-magnet чек-листа ему не ровня, а раз денежный
+// бар на статьях блога никогда не скрыт, второй sticky-бар был лишним всегда.
+// Убрали баннер целиком (не просто вызов на странице): он был нужен только
+// здесь и у него не было других вызовов (см. git history 2026-10-13). Email
+// для лид-магнита по чек-листу всё еще собирается — обычным не-sticky
+// блоком EmailSignupInline в потоке статьи (там же, где BlogReportCTA).
+// Если понадобится sticky lead-magnet на странице БЕЗ денежного CTA —
+// восстанавливать нужно с отдельной проверкой, что денежный бар на той
+// странице отсутствует, а не бездумно копировать старую версию.

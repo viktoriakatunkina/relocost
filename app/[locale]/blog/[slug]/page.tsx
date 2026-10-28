@@ -26,7 +26,7 @@ import type { City, Price, PriceCategory } from "@/lib/types";
 import { ShareButton } from "@/components/ShareButton";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
-import { EmailSignupInline, EmailSignupSticky } from "@/components/blog/EmailSignup";
+import { EmailSignupInline } from "@/components/blog/EmailSignup";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { defaultLocale, type Locale } from "@/i18n/routing";
 import { buildRuOnlyAlternates } from "@/lib/i18n-seo";
@@ -699,10 +699,12 @@ export default async function BlogPostPage({
         <Footer />
       </div>
 
-      {/* Чек-лист переезда: scroll-triggered sticky-ссылка на мобиле (ведёт
-          на /checklist — реальной отправки email тут больше нет, см.
-          components/blog/EmailSignup.tsx) */}
-      <EmailSignupSticky />
+      {/* 2026-10-28 (UI/UX-аудит): здесь раньше был второй sticky-бар
+          EmailSignupSticky (чек-лист, scroll-triggered) НАД денежным CTA
+          ниже — вместе ~140px и конкуренция за клик на мобиле. Денежный
+          CTA рендерится безусловно на каждой статье, so email-напоминание
+          убрано целиком (см. components/blog/EmailSignup.tsx). Лид-магнит
+          чек-листа остается доступен выше в потоке статьи — EmailSignupInline. */}
 
       {/* Sticky bottom CTA — только на мобиле, всегда виден */}
       <div className="md:hidden fixed bottom-0 inset-x-0 z-40 px-3 pb-3">

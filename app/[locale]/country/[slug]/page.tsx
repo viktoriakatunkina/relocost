@@ -278,6 +278,24 @@ export default async function CountryPage({
     dynFaqQ5: t("dynFaqQ5"),
     dynFaqA5: t("dynFaqA5"),
   });
+  // Дедуп ВИДИМОГО контента (UI-аудит 2026-10-28): dynFaqItems[0..2]
+  // (стоимость жизни / самый дешевый город / виза) пересекаются по смыслу
+  // с costFaqItems и faqItems, которые читатель уже видел в секции CountryFAQ
+  // выше — там ответы точнее (реальные цифры агрегата и visa_note конкретной
+  // страны), а здесь шаблонная формулировка-дубль без новых данных.
+  // schema.org FAQPage (FaqSchema ниже) получает dynFaqItems БЕЗ урезания —
+  // это намеренно (см. комментарий выше), трогать не нужно. Прячем дубль
+  // только из рендера <CountryDynamicFAQ>, и только когда более полная
+  // версия на странице реально есть: для ~47 стран без ручного контента
+  // (COUNTRY_CONTENT) или без isRu-агрегата costFaqItems/faqItems пустые,
+  // и тогда все 5 вопросов dynFaqItems остаются единственным источником.
+  const dynFaqHideCost = costFaqItems.length > 0; // дублируют costFaqItems[0] и [3]
+  const dynFaqHideVisa = faqItems.length > 0; // дублирует faqItems[0] (faqVisa)
+  const dynFaqVisibleItems = dynFaqItems.filter((_, i) => {
+    if ((i === 0 || i === 1) && dynFaqHideCost) return false;
+    if (i === 2 && dynFaqHideVisa) return false;
+    return true;
+  });
 
   return (
     <main className="pb-36 md:pb-24">
@@ -497,7 +515,7 @@ export default async function CountryPage({
       )}
 
       <CountryDynamicFAQ
-        items={dynFaqItems}
+        items={dynFaqVisibleItems}
         eyebrow={t("dynFaqEyebrow")}
         title={t("dynFaqTitle", { country: countryWhereTo })}
       />
