@@ -55,7 +55,10 @@ export async function generateMetadata({
   return {
     title: `Цены в ${city.name_ru} 2026 — молоко, хлеб, бензин, кофе, аренда | Relocost`,
     description: `Сколько стоят продукты, аренда, транспорт и услуги в ${city.name_ru} в 2026 году. Цены на молоко, хлеб, кофе, бензин, билет в кино и ЖКХ — актуальные данные.`,
-    alternates: buildAlternates(`/city/${params.slug}/prices`, params.locale),
+    // 2026-10-28 (SEO-аудит, находка №3): canonical на родительскую
+    // /city/{slug} вместо себя — та же логика, что в budget/page.tsx рядом
+    // (см. комментарий там). Платный/бесплатный объём контента не меняем.
+    alternates: buildAlternates(`/city/${params.slug}`, params.locale),
     openGraph: {
       title: `Цены в ${city.name_ru} 2026`,
       description: `Продукты, аренда, транспорт и услуги в ${city.name_ru} — актуальные цены 2026 года.`,
