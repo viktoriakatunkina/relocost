@@ -702,7 +702,13 @@ export default async function CityPage({
         <Footer />
       </div>
 
-      <StickyBar slug={c.slug} isForeign={c.is_foreign} purchaseCount={purchaseCount} />
+      <StickyBar
+        slug={c.slug}
+        isForeign={c.is_foreign}
+        purchaseCount={purchaseCount}
+        countrySlug={c.country_slug}
+        countryName={c.country_ru}
+      />
       <VerifyOnReturn slug={c.slug} />
     </main>
   );

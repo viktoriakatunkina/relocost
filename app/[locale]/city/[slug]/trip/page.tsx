@@ -151,7 +151,13 @@ export default async function CityTripPage({
         <Footer />
       </div>
 
-      <StickyBar slug={city.slug} isForeign={city.is_foreign} purchaseCount={purchaseCount} />
+      <StickyBar
+        slug={city.slug}
+        isForeign={city.is_foreign}
+        purchaseCount={purchaseCount}
+        countrySlug={city.country_slug}
+        countryName={city.country_ru}
+      />
     </main>
   );
 }

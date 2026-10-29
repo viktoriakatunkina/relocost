@@ -228,7 +228,13 @@ export default async function CityBudgetPage({
           под тем же paywall'ом «Расходы» 49 ₽, а трафик у /budget заметный —
           151 посетитель за 30 дней (16% от трафика городских страниц).
           На /city/[slug]/prices такая панель уже стоит. */}
-      <StickyBar slug={c.slug} isForeign={!!c.is_foreign} purchaseCount={purchaseCount} />
+      <StickyBar
+        slug={c.slug}
+        isForeign={!!c.is_foreign}
+        purchaseCount={purchaseCount}
+        countrySlug={c.country_slug}
+        countryName={c.country_ru}
+      />
     </main>
   );
 }

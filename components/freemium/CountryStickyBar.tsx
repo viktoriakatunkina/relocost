@@ -7,6 +7,7 @@ import {
   useCountryUnlocked,
   type CountryPackageType,
 } from "@/lib/unlocked";
+import { Link } from "@/i18n/navigation";
 import { CountryPaymentModal } from "./CountryPaymentModal";
 import { PackageIcon } from "@/components/icons/PackageIcons";
 
@@ -14,6 +15,7 @@ export function CountryStickyBar({
   slug,
   packages,
   countryName,
+  cities,
 }: {
   slug: string;
   /** Какие пакеты реально продаются на этой странице. По умолчанию — оба.
@@ -21,6 +23,12 @@ export function CountryStickyBar({
    *  предлагать нечестно — остаётся только «Обзор». */
   packages?: CountryPackageType[];
   countryName?: string;
+  /** Пара городов этой страны (тот же `cities`, что уже передаёт страница
+   *  country/[slug]/page.tsx в CrossLinks) — только для cross-sell-ссылки
+   *  ниже, когда remaining.length === 0 после покупки всех пакетов страны.
+   *  Не передан — просто не показываем ссылки на города, остальное не
+   *  ломается. */
+  cities?: { slug: string; name_ru: string }[];
 }) {
   const unlocked = useCountryUnlocked(slug);
   const allowed = packages ?? ["country_cities", "country_overview"];
@@ -53,7 +61,39 @@ export function CountryStickyBar({
     };
   }, [barHeight]);
 
-  if (remaining.length === 0) return null;
+  // 2026-10-29 (ночной аудит, #stickybar-post-purchase-crosssell): тот же
+  // паттерн и фикс, что в components/freemium/StickyBar.tsx — раньше `return
+  // null` убирал единственную точку повторной продажи сразу после оплаты
+  // всех пакетов страны. unlock/remaining выше не трогаем — только рендерим
+  // лёгкий cross-sell на 1-2 города этой страны (те же данные, что уже
+  // передаются в CrossLinks на этой странице) и на сравнение городов.
+  if (remaining.length === 0) {
+    const crossSellCities = (cities ?? []).slice(0, 2);
+    return (
+      <div ref={barRef} className="fixed bottom-0 inset-x-0 z-40 px-3 pb-3 md:px-6 md:pb-6">
+        <div className="max-w-5xl mx-auto rounded-2xl bg-surface-elevated/95 backdrop-blur-md border border-copper/20 shadow-xl px-3 py-2.5 md:px-4 flex items-center justify-center gap-x-4 gap-y-1.5 flex-wrap text-center">
+          <span className="text-brandy/55 text-[11px] md:text-xs whitespace-nowrap">
+            <span aria-hidden>✓</span> Все пакеты этой страны открыты
+          </span>
+          {crossSellCities.map((c) => (
+            <Link
+              key={c.slug}
+              href={`/city/${c.slug}`}
+              className="text-copper text-[11px] md:text-xs font-medium underline underline-offset-2 hover:text-brandy transition whitespace-nowrap"
+            >
+              Жизнь в {c.name_ru} →
+            </Link>
+          ))}
+          <Link
+            href="/compare"
+            className="text-copper text-[11px] md:text-xs font-medium underline underline-offset-2 hover:text-brandy transition whitespace-nowrap"
+          >
+            Сравнить города →
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

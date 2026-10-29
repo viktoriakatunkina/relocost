@@ -602,6 +602,7 @@ export default async function CountryPage({
               : ["country_overview"]
           }
           countryName={countryName}
+          cities={cities}
         />
       )}
     </main>

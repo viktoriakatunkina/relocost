@@ -7,6 +7,7 @@ import {
   useUnlocked,
   type CityPackageType,
 } from "@/lib/unlocked";
+import { Link } from "@/i18n/navigation";
 import { PaymentModal } from "./PaymentModal";
 import { PackageComparisonModal } from "./PackageComparisonModal";
 import { RestoreAccess } from "./RestoreAccess";
@@ -16,6 +17,8 @@ export function StickyBar({
   slug,
   isForeign,
   purchaseCount,
+  countrySlug,
+  countryName,
 }: {
   slug: string;
   isForeign: boolean;
@@ -27,6 +30,12 @@ export function StickyBar({
    *  запущен и подтверждённых оплат ещё 0 — см. исходный комментарий в
    *  PurchaseCount.tsx). Не передан/0 — строка не рендерится. */
   purchaseCount?: number;
+  /** country_slug/country_ru этого города — только для cross-sell-ссылки
+   *  ниже (remaining.length === 0, после покупки всех пакетов города).
+   *  Не передан — просто не показываем ссылку на страну, остальное не
+   *  ломается. */
+  countrySlug?: string;
+  countryName?: string;
 }) {
   const unlocked = useUnlocked(slug);
   const remaining = lockedRemaining(unlocked, isForeign);
@@ -71,7 +80,40 @@ export function StickyBar({
     };
   }, [barHeight]);
 
-  if (remaining.length === 0) return null;
+  // 2026-10-29 (ночной аудит, #stickybar-post-purchase-crosssell): раньше
+  // здесь было `return null` — после покупки ВСЕХ пакетов города единственная
+  // точка повторной продажи (эта плашка) пропадала полностью именно в
+  // момент максимального доверия, сразу после оплаты. unlock/remaining выше
+  // не трогаем — только рендерим лёгкий cross-sell вместо null: ссылку на
+  // обзор страны (если она передана) и на сравнение городов. Label "Жизнь в
+  // {countryName}" — тот же паттерн без склонения именительного падежа, что
+  // уже используется в CrossLinks этих же страниц (app/[locale]/city/[slug]/
+  // page.tsx и др., "Жизнь в {c.country_ru}"), не новая грамматика.
+  if (remaining.length === 0) {
+    return (
+      <div ref={barRef} className="fixed bottom-0 inset-x-0 z-40 px-3 pb-3 md:px-6 md:pb-6">
+        <div className="max-w-5xl mx-auto rounded-2xl bg-surface-elevated/95 backdrop-blur-md border border-copper/20 shadow-xl px-3 py-2.5 md:px-4 flex items-center justify-center gap-x-4 gap-y-1.5 flex-wrap text-center">
+          <span className="text-brandy/55 text-[11px] md:text-xs whitespace-nowrap">
+            <span aria-hidden>✓</span> Все пакеты этого города открыты
+          </span>
+          {countrySlug && (
+            <Link
+              href={`/country/${countrySlug}`}
+              className="text-copper text-[11px] md:text-xs font-medium underline underline-offset-2 hover:text-brandy transition whitespace-nowrap"
+            >
+              Жизнь в {countryName ?? "стране"} →
+            </Link>
+          )}
+          <Link
+            href="/compare"
+            className="text-copper text-[11px] md:text-xs font-medium underline underline-offset-2 hover:text-brandy transition whitespace-nowrap"
+          >
+            Сравнить с другим городом →
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const bundleSavings =
     remaining.reduce((sum, p) => sum + CITY_PACKAGES[p].price, 0) -
