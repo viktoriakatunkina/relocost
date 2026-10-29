@@ -1,5 +1,18 @@
 import { supabase } from "@/lib/supabase";
 
+// Единый allow-list категорий краудсорс-цен — те же 6, что показывает UI
+// (components/CrowdPriceForm.tsx). Используется для серверной валидации в
+// app/actions/crowd-price.ts, чтобы прямой POST на server action не мог
+// протащить произвольную строку в category.
+export const CROWD_PRICE_CATEGORIES = [
+  "food",
+  "rent",
+  "transport",
+  "leisure",
+  "health",
+  "other",
+] as const;
+
 export interface CrowdPrice {
   id: string;
   city_slug: string;

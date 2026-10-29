@@ -161,7 +161,7 @@ export function CrowdPriceForm({ citySlug }: { citySlug: string }) {
               </button>
 
               <p className="text-brandy/75 text-xs text-center">
-                Данные проходят модерацию и публикуются анонимно
+                Данные публикуются сразу и анонимно
               </p>
             </form>
           )}
