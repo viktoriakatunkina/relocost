@@ -46,7 +46,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { EmailSignupInline } from "@/components/blog/EmailSignup";
 import { defaultLocale, type Locale } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/i18n-seo";
+import { buildAlternates, buildRobotsForTranslation } from "@/lib/i18n-seo";
 import { localizeCountryContent, translatedLocalesFor } from "@/lib/content-i18n";
 import { countryName as localizedCountryName } from "@/lib/i18n-content";
 import {
@@ -118,6 +118,7 @@ export async function generateMetadata({
   // страницах стран в title стояло «Переезд в Грузия». Для en/uz склонений
   // нет, у них свои шаблоны с собственными предлогами.
   const nameTo = params.locale === defaultLocale ? countryTo(params.slug, name) : name;
+  const translatedLocales = await translatedLocalesFor("countries", params.slug);
   return {
     title: t("metaTitle", { country: nameTo }),
     description: t("metaDescription", { country: nameTo }),
@@ -125,8 +126,12 @@ export async function generateMetadata({
     // (content/i18n/{locale}/countries/{slug}.json): en — 25 стран, uz — 3.
     // Для остальных /en и /uz были дублем русского текста.
     alternates: buildAlternates(`/country/${params.slug}`, params.locale, {
-      translatedLocales: await translatedLocalesFor("countries", params.slug),
+      translatedLocales,
     }),
+    // Непереведённая локаль наследовала index:true от корневого layout —
+    // краулер мог утащить дубль русского текста в индекс даже без сайтмапа.
+    // См. lib/i18n-seo.ts.
+    robots: buildRobotsForTranslation(params.locale, translatedLocales),
     openGraph: {
       title: t("ogTitle", { country: nameTo }),
       description: t("ogDescription", { country: nameTo }),

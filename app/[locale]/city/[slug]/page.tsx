@@ -14,7 +14,7 @@ import { CITY_CONTENT } from "@/lib/cities-content";
 import { CITY_EXTRA } from "@/lib/cities-content-extra";
 import type { City } from "@/lib/types";
 import { type Locale } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/i18n-seo";
+import { buildAlternates, buildRobotsForTranslation } from "@/lib/i18n-seo";
 import { cityName, countryName } from "@/lib/i18n-content";
 import {
   localizeCity,
@@ -163,6 +163,7 @@ export async function generateMetadata({
   // а не как преимущество. Сам блок «Индекс качества жизни» на странице
   // остаётся — здесь речь только про мета-тег.
   const description = seo.seo_description ?? undefined;
+  const translatedLocales = await translatedLocalesFor("cities", params.slug);
 
   return {
     title: seo.seo_title,
@@ -174,8 +175,13 @@ export async function generateMetadata({
     // русский текст. Если текущая локаль непереведённая, canonical уходит
     // на русскую версию — см. lib/i18n-seo.ts.
     alternates: buildAlternates(`/city/${params.slug}`, params.locale, {
-      translatedLocales: await translatedLocalesFor("cities", params.slug),
+      translatedLocales,
     }),
+    // Непереведённая локаль (сайтмап её и так не включает — см.
+    // translatedLocalesFor) получает noindex: без этого URL наследовал
+    // index:true от корневого layout и отдавал в индекс дубль русского
+    // текста. См. lib/i18n-seo.ts.
+    robots: buildRobotsForTranslation(params.locale, translatedLocales),
     openGraph: {
       // Профиль города — это не статья. Богатые данные (Place/TouristDestination,
       // гео, цены) отдаём через JSON-LD в <CitySchema>/<ProductSchema>.

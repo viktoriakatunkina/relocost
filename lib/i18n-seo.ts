@@ -68,3 +68,26 @@ export function buildRuOnlyAlternates(
     translatedLocales: [routing.defaultLocale],
   });
 }
+
+// robots для страниц, которые существуют на всех локалях по URL, но реально
+// переведены только на части из них (города/страны — тот же набор
+// `translatedLocales`, что уже отдаёт translatedLocalesFor() для sitemap.ts
+// и buildAlternates() выше).
+//
+// 2026-10-29. До этого страницы вроде /uz/city/moscow отдавали 200 с тем же
+// русским текстом, canonical честно уводил на /city/moscow, но meta robots
+// наследовался от корневого layout (index:true, follow:true) безусловно —
+// сайтмап такие URL не включает (translatedLocalesFor их отфильтровывает),
+// но сам URL живой, и краулер, пришедший по ссылке (не по сайтмапу), может
+// утащить дубль в индекс. Явный noindex — страховка сверх canonical, который
+// краулеры иногда игнорируют.
+export function buildRobotsForTranslation(
+  locale: Locale,
+  translatedLocales: readonly Locale[],
+): NonNullable<Metadata["robots"]> {
+  const isTranslated =
+    locale === routing.defaultLocale || translatedLocales.includes(locale);
+  return isTranslated
+    ? { index: true, follow: true, googleBot: { index: true, follow: true } }
+    : { index: false, follow: true, googleBot: { index: false, follow: true } };
+}
