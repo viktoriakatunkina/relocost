@@ -138,7 +138,7 @@ function LockedCityLinks({ cities }: { cities: CityWithMinRent[] }) {
           >
             {cityName(c, locale)}
           </Link>
-          {i < cities.length - 1 && <span className="text-brandy/30">,</span>}
+          {i < cities.length - 1 && <span className="text-brandy/75">,</span>}
         </span>
       ))}
     </p>

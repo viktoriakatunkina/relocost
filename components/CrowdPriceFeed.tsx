@@ -67,7 +67,7 @@ function PriceCard({
       <p className="text-cream font-semibold text-lg leading-none tabular-nums">
         {formatAmount(p.amount_rub)}
       </p>
-      <p className="text-brandy/35 text-[10px] leading-none mt-auto">
+      <p className="text-brandy/75 text-[10px] leading-none mt-auto">
         {timeAgo(p.created_at)}
       </p>
     </div>

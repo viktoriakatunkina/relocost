@@ -353,7 +353,7 @@ export function ChecklistClient({
           <button
             type="button"
             onClick={() => writeChecked(variant, [])}
-            className="mt-4 text-xs text-brandy/45 hover:text-copper/80 transition"
+            className="mt-4 text-xs text-brandy/75 hover:text-copper/80 transition"
           >
             Сбросить все отметки
           </button>
@@ -464,12 +464,12 @@ export function ChecklistClient({
                             <span className="min-w-0">
                               <span
                                 className={`block font-medium text-sm md:text-base leading-snug transition-colors ${
-                                  isDone ? "text-brandy/45 line-through" : "text-cream"
+                                  isDone ? "text-brandy/75 line-through" : "text-cream"
                                 }`}
                               >
                                 {step.title}
                               </span>
-                              <span className={`block text-sm mt-1 text-pretty leading-relaxed ${isDone ? "text-brandy/35" : "text-brandy/65"}`}>
+                              <span className={`block text-sm mt-1 text-pretty leading-relaxed ${isDone ? "text-brandy/75" : "text-brandy/90"}`}>
                                 {step.description}
                               </span>
                             </span>

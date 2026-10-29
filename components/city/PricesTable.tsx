@@ -77,7 +77,7 @@ export function PricesTable({
                     </span>
                     <span className="tabular-nums flex items-baseline gap-1 shrink-0 ml-3 whitespace-nowrap">
                       <span className="text-brandy/70 text-sm">{formatRub(p.price_min)}</span>
-                      <span className="text-brandy/40">—</span>
+                      <span className="text-brandy/75">—</span>
                       <span className="text-cream font-semibold">{formatRub(p.price_max)}</span>
                     </span>
                   </li>
@@ -101,7 +101,7 @@ export function PricesTable({
                         </span>
                         <span className="tabular-nums flex items-baseline gap-1 shrink-0 ml-3 whitespace-nowrap">
                           <span className="text-brandy/70 text-sm">{formatRub(p.price_min)}</span>
-                          <span className="text-brandy/40">—</span>
+                          <span className="text-brandy/75">—</span>
                           <span className="text-cream font-semibold">{formatRub(p.price_max)}</span>
                         </span>
                       </li>
@@ -124,7 +124,7 @@ export function PricesTable({
                           </span>
                           <span className="tabular-nums flex items-baseline gap-1 shrink-0 ml-3 whitespace-nowrap">
                             <span className="text-brandy/70 text-sm">{formatRub(p.price_min)}</span>
-                            <span className="text-brandy/40">—</span>
+                            <span className="text-brandy/75">—</span>
                             <span className="text-cream font-semibold">{formatRub(p.price_max)}</span>
                           </span>
                         </li>

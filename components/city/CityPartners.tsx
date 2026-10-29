@@ -51,7 +51,7 @@ export function CityPartners() {
             className="relative group flex flex-col gap-4 p-6 rounded-2xl bg-surface border hairline hover:bg-surface-elevated hover:border-copper/40 hover:-translate-y-1 transition-all duration-300"
           >
             {/* Лейбл «Реклама» */}
-            <span className="absolute top-3 right-3 text-[10px] text-brandy/40 uppercase tracking-widest">
+            <span className="absolute top-3 right-3 text-[10px] text-brandy/75 uppercase tracking-widest">
               Реклама
             </span>
 

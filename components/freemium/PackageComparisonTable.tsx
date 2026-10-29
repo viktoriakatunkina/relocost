@@ -143,7 +143,7 @@ export function PackageComparisonTable({
                   <li
                     key={f.label}
                     className={`flex items-start gap-2 text-xs leading-snug ${
-                      f[c.key] ? "text-brandy/85" : "text-brandy/35 line-through"
+                      f[c.key] ? "text-brandy/85" : "text-brandy/75 line-through"
                     }`}
                   >
                     <Check ok={f[c.key]} />

@@ -256,7 +256,7 @@ export function Calculator({
                 <span className="text-cream/90 min-w-0 flex-1 text-pretty">{l.label}</span>
                 <span className="text-cream tabular-nums whitespace-nowrap shrink-0">
                   <span className="text-brandy/70">{formatRub(l.min)}</span>
-                  <span className="text-brandy/40 mx-1.5">—</span>
+                  <span className="text-brandy/75 mx-1.5">—</span>
                   <span className="font-semibold">{formatRub(l.max)}</span>
                 </span>
               </li>

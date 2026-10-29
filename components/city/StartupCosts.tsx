@@ -117,7 +117,7 @@ export function StartupCosts({
                       <span className="text-cream font-semibold tabular-nums">
                         {r.min === r.max ? formatRub(r.min) : `${formatRub(r.min)} – ${formatRub(r.max)}`}
                       </span>
-                      <span className="text-brandy/45 text-xs">{r.note}</span>
+                      <span className="text-brandy/75 text-xs">{r.note}</span>
                     </span>
                   </li>
                 ) : (

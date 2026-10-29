@@ -123,7 +123,7 @@ export function CrowdPriceForm({ citySlug }: { citySlug: string }) {
                   required
                   maxLength={100}
                   placeholder={PLACEHOLDERS[category]}
-                  className="w-full bg-pine-tree border border-cream/12 rounded-2xl px-4 py-3 text-cream placeholder:text-brandy/35 text-sm focus:outline-none focus:border-copper/40 transition"
+                  className="w-full bg-pine-tree border border-cream/12 rounded-2xl px-4 py-3 text-cream placeholder:text-brandy/75 text-sm focus:outline-none focus:border-copper/40 transition"
                 />
               </div>
 
@@ -140,9 +140,9 @@ export function CrowdPriceForm({ citySlug }: { citySlug: string }) {
                     min={1}
                     max={999999}
                     placeholder="0"
-                    className="w-full bg-pine-tree border border-cream/12 rounded-2xl px-4 py-3 pr-10 text-cream placeholder:text-brandy/35 text-sm focus:outline-none focus:border-copper/40 transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-full bg-pine-tree border border-cream/12 rounded-2xl px-4 py-3 pr-10 text-cream placeholder:text-brandy/75 text-sm focus:outline-none focus:border-copper/40 transition [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-brandy/45 text-sm pointer-events-none">
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-brandy/75 text-sm pointer-events-none">
                     ₽
                   </span>
                 </div>
@@ -160,7 +160,7 @@ export function CrowdPriceForm({ citySlug }: { citySlug: string }) {
                 {isPending ? "Отправляем..." : "Отправить цену"}
               </button>
 
-              <p className="text-brandy/40 text-xs text-center">
+              <p className="text-brandy/75 text-xs text-center">
                 Данные проходят модерацию и публикуются анонимно
               </p>
             </form>

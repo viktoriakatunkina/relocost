@@ -49,7 +49,7 @@ export function AnchorPrices({ items }: { items: AnchorItem[] }) {
 
   return (
     <section className="max-w-6xl mx-auto px-6 pt-6 overflow-hidden md:overflow-visible">
-      <p className="text-brandy/45 text-[11px] uppercase tracking-[0.15em] mb-3">
+      <p className="text-brandy/75 text-[11px] uppercase tracking-[0.15em] mb-3">
         Цены на продукты и услуги
       </p>
       <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none snap-x">
@@ -64,7 +64,7 @@ export function AnchorPrices({ items }: { items: AnchorItem[] }) {
             <div className="min-w-0">
               <p className="text-brandy/55 text-[11px] leading-none mb-0.5">
                 {item.label}
-                <span className="text-brandy/35"> · {item.sublabel}</span>
+                <span className="text-brandy/75"> · {item.sublabel}</span>
               </p>
               <p className="text-cream font-medium text-sm tabular-nums leading-tight">
                 {fmtAnchorPrice(item.price!)}

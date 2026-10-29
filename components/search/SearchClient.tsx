@@ -670,7 +670,7 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t("inputPlaceholder")}
-              className="w-full pl-10 sm:pl-[3.25rem] pr-3 sm:pr-5 py-3 sm:py-4 rounded-pill bg-pine-tree/60 text-cream placeholder-brandy/45 text-sm sm:text-lg border hairline focus:border-copper focus:outline-none transition [color-scheme:dark]"
+              className="w-full pl-10 sm:pl-[3.25rem] pr-3 sm:pr-5 py-3 sm:py-4 rounded-pill bg-pine-tree/60 text-cream placeholder-brandy/75 text-sm sm:text-lg border hairline focus:border-copper focus:outline-none transition [color-scheme:dark]"
               aria-label={t("ariaInput")}
             />
           </div>
@@ -1060,7 +1060,7 @@ function Pagination({
 
       {items.map((it, idx) =>
         it === "…" ? (
-          <span key={`gap-${idx}`} className="px-2 text-brandy/40 select-none">
+          <span key={`gap-${idx}`} className="px-2 text-brandy/75 select-none">
             …
           </span>
         ) : (

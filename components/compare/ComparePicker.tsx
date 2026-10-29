@@ -54,7 +54,7 @@ export function ComparePicker({ cities }: { cities: PickerCity[] }) {
           cities={sorted}
           disabledSlug={b}
         />
-        <p className="hidden sm:block text-brandy/45 text-sm pb-3 text-center">
+        <p className="hidden sm:block text-brandy/75 text-sm pb-3 text-center">
           или
         </p>
         <CitySelect

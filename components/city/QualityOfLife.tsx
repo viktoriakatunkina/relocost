@@ -100,7 +100,7 @@ export function QualityOfLife({
         })}
       </div>
 
-      <p className="mt-6 text-xs text-brandy/45 text-pretty">
+      <p className="mt-6 text-xs text-brandy/75 text-pretty">
         Источники: Numbeo Crime / Health Care / Pollution Index, Nomad List, AirVisual Quality Reports.
         Оценки — усредненные по открытым данным, обновлены в 2025–2026 гг. Служат
         ориентиром для сравнения городов.

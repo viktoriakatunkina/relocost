@@ -178,7 +178,7 @@ export function CountryCompareUnlockCTA({
           />
         </div>
 
-        <p className="text-brandy/40 text-xs mt-5 text-center">
+        <p className="text-brandy/75 text-xs mt-5 text-center">
           Единоразовая оплата · доступ навсегда · ЮKassa
         </p>
       </div>

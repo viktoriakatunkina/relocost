@@ -136,7 +136,7 @@ function CategoryRow({
               {grade} · {score}
             </span>
           ) : (
-            <span className="text-xs text-brandy/40 shrink-0">{noDataLabel}</span>
+            <span className="text-xs text-brandy/75 shrink-0">{noDataLabel}</span>
           )}
         </div>
         <div className="h-1.5 rounded-full bg-cream/8 overflow-hidden">

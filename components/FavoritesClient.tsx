@@ -58,7 +58,7 @@ export function FavoritesClient({ cities, dbError = false }: Props) {
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-brandy/40 text-xs">
+          <p className="mt-6 text-brandy/75 text-xs">
             Если проблема повторяется — попробуйте обновить страницу через несколько минут.
           </p>
         </div>

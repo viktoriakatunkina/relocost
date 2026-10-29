@@ -171,7 +171,7 @@ function Pagination({
           p === "..." ? (
             <span
               key={`dots-${i}`}
-              className="w-10 h-10 flex items-center justify-center text-brandy/40 text-sm select-none"
+              className="w-10 h-10 flex items-center justify-center text-brandy/75 text-sm select-none"
             >
               &hellip;
             </span>

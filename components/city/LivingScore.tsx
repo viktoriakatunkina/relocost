@@ -93,7 +93,7 @@ export function LivingScore({
                       {g.letter} · {Math.round(a.value * 10)}
                     </span>
                   ) : (
-                    <span className="text-xs text-brandy/40">нет данных</span>
+                    <span className="text-xs text-brandy/75">нет данных</span>
                   )}
                 </div>
                 <div className="h-2.5 rounded-full bg-cream/8 overflow-hidden">
@@ -122,7 +122,7 @@ export function LivingScore({
             фиксированным критериям (одинаковая для всех), а не персональный
             подбор под приоритеты конкретного человека — их считают по-разному
             и не должны совпадать. */}
-        <p className="mt-3 text-xs text-brandy/40 text-pretty">
+        <p className="mt-3 text-xs text-brandy/75 text-pretty">
           Это общая объективная оценка города — одна для всех. Если хотите
           подобрать город под свои приоритеты (бюджет, климат, море,
           безопасность), используйте{" "}

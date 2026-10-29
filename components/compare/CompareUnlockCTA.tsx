@@ -148,7 +148,7 @@ export function CompareUnlockCTA({
           <CityUnlockCard city={b} onBuy={(slug, pkg, name) => setModal({ slug, pkg, name })} />
         </div>
 
-        <p className="text-brandy/40 text-xs mt-5 text-center">
+        <p className="text-brandy/75 text-xs mt-5 text-center">
           Единоразовая оплата · доступ навсегда · ЮKassa
         </p>
       </div>

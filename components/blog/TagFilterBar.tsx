@@ -123,7 +123,7 @@ export function TagFilterBar({
                         }`}
                       >
                         <span>{t}</span>
-                        <span className="text-brandy/40 text-xs shrink-0">{count}</span>
+                        <span className="text-brandy/75 text-xs shrink-0">{count}</span>
                       </button>
                     </li>
                   ))

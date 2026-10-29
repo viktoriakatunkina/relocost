@@ -253,7 +253,7 @@ export function MonthlyBudget({
                     <span className="text-cream font-semibold block leading-tight">
                       {formatRub(s.amount)}
                     </span>
-                    <span className="text-brandy/45 text-xs">
+                    <span className="text-brandy/75 text-xs">
                       {Math.round(s.pct * 100)}%
                     </span>
                   </span>

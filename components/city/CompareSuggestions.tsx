@@ -33,7 +33,7 @@ export function CompareSuggestions({
           похожая аренда и сложность переезда. Раньше принцип выбора
           нигде не объяснялся — коллега не понимала, почему сравнение
           именно с этим городом, а не с любым другим. */}
-      <p className="text-brandy/45 text-sm mb-10 max-w-xl text-pretty">
+      <p className="text-brandy/75 text-sm mb-10 max-w-xl text-pretty">
         Подобраны по стране, близкой аренде и похожей сложности переезда — не случайный список.
       </p>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">

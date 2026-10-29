@@ -488,7 +488,7 @@ export function QuizClient({
                 </Link>
               )}
             </div>
-            <p className="text-brandy/40 text-xs mt-4">Оплата картой или СБП · Доступ навсегда · Без подписки</p>
+            <p className="text-brandy/75 text-xs mt-4">Оплата картой или СБП · Доступ навсегда · Без подписки</p>
           </div>
         )}
 
@@ -630,7 +630,7 @@ export function QuizClient({
               )}
               <span className="flex-1 min-w-0">
                 <span className="block font-medium text-sm md:text-base">{opt.label}</span>
-                {opt.hint && <span className="block text-xs text-brandy/50 mt-0.5">{opt.hint}</span>}
+                {opt.hint && <span className="block text-xs text-brandy/75 mt-0.5">{opt.hint}</span>}
               </span>
               <span className="w-7 h-7 rounded-full border border-brandy/25 flex items-center justify-center text-brandy/40 group-hover:border-copper group-hover:text-copper transition shrink-0">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

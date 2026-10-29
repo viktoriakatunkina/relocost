@@ -58,7 +58,7 @@ export function ListCitiesGrid({ cities }: { cities: CityWithBudget[] }) {
             resetToFirstPage();
           }}
           placeholder="Город или страна…"
-          className="w-full sm:w-56 px-4 py-2.5 rounded-pill bg-surface border hairline text-cream text-sm placeholder:text-brandy/45 focus:outline-none focus:border-copper/50 transition"
+          className="w-full sm:w-56 px-4 py-2.5 rounded-pill bg-surface border hairline text-cream text-sm placeholder:text-brandy/75 focus:outline-none focus:border-copper/50 transition"
         />
 
         {priceBounds && (

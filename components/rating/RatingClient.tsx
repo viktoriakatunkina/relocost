@@ -64,7 +64,7 @@ function ScoreBar({ value, available }: { value: number; available: boolean }) {
 function RankMedal({ rank }: { rank: number }) {
   if (rank > 3) {
     return (
-      <span className="text-brandy/40 font-serif text-sm sm:text-lg tabular-nums">{rank}</span>
+      <span className="text-brandy/75 font-serif text-sm sm:text-lg tabular-nums">{rank}</span>
     );
   }
   const configs = [
@@ -151,7 +151,7 @@ function RatingCard({ city, rank }: { city: RatedCity; rank: number }) {
             <span className="text-copper font-bold text-base sm:text-2xl tabular-nums leading-none">
               {city.total.toFixed(1)}
             </span>
-            <span className="text-brandy/45 text-[9px] sm:text-xs block mt-0.5">из 10</span>
+            <span className="text-brandy/75 text-[9px] sm:text-xs block mt-0.5">из 10</span>
           </div>
         </div>
 
@@ -168,7 +168,7 @@ function RatingCard({ city, rank }: { city: RatedCity; rank: number }) {
         </div>
 
         {city.coverage === "partial" && (
-          <p className="hidden sm:block text-brandy/40 text-xs mt-2">оценка по 3 параметрам</p>
+          <p className="hidden sm:block text-brandy/75 text-xs mt-2">оценка по 3 параметрам</p>
         )}
       </div>
 
@@ -185,7 +185,7 @@ function RatingCard({ city, rank }: { city: RatedCity; rank: number }) {
                 </span>
                 <span
                   className={`text-[10px] tabular-nums shrink-0 font-medium ${
-                    ax.available ? "text-brandy/70" : "text-brandy/30"
+                    ax.available ? "text-brandy/90" : "text-brandy/75"
                   }`}
                 >
                   {ax.available ? ax.value.toFixed(1) : "н/д"}
@@ -205,7 +205,7 @@ function RatingCard({ city, rank }: { city: RatedCity; rank: number }) {
                 <ScoreBar value={ax.value} available={ax.available} />
                 <span
                   className={`text-xs tabular-nums w-7 text-right shrink-0 font-medium ${
-                    ax.available ? "text-brandy/70" : "text-brandy/30"
+                    ax.available ? "text-brandy/90" : "text-brandy/75"
                   }`}
                 >
                   {ax.available ? ax.value.toFixed(1) : "н/д"}
@@ -270,7 +270,7 @@ export function RatingClient({ cities }: { cities: RatedCity[] }) {
           критериям (для всех городов одинаковая методика), а не персональный
           подбор под приоритеты пользователя — там своя логика и свой набор
           критериев, сравнивать балл-в-балл их не нужно. */}
-      <p className="text-brandy/45 text-xs mb-5 max-w-2xl">
+      <p className="text-brandy/75 text-xs mb-5 max-w-2xl">
         Это общая объективная оценка — считается одинаково для всех городов.
         Ищете город под свои приоритеты (бюджет, климат, море, виза)?
         Загляните в{" "}
@@ -365,7 +365,7 @@ export function RatingClient({ cities }: { cities: RatedCity[] }) {
                     <span className="block text-brandy/55 text-sm truncate">
                       {c.country}
                       {c.coverage === "partial" && (
-                        <span className="text-brandy/40"> · оценка по 3 параметрам</span>
+                        <span className="text-brandy/75"> · оценка по 3 параметрам</span>
                       )}
                     </span>
                   </span>
@@ -388,7 +388,7 @@ export function RatingClient({ cities }: { cities: RatedCity[] }) {
                     {m.available ? (
                       <span className="text-copper">{m.value.toFixed(1)}</span>
                     ) : (
-                      <span className="text-brandy/35 text-xs">н/д</span>
+                      <span className="text-brandy/75 text-xs">н/д</span>
                     )}
                   </span>
 

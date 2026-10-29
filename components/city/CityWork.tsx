@@ -65,7 +65,7 @@ export function CityWork({
       </div>
 
       {hasCurrencyHint && (
-        <p className="text-brandy/40 text-xs mt-5 max-w-3xl text-pretty">
+        <p className="text-brandy/75 text-xs mt-5 max-w-3xl text-pretty">
           {RUB_RATE_FOOTNOTE}
         </p>
       )}

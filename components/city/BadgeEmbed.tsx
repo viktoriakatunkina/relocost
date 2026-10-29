@@ -68,7 +68,7 @@ export function BadgeEmbed({
         </pre>
       </div>
 
-      <p className="mt-4 text-xs text-brandy/40">
+      <p className="mt-4 text-xs text-brandy/75">
         Бейдж обновляется автоматически при изменении данных. Ссылка ведёт
         на страницу с полным расчётом бюджета переезда.
       </p>

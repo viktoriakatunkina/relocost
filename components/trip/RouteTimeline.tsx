@@ -77,7 +77,7 @@ function StopRow({
         </div>
         <p
           className={`text-sm leading-relaxed text-pretty ${
-            done ? "text-brandy/40" : "text-brandy/80"
+            done ? "text-brandy/75" : "text-brandy/80"
           }`}
         >
           {typo(stop.description)}
@@ -102,7 +102,7 @@ function ConnectorRow({ transfer }: { transfer?: RouteStop["transfer"] }) {
       <div className="w-9 flex justify-center shrink-0">
         <div className="w-px h-5 bg-cream/12" aria-hidden />
       </div>
-      <p className="text-brandy/40 text-xs flex items-center gap-1.5">
+      <p className="text-brandy/75 text-xs flex items-center gap-1.5">
         <svg
           width="10"
           height="10"

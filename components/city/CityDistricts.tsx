@@ -42,7 +42,7 @@ export function CityDistricts({
                 {(() => {
                   const rub = firstRubEquivalent(d.rent);
                   return rub ? (
-                    <span className="block text-brandy/45 text-xs whitespace-nowrap mt-0.5">
+                    <span className="block text-brandy/75 text-xs whitespace-nowrap mt-0.5">
                       {rub}
                     </span>
                   ) : null;
@@ -53,7 +53,7 @@ export function CityDistricts({
               {typo(d.vibe)}
             </p>
             <p className="text-sm text-brandy/65">
-              <span className="text-brandy/45 uppercase tracking-[0.14em] text-[11px]">
+              <span className="text-brandy/75 uppercase tracking-[0.14em] text-[11px]">
                 Кому подходит:{" "}
               </span>
               {typo(d.for_whom)}
@@ -64,7 +64,7 @@ export function CityDistricts({
       </div>
 
       {hasCurrencyHint && (
-        <p className="max-w-6xl mx-auto px-6 text-brandy/40 text-xs mt-5 text-pretty">
+        <p className="max-w-6xl mx-auto px-6 text-brandy/75 text-xs mt-5 text-pretty">
           {RUB_RATE_FOOTNOTE}
         </p>
       )}

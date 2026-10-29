@@ -150,7 +150,7 @@ function WeightSegment({
                 : v === 1
                 ? "bg-copper/25 text-copper font-semibold"
                 : "bg-copper text-pine-tree font-semibold"
-              : "bg-transparent text-brandy/30 hover:text-brandy/65 hover:bg-cream/5",
+              : "bg-transparent text-brandy/75 hover:text-cream hover:bg-cream/5",
           ].join(" ")}
         >
           {label}
@@ -229,7 +229,7 @@ function MatchRow({
       ].join(" ")}
     >
       <Link href={`/city/${city.slug}`} className="absolute inset-0 rounded-2xl" aria-label={city.name_ru} />
-      <span className="relative w-6 text-center text-brandy/30 text-sm font-mono shrink-0 mt-0.5">
+      <span className="relative w-6 text-center text-brandy/75 text-sm font-mono shrink-0 mt-0.5">
         {rank}
       </span>
       <div className="relative flex-1 min-w-0">
@@ -239,7 +239,7 @@ function MatchRow({
               {city.flag_emoji && <span className="mr-1">{city.flag_emoji}</span>}
               {city.name_ru}
             </p>
-            <p className="text-brandy/45 text-xs mt-0.5 truncate">
+            <p className="text-brandy/75 text-xs mt-0.5 truncate">
               {city.country_ru}
               {city.monthly_from > 0 && ` · от ${formatRub(city.monthly_from)}/мес`}
             </p>
@@ -259,7 +259,7 @@ function MatchRow({
           {tags.length > 0 ? (
             <div className="flex flex-wrap gap-x-3 gap-y-1">
               {tags.map(t => (
-                <span key={t} className="text-[10px] text-brandy/45">{t}</span>
+                <span key={t} className="text-[10px] text-brandy/75">{t}</span>
               ))}
             </div>
           ) : (
@@ -425,7 +425,7 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
                 disabled={prefs.budgetWeight === 0}
                 className="w-full accent-copper mb-1.5 disabled:opacity-40"
               />
-              <div className="flex justify-between text-[11px] text-brandy/35">
+              <div className="flex justify-between text-[11px] text-brandy/75">
                 <span>30 000 ₽</span>
                 <span className="text-cream text-xs font-medium">до {budgetFormatted} ₽</span>
                 <span>300 000 ₽</span>
@@ -452,7 +452,7 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
                           "px-3 py-1.5 rounded-full text-xs border transition",
                           prefs.climatePref === p
                             ? "border-copper bg-copper text-pine-tree font-semibold"
-                            : "border-cream/10 bg-transparent text-brandy/45 hover:border-cream/25 hover:text-cream/70",
+                            : "border-cream/10 bg-transparent text-brandy/75 hover:border-cream/25 hover:text-cream/70",
                         ].join(" ")}
                       >
                         {p === "warm" ? "🌴 Тропики / жарко" : "🍃 Умеренно"}
@@ -468,7 +468,7 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
               <DimRow emoji="⚡" label="Быстрый интернет" value={prefs.internetWeight} onChange={v => set("internetWeight", v)} />
             </div>
 
-            <p className="text-brandy/30 text-[11px] mt-6 leading-relaxed">
+            <p className="text-brandy/75 text-[11px] mt-6 leading-relaxed">
               Оценка рассчитывается по реальным ценам и публичным данным. Кликните на город — откроется полная карточка.
             </p>
           </div>
@@ -479,7 +479,7 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
           <div className="flex items-baseline justify-between mb-1.5 gap-3">
             <h2 className="font-serif text-2xl text-cream">Топ совпадений</h2>
             <div className="flex items-center gap-3 shrink-0">
-              <span className="text-brandy/40 text-sm">{cities.length} городов</span>
+              <span className="text-brandy/75 text-sm">{cities.length} городов</span>
               <ShareButton
                 title="Подбор города для переезда — Relocost"
                 text={shareText}
@@ -487,7 +487,7 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
               />
             </div>
           </div>
-          <p className="text-brandy/45 text-xs mb-5">
+          <p className="text-brandy/75 text-xs mb-5">
             Топ-15 из {cities.length} направлений. Меняйте приоритеты — список обновляется мгновенно.
             Отметьте до двух городов «+ Сравнить», чтобы посмотреть разницу и
             открыть бюджет по обоим дешевле.

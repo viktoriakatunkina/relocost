@@ -49,7 +49,7 @@ export function DifficultyBars({
               ))}
             </div>
             <span className="col-span-2 sm:col-span-1 text-cream tabular-nums text-right font-semibold">
-              {it.value}<span className="text-brandy/40">/5</span>
+              {it.value}<span className="text-brandy/75">/5</span>
             </span>
           </div>
         ))}
