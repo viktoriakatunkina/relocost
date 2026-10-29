@@ -9,11 +9,18 @@ declare global {
 }
 
 /**
- * Отправляет цель в Яндекс.Метрику: ym(COUNTER_ID, 'reachGoal', goal).
+ * Отправляет цель в Яндекс.Метрику: ym(COUNTER_ID, 'reachGoal', goal, params).
  * Безопасно вызывать где угодно на клиенте — если счётчик ещё не
  * загрузился (или NODE_ENV !== production), window.ym просто undefined.
+ *
+ * `params` — необязательные параметры визита (краткий код причины ошибки
+ * и т.п.) — НЕ для PII (email, payment_id и т.д. сюда не класть).
  */
-export function reachGoal(goal: string): void {
+export function reachGoal(goal: string, params?: Record<string, unknown>): void {
   if (typeof window === "undefined") return;
-  window.ym?.(METRIKA_COUNTER_ID, "reachGoal", goal);
+  if (params) {
+    window.ym?.(METRIKA_COUNTER_ID, "reachGoal", goal, params);
+  } else {
+    window.ym?.(METRIKA_COUNTER_ID, "reachGoal", goal);
+  }
 }

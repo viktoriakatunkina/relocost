@@ -85,6 +85,8 @@ export function CountryPaymentModal({
       const data = await res.json();
 
       if (!res.ok) {
+        // Цель "checkout_error" — см. тот же комментарий в PaymentModal.tsx.
+        reachGoal("checkout_error", { reason: `http_${res.status}` });
         setError(data?.error || "Не удалось создать платеж. Попробуйте еще раз.");
         setSubmitting(false);
         return;
@@ -106,13 +108,17 @@ export function CountryPaymentModal({
         if (data?.payment_id) {
           setPendingPayment({ payment_id: data.payment_id, slug, pkg: pkg! });
         }
+        // Цель "checkout_submitted" — см. тот же комментарий в PaymentModal.tsx.
+        reachGoal("checkout_submitted");
         window.location.href = data.confirmation_url;
         return;
       }
 
+      reachGoal("checkout_error", { reason: "no_confirmation_url" });
       setError("ЮKassa не вернула ссылку на оплату. Попробуйте еще раз.");
       setSubmitting(false);
     } catch {
+      reachGoal("checkout_error", { reason: "network" });
       setError("Сеть недоступна. Проверьте подключение и попробуйте еще раз.");
       setSubmitting(false);
     }

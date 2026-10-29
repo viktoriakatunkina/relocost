@@ -91,6 +91,10 @@ export function VerifyOnReturn({
         }
         if (data?.status === "canceled") {
           clearPendingPayment();
+          // Цель "payment_canceled" — слепая зона воронки (2026-10-29): эта
+          // ветка уже отличала canceled от timeout визуально, но ни одна
+          // из них не слалась в Метрику.
+          reachGoal("payment_canceled");
           if (!cancelled) {
             setStatus("canceled");
             dismissTimer.current = setTimeout(() => {
@@ -98,6 +102,7 @@ export function VerifyOnReturn({
             }, 5000);
           }
         } else if (!cancelled) {
+          reachGoal("payment_timeout");
           setStatus("timeout");
           dismissTimer.current = setTimeout(() => {
             if (!cancelled) setStatus("idle");
@@ -107,6 +112,7 @@ export function VerifyOnReturn({
         if (attempt < MAX_TRIES) {
           setTimeout(() => checkPayment(attempt + 1), 2500);
         } else if (!cancelled) {
+          reachGoal("payment_timeout");
           setStatus("timeout");
           dismissTimer.current = setTimeout(() => {
             if (!cancelled) setStatus("idle");

@@ -111,6 +111,12 @@ export function PaymentModal({
       const data = await res.json();
 
       if (!res.ok) {
+        // Цель "checkout_error" — слепая зона воронки (2026-10-29): раньше
+        // между открытием модалки (package_click) и успехом (payment_success)
+        // не было ни одного сигнала об отказе — серверная ошибка создания
+        // платежа была не видна в Метрике вообще. Код причины — короткий
+        // HTTP-статус, не PII.
+        reachGoal("checkout_error", { reason: `http_${res.status}` });
         setError(data?.error || "Не удалось создать платеж. Попробуйте еще раз.");
         setSubmitting(false);
         return;
@@ -140,13 +146,19 @@ export function PaymentModal({
         if (data?.payment_id) {
           setPendingPayment({ payment_id: data.payment_id, slug, pkg: pkg! });
         }
+        // Цель "checkout_submitted" — фиксирует сам факт ухода на оплату
+        // ЮKassa, до того как произойдёт редирект (fire-and-forget, не
+        // блокирует переход).
+        reachGoal("checkout_submitted");
         window.location.href = data.confirmation_url;
         return;
       }
 
+      reachGoal("checkout_error", { reason: "no_confirmation_url" });
       setError("ЮKassa не вернула ссылку на оплату. Попробуйте еще раз.");
       setSubmitting(false);
     } catch {
+      reachGoal("checkout_error", { reason: "network" });
       setError("Сеть недоступна. Проверьте подключение и попробуйте еще раз.");
       setSubmitting(false);
     }
