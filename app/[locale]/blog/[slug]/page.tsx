@@ -42,6 +42,19 @@ export const revalidate = 86400;
 // Неизвестные slug рендерятся по первому запросу и кешируются ISR.
 export const dynamicParams = true;
 
+// 2026-10-29 (ночной прогон, находка #strip-html-comments-blog-renderer):
+// content_md статей содержит служебные HTML-комментарии для редактора
+// (напр. "<!-- Явный контекстный CTA -->" — найдено в 221 из 961 md-файлов
+// content/blog/), а react-markdown их не вырезает — на живой странице это
+// обычный видимый текст прямо в теле статьи (подтверждено на
+// /blog/phuket-tipichnyy-pereezd-2026). Сами .md-файлы и content_md в
+// Supabase не трогаем (источник правды — живая БД, см. CLAUDE.md) —
+// вырезаем на единственном пути рендера статьи, одной правкой сразу для
+// всех затронутых статей.
+function stripHtmlComments(md: string): string {
+  return md.replace(/<!--[\s\S]*?-->/g, "");
+}
+
 // Консолидация дублей: слабая статья отдаёт canonical на более полную версию,
 // чтобы они не каннибализировали друг друга в поиске. Ключ — slug-дубль,
 // значение — slug канонической (более полной) статьи.
@@ -152,7 +165,11 @@ export default async function BlogPostPage({
   if (!rawPost) notFound();
   // Локализуем тело статьи (title, content_md, seo) — ниже всё рендерится из
   // этого объекта. Для ru возвращается исходный пост без изменений.
-  const post = await localizeBlogPost(rawPost, params.locale);
+  const localizedPost = await localizeBlogPost(rawPost, params.locale);
+  // stripHtmlComments() — см. комментарий у функции выше. Новый объект, а не
+  // мутация localizedPost: тот может быть тем же объектом, что кэширован в
+  // postMemo (lib/blog.ts) под rawPost, который используют другие читатели.
+  const post = { ...localizedPost, content_md: stripHtmlComments(localizedPost.content_md) };
   const rawHasNoBinding = !post.city_id && !post.country_slug;
   const [city, relatedPosts, prices, countryCities, popularCitiesInitial, citiesForMatchInitial] = await Promise.all([
     getCityForPost(post.city_id) as Promise<City | null>,
