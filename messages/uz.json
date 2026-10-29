@@ -12,7 +12,8 @@
     "quiz": "Test",
     "checklist": "Roʻyxat",
     "rating": "Reyting",
-    "match": "Tanlash"
+    "match": "Tanlash",
+    "compare": "Taqqoslash"
   },
   "lang": {
     "label": "Tilni tanlash",

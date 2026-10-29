@@ -376,6 +376,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/search", lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { path: "/quiz", lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { path: "/rating", lastModified: now, changeFrequency: "weekly", priority: 0.7 },
+    // Хаб /compare (2026-10-29): раньше точки входа в 89 готовых сравнений
+    // не было вообще (curl /compare → 404) — ни в sitemap, ни в навигации.
+    { path: "/compare", lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { path: "/checklist", lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { path: "/embed", lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     ...getAllListSlugs().map((slug) => ({

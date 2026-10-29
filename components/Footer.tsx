@@ -12,6 +12,7 @@ export async function Footer() {
     { href: "/countries", label: tn("countries") },
     { href: "/quiz", label: tn("quiz") },
     { href: "/rating", label: tn("rating") },
+    { href: "/compare", label: tn("compare") },
     { href: "/checklist", label: tn("checklist") },
     { href: "/blog", label: tn("blog") },
     { href: "/news", label: tn("news") },

@@ -16,7 +16,8 @@ type IconName =
   | "coins"
   | "info"
   | "news"
-  | "list";
+  | "list"
+  | "scale";
 
 interface NavItem {
   href: string;
@@ -144,6 +145,16 @@ function NavIcon({ name }: { name: IconName }) {
           <circle cx="4.5" cy="6" r="1.3" fill="currentColor" stroke="none" />
           <circle cx="4.5" cy="12" r="1.3" fill="currentColor" stroke="none" />
           <circle cx="4.5" cy="18" r="1.3" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "scale":
+      return (
+        <svg {...common}>
+          <line x1="12" y1="3" x2="12" y2="19" />
+          <line x1="5" y1="7" x2="19" y2="7" />
+          <path d="M5 7 2.5 13a2.5 2.5 0 0 0 5 0L5 7z" />
+          <path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0L19 7z" />
+          <line x1="8.5" y1="21" x2="15.5" y2="21" />
         </svg>
       );
   }

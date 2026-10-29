@@ -12,7 +12,8 @@
     "quiz": "Move quiz",
     "checklist": "Checklist",
     "rating": "Rating",
-    "match": "Match"
+    "match": "Match",
+    "compare": "Compare"
   },
   "lang": {
     "label": "Choose language",

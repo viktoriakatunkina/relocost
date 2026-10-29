@@ -31,6 +31,7 @@ export async function Header() {
     { href: "/match", label: t("match"), icon: "sliders" as const },
     { href: "/quiz", label: t("quiz"), icon: "compass" as const },
     { href: "/rating", label: t("rating"), icon: "star" as const },
+    { href: "/compare", label: t("compare"), icon: "scale" as const },
     { href: "/blog", label: t("blog"), icon: "book" as const },
     { href: "/news", label: t("news"), icon: "news" as const },
     { href: "/checklist", label: t("checklist"), icon: "check" as const },
