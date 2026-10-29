@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SearchClient } from "@/components/search/SearchClient";
+import { ToolsCrossNote } from "@/components/ToolsCrossNote";
 import { getCitiesWithBudget } from "@/lib/city-budget";
 import { Footer } from "@/components/Footer";
 import { type Locale } from "@/i18n/routing";
@@ -54,6 +55,8 @@ export default async function SearchPage({
         <p className="text-brandy/65 text-base max-w-3xl mt-4 leading-relaxed">
           {t("intro", { cities: cityCount, countries: countryCount })}
         </p>
+
+        <ToolsCrossNote current="search" />
       </section>
 
       <SearchClient cities={cities} />

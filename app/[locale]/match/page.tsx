@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { getCitiesWithBudget } from "@/lib/city-budget";
 import { MatchClient } from "@/components/MatchClient";
+import { ToolsCrossNote } from "@/components/ToolsCrossNote";
 import { Footer } from "@/components/Footer";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CrossLinks } from "@/components/CrossLinks";
@@ -49,6 +50,8 @@ export default async function MatchPage({ params }: { params: { locale: Locale }
           Расставьте приоритеты — алгоритм подберет города с максимальным
           совпадением. Меняйте веса в реальном времени.
         </p>
+
+        <ToolsCrossNote current="match" />
       </section>
 
       <MatchClient cities={cities} />

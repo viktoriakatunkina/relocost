@@ -311,6 +311,40 @@ export default async function AboutPage({
             </Reveal>
           ))}
         </div>
+
+        {/* Четыре инструмента подбора города — поясняем разницу, чтобы не путали */}
+        <Reveal delay={FEATURES.length * 80}>
+          <div className="mt-10 rounded-2xl border hairline bg-surface p-6 md:p-8">
+            <h3 className="font-serif text-xl md:text-2xl text-cream mb-3">
+              Еще не выбрали город? Четыре способа подобрать
+            </h3>
+            <p className="text-brandy/75 text-sm md:text-base leading-relaxed mb-5 text-pretty">
+              Внутри Подборок — четыре отдельных инструмента для подбора города, у каждого свой
+              сценарий: Тест — быстрый вариант за 6 вопросов о бюджете и приоритетах, Подбор —
+              точная настройка через слайдеры с весами критериев, Поиск — список всех городов
+              с фильтрами, который можно просмотреть самостоятельно, Рейтинг — общий топ по
+              всем {stats.cityCount}+ городам сайта. Это не четыре версии одного и того же —
+              выбирайте по тому, сколько времени готовы потратить и нужен ли Вам готовый ответ
+              или список для сравнения.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {[
+                { href: "/quiz", label: "Тест" },
+                { href: "/match", label: "Подбор" },
+                { href: "/search", label: "Поиск" },
+                { href: "/rating", label: "Рейтинг" },
+              ].map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href as "/quiz" | "/match" | "/search" | "/rating"}
+                  className="px-4 py-2.5 rounded-pill bg-pine-tree border hairline text-brandy/90 hover:text-copper hover:border-copper/40 transition text-sm"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </Reveal>
       </section>
 
       {/* Принципы */}

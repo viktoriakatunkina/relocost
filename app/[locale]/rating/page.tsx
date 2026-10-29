@@ -3,6 +3,7 @@ import { getCitiesWithBudget } from "@/lib/city-budget";
 import { CITY_CONTENT } from "@/lib/cities-content";
 import { computeLivingScore } from "@/lib/rating";
 import { RatingClient, type RatedCity } from "@/components/rating/RatingClient";
+import { ToolsCrossNote } from "@/components/ToolsCrossNote";
 import { CityDeepLinks } from "@/components/CityDeepLinks";
 import { CrossLinks } from "@/components/CrossLinks";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -115,6 +116,8 @@ export default async function RatingPage({
         <p className="mt-5 text-xs text-brandy/45 max-w-xl">
           Оценка для переезда, а не «уровень жизни вообще». Безопасность и медицину числом не оцениваем — только то, что реально измерили. Города с неполными данными помечены.
         </p>
+
+        <ToolsCrossNote current="rating" />
       </section>
 
       <RatingClient cities={rated} />

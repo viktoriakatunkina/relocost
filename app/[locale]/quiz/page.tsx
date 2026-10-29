@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getCitiesWithBudget } from "@/lib/city-budget";
 import { CITY_CONTENT } from "@/lib/cities-content";
 import { QuizClient } from "@/components/quiz/QuizClient";
+import { ToolsCrossNote } from "@/components/ToolsCrossNote";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
 import { type Locale } from "@/i18n/routing";
@@ -108,6 +109,8 @@ export default async function QuizPage({
             </span>
           ))}
         </div>
+
+        <ToolsCrossNote current="quiz" />
       </section>
 
       <QuizClient cities={cities} community={community} />
