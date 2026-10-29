@@ -8,6 +8,7 @@ import {
   type CountryPackageType,
 } from "@/lib/unlocked";
 import { CountryPaymentModal } from "./CountryPaymentModal";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 export function CountryStickyBar({
   slug,
@@ -90,7 +91,7 @@ export function CountryStickyBar({
                   className="shrink-0 inline-flex flex-col items-start gap-0.5 px-3.5 md:px-4 py-2 min-h-[44px] justify-center rounded-pill bg-surface-elevated hover:bg-surface-elevated text-cream text-sm border hairline transition"
                 >
                   <span className="inline-flex items-center gap-1.5">
-                    <span>{meta.emoji}</span>
+                    <PackageIcon pkg={p} size={14} />
                     <span className="hidden sm:inline">{meta.short}</span>
                     <span className="font-semibold tabular-nums">{meta.price} ₽</span>
                   </span>

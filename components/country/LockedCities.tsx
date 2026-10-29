@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
 import { COUNTRY_PACKAGES, useCountryUnlocked, isCountryUnlocked } from "@/lib/unlocked";
 import { CountryPaymentModal } from "@/components/freemium/CountryPaymentModal";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 import { cityName } from "@/lib/i18n-content";
 import type { Locale } from "@/i18n/routing";
 import type { CityWithMinRent } from "@/lib/types";
@@ -58,7 +59,7 @@ export function LockedCities({
                 onClick={() => setOpenModal(true)}
                 className="flex flex-col items-center gap-3 hover:opacity-80 transition"
               >
-                <span className="text-3xl">🏙</span>
+                <PackageIcon pkg="country_cities" size={28} />
                 <p className="text-cream/80 text-sm font-medium">
                   Ещё {locked.length} городов
                 </p>
@@ -91,7 +92,7 @@ export function LockedCities({
                   onClick={() => setOpenModal(true)}
                   className="flex flex-col items-center gap-3 hover:opacity-80 transition"
                 >
-                  <span className="text-4xl">🏙</span>
+                  <PackageIcon pkg="country_cities" size={36} />
                   <p className="text-cream font-serif text-2xl">
                     Ещё {locked.length} городов
                   </p>

@@ -13,6 +13,7 @@ import {
 import { CITY_PACKAGES, isUnlocked, useUnlocked } from "@/lib/unlocked";
 import { PaymentModal } from "@/components/freemium/PaymentModal";
 import { PurchaseCount } from "@/components/PurchaseCount";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 // Цвета сегментов бюджета — в теплой палитре сайта, но различимые между собой.
 const SLICE_COLOR: Record<string, string> = {
@@ -295,7 +296,9 @@ export function MonthlyBudget({
 
                       {/* единая карточка с ценой и гарантией — под запертыми строками */}
                       <div className="mt-3 bg-surface-elevated/80 border border-copper/25 rounded-2xl px-5 py-4 text-center">
-                        <p className="text-cream font-serif text-lg mb-1">📊 Детальная разбивка</p>
+                        <p className="text-cream font-serif text-lg mb-1 flex items-center justify-center gap-1.5">
+                          <PackageIcon pkg="budget" size={18} /> Детальная разбивка
+                        </p>
                         <p className="text-brandy/75 text-sm mb-3 leading-snug">
                           Точные суммы и % по каждой категории — в пакете «{budgetPkg.label}»
                         </p>

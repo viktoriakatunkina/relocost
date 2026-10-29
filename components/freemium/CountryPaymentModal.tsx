@@ -14,6 +14,7 @@ import {
   type CountryPackageType,
 } from "@/lib/unlocked";
 import { reachGoal } from "@/lib/metrika";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 const PACKAGE_BULLETS: Record<CountryPackageType, string[]> = {
   country_cities: [
@@ -160,7 +161,7 @@ export function CountryPaymentModal({
         <div className="flex items-start justify-between gap-3 px-5 pt-5 pb-3 md:px-8 md:pt-7">
           <div>
             <div className="flex items-center gap-2 text-copper uppercase text-xs tracking-wider mb-1.5">
-              <span>{meta.emoji}</span>
+              <PackageIcon pkg={pkg} size={14} />
               <span>Материал о стране</span>
             </div>
             <h3 className="font-serif text-xl md:text-2xl text-cream leading-tight">
@@ -213,7 +214,7 @@ export function CountryPaymentModal({
           {/* Саммари заказа перед оплатой — компактная строка, см. PaymentModal.tsx. */}
           <div className="flex items-center justify-between gap-3 rounded-xl border border-copper/25 bg-pine-tree/40 px-4 py-2.5">
             <p className="min-w-0 flex items-center gap-1.5 text-cream text-sm font-semibold leading-snug">
-              <span aria-hidden>{meta.emoji}</span>
+              <PackageIcon pkg={pkg} size={16} />
               <span className="truncate">
                 {meta.label}
                 {countryName ? ` — ${countryName}` : ""}

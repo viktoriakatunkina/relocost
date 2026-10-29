@@ -6,6 +6,7 @@ import { formatRub } from "@/lib/cities";
 import { PACKAGES, isUnlocked, useUnlocked } from "@/lib/unlocked";
 import { PaymentModal } from "@/components/freemium/PaymentModal";
 import { typo } from "@/lib/typography";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 type Lifestyle = "econom" | "standard" | "comfort";
 
@@ -266,8 +267,8 @@ export function Calculator({
           {!opened && (
             <div className="absolute inset-0 flex items-center justify-center px-4">
               <div className="max-w-md w-full bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-3xl p-5 md:p-8 text-center shadow-card">
-                <div className="text-3xl mb-3" aria-hidden>
-                  {budget.emoji}
+                <div className="mb-3 flex justify-center text-copper" aria-hidden>
+                  <PackageIcon pkg="budget" size={32} />
                 </div>
                 <h3 className="font-serif text-2xl text-cream mb-3 text-pretty">
                   {typo(`Ваш расчёт для «${cityName}» готов`)}

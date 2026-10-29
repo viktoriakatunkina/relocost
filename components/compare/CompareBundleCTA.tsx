@@ -29,6 +29,7 @@ import {
   setPendingBundlePayment,
 } from "@/lib/unlocked";
 import { reachGoal } from "@/lib/metrika";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 type CityTarget = { slug: string; name: string };
 
@@ -69,7 +70,7 @@ export function CompareBundleCTA({ a, b }: { a: CityTarget; b: CityTarget }) {
           }}
           className="shrink-0 inline-flex items-center justify-center gap-2 px-7 py-3.5 min-h-[44px] rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
         >
-          🎁 Купить оба — {CITY_PAIR_BUDGET_BUNDLE.price} ₽
+          <PackageIcon pkg="bundle" size={16} /> Купить оба — {CITY_PAIR_BUDGET_BUNDLE.price} ₽
         </button>
       </div>
 
@@ -178,7 +179,7 @@ function CompareBundleModal({
         <div className="shrink-0 flex items-start justify-between gap-3 px-5 pt-5 pb-3 md:px-8 md:pt-7">
           <div>
             <div className="flex items-center gap-2 text-copper uppercase text-xs tracking-wider mb-1.5">
-              <span>🎁</span>
+              <PackageIcon pkg="bundle" size={14} />
               <span>Бандл на 2 города</span>
             </div>
             <h3 className="font-serif text-xl md:text-2xl text-cream leading-tight">
@@ -228,8 +229,8 @@ function CompareBundleModal({
             <p className="text-brandy/55 text-[10px] uppercase tracking-wider mb-1">
               Ваш заказ
             </p>
-            <p className="text-cream text-sm font-semibold leading-snug">
-              🎁 Бюджет — {a.name} + {b.name}
+            <p className="text-cream text-sm font-semibold leading-snug flex items-center gap-1.5">
+              <PackageIcon pkg="bundle" size={16} /> Бюджет — {a.name} + {b.name}
             </p>
             <p className="text-copper text-sm font-bold mt-1.5">
               {CITY_PAIR_BUDGET_BUNDLE.price} ₽{" "}

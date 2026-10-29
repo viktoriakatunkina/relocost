@@ -6,6 +6,7 @@ import { CATEGORY_LABELS, CATEGORY_ORDER } from "@/lib/prices";
 import { formatRub } from "@/lib/cities";
 import { CITY_PACKAGES, isUnlocked, useUnlocked } from "@/lib/unlocked";
 import { PaymentModal } from "@/components/freemium/PaymentModal";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 export function PricesTable({
   prices,
@@ -140,7 +141,7 @@ export function PricesTable({
                         onClick={() => setOpenModal(true)}
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
                       >
-                        📊 Получить полный расчёт расходов — {CITY_PACKAGES.budget.price} ₽
+                        <PackageIcon pkg="budget" size={16} /> Получить полный расчёт расходов — {CITY_PACKAGES.budget.price} ₽
                       </button>
                     </div>
                   </div>

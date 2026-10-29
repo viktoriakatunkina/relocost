@@ -8,6 +8,7 @@ import { typo } from "@/lib/typography";
 import { type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
 import { COUNTRY_PACKAGES, COUNTRY_PACKAGE_DESCRIPTIONS } from "@/lib/packages";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 // Findable-ответ на фидбек «нигде не нашла сравнения тарифов» / «не понимаю
 // чем отличаются кроме цены»: раньше цены были разбросаны по разным блокам
@@ -89,7 +90,7 @@ export default async function TariffsPage({
                 >
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center gap-1.5 text-cream font-serif text-base">
-                      <span aria-hidden>{meta.emoji}</span>
+                      <PackageIcon pkg={r.key} size={18} />
                       {meta.short}
                     </span>
                     <span className="text-copper font-semibold text-sm tabular-nums">

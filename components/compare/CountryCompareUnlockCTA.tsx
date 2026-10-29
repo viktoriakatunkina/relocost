@@ -10,6 +10,7 @@ import {
   type CountryPackageType,
 } from "@/lib/unlocked";
 import { pluralRu } from "@/lib/trip-format";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 // Монетизация /compare/<страна>-vs-<страна>.
 //
@@ -105,7 +106,7 @@ function CountryUnlockCard({
                       : "inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-pill border border-copper/50 text-copper font-semibold text-sm hover:bg-copper/10 transition"
                   }
                 >
-                  {meta.emoji} {meta.label} — {meta.price} ₽
+                  <PackageIcon pkg={p} size={15} /> {meta.label} — {meta.price} ₽
                 </button>
               );
             })}

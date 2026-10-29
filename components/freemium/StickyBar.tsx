@@ -10,6 +10,7 @@ import {
 import { PaymentModal } from "./PaymentModal";
 import { PackageComparisonModal } from "./PackageComparisonModal";
 import { RestoreAccess } from "./RestoreAccess";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 export function StickyBar({
   slug,
@@ -136,7 +137,7 @@ export function StickyBar({
               onClick={() => setOpenPkg(heroPkg)}
               className="flex-1 rounded-xl bg-copper text-pine-tree font-semibold text-[13px] py-2.5 px-3 whitespace-nowrap hover:bg-brandy transition active:scale-95"
             >
-              {heroPkg === "bundle" && <span aria-hidden>🎁 </span>}
+              {heroPkg === "bundle" && <PackageIcon pkg="bundle" size={14} className="mr-0.5" />}
               {heroLabel} — {CITY_PACKAGES[heroPkg].price} ₽
             </button>
             {downsellPkg && (
@@ -165,7 +166,7 @@ export function StickyBar({
                 onClick={() => setOpenPkg(heroPkg)}
                 className="shrink-0 inline-flex items-center gap-1.5 px-4 md:px-5 py-2 min-h-[40px] rounded-pill bg-copper text-pine-tree text-sm font-semibold border border-copper transition hover:bg-brandy whitespace-nowrap"
               >
-                {heroPkg === "bundle" && <span aria-hidden>🎁</span>}
+                {heroPkg === "bundle" && <PackageIcon pkg="bundle" size={14} />}
                 <span>{heroLabel}</span>
                 <span className="font-semibold tabular-nums">{CITY_PACKAGES[heroPkg].price} ₽</span>
                 {heroPkg === "bundle" && bundleSavings > 0 && (

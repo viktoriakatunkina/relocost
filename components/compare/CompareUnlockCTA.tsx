@@ -9,6 +9,7 @@ import {
   useUnlocked,
   type CityPackageType,
 } from "@/lib/unlocked";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 // Монетизация /compare/<город>-vs-<город>.
 //
@@ -71,7 +72,7 @@ function CityUnlockCard({
             onClick={() => onBuy(city.slug, "places", city.name)}
             className="mt-auto inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-pill border border-copper/50 text-copper font-semibold text-sm hover:bg-copper/10 transition"
           >
-            {CITY_PACKAGES.places.emoji} Лучшие места — {CITY_PACKAGES.places.price} ₽
+            <PackageIcon pkg="places" size={15} /> Лучшие места — {CITY_PACKAGES.places.price} ₽
           </button>
         </>
       ) : (
@@ -85,14 +86,14 @@ function CityUnlockCard({
             onClick={() => onBuy(city.slug, "budget", city.name)}
             className="mt-auto inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-pill bg-copper text-pine-tree font-semibold text-sm hover:bg-brandy transition"
           >
-            {CITY_PACKAGES.budget.emoji} Полный профиль — {CITY_PACKAGES.budget.price} ₽
+            <PackageIcon pkg="budget" size={15} /> Полный профиль — {CITY_PACKAGES.budget.price} ₽
           </button>
           <button
             type="button"
             onClick={() => onBuy(city.slug, "bundle", city.name)}
             className="text-brandy/60 hover:text-copper text-xs underline underline-offset-2 transition"
           >
-            {CITY_PACKAGES.bundle.emoji} + лучшие места, всё вместе —{" "}
+            <PackageIcon pkg="bundle" size={13} /> + лучшие места, всё вместе —{" "}
             {CITY_PACKAGES.bundle.price} ₽
           </button>
         </>

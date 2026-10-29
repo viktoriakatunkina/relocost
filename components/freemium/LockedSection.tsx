@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CITY_PACKAGES, type CityPackageType } from "@/lib/unlocked";
 import { PaymentModal } from "./PaymentModal";
 import { PurchaseCount } from "@/components/PurchaseCount";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 export function LockedSection({
   slug,
@@ -54,8 +55,8 @@ export function LockedSection({
 
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="max-w-md w-full bg-surface-elevated/95 backdrop-blur-md border border-copper/25 rounded-3xl p-6 md:p-7 text-center shadow-2xl">
-            <div className="text-3xl mb-3" aria-hidden>
-              {meta.emoji}
+            <div className="mb-3 flex justify-center text-copper" aria-hidden>
+              <PackageIcon pkg={pkg} size={32} />
             </div>
             <h3 className="font-serif text-xl text-cream mb-2">
               {meta.label}

@@ -1,6 +1,7 @@
 "use client";
 
 import { CITY_COMPARISON_FEATURES, CITY_PACKAGES, type CityPackageType } from "@/lib/packages";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 // Полноценная таблица сравнения 3 пакетов города — что именно входит в
 // каждый, чек-марками по фичам. Раньше сравнения тарифов не было нигде на
@@ -60,7 +61,7 @@ export function PackageComparisonTable({
                   }`}
                 >
                   <div className="flex flex-col items-center gap-0.5">
-                    <span className="text-lg" aria-hidden>{meta.emoji}</span>
+                    <PackageIcon pkg={c.key} size={20} />
                     <span className="font-serif text-base leading-tight">{meta.short}</span>
                     <span className="font-semibold tabular-nums text-sm">{meta.price} ₽</span>
                   </div>
@@ -131,7 +132,7 @@ export function PackageComparisonTable({
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="inline-flex items-center gap-1.5 text-cream font-serif text-base">
-                  <span aria-hidden>{meta.emoji}</span>
+                  <PackageIcon pkg={c.key} size={16} />
                   {meta.short}
                 </span>
                 <span className="text-copper font-semibold text-sm tabular-nums">

@@ -17,6 +17,13 @@
 
 export type CityPackageType = "places" | "budget" | "bundle";
 
+// 2026-10-29 (аудит иконографии): `emoji` больше НЕ рендерится ни в одном
+// компоненте — OS-эмодзи (📍📊🎁) выглядели по-разному на разных платформах,
+// заменены на line-иконки в components/icons/PackageIcons.tsx (та же
+// эстетика 1.6px stroke, что у components/quiz/QuizClient.tsx). Поле
+// оставлено только чтобы не трогать тип Record и возможные внешние
+// потребители — для нового кода используй <PackageIcon pkg={...} />, а не
+// это поле.
 export const CITY_PACKAGES: Record<
   CityPackageType,
   { label: string; price: number; emoji: string; short: string }
@@ -66,6 +73,9 @@ export type CountryPackageType = "country_cities" | "country_overview";
 // country_overview — цену places (так было и в 199/149-эпоху, и в 49/19 —
 // кроме country_overview, который на низких ценах разъехался с places на
 // 29 против 19; восстанавливаем зеркалирование при повышении).
+//
+// 2026-10-29: `emoji` тут та же история, что у CITY_PACKAGES выше —
+// оставлено для совместимости типа, не рендерится (см. PackageIcon).
 export const COUNTRY_PACKAGES: Record<
   CountryPackageType,
   { label: string; price: number; emoji: string; short: string }

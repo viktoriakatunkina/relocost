@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { COUNTRY_PACKAGES, useCountryUnlocked, isCountryUnlocked } from "@/lib/unlocked";
 import { CountryPaymentModal } from "@/components/freemium/CountryPaymentModal";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
 interface FactData {
   key: string;
@@ -99,8 +100,8 @@ export function LockedCountryFacts({
                 {/* paywall-оверлей */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="bg-surface-elevated/95 backdrop-blur-md border border-copper/30 rounded-2xl px-6 py-5 text-center shadow-xl max-w-sm">
-                    <p className="text-cream font-serif text-xl mb-2">
-                      🌍 Полный обзор страны
+                    <p className="text-cream font-serif text-xl mb-2 flex items-center justify-center gap-2">
+                      <PackageIcon pkg="country_overview" size={22} /> Полный обзор страны
                     </p>
                     <p className="text-brandy/75 text-sm mb-4 leading-snug">
                       Особенности жизни, менталитет, лучшие места и практические советы — в одном материале.

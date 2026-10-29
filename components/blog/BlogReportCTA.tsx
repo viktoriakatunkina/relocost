@@ -1,11 +1,12 @@
 import { Link } from "@/i18n/navigation";
 import type { City } from "@/lib/types";
-import { CITY_PACKAGES } from "@/lib/packages";
+import { CITY_PACKAGES, type CityPackageType } from "@/lib/packages";
+import { PackageIcon } from "@/components/icons/PackageIcons";
 
-const PKGS = [
-  { key: "places", emoji: CITY_PACKAGES.places.emoji, label: "Лучшие места", price: CITY_PACKAGES.places.price },
-  { key: "budget", emoji: CITY_PACKAGES.budget.emoji, label: "Все расходы", price: CITY_PACKAGES.budget.price },
-  { key: "bundle", emoji: CITY_PACKAGES.bundle.emoji, label: "Расходы + Места", price: CITY_PACKAGES.bundle.price },
+const PKGS: { key: CityPackageType; label: string; price: number }[] = [
+  { key: "places", label: "Лучшие места", price: CITY_PACKAGES.places.price },
+  { key: "budget", label: "Все расходы", price: CITY_PACKAGES.budget.price },
+  { key: "bundle", label: "Расходы + Места", price: CITY_PACKAGES.bundle.price },
 ];
 
 const MIN_PRICE = Math.min(CITY_PACKAGES.places.price, CITY_PACKAGES.budget.price, CITY_PACKAGES.bundle.price);
@@ -43,7 +44,7 @@ export function BlogReportCTA({ city }: { city: CTACity | null }) {
               href={`/city/${city.slug}`}
               className="flex flex-col items-center gap-1.5 p-4 rounded-2xl bg-pine-tree/50 border border-copper/25 hover:border-copper/60 hover:bg-pine-tree/70 transition text-center"
             >
-              <span className="text-2xl" aria-hidden>{p.emoji}</span>
+              <PackageIcon pkg={p.key} size={26} className="text-copper" />
               <span className="text-cream text-sm font-medium leading-tight">{p.label}</span>
               <span className="text-copper font-bold text-sm">{p.price} ₽</span>
             </Link>
