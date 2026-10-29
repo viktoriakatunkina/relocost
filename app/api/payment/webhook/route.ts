@@ -30,6 +30,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   }
 
+  // Формат id платежа ЮKassa — буквы/цифры/дефисы (см. app/api/payment/verify).
+  // Отбрасываем до обращения к API ЮKassa, чтобы мусорные POST с фейковыми id
+  // не заставляли сервер слать неограниченные запросы под реальным ключом магазина.
+  if (!/^[a-z0-9-]{16,64}$/i.test(paymentId)) {
+    return NextResponse.json({ ok: true });
+  }
+
   let payment;
   try {
     payment = await getPayment(paymentId);
