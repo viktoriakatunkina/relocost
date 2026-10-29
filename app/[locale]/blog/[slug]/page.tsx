@@ -407,7 +407,7 @@ export default async function BlogPostPage({
   const displayTitle = displayBlogTitle(post.title);
 
   return (
-    <main className="pb-20 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-20 md:pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}

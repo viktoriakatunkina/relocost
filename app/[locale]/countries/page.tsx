@@ -60,7 +60,7 @@ export default async function CountriesPage({
   const domesticCities = domestic.reduce((acc, c) => acc + c.city_count, 0);
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-12 md:pb-24">
       <Breadcrumbs items={[{ name: tc("home"), href: "/" }, { name: tn("countries") }]} />
 
       <section className="relative px-6 pt-12 pb-10 overflow-hidden">

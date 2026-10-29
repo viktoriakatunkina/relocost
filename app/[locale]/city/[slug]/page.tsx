@@ -353,7 +353,7 @@ export default async function CityPage({
   };
 
   return (
-    <main className="pb-36 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-36 md:pb-24">
       <CitySchema city={c} />
       <ProductSchema city={c} />
       <Breadcrumbs

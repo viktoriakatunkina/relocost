@@ -33,7 +33,7 @@ export default async function MatchPage({ params }: { params: { locale: Locale }
   const cities = await getCitiesWithBudget();
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-12 md:pb-24">
       <Breadcrumbs
         items={[
           { name: "Главная", href: "/" },

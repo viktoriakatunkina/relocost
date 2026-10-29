@@ -153,6 +153,7 @@ export default async function HomePage({
           визуально «пропадали». Фон/дымка теперь клипаются собственной
           обёрткой ниже, а не всей секцией — HeroMist уже и так сам себя
           клипает (см. components/decor/Atmosphere.tsx). */}
+      <main id="main-content" tabIndex={-1}>
       <section className="relative isolate md:min-h-[92vh] flex flex-col justify-center px-6 py-8 md:py-12">
         <div className="absolute inset-0 overflow-hidden" aria-hidden>
           <Image
@@ -468,6 +469,7 @@ export default async function HomePage({
       <Reveal>
         <CTABanner cityCount={cityCount} countryCount={countryCount} />
       </Reveal>
+      </main>
       <Footer />
     </>
   );

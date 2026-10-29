@@ -50,7 +50,7 @@ export default async function FavoritesPage({
   setRequestLocale(params.locale);
   const { cities: all, dbError } = await getAllCities();
   return (
-    <main className="pb-12 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-12 md:pb-24">
       <section className="max-w-6xl mx-auto px-6 pt-12 pb-12">
         <p className="text-copper uppercase text-sm tracking-wider mb-4">
           Избранное

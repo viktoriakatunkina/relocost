@@ -48,7 +48,7 @@ export default async function ProjectPage({
   const ti = await getTranslations("projectIndex");
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-12 md:pb-24">
       <Breadcrumbs items={[{ name: tc("home"), href: "/" }, { name: tn("project") }]} />
 
       <section className="relative px-6 pt-12 pb-10 overflow-hidden">

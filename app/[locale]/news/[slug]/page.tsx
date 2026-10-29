@@ -156,7 +156,7 @@ export default async function NewsItemPage({
   const dateLabel = formatNewsDate(post.event_date ?? post.created_at);
 
   return (
-    <main className="pb-20 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-20 md:pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(newsSchema) }}

@@ -61,7 +61,7 @@ export default async function ListsIndexPage({
   const lists = await getAllListsPreview();
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-12 md:pb-24">
       <Breadcrumbs items={[{ name: tc("home"), href: "/" }, { name: tn("lists") }]} />
 
       <section className="relative px-6 pt-12 pb-10 overflow-hidden">

@@ -72,7 +72,7 @@ export default async function BlogArchivePage({
   const slice = posts.slice((page - 1) * ARCHIVE_PAGE_SIZE, page * ARCHIVE_PAGE_SIZE);
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-12 md:pb-24">
       <Breadcrumbs
         items={[{ name: "Блог", href: "/blog" }, { name: `Страница ${page}` }]}
       />

@@ -121,7 +121,7 @@ export default async function OfferPage({
   const tf = await getTranslations("footer");
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-12 md:pb-24">
       <Breadcrumbs
         items={[{ name: tc("home"), href: "/" }, { name: tf("offer") }]}
       />

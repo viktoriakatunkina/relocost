@@ -91,7 +91,7 @@ export default async function CityTripPage({
   const purchaseCount = await getGlobalPurchaseCount();
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-12 md:pb-24">
       <Breadcrumbs
         items={[
           { name: "Главная", href: "/" },

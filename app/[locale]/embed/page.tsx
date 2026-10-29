@@ -59,7 +59,7 @@ export default async function EmbedPage({
   const exampleSnippet = buildBadgeSnippet(EXAMPLE_SLUG, EXAMPLE_NAME);
 
   return (
-    <main className="pb-16 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-16 md:pb-24">
       <Breadcrumbs
         items={[
           { name: tc("home"), href: "/" },

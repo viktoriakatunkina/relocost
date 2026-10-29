@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Manrope, Cormorant_Garamond } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Script from "next/script";
 import "../globals.css";
 import { Header } from "@/components/Header";
@@ -121,11 +121,23 @@ export default async function LocaleLayout({
   // SSG-совместимость: фиксируем локаль запроса для статической отрисовки.
   setRequestLocale(locale);
 
+  const t = await getTranslations("common");
+
   return (
     <html lang={locale}>
       <body
         className={`${manrope.variable} ${cormorant.variable} antialiased`}
       >
+        {/* Skip-to-content (WCAG 2.4.1 Bypass Blocks): без неё клавиатура/
+            скринридер вынуждены проходить весь Header на каждой из 2000+
+            страниц, чтобы добраться до контента. Видна только при фокусе
+            (Tab с начала страницы) — остальным пользователям не мешает. */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-pine-tree focus:text-brandy focus:px-4 focus:py-2 focus:rounded"
+        >
+          {t("skipToContent")}
+        </a>
         <NextIntlClientProvider>
           <Header />
           {/* В обычном потоке сразу под header (не fixed) — раньше баннер

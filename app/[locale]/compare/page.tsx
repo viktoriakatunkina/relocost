@@ -101,7 +101,7 @@ export default async function CompareHubPage({
   const total = cityPairs.length + countryPairs.length;
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-12 md:pb-24">
       <Breadcrumbs
         items={[{ name: tc("home"), href: "/" }, { name: tc("compare") }]}
       />

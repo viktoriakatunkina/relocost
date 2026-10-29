@@ -49,7 +49,7 @@ export default async function NewsPage({
   ]);
 
   return (
-    <main className="pb-12 md:pb-24">
+    <main id="main-content" tabIndex={-1} className="pb-12 md:pb-24">
       <Breadcrumbs items={[{ name: tc("home"), href: "/" }, { name: "Новости" }]} />
       <section className="max-w-4xl mx-auto px-6 pt-12 pb-10">
         <p className="text-copper uppercase text-sm tracking-wider mb-4">
