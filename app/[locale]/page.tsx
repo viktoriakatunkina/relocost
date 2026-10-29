@@ -9,7 +9,7 @@ import {
 } from "@/lib/countries";
 import { getListsPreview } from "@/lib/lists";
 import { getSiteStats } from "@/lib/site-stats";
-import { isR2Src, isUnsplashSrc } from "@/lib/photo";
+import { cityPhotoSrc, isR2Src, isUnsplashSrc } from "@/lib/photo";
 import type { SearchItem } from "@/components/SearchBar";
 import { CityCard } from "@/components/CityCard";
 import { CountryCard } from "@/components/country/CountryCard";
@@ -90,6 +90,25 @@ export default async function HomePage({
     ]);
   const countriesPreview = allCountries.slice(0, 8);
 
+  // 2026-10-29 (#hero-photo-swap): фон hero-секции раньше был Лондон
+  // (hero-v3.jpg) — страны Великобритания нет в каталоге и для российской
+  // аудитории UK почти не фигурирует как направление релокации, при этом
+  // сразу под фото — пилюли с реальными направлениями (Тбилиси и т.д.),
+  // визуально споря с фоном. Берём то же фото, что уже легитимно рендерится
+  // на /city/tbilisi (CityHero.tsx) — тот же источник/лицензия, без нового
+  // неподтверждённого asset'а. Тбилиси — первый в FEATURED_CITY_SLUGS и по
+  // собственному исследованию проекта (см. lib/cities.ts) самый массовый и
+  // устойчивый хаб релокации. Фолбэк на старый локальный файл, если по
+  // какой-то причине город не нашёлся в выборке popular.
+  const heroCity = popular.find((c) => c.slug === "tbilisi") ?? popular[0];
+  const heroPhoto =
+    (heroCity &&
+      cityPhotoSrc(heroCity.slug, heroCity.image_url, heroCity.unsplash_url, {
+        w: 1600,
+        q: 80,
+      })) ||
+    "/images/hero-v3.jpg";
+
   // Счётчики городов/стран на главной — из getSiteStats(), единого
   // источника чисел для всего сайта (lib/site-stats.ts), а НЕ из
   // cities.length/allCountries.length. 2026-09-29: живая проверка (AI-агент
@@ -137,12 +156,13 @@ export default async function HomePage({
       <section className="relative isolate md:min-h-[92vh] flex flex-col justify-center px-6 py-8 md:py-12">
         <div className="absolute inset-0 overflow-hidden" aria-hidden>
           <Image
-            src="/images/hero-v3.jpg"
+            src={heroPhoto}
             alt=""
             fill
             priority
             sizes="100vw"
             className="object-cover -z-20 opacity-55"
+            unoptimized={isR2Src(heroPhoto) || isUnsplashSrc(heroPhoto)}
           />
           <div
             className="absolute inset-0 -z-10"
