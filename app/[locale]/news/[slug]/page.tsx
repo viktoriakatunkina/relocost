@@ -66,6 +66,20 @@ function buildNewsMetaDescription(summary: string): string {
   return truncateAtWord(summary, 155);
 }
 
+// 2026-10-29 (ночной автономный аудит, #news-off-topic-content): генератор
+// новостей (scripts/seed-*-news-*.mjs) дописывает в content_md CTA-фразу
+// «...посчитайте точный бюджет жизни в новом городе на Relocost.» ПРОСТЫМ
+// текстом — упоминание бренда никуда не ведёт, мостик к продукту не работал
+// даже технически. Все 126 опубликованных новостей (проверено на 2026-10-29)
+// уже содержат этот текст как есть в Supabase — правим на лету при рендере
+// (без миграции БД, без риска для content_md): превращаем голое «Relocost»
+// в реальную markdown-ссылку, которую подхватит ReactMarkdown ниже. Не
+// трогаем случай, где «Relocost» уже оформлен как ссылка (на будущее, если
+// шаблон CTA в seed-скриптах поменяют на markdown-линк).
+function linkifyRelocostMention(md: string): string {
+  return md.replace(/(?<!\[)\bRelocost\b(?!\]\()/g, "[Relocost](https://relocost.ru)");
+}
+
 function formatNewsDate(iso: string | null): string | null {
   if (!iso) return null;
   const d = new Date(iso.length === 10 ? `${iso}T00:00:00Z` : iso);
@@ -167,7 +181,9 @@ export default async function NewsItemPage({
         <p className="text-brandy/85 text-lg leading-relaxed mb-8">{post.summary}</p>
 
         <article className="prose prose-invert prose-headings:font-serif prose-headings:text-cream prose-p:text-brandy/90 prose-strong:text-cream prose-a:text-copper prose-a:no-underline hover:prose-a:underline prose-li:text-brandy/90 max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content_md}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {linkifyRelocostMention(post.content_md)}
+          </ReactMarkdown>
         </article>
 
         {/* Обязательный CTA на оплату — см. lib/news-city-match.ts: ведёт на
