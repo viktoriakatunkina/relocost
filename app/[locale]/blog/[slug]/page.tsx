@@ -253,7 +253,16 @@ export default async function BlogPostPage({
     description: post.seo_description ?? undefined,
     image: `${SITE_URL}/blog/${post.slug}/opengraph-image`,
     datePublished: post.created_at,
-    dateModified: post.created_at,
+    // 2026-10-29 (#datemodified-real-tracking): раньше здесь всегда стоял
+    // created_at — у blog_posts физически нет updated_at (миграция
+    // supabase/migrations/202507060001_blog_posts_updated_at.sql существует
+    // в репозитории с августа, но никогда не была применена в живой БД —
+    // проверено прямым запросом к Supabase REST, колонки нет). post.updated_at
+    // пока всегда undefined (optional-поле в BlogPost, см. lib/blog.ts) —
+    // фолбэк на created_at сохраняет сегодняшнее поведение без регрессии,
+    // а после применения той миграции в Supabase Studio dateModified
+    // начнёт отражать реальную дату правки content_md автоматически.
+    dateModified: post.updated_at ?? post.created_at,
     author: {
       "@type": "Organization",
       name: "Редакция Relocost",

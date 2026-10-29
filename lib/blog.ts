@@ -21,6 +21,15 @@ export type BlogPost = {
   cover_author_url: string | null;
   published: boolean;
   created_at: string;
+  // 2026-10-29 (#datemodified-real-tracking): проставляется триггером
+  // set_updated_at() при любом UPDATE строки (как уже работает для cities/
+  // prices). optional по той же причине, что у cover_image_url выше —
+  // миграция supabase/migrations/202507060001_blog_posts_updated_at.sql
+  // лежит в репозитории, но ещё не применена в живой Supabase (колонки
+  // нет — проверено запросом к REST API). До её применения всегда
+  // undefined, и код, который на неё ссылается (dateModified в Article-
+  // схеме статьи), безопасно фолбэчится на created_at.
+  updated_at?: string | null;
 };
 
 export async function getPublishedPosts(limit?: number): Promise<BlogPost[]> {
