@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { CityCard } from "@/components/CityCard";
+import { ShareButton } from "@/components/ShareButton";
 import type { CityWithBudget } from "@/lib/types";
 import {
   rankCities,
@@ -290,8 +291,52 @@ export function QuizClient({
         : { cities: [], isFallback: false },
     [finished, cities, answers, communityMap],
   );
-  const results = result.cities;
-  const isFallback = result.isFallback;
+
+  // ── Шерабельный результат ──────────────────────────────────────────────
+  // Топ-2 города кодируем в ?r=slug,slug (router.replace без релоада), чтобы
+  // результат можно было переслать. Если страница открыта по такой ссылке —
+  // сразу показываем экран результата с этими городами (упрощённо: не
+  // восстанавливаем весь ответный путь). Подсчёт результата (rankCities выше)
+  // не трогаем — это отдельная ветка поверх него.
+  //
+  // Читаем query-параметр вручную через window.location (не useSearchParams)
+  // и только внутри useEffect — чтобы не требовать Suspense-границу и не
+  // ломать статическую генерацию страницы: first paint у всех посетителей
+  // остаётся прежним (первый вопрос), сразу после монтирования — если нашли
+  // ?r=, подставляем шаренные города без доп. рендера вопросов.
+  const router = useRouter();
+  const pathname = usePathname();
+  const [sharedCities, setSharedCities] = useState<CityWithBudget[]>([]);
+
+  useEffect(() => {
+    const raw = new URLSearchParams(window.location.search).get("r");
+    if (!raw) return;
+    const slugs = raw.split(",").map((s) => s.trim()).filter(Boolean).slice(0, 8);
+    const bySlug = new Map(cities.map((c) => [c.slug, c]));
+    const found = slugs
+      .map((slug) => bySlug.get(slug))
+      .filter((c): c is CityWithBudget => Boolean(c));
+    if (found.length > 0) setSharedCities(found);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- читаем URL только при монтировании
+  }, []);
+
+  const isSharedView = !finished && sharedCities.length > 0;
+  const showResults = finished || isSharedView;
+
+  const results = finished
+    ? result.cities
+    : sharedCities.map((city) => ({ city, score: 0, reasons: [] as string[] }));
+  const isFallback = finished ? result.isFallback : false;
+
+  // Записываем топ-2 города в URL сразу после прохождения теста.
+  useEffect(() => {
+    if (!finished || result.cities.length === 0) return;
+    const next = result.cities.slice(0, 2).map((r) => r.city.slug).join(",");
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("r") === next) return;
+    params.set("r", next);
+    router.replace({ pathname, query: Object.fromEntries(params.entries()) }, { scroll: false });
+  }, [finished, result, pathname, router]);
 
   function choose(value: unknown) {
     const q = QUESTIONS[step];
@@ -316,11 +361,17 @@ export function QuizClient({
   function restart() {
     setAnswers(DEFAULT_ANSWERS);
     setStep(0);
+    setSharedCities([]);
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("r")) {
+      params.delete("r");
+      router.replace({ pathname, query: Object.fromEntries(params.entries()) }, { scroll: false });
+    }
   }
 
   // ── Results screen ──────────────────────────────────────────────────────────
 
-  if (finished) {
+  if (showResults) {
     return (
       <section className="max-w-6xl mx-auto px-6 pb-8">
         <div className="text-center mb-10">
@@ -339,26 +390,39 @@ export function QuizClient({
             >
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            Тест пройден
+            {isSharedView ? "Результат по ссылке" : "Тест пройден"}
           </div>
 
           <h2 className="font-serif text-3xl md:text-5xl text-cream mt-2 mb-4">
-            {isFallback
+            {isSharedView
+              ? `Вам прислали подборку из ${results.length} ${cityWord(results.length)}`
+              : isFallback
               ? "Возможно, Вам подойдут эти города"
               : `Нашли ${results.length} ${cityWord(results.length)} для Вас`}
           </h2>
           <p className="text-brandy/75 max-w-2xl mx-auto text-pretty">
-            {isFallback
+            {isSharedView
+              ? "Эти города подобрали по чьим-то ответам в тесте. Пройдите тест сами, чтобы получить подборку под себя."
+              : isFallback
               ? "Идеального совпадения не нашлось — но вот направления, которые стоит рассмотреть. Попробуйте изменить ответы или выберите «Пока не решил(а)» в первом вопросе."
               : "Города отобраны по Вашим ответам. Откройте любой, чтобы увидеть цены, бюджет и детали переезда."}
           </p>
-          <button
-            type="button"
-            onClick={restart}
-            className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-pill border hairline text-brandy/85 hover:text-cream hover:border-copper/30 transition text-sm"
-          >
-            Пройти заново
-          </button>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={restart}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-pill border hairline text-brandy/85 hover:text-cream hover:border-copper/30 transition text-sm"
+            >
+              {isSharedView ? "Пройти тест самому" : "Пройти заново"}
+            </button>
+            {results.length > 0 && (
+              <ShareButton
+                title="Тест: куда мне переехать — Relocost"
+                text={`Мне подобрали ${results[0]?.city.name_ru ?? "город"} для переезда, попробуй и ты`}
+                variant="ghost"
+              />
+            )}
+          </div>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">

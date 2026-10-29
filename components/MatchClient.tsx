@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import type { CityWithBudget } from "@/lib/types";
 import { climateTemp, isCoastal } from "@/lib/city-signals";
 import { getVisa } from "@/lib/visa";
 import { formatRub } from "@/lib/cities";
 import { getCityQuality } from "@/lib/city-quality";
+import { ShareButton } from "@/components/ShareButton";
 
 // Города с быстрым интернетом (аналог SearchClient — выделено в одном месте).
 const FAST_INTERNET = new Set([
@@ -192,6 +193,7 @@ function MatchRow({
   score,
   compareSelected,
   onToggleCompare,
+  shared,
 }: {
   rank: number;
   city: CityWithBudget;
@@ -201,6 +203,9 @@ function MatchRow({
    *  бандл-предложением там (не встраиваем логику сравнения сюда). */
   compareSelected: boolean;
   onToggleCompare: () => void;
+  /** Город есть в ?r= из пересланной ссылки — подсвечиваем и к нему же
+   *  скроллим при открытии (см. MatchClient). */
+  shared?: boolean;
 }) {
   const temp = climateTemp(city);
   const tags: string[] = [];
@@ -209,12 +214,18 @@ function MatchRow({
   if (getVisa(city).status === "visa_free") tags.push("✈️ Без визы");
   if ((getCityQuality(city.slug)?.safety ?? 0) >= 4) tags.push("🛡️ Безопасно");
   if (FAST_INTERNET.has(city.slug)) tags.push("⚡ Интернет");
+  if (shared) tags.push("🔗 Из ссылки");
 
   return (
     <div
+      id={`match-${city.slug}`}
       className={[
         "group relative flex items-start gap-3 bg-surface border rounded-2xl p-4 transition-colors",
-        compareSelected ? "border-copper/60" : "hairline hover:border-copper/35",
+        shared
+          ? "border-copper ring-2 ring-copper/40"
+          : compareSelected
+          ? "border-copper/60"
+          : "hairline hover:border-copper/35",
       ].join(" ")}
     >
       <Link href={`/city/${city.slug}`} className="absolute inset-0 rounded-2xl" aria-label={city.name_ru} />
@@ -285,6 +296,35 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
   // предложение купить бюджет по обоим сразу дешевле (CompareBundleCTA).
   const [compareSelection, setCompareSelection] = useState<string[]>([]);
 
+  // ── Шерабельный результат ──────────────────────────────────────────────
+  // Топ-2 совпадения кодируем в ?r=slug,slug (router.replace без релоада),
+  // чтобы подборку можно было переслать. Если страница открыта по такой
+  // ссылке — подсвечиваем эти города в списке и скроллим к первому
+  // (упрощённо: веса/приоритеты не восстанавливаем). Скоринг (computeMatch
+  // выше) не трогаем.
+  //
+  // Читаем query-параметр вручную через window.location (не useSearchParams)
+  // и только внутри useEffect — чтобы не требовать Suspense-границу и не
+  // ломать статическую генерацию страницы (первый рендер у всех посетителей
+  // остаётся прежним).
+  const router = useRouter();
+  const pathname = usePathname();
+  const [sharedSlugs, setSharedSlugs] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const raw = new URLSearchParams(window.location.search).get("r");
+    if (!raw) return;
+    const slugs = new Set(raw.split(",").map((s) => s.trim()).filter(Boolean));
+    if (slugs.size === 0) return;
+    setSharedSlugs(slugs);
+    // Город уже в списке (рендерится до 15 позиций) — скроллим к первому совпавшему.
+    const firstSlug = Array.from(slugs)[0];
+    requestAnimationFrame(() => {
+      document.getElementById(`match-${firstSlug}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- читаем URL только при монтировании
+  }, []);
+
   function set<K extends keyof Prefs>(key: K, val: Prefs[K]) {
     setPrefs(p => ({ ...p, [key]: val }));
   }
@@ -310,6 +350,25 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
   const compareCities = compareSelection
     .map(slug => cities.find(c => c.slug === slug))
     .filter((c): c is CityWithBudget => Boolean(c));
+
+  // Пишем топ-2 совпадения в URL — с debounce, чтобы не дёргать replace на
+  // каждое мгновенное изменение слайдера, только когда веса устоялись.
+  useEffect(() => {
+    if (ranked.length === 0) return;
+    const next = ranked.slice(0, 2).map(r => r.city.slug).join(",");
+    const timer = setTimeout(() => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("r") === next) return;
+      params.set("r", next);
+      router.replace({ pathname, query: Object.fromEntries(params.entries()) }, { scroll: false });
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [ranked, pathname, router]);
+
+  const topMatch = ranked[0];
+  const shareText = topMatch
+    ? `Мне подобрали ${topMatch.city.name_ru} с совпадением ${topMatch.score}%, попробуй и ты`
+    : "Подбери свой идеальный город для переезда — тест на Relocost";
 
   return (
     <div className="max-w-6xl mx-auto px-6 pb-12">
@@ -417,9 +476,16 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
 
         {/* Результаты */}
         <div>
-          <div className="flex items-baseline justify-between mb-1.5">
+          <div className="flex items-baseline justify-between mb-1.5 gap-3">
             <h2 className="font-serif text-2xl text-cream">Топ совпадений</h2>
-            <span className="text-brandy/40 text-sm">{cities.length} городов</span>
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="text-brandy/40 text-sm">{cities.length} городов</span>
+              <ShareButton
+                title="Подбор города для переезда — Relocost"
+                text={shareText}
+                variant="ghost"
+              />
+            </div>
           </div>
           <p className="text-brandy/45 text-xs mb-5">
             Топ-15 из {cities.length} направлений. Меняйте приоритеты — список обновляется мгновенно.
@@ -436,6 +502,7 @@ export function MatchClient({ cities }: { cities: CityWithBudget[] }) {
                 score={score}
                 compareSelected={compareSelection.includes(city.slug)}
                 onToggleCompare={() => toggleCompare(city.slug)}
+                shared={sharedSlugs.has(city.slug)}
               />
             ))}
           </div>
