@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { BlogPostCard } from "@/lib/blog";
 import { BlogCard } from "./BlogCard";
 import { TagFilterBar } from "./TagFilterBar";
@@ -16,11 +16,28 @@ export function BlogFilters({ posts }: { posts: BlogPostCard[] }) {
   }, [posts]);
 
   const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
 
-  const filtered = activeTag
-    ? posts.filter((p) => p.tag === activeTag)
-    : posts;
+  // Ссылка на тег со страницы статьи (/blog/[slug]) ведёт на
+  // /blog?tag=.... Читаем параметр вручную через window.location (не
+  // useSearchParams) и только внутри useEffect — тот же приём, что уже
+  // используется в QuizClient.tsx/MatchClient.tsx для ?r= — чтобы не
+  // требовать Suspense-границу и не ломать статическую генерацию страницы.
+  // Первый рендер одинаков у всех (без фильтра), тег подставляется сразу
+  // после монтирования, и только если он реально есть среди статей.
+  useEffect(() => {
+    const tag = new URLSearchParams(window.location.search).get("tag");
+    if (tag && tagCounts.some(([t]) => t === tag)) setActiveTag(tag);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- читаем URL только при монтировании
+  }, []);
+
+  const normalizedQuery = query.trim().toLowerCase();
+  const filtered = posts.filter(
+    (p) =>
+      (!activeTag || p.tag === activeTag) &&
+      (!normalizedQuery || p.title.toLowerCase().includes(normalizedQuery)),
+  );
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
@@ -31,8 +48,24 @@ export function BlogFilters({ posts }: { posts: BlogPostCard[] }) {
     setPage(1);
   }
 
+  function handleQueryChange(value: string) {
+    setQuery(value);
+    setPage(1);
+  }
+
   return (
     <>
+      <div className="mb-6 max-w-md">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => handleQueryChange(e.target.value)}
+          placeholder="Поиск по заголовкам статей…"
+          aria-label="Поиск по заголовкам статей"
+          className="w-full px-5 py-3 rounded-pill bg-surface text-cream placeholder-brandy/50 text-sm border hairline focus:border-copper focus:outline-none [color-scheme:dark]"
+        />
+      </div>
+
       <TagFilterBar
         tagCounts={tagCounts}
         activeTag={activeTag}
@@ -50,7 +83,9 @@ export function BlogFilters({ posts }: { posts: BlogPostCard[] }) {
       {/* Список статей */}
       {paginated.length === 0 ? (
         <p className="text-brandy/70 text-center py-12">
-          В этой категории пока нет статей.
+          {normalizedQuery
+            ? "По этому запросу ничего не нашлось."
+            : "В этой категории пока нет статей."}
         </p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

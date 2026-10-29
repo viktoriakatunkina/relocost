@@ -454,7 +454,20 @@ export default async function BlogPostPage({
           </Link>
           <div className="flex items-center gap-2 text-brandy/70 text-xs uppercase tracking-wider mb-4">
             {post.tag && (
-              <span className="text-copper">{post.tag}</span>
+              post.tag === HIDDEN_BLOG_TAG ? (
+                // "города" — скрытый тег (DN-карточки для CityArticles, не
+                // журнал, см. lib/blog-visibility.ts). У /blog?tag=города
+                // нет ни одной статьи — листинг их исключает — поэтому
+                // здесь ссылку не делаем, оставляем как раньше, текстом.
+                <span className="text-copper">{post.tag}</span>
+              ) : (
+                <Link
+                  href={`/blog?tag=${encodeURIComponent(post.tag)}`}
+                  className="text-copper hover:text-brandy transition"
+                >
+                  {post.tag}
+                </Link>
+              )
             )}
             {post.tag && post.read_time && <span>·</span>}
             {post.read_time && <span>{post.read_time} мин чтения</span>}
