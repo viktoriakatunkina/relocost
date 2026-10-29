@@ -135,6 +135,12 @@ if curl -fsS --retry 20 --retry-delay 1 --retry-all-errors -o /dev/null "$SITE/"
   # Теперь .next.old при успехе становится новым .next.prev.
   $SSH "$HOST" "cd $APP && rm -rf .next.prev && mv .next.old .next.prev"
   echo "==> Готово ✓  Сайт отвечает 200. Прошлый билд сохранён как .next.prev (./deploy.sh --rollback)."
+  # Прогрев sitemap.xml: без этого первая регенерация (ISR, revalidate=3600)
+  # приходится на первый заход краулера после рестарта процесса — именно в
+  # этот момент fallback-кэш (память процесса) ещё пуст, и при любом сбое
+  # Supabase нет вообще никакого снимка на подмену (см. app/sitemap.ts).
+  # Делаем это сами сразу после здорового старта, пока нагрузка низкая.
+  curl -s "$SITE/sitemap.xml" -o /dev/null || echo "!! Прогрев sitemap.xml не удался (не критично)"
   echo "==> IndexNow: уведомляем Яндекс и Bing о страницах"
   node scripts/indexnow.mjs || echo "!! IndexNow вернул ошибку (не критично)"
 else

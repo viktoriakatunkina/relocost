@@ -133,10 +133,19 @@ async function retryWithFallback<K extends keyof FallbackCache>(
     );
     return fallback.data as never;
   }
+  // 2026-10-29: раньше здесь был `return [] as never`. Для Next.js ISR это
+  // выглядит как ОБЫЧНАЯ УСПЕШНАЯ регенерация — она немедленно заменяла
+  // прошлый (хороший) кэш пустым/урезанным sitemap.xml. Именно этот путь
+  // живьём сработал 29.10.2026 на первом запуске процесса после рестарта
+  // (диск/память ещё не прогреты, fallback-кэша нет): curl показал 0 из 2280
+  // статей блога. throw вместо [] заставляет Next.js трактовать регенерацию
+  // как провалившуюся и продолжать отдавать последний закэшированный (пусть
+  // и устаревший) sitemap.xml вместо его подмены пустым — см. комментарий в
+  // начале файла про stale-while-revalidate.
   console.error(
-    `ALERT [sitemap] ${label}: Supabase недоступна после ретрая, fallback-кэш пуст (вероятно первый запуск процесса) — отдаю []`,
+    `ALERT [sitemap] ${label}: Supabase недоступна после ретрая, fallback-кэш пуст (вероятно первый запуск процесса) — проваливаю регенерацию, чтобы Next.js не подменил кэш пустым sitemap`,
   );
-  return [] as never;
+  throw lastErr instanceof Error ? lastErr : new Error(String(lastErr));
 }
 
 // PostgREST режет ЛЮБОЙ ответ по серверному db-max-rows=1000 — параметр
