@@ -49,6 +49,7 @@ import { DifficultyBars } from "@/components/city/DifficultyBars";
 import { BestPlaces } from "@/components/city/BestPlaces";
 import { VisaSteps } from "@/components/city/VisaSteps";
 import { Reviews } from "@/components/city/Reviews";
+import { ProsCons } from "@/components/city/ProsCons";
 import { CityReviews } from "@/components/city/CityReviews";
 import {
   CityDynamicFAQ,
@@ -537,6 +538,17 @@ export default async function CityPage({
           <CityPartners />
         </Reveal>
       )}
+
+      {content?.pros?.length && content?.cons?.length ? (
+        <ProsCons
+          pros={content.pros}
+          cons={content.cons}
+          eyebrow={tCity("prosConsEyebrow")}
+          title={tCity("prosConsTitle")}
+          prosTitle={tCity("prosColTitle")}
+          consTitle={tCity("consColTitle")}
+        />
+      ) : null}
 
       {content && (
         <Reveal>
