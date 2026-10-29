@@ -333,9 +333,19 @@ export function ChecklistClient({
               <path d="M12 3v2M12 19v2M5 5l1.4 1.4M17.6 17.6 19 19M3 12h2M19 12h2M5 19l1.4-1.4M17.6 6.4 19 5" />
               <circle cx="12" cy="12" r="4" />
             </svg>
-            <div>
+            <div className="min-w-0">
               <p className="text-copper font-serif text-base leading-tight">Чек-лист готов!</p>
               <p className="text-brandy/60 text-xs mt-0.5">Вы учли всё по плану — осталось только собрать чемодан.</p>
+              <Link
+                href="/search"
+                className="mt-3 inline-flex items-center gap-1.5 rounded-pill bg-copper text-pine-tree px-4 py-2 text-xs font-medium hover:bg-copper/90 transition"
+              >
+                Посчитать бюджет переезда
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </Link>
             </div>
           </div>
         )}

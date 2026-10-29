@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ChecklistClient } from "@/components/checklist/ChecklistClient";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Footer } from "@/components/Footer";
+import { CrossLinks } from "@/components/CrossLinks";
 import { CHECKLIST_STEPS } from "@/lib/checklist-data";
 import { routing, type Locale } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/i18n-seo";
@@ -88,6 +89,17 @@ export default async function ChecklistPage({
       </div>
 
       <ChecklistClient initialVariant="foreign" />
+
+      <div className="no-print">
+        <CrossLinks
+          links={[
+            { href: "/search", label: "Подобрать город" },
+            { href: "/match", label: "Подбор по приоритетам" },
+            { href: "/rating", label: "Рейтинг городов" },
+            { href: "/quiz", label: "Квиз" },
+          ]}
+        />
+      </div>
 
       <div className="pt-16">
         <Footer />
