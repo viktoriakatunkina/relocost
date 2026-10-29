@@ -150,6 +150,7 @@
     "filterDestination": "Qayerga",
     "filterVisa": "Ruslar uchun viza",
     "filterBudget": "Oylik byudjet",
+    "allFilters": "Barcha filtrlar",
     "budgetUpTo": "{amount} gacha",
     "budgetAny": "Istalgan",
     "regionAll": "Istalgan",

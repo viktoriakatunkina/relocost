@@ -150,6 +150,7 @@
     "filterDestination": "Where",
     "filterVisa": "Visa for Russians",
     "filterBudget": "Monthly budget",
+    "allFilters": "All filters",
     "budgetUpTo": "up to {amount}",
     "budgetAny": "Any",
     "regionAll": "Any",

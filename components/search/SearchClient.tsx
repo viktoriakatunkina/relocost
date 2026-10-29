@@ -432,6 +432,11 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
   const [budgetMax, setBudgetMax] = useState<number | null>(null);
   const [sort, setSort] = useState<Sort>("budget");
   const [page, setPage] = useState(1);
+  // Мобильный аккордеон: 5 из 6 групп чипов (кроме Региона) свёрнуты по
+  // умолчанию, чтобы на телефоне перед карточками городов не было стены из
+  // ~30 кнопок. От md и шире эта логика не используется — там всегда всё
+  // видно (см. разметку ниже).
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   type TagKey = "cheap" | "warm" | "safe" | "visa_free" | "seaside" | "internet";
 
@@ -596,6 +601,16 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
 
   const hasAnyFilter = activeFilters > 0 || query.trim().length > 0;
 
+  // Сколько активных фильтров сейчас спрятано под свёрнутым на мобильном
+  // аккордеоном (все группы кроме Региона, который виден всегда) — число на
+  // кнопке «Все фильтры», чтобы было понятно, что там что-то выбрано.
+  const hiddenFilterCount =
+    (climate !== "all" ? 1 : 0) +
+    (difficulty !== "all" ? 1 : 0) +
+    (destination !== "all" ? 1 : 0) +
+    (visa !== "all" ? 1 : 0) +
+    (budgetMax !== null ? 1 : 0);
+
   // Пагинация по отфильтрованному набору. Сбрасываем на 1-ю страницу при любом
   // изменении фильтров/поиска/сортировки.
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
@@ -705,19 +720,46 @@ export function SearchClient({ cities }: { cities: CityWithBudget[] }) {
           )}
         </HScroll>
 
-        {/* Чип-группы */}
+        {/* Чип-группы. На мобильном (ниже md) видна сразу только группа
+            «Регион» + кнопка-раскрытие; остальные 5 групп свёрнуты, пока
+            пользователь не попросит «Все фильтры». От md и шире — обычный
+            грид, как было, без скрытия. */}
         <div className="grid md:grid-cols-2 gap-x-10 gap-y-3 sm:gap-y-6">
           <ChipGroup label={t("filterRegion")} value={region} options={REGION_OPTIONS} onChange={setRegion} />
-          <ChipGroup label={t("filterClimate")} value={climate} options={CLIMATE_OPTIONS} onChange={setClimate} />
-          <ChipGroup label={t("filterDifficulty")} value={difficulty} options={DIFFICULTY_OPTIONS} onChange={setDifficulty} />
-          <ChipGroup label={t("filterDestination")} value={destination} options={DESTINATION_OPTIONS} onChange={setDestination} />
-          <ChipGroup label={t("filterVisa")} value={visa} options={VISA_OPTIONS} onChange={setVisa} />
-          <ChipGroup
-            label={t("filterBudget")}
-            value={budgetMax === null ? "any" : String(budgetMax)}
-            options={BUDGET_OPTIONS}
-            onChange={(v) => setBudgetMax(v === "any" ? null : Number(v))}
-          />
+
+          <button
+            type="button"
+            onClick={() => setFiltersOpen((v) => !v)}
+            aria-expanded={filtersOpen}
+            className="md:hidden flex items-center justify-between gap-2 rounded-xl border hairline px-4 py-3 min-h-11 text-sm text-brandy/85 hover:border-copper/50 hover:text-cream transition"
+          >
+            <span>
+              {t("allFilters")}
+              {hiddenFilterCount > 0 ? ` (${hiddenFilterCount})` : ""}
+            </span>
+            <svg
+              className={`shrink-0 transition-transform ${filtersOpen ? "rotate-180" : ""}`}
+              width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+
+          {/* display:contents — дети становятся прямыми элементами грида
+              (не ломает двухколоночную раскладку на md+); на мобильном это
+              либо contents (развёрнуто), либо hidden (свёрнуто). */}
+          <div className={filtersOpen ? "contents" : "hidden md:contents"}>
+            <ChipGroup label={t("filterClimate")} value={climate} options={CLIMATE_OPTIONS} onChange={setClimate} />
+            <ChipGroup label={t("filterDifficulty")} value={difficulty} options={DIFFICULTY_OPTIONS} onChange={setDifficulty} />
+            <ChipGroup label={t("filterDestination")} value={destination} options={DESTINATION_OPTIONS} onChange={setDestination} />
+            <ChipGroup label={t("filterVisa")} value={visa} options={VISA_OPTIONS} onChange={setVisa} />
+            <ChipGroup
+              label={t("filterBudget")}
+              value={budgetMax === null ? "any" : String(budgetMax)}
+              options={BUDGET_OPTIONS}
+              onChange={(v) => setBudgetMax(v === "any" ? null : Number(v))}
+            />
+          </div>
         </div>
 
         {/* Нижняя панель: тумблеры + сортировка */}
@@ -845,7 +887,7 @@ function ChipGroup<T extends string>({
               type="button"
               onClick={() => onChange(v)}
               aria-pressed={active}
-              className={`shrink-0 rounded-pill border px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs sm:text-sm transition ${
+              className={`shrink-0 rounded-pill border px-4 py-3 min-h-11 sm:min-h-0 sm:px-3.5 sm:py-2 text-xs sm:text-sm transition ${
                 active
                   ? "bg-copper text-pine-tree border-transparent font-semibold"
                   : "hairline text-brandy/85 hover:border-copper/60 hover:text-cream"

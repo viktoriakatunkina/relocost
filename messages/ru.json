@@ -150,6 +150,7 @@
     "filterDestination": "Куда",
     "filterVisa": "Виза для россиян",
     "filterBudget": "Бюджет в месяц",
+    "allFilters": "Все фильтры",
     "budgetUpTo": "до {amount}",
     "budgetAny": "Любой",
     "regionAll": "Любой",
