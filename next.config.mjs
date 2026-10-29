@@ -5,6 +5,10 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Выключает заголовок "X-Powered-By: Next.js" на каждом ответе — лишний
+  // фингерпринт стека без функциональной пользы (не влияет на рантайм/сборку).
+  poweredByHeader: false,
+
   // Деплой на Node-VPS: nginx + systemd + `next start` читает обычный .next.
   // Без output:"standalone" — он несовместим с `next start` и ломал запуск.
 

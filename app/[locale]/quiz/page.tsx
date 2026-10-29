@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getCitiesWithBudget } from "@/lib/city-budget";
+import { getSiteStats } from "@/lib/site-stats";
 import { CITY_CONTENT } from "@/lib/cities-content";
 import { QuizClient } from "@/components/quiz/QuizClient";
 import { ToolsCrossNote } from "@/components/ToolsCrossNote";
@@ -41,6 +42,9 @@ export default async function QuizPage({
   setRequestLocale(params.locale);
   const tc = await getTranslations("common");
   const cities = await getCitiesWithBudget();
+  // Было захардкожено "99+" — число городов растёт (см. lib/site-stats.ts про
+  // тот же анти-паттерн), берём живьём из getSiteStats(), как остальной сайт.
+  const { cityCount } = await getSiteStats();
 
   // Карта «русскоязычное сообщество» (difficulty_breakdown.community, 1–5) для
   // бонуса за русскоязычную среду в скоринге. Record (не Map) — сериализуемо в client.
@@ -83,7 +87,7 @@ export default async function QuizPage({
         {/* Benefit pills */}
         <div className="flex flex-wrap justify-center gap-3 mt-3">
           {[
-            "99+ городов в базе",
+            `${cityCount}+ городов в базе`,
             "Бесплатно",
             "Результат за 1 минуту",
           ].map((text) => (

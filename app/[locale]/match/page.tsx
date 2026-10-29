@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { getCitiesWithBudget } from "@/lib/city-budget";
+import { getSiteStats } from "@/lib/site-stats";
 import { MatchClient } from "@/components/MatchClient";
 import { ToolsCrossNote } from "@/components/ToolsCrossNote";
 import { Footer } from "@/components/Footer";
@@ -15,10 +16,13 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { locale: Locale } }) {
+  // Было захардкожено "100+" — число городов растёт, берём живьём из
+  // getSiteStats() (кешируется на процесс, см. lib/site-stats.ts).
+  const { cityCount } = await getSiteStats();
   return {
     title: "Подбор города для переезда по приоритетам | Relocost",
     description:
-      "Укажите, что важно — бюджет, климат, безопасность, море — и получите персональный рейтинг городов. Алгоритм подберет лучшие совпадения из 100+ направлений.",
+      `Укажите, что важно — бюджет, климат, безопасность, море — и получите персональный рейтинг городов. Алгоритм подберет лучшие совпадения из ${cityCount}+ направлений.`,
     alternates: buildAlternates("/match", params.locale),
     openGraph: {
       title: "Подбор города для переезда",
