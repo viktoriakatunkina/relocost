@@ -265,6 +265,54 @@ export async function getAllPostSlugs(limit = 2000): Promise<string[]> {
   return (data ?? []).map((p) => p.slug as string);
 }
 
+// ── Ротация «Читайте также» (город/страна → блог) ───────────────────────
+// 2026-11-09 (аудит после DN-волны): раньше оба блока брали чистый топ-N
+// самых свежих статей по city_id/country_slug — `order by created_at desc
+// limit N`. При резких всплесках публикаций (бывали дни по 1000+ статей
+// разом) старые статьи по «горячим» городам (Тбилиси, Белград, Дубай)
+// навсегда вытеснялись из этого блока — единственного канала перелинковки
+// с денежных страниц (/city/*, /country/*) на блог — в течение нескольких
+// дней после публикации, механически, а не потому что устарели по смыслу.
+//
+// Фикс: вместо топ-N берём широкий пул кандидатов (топ CITY_ARTICLE_POOL /
+// COUNTRY_ARTICLE_POOL по свежести), затем детерминированно выбираем
+// `limit` статей внутри пула — скользящим окном по пулу, отсортированному
+// от нового к старому. Смещение окна = hashString(дата + seed) % длина
+// пула, где seed — city_id/country_slug. Это даёт:
+//  - стабильный результат в рамках одного календарного дня (важно для
+//    ISR/SSR — один и тот же рендер в течение дня не "дёргается");
+//  - разное смещение день ото дня — за недели статьи из разных частей
+//    пула получают эфир, а не только самые свежие 3/6;
+//  - никакого Math.random()/Date.now() — воспроизводимо по входным данным.
+function hashString(s: string): number {
+  let hash = 0;
+  for (let i = 0; i < s.length; i++) hash = (hash * 31 + s.charCodeAt(i)) >>> 0;
+  return hash;
+}
+
+// Календарная дата как строка (не timestamp) — стабильна в течение суток
+// (UTC), меняется только по дням. Привязка к конкретному часовому поясу
+// здесь не важна: цель — "разные дни дают разную, но стабильную в рамках
+// дня выборку", а не синхронизация с полночью по Москве.
+function todayKey(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+// Скользящее окно шириной `limit` по пулу `pool` (ожидается уже
+// отсортированным от нового к старому). Если пул не больше limit — вращать
+// нечего, отдаём его целиком как раньше (маленькие города/страны с 1-2
+// статьями не теряют то, что у них есть).
+function rotatingSlice<T>(pool: T[], seed: string, limit: number): T[] {
+  if (pool.length <= limit) return pool;
+  const offset = hashString(`${todayKey()}:${seed}`) % pool.length;
+  const out: T[] = [];
+  for (let i = 0; i < limit; i++) out.push(pool[(offset + i) % pool.length]);
+  return out;
+}
+
+const CITY_ARTICLE_POOL = 24;
+const COUNTRY_ARTICLE_POOL = 30;
+
 // Статьи блога для страницы города: сначала привязанные к самому городу
 // (city_id), затем к его стране (country_slug). Используется для блока
 // «Читайте также» на /city/* (внутренняя перелинковка город → блог).
@@ -273,32 +321,45 @@ export async function getPostsForCity(
   countrySlug: string | null,
   limit = 3,
 ): Promise<BlogPostRelated[]> {
-  // Привязанные к городу — выше страновых. Два узких запроса с лимитом вместо
-  // одного select("*") без лимита (сотни полных статей на страну, см. выше).
-  const [own, country] = await Promise.all([
+  // Привязанные к городу — выше страновых. Два узких запроса с лимитом
+  // (пул, не топ-N) вместо одного select("*") без лимита (сотни полных
+  // статей на страну, см. комментарий выше по файлу).
+  const [ownPool, countryPool] = await Promise.all([
     rows(
       relatedQuery()
         .eq("city_id", cityId)
         .order("created_at", { ascending: false })
-        .limit(limit),
+        .limit(CITY_ARTICLE_POOL),
     ),
     countrySlug
       ? rows(
           relatedQuery()
             .eq("country_slug", countrySlug)
             .order("created_at", { ascending: false })
-            .limit(limit * 2),
+            .limit(CITY_ARTICLE_POOL * 2),
         )
       : Promise.resolve([] as BlogPostRelated[]),
   ]);
-  const out = [...own];
-  for (const p of country) if (!out.some((o) => o.id === p.id)) out.push(p);
-  return out.slice(0, limit);
+
+  const own = rotatingSlice(ownPool, `city:${cityId}`, limit);
+  if (own.length >= limit) return own;
+
+  // Городских статей не хватает — дополняем страновыми, тоже через
+  // ротацию (своя скользящая выборка на оставшийся пул), не просто топ-N.
+  const countryCandidates = countryPool.filter(
+    (p) => !own.some((o) => o.id === p.id),
+  );
+  const country = rotatingSlice(
+    countryCandidates,
+    `city:${cityId}:country`,
+    limit - own.length,
+  );
+  return [...own, ...country];
 }
 
 // Статьи блога для страницы СТРАНЫ: привязанные к стране (country_slug) или к
 // любому её городу (city_id). Внутренняя перелинковка страна → блог — раздаёт
-// вес 202 статьям и усиливает страновой кластер.
+// вес статьям и усиливает страновой кластер.
 export async function getPostsForCountry(
   countrySlug: string,
   cityIds: string[],
@@ -306,12 +367,13 @@ export async function getPostsForCountry(
 ): Promise<BlogPostRelated[]> {
   const ors = [`country_slug.eq.${countrySlug}`];
   if (cityIds.length) ors.push(`city_id.in.(${cityIds.join(",")})`);
-  return rows(
+  const pool = await rows(
     relatedQuery()
       .or(ors.join(","))
       .order("created_at", { ascending: false })
-      .limit(limit),
+      .limit(COUNTRY_ARTICLE_POOL),
   );
+  return rotatingSlice(pool, `country:${countrySlug}`, limit);
 }
 
 export async function getCityForPost(cityId: string | null) {
@@ -351,9 +413,9 @@ const COVER_GRADIENTS = [
 ];
 
 export function coverGradient(slug: string): string {
-  let hash = 0;
-  for (let i = 0; i < slug.length; i++) hash = (hash * 31 + slug.charCodeAt(i)) >>> 0;
-  return COVER_GRADIENTS[hash % COVER_GRADIENTS.length];
+  // hashString — тот же детерминированный хэш, что и у ротации «Читайте
+  // также» выше по файлу (вынесен туда первым, переиспользуем здесь).
+  return COVER_GRADIENTS[hashString(slug) % COVER_GRADIENTS.length];
 }
 
 // Keyword → Unsplash photo ID map (same logic as fix-covers.mjs).
